@@ -1,7 +1,8 @@
 import './App.css'
-import Routers from 'Routes/Routers.js'
+import React from 'react'
+import Routers from './Routes/Routers'
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="App">
       <Routers />
