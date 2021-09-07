@@ -1,12 +1,12 @@
 import 'css/SetQuizOptions.css'
 import { useState } from 'react'
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button } from 'reactstrap'
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button, DropdownItemProps } from 'reactstrap'
 import { withRouter } from 'react-router-dom'
 import tagItems from 'constants/TagItems'
 import axios from 'axios'
 import QuizSolving from './QuizSolving'
 
-const SetQuizOptions = (props) => {
+const SetQuizOptions = (props: any) => {
   const [tagDropdownOpen, setTagDropdownOpen] = useState(false)
   const [cntDropdownOpen, setCntDropdownOpen] = useState(false)
   const tagToggle = () => setTagDropdownOpen((prevState) => !prevState)
@@ -15,36 +15,37 @@ const SetQuizOptions = (props) => {
   const [selectedQuizTag, setselectedQuizTag] = useState([])
   const [selectedQuizCnt, setSelectedQuizCnt] = useState(null)
 
-  const quizCnt = new Array(30).fill().map((cnt, i) => {
+  const quizCnt = new Array(30).map((cnt, i) => {
     return i
   })
   const quizMinToMax = quizCnt.slice(4, 30)
 
   const quizTag = localStorage.getItem('selectedQuizTag')
-  const quizTagArr = JSON.parse(quizTag)
+  const quizTagArr = JSON.parse(quizTag!)
 
-  const [allQuiz, setAllQuiz] = useState([])
+  const [allQuiz, setAllQuiz] = useState<Array<any>>([])
   const [request, setRequest] = useState(false)
 
   let quizSize = localStorage.getItem('selectedQuizCnt')
   let quiz = allQuiz
   let quizTagList = selectedQuizTag
 
-  const selectedTag = (e) => {
-    if (selectedQuizTag.length > 9) {
-      alert('지정할 수 있는 태그는 최대 10개입니다')
-    }
-    if (!selectedQuizTag.includes(e.target.id) && selectedQuizTag.length <= 9) {
-      setselectedQuizTag(selectedQuizTag.concat(e.target.id))
-      quizTagList.push(e.target.id)
-    } else if (selectedQuizTag.includes(e.target.id)) {
-      alert('이미 선택된 태그입니다.')
-    }
+  // todo: 리팩토링 필요
+  const selectedTag = (e: any) => {
+    // if (selectedQuizTag.length > 9) {
+    //   alert('지정할 수 있는 태그는 최대 10개입니다')
+    // }
+    // if (!selectedQuizTag.includes(e.target.id) && selectedQuizTag.length <= 9) {
+    //   setselectedQuizTag(selectedQuizTag.concat(e.target.id))
+    //   quizTagList.push(e.target.id)
+    // } else if (selectedQuizTag.includes(e.target.id)) {
+    //   alert('이미 선택된 태그입니다.')
+    // }
   }
-  const deselectedTag = (e) => {
-    setselectedQuizTag(selectedQuizTag.filter((element) => element !== e.target.id))
+  const deselectedTag = (e: any) => {
+    // setselectedQuizTag(selectedQuizTag.filter((element) => element !== e.target.id))
   }
-  const selectedCnt = (e) => {
+  const selectedCnt = (e: any) => {
     setSelectedQuizCnt(e.target.id)
   }
 
@@ -107,7 +108,8 @@ const SetQuizOptions = (props) => {
                     <DropdownMenu className="quiz-dropdown-menu">
                       {quizMinToMax.map((cnt, i) => {
                         return (
-                          <DropdownItem key={i} onClick={selectedCnt} id={cnt + 1}>
+                          <DropdownItem key={i} onClick={selectedCnt}>
+                            {/* <DropdownItem key={i} onClick={selectedCnt} id={cnt + 1}> */}
                             {cnt + 1}
                           </DropdownItem>
                         )
@@ -136,7 +138,7 @@ const SetQuizOptions = (props) => {
                 <hr className="two-line" />
                 <span className="quiz-cnt">
                   {selectedQuizCnt}
-                  {localStorage.setItem('selectedQuizCnt', parseInt(selectedQuizCnt))}
+                  {localStorage.setItem('selectedQuizCnt', selectedQuizCnt!)}
                 </span>
                 <span>개</span>
               </div>
@@ -150,7 +152,7 @@ const SetQuizOptions = (props) => {
                   axios
                     .get(`/api/v1/question/quiz?size=${quizSize}&tags=${quizTagArr}`)
                     .then((res) => {
-                      res.data.forEach((item) => {
+                      res.data.forEach((item: any) => {
                         quiz.push(item)
                       })
                       console.log(allQuiz)

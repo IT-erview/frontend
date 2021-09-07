@@ -7,8 +7,9 @@ const MyBookmarkQuestion = () => {
   const [sort, setSort] = useState('question_bookmarkCount')
 
   useEffect(() => {
-    const bookmarkBtn = document.getElementById('sort-by-bookmark')
-    const latestBtn = document.getElementById('sort-by-latest')
+    // todo: elem !
+    const bookmarkBtn = document.getElementById('sort-by-bookmark')!
+    const latestBtn = document.getElementById('sort-by-latest')!
 
     if (sort === 'question_bookmarkCount') {
       bookmarkBtn.style.color = '#4d4d4e'

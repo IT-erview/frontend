@@ -17,7 +17,7 @@ import { JWT_TOKEN } from 'constants/Oauth'
 import { removeCookie } from 'components/Cookies'
 import { Link, useHistory, withRouter } from 'react-router-dom'
 
-const Navigation = (props) => {
+const Navigation = (props: any) => {
   const [modalOpen, setModalOpen] = useState(false)
   const [userProfile, setUserProfile] = useState(null)
   const [dropdownOpen, setOpen] = useState(false)
@@ -103,7 +103,8 @@ const Navigation = (props) => {
         {userProfile ? (
           <ButtonDropdown className="dropdown-btn-par" isOpen={dropdownOpen} toggle={toggle}>
             <DropdownToggle className="dropdown-btn" caret>
-              {userProfile?.username}님
+              {/* note: 구조변경필요 일단 주석 */}
+              {/* {userProfile?.username}님 */}
               <img src="/img/nav_icon6.png" alt="nav_icon" />
             </DropdownToggle>
             <DropdownMenu className="dropdown-menu">

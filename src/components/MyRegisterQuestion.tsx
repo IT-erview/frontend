@@ -7,8 +7,8 @@ const MyRegisterQuestion = () => {
   const [sort, setSort] = useState('bookmarkCount')
 
   useEffect(() => {
-    const bookmarkBtn = document.getElementById('sort-by-bookmark')
-    const latestBtn = document.getElementById('sort-by-latest')
+    const bookmarkBtn = document.getElementById('sort-by-bookmark')!
+    const latestBtn = document.getElementById('sort-by-latest')!
 
     if (sort === 'bookmarkCount') {
       bookmarkBtn.style.color = '#4d4d4e'

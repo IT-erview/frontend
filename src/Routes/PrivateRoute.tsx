@@ -1,7 +1,12 @@
-import { Route, Redirect } from 'react-router-dom'
+import { Route, Redirect, RouteProps } from 'react-router-dom'
 import { JWT_TOKEN } from 'constants/Oauth'
-import LoginModal from 'components/LoginModal'
-const PrivateRoute = ({ component: Component, ...rest }) => {
+import React from 'react'
+
+const PrivateRoute: React.FunctionComponent<
+  {
+    component: React.ElementType
+  } & RouteProps
+> = ({ component: Component, ...rest }) => {
   return (
     // Show the component only when the user is logged in
     // Otherwise, redirect the user to /signin page

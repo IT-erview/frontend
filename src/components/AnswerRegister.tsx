@@ -4,18 +4,20 @@ import { Form, Input } from 'reactstrap'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-const AnswerRegister = ({ quiz }) => {
+// note: prop의 quiz 사용처 없어보임
+const AnswerRegister = () => {
   const [answerTextContents, setAnswerTextContents] = useState('')
   const [answerContentsLength, setAnswerContentsLength] = useState(0)
   useEffect(() => {
     setAnswerContentsLength(answerTextContents.length)
     const answerArea = document.getElementById('answer-text-length')
+    // todo: refactoring 필요. 일단 ! 처리
     if (answerContentsLength >= 1 && answerContentsLength < 20) {
-      answerArea.style.setProperty('color', 'red')
+      answerArea!.style.setProperty('color', 'red')
     } else if (answerContentsLength >= 1000) {
-      answerArea.style.setProperty('color', 'red')
+      answerArea!.style.setProperty('color', 'red')
     } else {
-      answerArea.style.setProperty('color', 'black')
+      answerArea!.style.setProperty('color', 'black')
     }
   }, [answerContentsLength, answerTextContents.length])
 
@@ -58,8 +60,8 @@ const AnswerRegister = ({ quiz }) => {
         <Form>
           <div className="breadcrumbs">
             <img src="/img/LOGO1.png" alt="iterview-logo" />
-            <span>테스트 문제 > </span>
-            <span>인기 문제 > </span>
+            <span>테스트 문제 {'>'} </span>
+            <span>인기 문제 {'>'} </span>
             <span className="subhead">문제 제목</span>
           </div>
           <div className="quiz-title">
@@ -74,7 +76,7 @@ const AnswerRegister = ({ quiz }) => {
           <Input
             type="textarea"
             value={answerTextContents}
-            maxLength="1000"
+            maxLength={1000}
             onChange={(e) => {
               setAnswerTextContents(e.target.value)
             }}

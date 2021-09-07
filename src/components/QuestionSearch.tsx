@@ -1,5 +1,5 @@
 import 'css/QuestionSearch.css'
-import Tags from 'components/Tags.js'
+import Tags from 'components/Tags'
 import { useEffect, useState } from 'react'
 import { Input } from 'reactstrap'
 import QuestionList from 'components/QuestionList'
@@ -46,8 +46,8 @@ const QuestionSearch = () => {
   const [sort, setSort] = useState('bookmarkCount')
 
   useEffect(() => {
-    const bookmarkBtn = document.getElementById('sort-by-bookmark')
-    const latestBtn = document.getElementById('sort-by-latest')
+    const bookmarkBtn = document.getElementById('sort-by-bookmark')!
+    const latestBtn = document.getElementById('sort-by-latest')!
 
     if (sort === 'bookmarkCount') {
       bookmarkBtn.style.color = '#4d4d4e'
@@ -88,7 +88,7 @@ const QuestionSearch = () => {
           id="question-search-input"
           type="textarea"
           value={searchWord}
-          maxLength="20"
+          maxLength={20}
           onChange={(e) => {
             setSearchWord(e.target.value)
           }}
@@ -98,7 +98,7 @@ const QuestionSearch = () => {
         <button
           onClick={() => {
             const tagList = localStorage.getItem('questionSearchTag')
-            const questionSerachTagArr = JSON.parse(tagList)
+            const questionSerachTagArr = JSON.parse(tagList!)
             setQuestionSearchTag(questionSerachTagArr)
             setQuestionSearchWord(searchWord)
             setSearchWord('')

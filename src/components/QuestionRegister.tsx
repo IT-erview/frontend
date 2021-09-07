@@ -6,7 +6,7 @@ import axios from 'axios'
 import { withRouter } from 'react-router-dom'
 import Question from './Question'
 
-const QuestionRegister = ({ history }) => {
+const QuestionRegister = ({ history }: { history: any }) => {
   const [textContents, setTextContents] = useState('')
   const [textContentsLength, setTextContentsLength] = useState(0)
   const [register, setRegister] = useState(false)
@@ -14,7 +14,7 @@ const QuestionRegister = ({ history }) => {
 
   useEffect(() => {
     setTextContentsLength(textContents.length)
-    const textArea = document.getElementById('text-counts')
+    const textArea = document.getElementById('text-counts')!
     if (textContentsLength < 20 && !register) {
       textArea.style.setProperty('color', 'red')
     } else if (textContentsLength >= 1000 && !register) {
@@ -31,7 +31,7 @@ const QuestionRegister = ({ history }) => {
       window.alert('최소 20자 이상 입력해주세요')
     } else {
       const questionRegiTag = localStorage.getItem('questionRegiTag')
-      const questionTag = JSON.parse(questionRegiTag)
+      const questionTag = JSON.parse(questionRegiTag!)
 
       console.log(localStorage.getItem('userName'))
       axios({
@@ -125,7 +125,7 @@ const QuestionRegister = ({ history }) => {
               <Input
                 type="textarea"
                 value={textContents}
-                maxLength="1000"
+                maxLength={1000}
                 onChange={(e) => {
                   setTextContents(e.target.value)
                 }}

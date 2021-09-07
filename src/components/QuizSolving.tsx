@@ -1,27 +1,32 @@
 import 'css/QuizSolving.css'
-import { withRouter } from 'react-router-dom'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { Form, Input } from 'reactstrap'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import QuizResult from './QuizResult'
 
-const QuizSolving = ({ quiz }) => {
+const QuizSolving: React.FunctionComponent<{ quiz: any } & RouteComponentProps> = ({ quiz }: { quiz: any }) => {
   const [answerTextContents, setAnswerTextContents] = useState('')
-  const [allAnswer, setAllAnswer] = useState([])
+  const [allAnswer, setAllAnswer] = useState<
+    Array<{
+      content: any
+      questionId: any
+    }>
+  >([])
   const [answerContentsLength, setAnswerContentsLength] = useState(0)
   const [quizNum, setQuizNum] = useState(0)
   const [quizIdNum, setQuizIdNum] = useState(0)
   const [showResult, setShowResult] = useState(false)
-  const [allQuizTag, setAllQuizTag] = useState([])
+  const [allQuizTag, setAllQuizTag] = useState<Array<any>>([])
 
-  let quizList = []
-  let quizIdList = []
+  let quizList: Array<any> = []
+  let quizIdList: Array<any> = []
   let quizTagList = allQuizTag
   let answerList = allAnswer
 
   useEffect(() => {
     setAnswerContentsLength(answerTextContents.length)
-    const answerArea = document.getElementById('answer-text-length')
+    const answerArea = document.getElementById('answer-text-length')!
     if (answerContentsLength >= 0 && answerContentsLength < 20) {
       answerArea.style.setProperty('color', 'red')
     } else if (answerContentsLength >= 1000) {
@@ -31,7 +36,7 @@ const QuizSolving = ({ quiz }) => {
     }
   }, [answerContentsLength, answerTextContents.length])
 
-  quiz.forEach((item) => {
+  quiz.forEach((item: any) => {
     quizList.push(item.content)
     quizIdList.push(item.id)
   })
@@ -51,7 +56,8 @@ const QuizSolving = ({ quiz }) => {
     })
   }, [])
 
-  localStorage.setItem('quizId', quizIdList)
+  // note: ??
+  localStorage.setItem('quizId', quizIdList.toString())
 
   const nextBtn = () => {
     return (
@@ -131,8 +137,8 @@ const QuizSolving = ({ quiz }) => {
             <div className="breadcrumbs">
               <img src="/img/LOGO1.png" alt="iterview-logo" />
               {/* {console.log(quiz)} */}
-              <span>테스트 문제 > </span>
-              <span>인기 문제 > </span>
+              <span>테스트 문제 {'>'} </span>
+              <span>인기 문제 {'>'} </span>
               <span className="subhead">문제 제목</span>
             </div>
             <div className="quiz-title">
@@ -155,7 +161,7 @@ const QuizSolving = ({ quiz }) => {
             <Input
               type="textarea"
               value={answerTextContents}
-              maxLength="1000"
+              maxLength={1000}
               onChange={(e) => {
                 setAnswerTextContents(e.target.value)
               }}

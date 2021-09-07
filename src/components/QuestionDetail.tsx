@@ -12,12 +12,15 @@ import InfiniteAnswerList from 'components/InfiniteAnswerList'
 const QuestionDetail = () => {
   const [questionId, setQuestionId] = useState(window.location.search.slice(1, window.location.search.length))
   const [questionContent, setQuesitonContent] = useState(localStorage.getItem('detailTitle'))
-  const [answerContent, setAnswerContent] = useState({ content: '', liked: 0 })
+  const [answerContent, setAnswerContent] = useState<{ id?: string; content: string; liked: number }>({
+    content: '',
+    liked: 0,
+  })
   const [sort, setSort] = useState('liked')
 
   useEffect(() => {
-    const likeBtn = document.getElementById('sort-by-like')
-    const latestBtn = document.getElementById('sort-by-latest')
+    const likeBtn = document.getElementById('sort-by-like')!
+    const latestBtn = document.getElementById('sort-by-latest')!
 
     if (sort === 'liked') {
       likeBtn.style.color = '#4d4d4e'
@@ -55,7 +58,7 @@ const QuestionDetail = () => {
       .catch((err) => {
         console.log(err)
       })
-  })
+  }, [])
 
   useEffect(() => {
     setQuestionId(window.location.search.slice(1, window.location.search.length))
@@ -71,10 +74,10 @@ const QuestionDetail = () => {
       <div className="question-detail-answer">
         <span>나의 답변</span>
         <Answer
-          id={answerContent.id}
+          id={answerContent.id!}
           number={1}
           answer={answerContent.content}
-          title={questionContent}
+          title={questionContent!}
           like={answerContent.liked}
         />
       </div>

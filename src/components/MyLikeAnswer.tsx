@@ -7,8 +7,9 @@ const MyLikeAnswer = () => {
   const [sort, setSort] = useState('answerManager_liked')
 
   useEffect(() => {
-    const likeBtn = document.getElementById('sort-by-like')
-    const latestBtn = document.getElementById('sort-by-latest')
+    // todo: elem !
+    const likeBtn = document.getElementById('sort-by-like')!
+    const latestBtn = document.getElementById('sort-by-latest')!
 
     if (sort === 'answerManager_liked') {
       likeBtn.style.color = '#4d4d4e'

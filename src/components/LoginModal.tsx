@@ -1,11 +1,11 @@
 import React from 'react'
 import 'css/LoginModal.css'
-import { GOOGLE_AUTH_URL, GITHUB_AUTH_URL } from 'constants/Oauth.js'
+import { GOOGLE_AUTH_URL, GITHUB_AUTH_URL } from 'constants/Oauth'
 
 const googleLogo = '/img/google-logo.png'
 const githubLogo = '/img/github-logo.png'
 
-function LoginModal(props) {
+function LoginModal(props: any) {
   const { open, close, header } = props
 
   return (

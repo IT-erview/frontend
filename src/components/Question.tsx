@@ -6,10 +6,10 @@ import Answer from './Answer'
 import AnswerRegister from './AnswerRegister'
 import QuizResult from './QuizResult'
 
-const Question = (props) => {
+const Question = (props: any) => {
   const [showAnswerRegister, setShowAnswerRegister] = useState(false)
 
-  const showQuestionTags = props.tagList.map((item, index) => {
+  const showQuestionTags = props.tagList.map((item: any, index: number) => {
     if (index < 3) {
       return (
         <div className="question-tags" key={index}>
@@ -21,7 +21,7 @@ const Question = (props) => {
     }
   })
 
-  const checkQuestionNumber = (num) => {
+  const checkQuestionNumber = (num: number) => {
     let questionNum = num.toString()
     if (questionNum.length < 2) {
       return '0' + num

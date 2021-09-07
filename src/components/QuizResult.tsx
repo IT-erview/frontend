@@ -3,13 +3,13 @@ import { useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import Question from './Question'
 
-const QuizResult = (props) => {
+const QuizResult = (props: any) => {
   let index = 0
   let arrIndex = 0
   let keyIndex = 0
   const tagItem = JSON.parse(localStorage.selectedQuizTag)
-  const midTitle = document.getElementById('quiz-option-title')
-  const subTitle = document.getElementById('quiz-option-sub-title')
+  const midTitle = document.getElementById('quiz-option-title')!
+  const subTitle = document.getElementById('quiz-option-sub-title')!
 
   useEffect(() => {
     midTitle.innerHTML = '면접문제 결과'
@@ -39,7 +39,7 @@ const QuizResult = (props) => {
           <div className="selectd-quiz-tag-content">
             <h4>퀴즈 태그</h4>
             <hr className="hr2" />
-            {tagItem.map((item, i) => {
+            {tagItem.map((item: any, i: any) => {
               return (
                 <button key={i} className="tag-btn">
                   {item}

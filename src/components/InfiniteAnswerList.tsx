@@ -3,8 +3,8 @@ import InfiniteAnswer from 'components/InfiniteAnswer'
 import { useEffect, useState } from 'react'
 import Question from 'components/Question'
 
-const InfiniteAnswerList = (props) => {
-  const [listInfo, setListInfo] = useState([])
+const InfiniteAnswerList = (props: any) => {
+  const [listInfo, setListInfo] = useState<any>([])
   const [skip, setSkip] = useState(0)
   const [limit, setLimit] = useState(10)
   const [fetching, setFetching] = useState(false)
@@ -31,7 +31,7 @@ const InfiniteAnswerList = (props) => {
     getData(body)
   })
 
-  const getData = (body) => {
+  const getData = (body: any) => {
     let answer = listInfo
     let getUrl = `/api/v1/answer/question/${questionId}?page=${page}&size=10&sort=${sort},desc`
     if (props.type === 'myanswer') {
@@ -47,12 +47,12 @@ const InfiniteAnswerList = (props) => {
       .then((res) => {
         console.log(res.data)
         if (res.data.content.length > 0) {
-          res.data.content.forEach((item) => {
+          res.data.content.forEach((item: any) => {
             if (answer.length < 1) {
               answer.push(item)
             } else {
               let check = true
-              answer.forEach((ans) => {
+              answer.forEach((ans: any) => {
                 if (JSON.stringify(ans) === JSON.stringify(item)) {
                   check = false
                 }
@@ -92,7 +92,7 @@ const InfiniteAnswerList = (props) => {
   return (
     <div>
       {props.type === 'myanswer' || props.type === 'mylike' ? (
-        listInfo.map((ans, index) => {
+        listInfo.map((ans: any, index: any) => {
           console.log(ans)
           return (
             <Question

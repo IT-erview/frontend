@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'
 import Question from 'components/Question'
-import { getCookie } from 'components/Cookies.js'
+import { getCookie } from 'components/Cookies'
 
 // header 설정
 axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`
@@ -16,46 +16,46 @@ axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`
 function MainPage() {
   const history = useHistory()
 
-  const [allQuestions, setAllQuestions] = useState(null)
-  const [allMostLikedAnswer, setAllMostLikedAnswer] = useState([])
+  const [allQuestions, setAllQuestions] = useState<Array<any>>([])
+  const [allMostLikedAnswer, setAllMostLikedAnswer] = useState<Array<any>>([])
   const [loginText, setLoginText] = useState('')
 
-  const [allHitQuestion, setAllHitQuestion] = useState(null)
-  const [allHitAnswer, setAllHitAnswer] = useState([])
+  const [allHitQuestion, setAllHitQuestion] = useState<Array<any>>([])
+  const [allHitAnswer, setAllHitAnswer] = useState<Array<any>>([])
 
-  let searchEx = document.getElementById('search-ex')
-  let registerEx = document.getElementById('register-ex')
-  let mypageEx = document.getElementById('mypage-ex')
-  let quizEx = document.getElementById('quiz-ex')
+  let searchEx = document.getElementById('search-ex')!
+  let registerEx = document.getElementById('register-ex')!
+  let mypageEx = document.getElementById('mypage-ex')!
+  let quizEx = document.getElementById('quiz-ex')!
 
-  let searchExBtn = document.getElementById('search-ex-btn')
-  let registerExBtn = document.getElementById('register-ex-btn')
-  let mypageExBtn = document.getElementById('mypage-ex-btn')
-  let quizExBtn = document.getElementById('quiz-ex-btn')
+  let searchExBtn = document.getElementById('search-ex-btn')!
+  let registerExBtn = document.getElementById('register-ex-btn')!
+  let mypageExBtn = document.getElementById('mypage-ex-btn')!
+  let quizExBtn = document.getElementById('quiz-ex-btn')!
 
   useEffect(() => {
-    searchEx = document.getElementById('search-ex')
-    registerEx = document.getElementById('register-ex')
-    mypageEx = document.getElementById('mypage-ex')
-    quizEx = document.getElementById('quiz-ex')
+    searchEx = document.getElementById('search-ex')!
+    registerEx = document.getElementById('register-ex')!
+    mypageEx = document.getElementById('mypage-ex')!
+    quizEx = document.getElementById('quiz-ex')!
 
-    searchExBtn = document.getElementById('search-ex-btn')
-    registerExBtn = document.getElementById('register-ex-btn')
-    mypageExBtn = document.getElementById('mypage-ex-btn')
-    quizExBtn = document.getElementById('quiz-ex-btn')
+    searchExBtn = document.getElementById('search-ex-btn')!
+    registerExBtn = document.getElementById('register-ex-btn')!
+    mypageExBtn = document.getElementById('mypage-ex-btn')!
+    quizExBtn = document.getElementById('quiz-ex-btn')!
     searchExBtn.style.borderBottom = '0.01px solid #2f00ff'
   }, [])
 
-  const tempQuestion = []
-  const tempLikedAnswer = []
-  const tempHitQuestion = []
-  const tempHitAnswer = []
+  const tempQuestion: Array<any> = []
+  const tempLikedAnswer: Array<any> = []
+  const tempHitQuestion: Array<any> = []
+  const tempHitAnswer: Array<any> = []
 
   useEffect(() => {
     axios
       .get('/api/v1/question/all?page=0&size=3')
       .then((res) => {
-        res.data.map((item, idx) => {
+        res.data.map((item: any, idx: any) => {
           // console.log(item)
           tempQuestion.push(item)
           if (item.mostLikedAnswer) tempLikedAnswer.push(item.mostLikedAnswer.content)
@@ -79,7 +79,7 @@ function MainPage() {
     axios
       .get('/api/v1/answer/hits')
       .then((res) => {
-        res.data.map((item, idx) => {
+        res.data.map((item: any, idx: any) => {
           // console.log(item)
           tempHitQuestion.push(item)
           if (item.content) tempHitAnswer.push(item.content)
@@ -126,9 +126,9 @@ function MainPage() {
               quizEx.style.display = 'none'
               registerEx.style.display = 'none'
 
-              registerExBtn.style.border = 0
-              mypageExBtn.style.border = 0
-              quizExBtn.style.border = 0
+              registerExBtn.style.border = '0'
+              mypageExBtn.style.border = '0'
+              quizExBtn.style.border = '0'
               searchExBtn.style.borderBottom = '0.01px solid #2f00ff'
             }}>
             <span>문제 검색</span>
@@ -141,9 +141,9 @@ function MainPage() {
               quizEx.style.display = 'none'
               searchEx.style.display = 'none'
 
-              searchExBtn.style.border = 0
-              mypageExBtn.style.border = 0
-              quizExBtn.style.border = 0
+              searchExBtn.style.border = '0'
+              mypageExBtn.style.border = '0'
+              quizExBtn.style.border = '0'
               registerExBtn.style.borderBottom = '0.01px solid #2f00ff'
             }}>
             <span>문제 등록</span>
@@ -156,9 +156,9 @@ function MainPage() {
               searchEx.style.display = 'none'
               registerEx.style.display = 'none'
 
-              searchExBtn.style.border = 0
-              registerExBtn.style.border = 0
-              quizExBtn.style.border = 0
+              searchExBtn.style.border = '0'
+              registerExBtn.style.border = '0'
+              quizExBtn.style.border = '0'
               mypageExBtn.style.borderBottom = '0.01px solid #2f00ff'
             }}>
             <span>마이페이지</span>
@@ -171,9 +171,9 @@ function MainPage() {
               searchEx.style.display = 'none'
               registerEx.style.display = 'none'
 
-              searchExBtn.style.border = 0
-              registerExBtn.style.border = 0
-              mypageExBtn.style.border = 0
+              searchExBtn.style.border = '0'
+              registerExBtn.style.border = '0'
+              mypageExBtn.style.border = '0'
               quizExBtn.style.borderBottom = '0.01px solid #2f00ff'
             }}>
             <span>퀴즈</span>
@@ -245,7 +245,7 @@ function MainPage() {
                     number={idx + 1}
                     content={item.content}
                     tagList={item.tagList}
-                    answer={allMostLikedAnswer[idx]}
+                    answer={allMostLikedAnswer![idx]}
                   />
                 )
               })}
@@ -268,7 +268,7 @@ function MainPage() {
                     number={idx + 1}
                     content={item.questionContent}
                     tagList={item.tags}
-                    answer={allHitAnswer[idx]}
+                    answer={allHitAnswer![idx]}
                   />
                 )
               })}

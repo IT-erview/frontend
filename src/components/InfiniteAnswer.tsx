@@ -1,7 +1,20 @@
 import { useState, useEffect } from 'react'
 import Answer from 'components/Answer'
 
-const InfiniteAnswer = ({ answers, fetching, fetchMoreData, questionTitle }) => {
+const InfiniteAnswer = ({
+  answers,
+  fetching,
+  fetchMoreData,
+  questionTitle,
+}: {
+  answers: Array<{
+    ans: any
+    index: any
+  }>
+  fetching: any
+  fetchMoreData: any
+  questionTitle: any
+}) => {
   const [answerInfo, setAnswerInfo] = useState(answers)
   useEffect(() => {
     setAnswerInfo(answers)
@@ -25,7 +38,7 @@ const InfiniteAnswer = ({ answers, fetching, fetchMoreData, questionTitle }) => 
     <div>
       {console.log(answerInfo)}
       {answerInfo &&
-        answerInfo.map((ans, index) => (
+        answerInfo.map((ans: any, index: any) => (
           <Answer
             key={ans.id}
             id={ans.id}

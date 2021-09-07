@@ -4,8 +4,8 @@ import axios from 'axios'
 import { useInView } from 'react-intersection-observer'
 import Question from 'components/Question'
 
-const QuestionList = (props) => {
-  const [allQuestions, setAllQuestions] = useState([])
+const QuestionList = (props: any) => {
+  const [allQuestions, setAllQuestions] = useState<Array<any>>([])
   // const [loading, setLoading] = useState(false)
   // const [page, setPage] = useState(0)
   // const [ref, inView] = useInView()
@@ -17,14 +17,14 @@ const QuestionList = (props) => {
   const getQuestions = useCallback(async () => {
     // if (!stopRequest) {
     //   setLoading(true)
-    const questions = []
+    const questions: Array<any> = []
     let getUrl = `/api/v1/question/search?keyword=${props.word}&page=0&size=30&tags=${props.tagList}&sort=${props.sortBy},desc`
     if (props.type === 'question') {
       getUrl = `/api/v1/question/mine?page=0&size=30&sort=${props.sortBy},desc`
       await axios
         .get(getUrl)
         .then((res) => {
-          res.data.forEach((item) => {
+          res.data.forEach((item: any) => {
             if (item.mostLikedAnswer === null) item.mostLikedAnswer = { content: '(등록된 답변이 없습니다)' }
             questions.push(item)
           })
@@ -39,7 +39,7 @@ const QuestionList = (props) => {
         .get(getUrl)
         .then((res) => {
           console.log(res.data)
-          res.data.forEach((item) => {
+          res.data.forEach((item: any) => {
             if (item.mostLikedAnswer === null) item.mostLikedAnswer = { content: '(등록된 답변이 없습니다)' }
             questions.push(item.question)
           })
@@ -52,7 +52,7 @@ const QuestionList = (props) => {
       await axios
         .get(getUrl)
         .then((res) => {
-          res.data.forEach((item) => {
+          res.data.forEach((item: any) => {
             if (item.mostLikedAnswer === null) item.mostLikedAnswer = { content: '(등록된 답변이 없습니다)' }
             questions.push(item)
           })

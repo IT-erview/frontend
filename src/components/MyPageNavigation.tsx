@@ -2,23 +2,23 @@ import 'css/MyPageNavigation.css'
 import { useEffect } from 'react'
 import { withRouter } from 'react-router'
 
-const MyPageNavigation = (props) => {
-  const changeBorderColor = (selected) => {
-    document.getElementById('text-question').style.borderBottom = '0'
-    document.getElementById('text-question').style.color = '#6a737d'
-    document.getElementById('text-question').style.fontWeight = 'normal'
+const MyPageNavigation = (props: any) => {
+  const changeBorderColor = (selected: any) => {
+    document.getElementById('text-question')!.style.borderBottom = '0'
+    document.getElementById('text-question')!.style.color = '#6a737d'
+    document.getElementById('text-question')!.style.fontWeight = 'normal'
 
-    document.getElementById('text-answer').style.borderBottom = '0'
-    document.getElementById('text-answer').style.color = '#6a737d'
-    document.getElementById('text-answer').style.fontWeight = 'normal'
+    document.getElementById('text-answer')!.style.borderBottom = '0'
+    document.getElementById('text-answer')!.style.color = '#6a737d'
+    document.getElementById('text-answer')!.style.fontWeight = 'normal'
 
-    document.getElementById('text-like').style.borderBottom = '0'
-    document.getElementById('text-like').style.color = '#6a737d'
-    document.getElementById('text-like').style.fontWeight = 'normal'
+    document.getElementById('text-like')!.style.borderBottom = '0'
+    document.getElementById('text-like')!.style.color = '#6a737d'
+    document.getElementById('text-like')!.style.fontWeight = 'normal'
 
-    document.getElementById('text-bookmark').style.borderBottom = '0'
-    document.getElementById('text-bookmark').style.color = '#6a737d'
-    document.getElementById('text-bookmark').style.fontWeight = 'normal'
+    document.getElementById('text-bookmark')!.style.borderBottom = '0'
+    document.getElementById('text-bookmark')!.style.color = '#6a737d'
+    document.getElementById('text-bookmark')!.style.fontWeight = 'normal'
 
     selected.style.borderBottom = '2px solid #2188FF'
     selected.style.color = 'black'
@@ -28,24 +28,24 @@ const MyPageNavigation = (props) => {
   useEffect(() => {
     const pathname = window.location.pathname
     if (pathname.indexOf('MyRegisterQuestion') !== -1) {
-      document.getElementById('text-question').style.borderBottom = '2px solid #2188FF'
-      document.getElementById('text-question').style.color = 'black'
-      document.getElementById('text-question').style.fontWeight = 'bold'
+      document.getElementById('text-question')!.style.borderBottom = '2px solid #2188FF'
+      document.getElementById('text-question')!.style.color = 'black'
+      document.getElementById('text-question')!.style.fontWeight = 'bold'
       changeBorderColor(document.getElementById('text-question'))
     } else if (pathname.indexOf('MyRegisterAnswer') !== -1) {
-      document.getElementById('text-answer').style.borderBottom = '2px solid #2188FF'
-      document.getElementById('text-answer').style.color = 'black'
-      document.getElementById('text-answer').style.fontWeight = 'bold'
+      document.getElementById('text-answer')!.style.borderBottom = '2px solid #2188FF'
+      document.getElementById('text-answer')!.style.color = 'black'
+      document.getElementById('text-answer')!.style.fontWeight = 'bold'
       changeBorderColor(document.getElementById('text-answer'))
     } else if (pathname.indexOf('MyLikeAnswer') !== -1) {
-      document.getElementById('text-like').style.borderBottom = '2px solid #2188FF'
-      document.getElementById('text-like').style.color = 'black'
-      document.getElementById('text-like').style.fontWeight = 'bold'
+      document.getElementById('text-like')!.style.borderBottom = '2px solid #2188FF'
+      document.getElementById('text-like')!.style.color = 'black'
+      document.getElementById('text-like')!.style.fontWeight = 'bold'
       changeBorderColor(document.getElementById('text-like'))
     } else if (pathname.indexOf('MyBookmarkQuestion') !== -1) {
-      document.getElementById('text-bookmark').style.borderBottom = '2px solid #2188FF'
-      document.getElementById('text-bookmark').style.color = 'black'
-      document.getElementById('text-bookmark').style.fontWeight = 'bold'
+      document.getElementById('text-bookmark')!.style.borderBottom = '2px solid #2188FF'
+      document.getElementById('text-bookmark')!.style.color = 'black'
+      document.getElementById('text-bookmark')!.style.fontWeight = 'bold'
       changeBorderColor(document.getElementById('text-bookmark'))
     }
   })

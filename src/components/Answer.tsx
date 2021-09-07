@@ -2,8 +2,15 @@ import { Button } from 'reactstrap'
 import 'css/Answer.css'
 import axios from 'axios'
 
-const Answer = (props) => {
-  const checkQuestionNumber = (num) => {
+const Answer = (props: {
+  id: string
+  number: number
+  title: string
+  answer: string
+  like: number
+  username?: string
+}) => {
+  const checkQuestionNumber = (num: number) => {
     let questionNum = num.toString()
     if (questionNum.length < 2) {
       return '0' + num

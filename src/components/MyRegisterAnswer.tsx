@@ -7,8 +7,8 @@ const MyRegisterAnswer = () => {
   const [sort, setSort] = useState('liked')
 
   useEffect(() => {
-    const likeBtn = document.getElementById('sort-by-like')
-    const latestBtn = document.getElementById('sort-by-latest')
+    const likeBtn = document.getElementById('sort-by-like')!
+    const latestBtn = document.getElementById('sort-by-latest')!
 
     if (sort === 'liked') {
       likeBtn.style.color = '#4d4d4e'
