@@ -7,95 +7,75 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'
-import Question from 'components/Question'
+import QuestionComponent from 'components/Question'
+import { getHitsAnswers, getQuestions } from 'common/api'
+import { Answer, Question } from 'common/type'
 import { getCookie } from 'components/Cookies'
 
 // header 설정
 axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`
+enum FeatureDescriptionType {
+  SEARCH,
+  REGISTER,
+  MY_PAGE,
+  QUIZ,
+}
+// todo: 쓰임새 보고 global로 변경
+const isAuthorized = () => {
+  console.log(getCookie('Authorization'))
+  return getCookie('Authorization')
+}
 
-function MainPage() {
+const featureDescriptions = [
+  {
+    title: '문제 검색',
+    description: '문제 검색 기능을 통해 태그와 키워드로 원하는 문제를 검색해보세요!',
+    type: FeatureDescriptionType.SEARCH,
+  },
+  {
+    title: '문제 등록',
+    description: '문제 등록 기능을 통해 궁금했던 문제를 등록하여 다른사람의 답변을 받아보세요!',
+    type: FeatureDescriptionType.REGISTER,
+  },
+  {
+    title: '마이페이지',
+    description: "마이페이지 기능을 통해 나의 IT'erview 기록들을 확인해보세요!",
+    type: FeatureDescriptionType.MY_PAGE,
+  },
+  {
+    title: '퀴즈',
+    description: '퀴즈 기능을 통해 모의 면접을 경험해보세요!',
+    type: FeatureDescriptionType.QUIZ,
+  },
+]
+
+const MainPage = () => {
   const history = useHistory()
+  const [questions, setQuestions] = useState<Array<Question>>()
+  const [hitsAnswers, setHitsAnswers] = useState<Array<Answer>>()
 
-  const [allQuestions, setAllQuestions] = useState<Array<any>>([])
-  const [allMostLikedAnswer, setAllMostLikedAnswer] = useState<Array<any>>([])
-  const [loginText, setLoginText] = useState('')
+  const [focusedFeatureDescriptionType, setFocusedFeatureDescriptionType] = useState<FeatureDescriptionType>(
+    FeatureDescriptionType.SEARCH,
+  )
 
-  const [allHitQuestion, setAllHitQuestion] = useState<Array<any>>([])
-  const [allHitAnswer, setAllHitAnswer] = useState<Array<any>>([])
-
-  let searchEx = document.getElementById('search-ex')!
-  let registerEx = document.getElementById('register-ex')!
-  let mypageEx = document.getElementById('mypage-ex')!
-  let quizEx = document.getElementById('quiz-ex')!
-
-  let searchExBtn = document.getElementById('search-ex-btn')!
-  let registerExBtn = document.getElementById('register-ex-btn')!
-  let mypageExBtn = document.getElementById('mypage-ex-btn')!
-  let quizExBtn = document.getElementById('quiz-ex-btn')!
+  const isFocused = (type: FeatureDescriptionType) => {
+    return focusedFeatureDescriptionType === type
+  }
 
   useEffect(() => {
-    searchEx = document.getElementById('search-ex')!
-    registerEx = document.getElementById('register-ex')!
-    mypageEx = document.getElementById('mypage-ex')!
-    quizEx = document.getElementById('quiz-ex')!
-
-    searchExBtn = document.getElementById('search-ex-btn')!
-    registerExBtn = document.getElementById('register-ex-btn')!
-    mypageExBtn = document.getElementById('mypage-ex-btn')!
-    quizExBtn = document.getElementById('quiz-ex-btn')!
-    searchExBtn.style.borderBottom = '0.01px solid #2f00ff'
-  }, [])
-
-  const tempQuestion: Array<any> = []
-  const tempLikedAnswer: Array<any> = []
-  const tempHitQuestion: Array<any> = []
-  const tempHitAnswer: Array<any> = []
-
-  useEffect(() => {
-    axios
-      .get('/api/v1/question/all?page=0&size=3')
-      .then((res) => {
-        res.data.map((item: any, idx: any) => {
-          // console.log(item)
-          tempQuestion.push(item)
-          if (item.mostLikedAnswer) tempLikedAnswer.push(item.mostLikedAnswer.content)
-          else {
-            tempLikedAnswer.push('(등록된 답변이 없습니다)')
-          }
-        })
-        setAllQuestions(tempQuestion)
-        setAllMostLikedAnswer(tempLikedAnswer)
-        console.log(allQuestions, allMostLikedAnswer)
-        setLoginText('')
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-
-    if (!getCookie('Authorization')) {
-      setLoginText('로그인 후 볼 수 있습니다.')
+    const initQuestions = async () => {
+      const questions = await getQuestions(0, 3)
+      setQuestions(questions)
     }
-
-    axios
-      .get('/api/v1/answer/hits')
-      .then((res) => {
-        res.data.map((item: any, idx: any) => {
-          // console.log(item)
-          tempHitQuestion.push(item)
-          if (item.content) tempHitAnswer.push(item.content)
-          else {
-            tempHitAnswer.push('(등록된 답변이 없습니다)')
-          }
-        })
-        setAllHitQuestion(tempHitQuestion)
-        setAllHitAnswer(tempHitAnswer)
-        console.log(allHitQuestion, allHitAnswer)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    const initHitsAnswers = async () => {
+      const answers = await getHitsAnswers()
+      setHitsAnswers(answers)
+    }
+    initQuestions()
+    initHitsAnswers()
   }, [])
 
+  // ?
   const removeLocalStorage = () => {
     localStorage.removeItem('questionSearchTag')
   }
@@ -118,72 +98,25 @@ function MainPage() {
           </Link>
         </div>
         <div className="intro-functions">
-          <button
-            id="search-ex-btn"
-            onClick={() => {
-              searchEx.style.display = 'inline'
-              mypageEx.style.display = 'none'
-              quizEx.style.display = 'none'
-              registerEx.style.display = 'none'
-
-              registerExBtn.style.border = '0'
-              mypageExBtn.style.border = '0'
-              quizExBtn.style.border = '0'
-              searchExBtn.style.borderBottom = '0.01px solid #2f00ff'
-            }}>
-            <span>문제 검색</span>
-          </button>
-          <button
-            id="register-ex-btn"
-            onClick={() => {
-              registerEx.style.display = 'inline'
-              mypageEx.style.display = 'none'
-              quizEx.style.display = 'none'
-              searchEx.style.display = 'none'
-
-              searchExBtn.style.border = '0'
-              mypageExBtn.style.border = '0'
-              quizExBtn.style.border = '0'
-              registerExBtn.style.borderBottom = '0.01px solid #2f00ff'
-            }}>
-            <span>문제 등록</span>
-          </button>
-          <button
-            id="mypage-ex-btn"
-            onClick={() => {
-              mypageEx.style.display = 'inline'
-              quizEx.style.display = 'none'
-              searchEx.style.display = 'none'
-              registerEx.style.display = 'none'
-
-              searchExBtn.style.border = '0'
-              registerExBtn.style.border = '0'
-              quizExBtn.style.border = '0'
-              mypageExBtn.style.borderBottom = '0.01px solid #2f00ff'
-            }}>
-            <span>마이페이지</span>
-          </button>
-          <button
-            id="quiz-ex-btn"
-            onClick={() => {
-              quizEx.style.display = 'inline'
-              mypageEx.style.display = 'none'
-              searchEx.style.display = 'none'
-              registerEx.style.display = 'none'
-
-              searchExBtn.style.border = '0'
-              registerExBtn.style.border = '0'
-              mypageExBtn.style.border = '0'
-              quizExBtn.style.borderBottom = '0.01px solid #2f00ff'
-            }}>
-            <span>퀴즈</span>
-          </button>
+          {featureDescriptions.map((feature, index) => {
+            return (
+              <button
+                key={index}
+                style={{
+                  borderBottom: isFocused(feature.type) ? '0.01px solid #2f00ff' : 'none',
+                }}
+                onClick={() => {
+                  setFocusedFeatureDescriptionType(feature.type)
+                }}>
+                <span>{feature.title}</span>
+              </button>
+            )
+          })}
           <hr className="intro-hr" />
           <div className="function-explain">
-            <span id="search-ex">문제 검색 기능을 통해 태그와 키워드로 원하는 문제를 검색해보세요!</span>
-            <span id="register-ex">문제 등록 기능을 통해 궁금했던 문제를 등록하여 다른사람의 답변을 받아보세요!</span>
-            <span id="mypage-ex">마이페이지 기능을 통해 나의 IT'erview 기록들을 확인해보세요!</span>
-            <span id="quiz-ex">퀴즈 기능을 통해 모의 면접을 경험해보세요!</span>
+            {featureDescriptions.map((feature, index) => {
+              return isFocused(feature.type) && <span key={index}>{feature.description}</span>
+            })}
           </div>
           <br />
           <br />
@@ -236,20 +169,21 @@ function MainPage() {
             </h1>
             <button className="hit-question-btn">더보기</button>
             <hr className="hit-question-hr" />
-            {allQuestions &&
-              allQuestions.map((item, idx) => {
+            {questions &&
+              questions.map((question, idx) => {
                 return (
-                  <Question
-                    key={item.id}
-                    id={item.id}
+                  <QuestionComponent
+                    key={question.id}
+                    id={question.id}
+                    // idx+1 ??
                     number={idx + 1}
-                    content={item.content}
-                    tagList={item.tagList}
-                    answer={allMostLikedAnswer![idx]}
+                    content={question.content}
+                    tagList={question.tagList}
+                    answer={question.mostLikedAnswer}
                   />
                 )
               })}
-            <span id="question-login-text">{loginText}</span>
+            {!isAuthorized() && <span id="question-login-text">로그인 후 볼 수 있습니다.</span>}
           </div>
           <div className="hit-answer">
             <h1 className="hit-answer-title">
@@ -258,21 +192,20 @@ function MainPage() {
             </h1>
             <button className="hit-answer-btn">더보기</button>
             <hr className="hit-answer-hr" />
-            {allHitQuestion &&
-              allHitQuestion.map((item, idx) => {
-                // console.log(item)
+            {hitsAnswers &&
+              hitsAnswers.map((answer, idx) => {
                 return (
-                  <Question
-                    key={item.id}
-                    id={item.questionId}
+                  <QuestionComponent
+                    key={answer.id}
+                    id={answer.questionId}
                     number={idx + 1}
-                    content={item.questionContent}
-                    tagList={item.tags}
-                    answer={allHitAnswer![idx]}
+                    content={answer.questionContent!}
+                    tagList={answer.tags}
+                    answer={answer}
                   />
                 )
               })}
-            <span id="answer-login-text">{loginText}</span>
+            {!isAuthorized() && <span id="answer-login-text">로그인 후 볼 수 있습니다.</span>}
           </div>
         </div>
       </div>

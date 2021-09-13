@@ -12,7 +12,7 @@ import InfiniteAnswerList from 'components/InfiniteAnswerList'
 const QuestionDetail = () => {
   const [questionId, setQuestionId] = useState(window.location.search.slice(1, window.location.search.length))
   const [questionContent, setQuesitonContent] = useState(localStorage.getItem('detailTitle'))
-  const [answerContent, setAnswerContent] = useState<{ id?: string; content: string; liked: number }>({
+  const [answerContent, setAnswerContent] = useState<{ id?: number; content: string; liked: number }>({
     content: '',
     liked: 0,
   })

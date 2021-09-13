@@ -45,7 +45,6 @@ const InfiniteAnswer = ({
             number={index + 1}
             answer={ans.content}
             title={questionTitle}
-            username={ans.username}
             like={ans.liked}
           />
         ))}

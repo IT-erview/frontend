@@ -1,14 +1,10 @@
 import axios from 'axios'
+import { Answer } from 'common/type'
 import 'css/Question.css'
 import { useState } from 'react'
-import { withRouter, Route } from 'react-router-dom'
-import Answer from './Answer'
-import AnswerRegister from './AnswerRegister'
-import QuizResult from './QuizResult'
+import { withRouter } from 'react-router-dom'
 
-const Question = (props: any) => {
-  const [showAnswerRegister, setShowAnswerRegister] = useState(false)
-
+const Question = (props: { id: number; number: number; content: string; tagList: Array<string>; answer?: Answer }) => {
   const showQuestionTags = props.tagList.map((item: any, index: number) => {
     if (index < 3) {
       return (
@@ -32,14 +28,14 @@ const Question = (props: any) => {
   const gotoDetails = () => {
     localStorage.setItem('detailTitle', props.content)
     window.open(`/QuestionDetail?${props.id}`)
-    localStorage.setItem('detailId', props.id)
+    localStorage.setItem('detailId', props.id.toString())
   }
 
   const gotoAnswerRegister = () => {
     alert('문제에 대한 나의 답변이 없으면 다른 사람의 답변을 볼 수 없습니다. 답변 등록 페이지로 이동합니다.')
     localStorage.setItem('detailTitle', props.content)
     window.open(`/AnswerRegister`, '', '_blank')
-    localStorage.setItem('detailId', props.id)
+    localStorage.setItem('detailId', props.id.toString())
   }
 
   return (
@@ -63,7 +59,7 @@ const Question = (props: any) => {
         <div className="question-content">
           {props.content}
           <br />
-          <span>{props.answer}</span>
+          <span>{props.answer ? props.answer.content : '(등록된 답변이 없습니다)'}</span>
         </div>
         <div className="question-tag">{showQuestionTags}</div>
         {/* <div className="date-or-username">{props.username}</div> */}
@@ -72,4 +68,4 @@ const Question = (props: any) => {
   )
 }
 
-export default withRouter(Question)
+export default Question
