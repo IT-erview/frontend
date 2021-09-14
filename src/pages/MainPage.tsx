@@ -98,10 +98,10 @@ const MainPage = () => {
           </Link>
         </div>
         <div className="intro-functions">
-          {featureDescriptions.map((feature, index) => {
+          {featureDescriptions.map((feature) => {
             return (
               <button
-                key={index}
+                key={feature.type}
                 style={{
                   borderBottom: isFocused(feature.type) ? '0.01px solid #2f00ff' : 'none',
                 }}
@@ -114,8 +114,8 @@ const MainPage = () => {
           })}
           <hr className="intro-hr" />
           <div className="function-explain">
-            {featureDescriptions.map((feature, index) => {
-              return isFocused(feature.type) && <span key={index}>{feature.description}</span>
+            {featureDescriptions.map((feature) => {
+              return isFocused(feature.type) && <span key={feature.type}>{feature.description}</span>
             })}
           </div>
           <br />
