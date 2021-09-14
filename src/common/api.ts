@@ -19,6 +19,14 @@ const answerLike = (answerId: number, onSuccess: Function, onFailure: Function) 
     })
 }
 
+const getQuestion = async (questionId: number) => {
+  const response = await axios({
+    method: 'get',
+    url: `/api/v1/question/${questionId}`,
+  })
+  return response.data as Question
+}
+
 const getQuestions = async (page: number, rowsPerPage: number) => {
   const response = await axios({
     method: 'get',
@@ -39,4 +47,28 @@ const getHitsAnswers = async () => {
   return response.data as Array<Answer>
 }
 
-export { answerLike, getQuestions, getHitsAnswers }
+const getMyAnswer = async (questionId: number) => {
+  try {
+    const response = await axios({
+      method: 'get',
+      url: `/api/v1/answer/${questionId}/mine`,
+    })
+    return response.data as Answer
+  } catch (e) {
+    return
+  }
+}
+
+const addBookmark = async (questionId: number) => {
+  try {
+    await axios({
+      method: 'post',
+      url: `/api/v1/bookmark/${questionId}`,
+    })
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
+export { answerLike, getQuestion, getQuestions, getHitsAnswers, getMyAnswer, addBookmark }

@@ -7,7 +7,7 @@ export type Answer = {
   questionId: number
   userName: string
   questionContent?: string
-  tags: Array<string>
+  tags?: Array<Tag>
 }
 
 export type Question = {
@@ -19,5 +19,9 @@ export type Question = {
   modifiedDate: Date
   mostLikedAnswer: Answer
   userName: string
-  tagList: Array<string>
+  tagList: Array<Tag>
+}
+
+export type Tag = {
+  tagTitle: string
 }

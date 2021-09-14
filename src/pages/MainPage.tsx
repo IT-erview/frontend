@@ -1,3 +1,4 @@
+// memo 제외하고 대부분 완료
 import 'css/MainPage.css'
 import MainCarousel from 'components/MainCarousel'
 import Tags from 'components/Tags'
@@ -14,15 +15,14 @@ import { getCookie } from 'components/Cookies'
 
 // header 설정
 axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`
-enum FeatureDescriptionType {
+const enum FeatureDescriptionType {
   SEARCH,
   REGISTER,
   MY_PAGE,
   QUIZ,
 }
-// todo: 쓰임새 보고 global로 변경
+// memo: 쓰임새 보고 global로 변경
 const isAuthorized = () => {
-  console.log(getCookie('Authorization'))
   return getCookie('Authorization')
 }
 
@@ -75,7 +75,7 @@ const MainPage = () => {
     initHitsAnswers()
   }, [])
 
-  // ?
+  // memo: 무슨역할?
   const removeLocalStorage = () => {
     localStorage.removeItem('questionSearchTag')
   }

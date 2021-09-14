@@ -6,17 +6,18 @@ import Question from 'components/Question'
 const InfiniteAnswerList = (props: any) => {
   const [listInfo, setListInfo] = useState<any>([])
   const [skip, setSkip] = useState(0)
-  const [limit, setLimit] = useState(10)
+  const [limit] = useState(10)
   const [fetching, setFetching] = useState(false)
   const [notExist, setNotExist] = useState('')
 
   const [questionId, setQuestionId] = useState(props.question)
   const [questionTitle, setQuestionTitle] = useState(props.title)
   const [page, setPage] = useState(0)
-  const [sort, setSort] = useState(props.sortBy)
+  const [sort, setSort] = useState(props.sortBy.toString())
 
   useEffect(() => {
-    setSort(props.sortBy)
+    console.log(props.sortBy)
+    setSort(props.sortBy.toString())
     setPage(0)
     setListInfo([])
   }, [props.sortBy])
@@ -45,6 +46,7 @@ const InfiniteAnswerList = (props: any) => {
     axios
       .get(getUrl, body)
       .then((res) => {
+        console.log(body)
         console.log(res.data)
         if (res.data.content.length > 0) {
           res.data.content.forEach((item: any) => {
