@@ -40,7 +40,7 @@ const AnswerRegister = () => {
               .then((res) => {
                 console.log(res.data)
                 alert('답변이 등록되었습니다!')
-                window.open(`/QuestionDetail?${localStorage.getItem('detailId')}`)
+                window.open(`/QuestionDetail?question_id=${localStorage.getItem('detailId')}`)
                 window.close()
               })
               .catch((err) => {

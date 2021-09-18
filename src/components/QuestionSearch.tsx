@@ -3,6 +3,7 @@ import Tags from 'components/Tags'
 import { useEffect, useState } from 'react'
 import { Input } from 'reactstrap'
 import QuestionList from 'components/QuestionList'
+import SortSelectBox, { Sort } from './SortSelectBox'
 
 // xd 복붙 시작 -->
 const searchIcon = () => {
@@ -43,30 +44,7 @@ const QuestionSearch = () => {
   const [searchWord, setSearchWord] = useState('')
   const [questionSearchTag, setQuestionSearchTag] = useState([])
   const [questionSearchWord, setQuestionSearchWord] = useState('')
-  const [sort, setSort] = useState('bookmarkCount')
-
-  useEffect(() => {
-    const bookmarkBtn = document.getElementById('sort-by-bookmark')!
-    const latestBtn = document.getElementById('sort-by-latest')!
-
-    if (sort === 'bookmarkCount') {
-      bookmarkBtn.style.color = '#4d4d4e'
-      bookmarkBtn.style.borderColor = '#707070'
-      bookmarkBtn.style.fontWeight = 'bold'
-
-      latestBtn.style.color = '#6a737d'
-      latestBtn.style.borderColor = '#cdcdd5'
-      latestBtn.style.fontWeight = 'normal'
-    } else {
-      bookmarkBtn.style.color = '#6a737d'
-      bookmarkBtn.style.borderColor = '#cdcdd5'
-      bookmarkBtn.style.fontWeight = 'normal'
-
-      latestBtn.style.color = '#4d4d4e'
-      latestBtn.style.borderColor = '#707070'
-      latestBtn.style.fontWeight = 'bold'
-    }
-  }, [sort])
+  const [sort, setSort] = useState<Sort>(Sort.LIKED)
 
   return (
     <div className="question-search">
@@ -112,25 +90,17 @@ const QuestionSearch = () => {
 
           <span>검색된 면접 문제</span>
           <div className="sort-button">
-            <button
-              id="sort-by-bookmark"
-              onClick={() => {
-                setSort('bookmarkCount')
-              }}>
-              인기순
-            </button>
-            <button
-              id="sort-by-latest"
-              onClick={() => {
-                setSort('createdDate')
-              }}>
-              최신순
-            </button>
+            <SortSelectBox defaultSort={sort} onSortChanged={(sort) => setSort(sort)} />
             <div className="question-search-hr" />
           </div>
         </div>
         <div className="question-section">
-          <QuestionList tagList={questionSearchTag} sortBy={sort} word={questionSearchWord} type={''} />
+          <QuestionList
+            tagList={questionSearchTag}
+            sortBy={sort === Sort.LIKED ? 'bookmarkCount' : 'createdDate'}
+            word={questionSearchWord}
+            type={''}
+          />
         </div>
       </div>
     </div>
