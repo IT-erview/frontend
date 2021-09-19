@@ -9,13 +9,11 @@ import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'
 import Question from 'components/Question'
 import { getCookie } from 'components/Cookies.js'
-
 // header 설정
 axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`
 
 function MainPage() {
   const history = useHistory()
-
   const [allQuestions, setAllQuestions] = useState(null)
   const [allMostLikedAnswer, setAllMostLikedAnswer] = useState([])
   const [loginText, setLoginText] = useState('')

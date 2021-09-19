@@ -1,8 +1,8 @@
 import 'css/SetQuizOptions.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button } from 'reactstrap'
 import { withRouter } from 'react-router-dom'
-import tagItems from 'constants/TagItems'
+// import tagItems from 'constants/TagItems'
 import axios from 'axios'
 import QuizSolving from './QuizSolving'
 
@@ -14,6 +14,14 @@ const SetQuizOptions = (props) => {
 
   const [selectedQuizTag, setselectedQuizTag] = useState([])
   const [selectedQuizCnt, setSelectedQuizCnt] = useState(null)
+  const [tagItems, setTagItems] = useState([])
+
+  useEffect(() => {
+    if (localStorage.getItem('tags')) {
+      setTagItems(JSON.parse(localStorage.getItem('tags')))
+      console.log(tagItems)
+    }
+  }, [])
 
   const quizCnt = new Array(30).fill().map((cnt, i) => {
     return i
@@ -87,8 +95,9 @@ const SetQuizOptions = (props) => {
                     <DropdownMenu className="quiz-dropdown-menu">
                       {tagItems.map((tagItem, i) => {
                         return (
-                          <DropdownItem key={i} onClick={selectedTag} id={tagItem.name}>
-                            {tagItem.name} {localStorage.setItem('selectedQuizTag', JSON.stringify(selectedQuizTag))}
+                          <DropdownItem key={i} onClick={selectedTag} id={tagItem.tagTitle}>
+                            {tagItem.tagTitle}{' '}
+                            {localStorage.setItem('selectedQuizTag', JSON.stringify(selectedQuizTag))}
                           </DropdownItem>
                         )
                       })}

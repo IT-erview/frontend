@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import tagItems from 'constants/TagItems'
 import 'css/Tags.css'
+import axios from 'axios'
 
 const Tags = (props) => {
   const [selectedTag, setSelectedTag] = useState([])
+  const [tagItems, setTagItems] = useState([])
 
   const selectThisTag = (e) => {
     setSelectedTag(selectedTag.concat(e.target.id))
@@ -12,7 +13,21 @@ const Tags = (props) => {
     setSelectedTag(selectedTag.filter((element) => element !== e.target.id))
   }
 
+  const getTags = () => {
+    axios
+      .get('/api/v1/tag/')
+      .then((res) => {
+        setTagItems(res.data)
+        console.log(tagItems)
+        localStorage.setItem('tags', JSON.stringify(res.data))
+      })
+      .catch((err) => {
+        console.log(err)
+        localStorage.setItem('tags', [])
+      })
+  }
   useEffect(() => {
+    getTags()
     if (localStorage.getItem('questionSearchTag')) {
       setSelectedTag(JSON.parse(localStorage.getItem('questionSearchTag')))
     }
@@ -29,16 +44,24 @@ const Tags = (props) => {
   })
 
   const TagButtons = tagItems.map((tagItem) => {
-    if (selectedTag && selectedTag.includes(tagItem.name)) {
+    if (selectedTag && selectedTag.includes(tagItem.tagTitle)) {
       return (
-        <button className="classification-tag-selected" key={tagItem.id} id={tagItem.name} onClick={deselectThisTag}>
-          {tagItem.name}
+        <button
+          className="classification-tag-selected"
+          key={tagItem.tagId}
+          id={tagItem.tagTitle}
+          onClick={deselectThisTag}>
+          {tagItem.tagTitle}
         </button>
       )
     } else {
       return (
-        <button className="classification-tag-unselected" key={tagItem.id} id={tagItem.name} onClick={selectThisTag}>
-          {tagItem.name}
+        <button
+          className="classification-tag-unselected"
+          key={tagItem.tagId}
+          id={tagItem.tagTitle}
+          onClick={selectThisTag}>
+          {tagItem.tagTitle}
         </button>
       )
     }
