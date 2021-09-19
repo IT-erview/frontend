@@ -97,9 +97,9 @@ const QuestionSearch = () => {
         <div className="question-section">
           <QuestionList
             tagList={questionSearchTag}
-            sortBy={sort === Sort.LIKED ? 'bookmarkCount' : 'createdDate'}
-            word={questionSearchWord}
-            type={''}
+            sort={sort === Sort.LIKED ? 'bookmarkCount' : 'createdDate'}
+            keyword={questionSearchWord}
+            type={'search'}
           />
         </div>
       </div>

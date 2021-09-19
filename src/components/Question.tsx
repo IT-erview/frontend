@@ -7,6 +7,7 @@ import 'css/Question.css'
 const MAX_DISPLAYED_TAG_COUNT = 3
 
 const Question = (props: { id: number; number: number; content: string; tagList?: Array<Tag>; answer?: Answer }) => {
+  // todo: 전체적으로 적용필요
   let isRequesting = false
   const moveToQuestionDetail = async () => {
     if (isRequesting) return

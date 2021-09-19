@@ -1,6 +1,6 @@
 import 'css/MyBookmarkQuestion.css'
 import MyPageProfile from 'components/MyPageProfile'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import QuestionList from 'components/QuestionList'
 import SortSelectBox, { Sort } from './SortSelectBox'
 
@@ -19,9 +19,7 @@ const MyBookmarkQuestion = () => {
           <SortSelectBox defaultSort={sort} onSortChanged={(sort) => setSort(sort)} />
         </div>
         <QuestionList
-          tagList={[]}
-          sortBy={sort === Sort.LIKED ? 'question_bookmarkCount' : 'question_createdDate'}
-          word={''}
+          sort={sort === Sort.LIKED ? 'question_bookmarkCount' : 'question_createdDate'}
           type={'bookmark'}
         />
       </div>

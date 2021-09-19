@@ -1,10 +1,10 @@
 import 'css/Answer.css'
 import { getZerofilledNumber } from 'common/util'
-import { answerLike } from 'common/api'
+import { likeAnswer } from 'common/api'
 
 const Answer = (props: { id: number; number: number; title: string; answer: string; like: number }) => {
   const like = () => {
-    answerLike(
+    likeAnswer(
       props.id,
       () => {
         window.location.reload()

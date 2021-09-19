@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { Answer, Question } from './type'
+import { Answer, Bookmark, Question } from './type'
 
-const answerLike = (answerId: number, onSuccess: Function, onFailure: Function) => {
+const likeAnswer = (answerId: number, onSuccess: Function, onFailure: Function) => {
   axios({
     method: 'post',
     url: '/api/v1/answer/like',
@@ -47,6 +47,16 @@ const getHitsAnswers = async () => {
   return response.data as Array<Answer>
 }
 
+///api/v1/question/mine?page=0&size=30&sort=${props.sortBy},desc
+// todo: sort 변경
+const getMyQuestions = async (sort: string, desc = true, page = 0, rowsPerPage = 30) => {
+  const response = await axios({
+    method: 'get',
+    url: `/api/v1/question/mine?page=${page}&size=${rowsPerPage}&sort=${sort}${desc ? ',desc' : ''}`,
+  })
+  return response.data as Array<Question>
+}
+
 const getMyAnswer = async (questionId: number) => {
   try {
     const response = await axios({
@@ -57,6 +67,34 @@ const getMyAnswer = async (questionId: number) => {
   } catch (e) {
     return
   }
+}
+
+const getBookmarks = async (sort: string, desc = true, page = 0, rowsPerPage = 30) => {
+  const response = await axios({
+    method: 'get',
+    url: `/api/v1/bookmark/mine?page=${page}&size=${rowsPerPage}&sort=${sort}${desc ? ',desc' : ''}`,
+  })
+  return response.data.map((bookmark: Bookmark) => {
+    return bookmark.question
+  })
+}
+
+// todo: sort 변경
+const searchQuestions = async (
+  keyword: string,
+  sort: string,
+  tagList: Array<string> = [],
+  desc = true,
+  page = 0,
+  rowsPerPage = 30,
+) => {
+  const response = await axios({
+    method: 'get',
+    url: `/api/v1/question/search?keyword=${keyword}&page=${page}&size=${rowsPerPage}&tags=${tagList}&sort=${sort}${
+      desc ? ',desc' : ''
+    }`,
+  })
+  return response.data as Array<Question>
 }
 
 const addBookmark = async (questionId: number) => {
@@ -71,4 +109,14 @@ const addBookmark = async (questionId: number) => {
   }
 }
 
-export { answerLike, getQuestion, getQuestions, getHitsAnswers, getMyAnswer, addBookmark }
+export {
+  likeAnswer,
+  getQuestion,
+  getQuestions,
+  getHitsAnswers,
+  getMyAnswer,
+  addBookmark,
+  getBookmarks,
+  searchQuestions,
+  getMyQuestions,
+}

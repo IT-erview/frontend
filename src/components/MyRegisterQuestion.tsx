@@ -1,6 +1,6 @@
 import 'css/MyRegisterQuestion.css'
 import MyPageProfile from 'components/MyPageProfile'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import QuestionList from 'components/QuestionList'
 import SortSelectBox, { Sort } from './SortSelectBox'
 
@@ -18,12 +18,7 @@ const MyRegisterQuestion = () => {
           </span>
           <SortSelectBox defaultSort={sort} onSortChanged={(sort) => setSort(sort)} />
         </div>
-        <QuestionList
-          tagList={[]}
-          sortBy={sort === Sort.LIKED ? 'bookmarkCount' : 'createdDate'}
-          word={''}
-          type={'question'}
-        />
+        <QuestionList sort={sort === Sort.LIKED ? 'bookmarkCount' : 'createdDate'} type={'question'} />
       </div>
     </div>
   )

@@ -1,6 +1,6 @@
 import 'css/MyRegisterAnswer.css'
 import MyPageProfile from 'components/MyPageProfile'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import InfiniteAnswerList from 'components/InfiniteAnswerList'
 import SortSelectBox, { Sort } from './SortSelectBox'
 
