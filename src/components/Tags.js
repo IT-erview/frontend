@@ -14,16 +14,18 @@ const Tags = (props) => {
   }
 
   const getTags = () => {
-    axios
-      .get('/api/v1/tag/')
+    fetch('/api/v1/tag/')
       .then((res) => {
-        setTagItems(res.data)
-        console.log(tagItems)
-        localStorage.setItem('tags', JSON.stringify(res.data))
+        return res.json()
       })
       .catch((err) => {
         console.log(err)
         localStorage.setItem('tags', [])
+      })
+      .then((json) => {
+        setTagItems(json)
+        console.log(tagItems)
+        localStorage.setItem('tags', JSON.stringify(json))
       })
   }
   useEffect(() => {
