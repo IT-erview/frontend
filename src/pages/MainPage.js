@@ -53,8 +53,7 @@ function MainPage() {
     axios
       .get('/api/v1/question/all?page=0&size=3')
       .then((res) => {
-        res.data.map((item, idx) => {
-          // console.log(item)
+        res.data.map((item) => {
           tempQuestion.push(item)
           if (item.mostLikedAnswer) tempLikedAnswer.push(item.mostLikedAnswer.content)
           else {
