@@ -1,11 +1,24 @@
 import 'css/MyRegisterAnswer.css'
 import MyPageProfile from 'components/MyPageProfile'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import InfiniteAnswerList from 'components/InfiniteAnswerList'
 import SortSelectBox, { Sort } from './SortSelectBox'
+import { Answer } from 'common/type'
+import { getMyAnswers } from 'common/api'
 
 const MyRegisterAnswer = () => {
+  const ROWS_PER_PAGE = 4
   const [sort, setSort] = useState<Sort>(Sort.LIKED)
+  const [page, setPage] = useState(0)
+  const [answers, setAnswers] = useState<Array<Answer>>([])
+
+  useEffect(() => {
+    const initAnswers = async () => {
+      const fetchedAnswer = await getMyAnswers(sort, page, ROWS_PER_PAGE)
+      setAnswers(fetchedAnswer)
+    }
+    initAnswers()
+  }, [sort, page])
 
   return (
     <div className="mypage-register-answer">
@@ -18,7 +31,7 @@ const MyRegisterAnswer = () => {
           </span>
           <SortSelectBox defaultSort={sort} onSortChanged={(sort) => setSort(sort)} />
         </div>
-        <InfiniteAnswerList sort={sort} type="myAnswer" />
+        <InfiniteAnswerList answers={answers} onScrollEnd={() => {}} />
       </div>
     </div>
   )

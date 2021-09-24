@@ -4,13 +4,16 @@ import AnswerComponet from 'components/Answer'
 
 import InfiniteAnswerList from 'components/InfiniteAnswerList'
 import { Answer, Question } from 'common/type'
-import { getMyAnswer, getQuestion } from 'common/api'
+import { getAnswers, getMyAnswer, getQuestion } from 'common/api'
 import SortSelectBox, { Sort } from './SortSelectBox'
 
 // 북마크 개수, 해당되는 태그, 작성자 없음
 const QuestionDetail = (props: { questionId: number }) => {
+  const ROWS_PER_PAGE = 4
   const [question, setQuestion] = useState<Question>()
   const [myAnswer, setMyAnswer] = useState<Answer | null>()
+  const [answers, setAnswers] = useState<Array<Answer>>([])
+  const [page, setPage] = useState(0)
   const [sort, setSort] = useState<Sort>(Sort.LIKED)
 
   useEffect(() => {
@@ -25,6 +28,14 @@ const QuestionDetail = (props: { questionId: number }) => {
     initMyAnswer()
     initQuestion()
   }, [props.questionId, sort])
+
+  useEffect(() => {
+    const initAnswers = async () => {
+      const fetchedAnswer = await getAnswers(props.questionId, sort, page, ROWS_PER_PAGE)
+      setAnswers(fetchedAnswer)
+    }
+    initAnswers()
+  }, [sort, page])
 
   return (
     <div>
@@ -50,7 +61,7 @@ const QuestionDetail = (props: { questionId: number }) => {
       </div>
       <div className="queiston-detail-others-answer">
         <div id="hr-line" />
-        <InfiniteAnswerList sort={sort} type="answer" />
+        <InfiniteAnswerList answers={answers} onScrollEnd={() => {}} />
       </div>
     </div>
   )

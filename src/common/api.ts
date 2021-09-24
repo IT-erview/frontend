@@ -117,6 +117,7 @@ const getAnswers = async (questionId: number, sort: string, page: number, rowsPe
   return content.map((item: any) => {
     const answer = item as Answer
     answer.questionContent = item.question.content
+    answer.tags = item.question.tagList
     return answer
   })
 }
@@ -132,6 +133,7 @@ const getMyAnswers = async (sort: string, page: number, rowsPerPage = 4, desc = 
   return content.map((item: any) => {
     const answer = item as Answer
     answer.questionContent = item.question.content
+    answer.tags = item.question.tagList
     return answer
   })
 }
@@ -148,6 +150,7 @@ const getMyLikedAnswers = async (sort: string, page: number, rowsPerPage = 4, de
   return content.map((item: any) => {
     const answer = item as Answer
     answer.questionContent = item.question.content
+    answer.tags = item.question.tagList
     return answer
   })
 }
