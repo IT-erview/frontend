@@ -5,7 +5,8 @@ import React from 'react'
 const PrivateRoute: React.FunctionComponent<
   {
     component: React.ElementType
-  } & RouteProps
+  } & RouteProps &
+    any
 > = ({ component: Component, ...rest }) => {
   return (
     // Show the component only when the user is logged in

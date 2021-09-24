@@ -5,9 +5,14 @@ import QuestionComponent from 'components/Question'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import SortSelectBox, { Sort } from './SortSelectBox'
 import { Answer } from 'common/type'
-import { getMyLikedAnswers } from 'common/api'
+import { getMyAnswers, getMyLikedAnswers } from 'common/api'
 
-const MyLikeAnswer = () => {
+export const enum MyAnswerType {
+  ALL,
+  LIKED,
+}
+
+const MyAnswers = (props: { type: MyAnswerType }) => {
   const ROWS_PER_PAGE = 4
   const INITIAL_PAGE = 0
   const [sort, setSort] = useState<Sort>(Sort.LIKED)
@@ -15,23 +20,43 @@ const MyLikeAnswer = () => {
   const [hasMore, setHasMore] = useState(true)
   const [answers, setAnswers] = useState<Array<Answer>>([])
 
+  const getAnswerTitle = (type: MyAnswerType) => {
+    if (type === MyAnswerType.ALL) {
+      return {
+        icon: '/img/mypage_icon2.png',
+        title: '내가 등록한 답변',
+      }
+    }
+    return {
+      icon: '/img/mypage_icon3.png',
+      title: '내가 좋아요한 답변',
+    }
+  }
+
+  const getAnswers = async (type: MyAnswerType, sort: string, page: number) => {
+    if (type === MyAnswerType.ALL) return await getMyAnswers(sort, page, ROWS_PER_PAGE)
+    return await getMyLikedAnswers(sort, page, ROWS_PER_PAGE)
+  }
+
   const fetchAnswers = async () => {
+    console.log('fetch')
     if (!hasMore) return
     const nextPage = page + 1
-    const fetchedAnswer = await getMyLikedAnswers(sort, nextPage, ROWS_PER_PAGE)
+    const fetchedAnswer = await getAnswers(props.type, sort, nextPage)
     setPage(nextPage)
     setAnswers((answers) => [...answers, ...fetchedAnswer])
   }
 
   useEffect(() => {
     const refreshAnswers = async () => {
-      const fetchedAnswer = await getMyLikedAnswers(sort, INITIAL_PAGE, ROWS_PER_PAGE)
+      console.log('refresg')
+      const fetchedAnswer = await getAnswers(props.type, sort, INITIAL_PAGE)
       setHasMore(fetchedAnswer.length > 0)
       setAnswers(fetchedAnswer)
       setPage(INITIAL_PAGE)
     }
     refreshAnswers()
-  }, [sort])
+  }, [sort, props.type])
 
   return (
     <div className="mypage-register-like">
@@ -39,8 +64,8 @@ const MyLikeAnswer = () => {
       <div className="mypage-register-like-question">
         <div className="mypage-register-question-title">
           <span>
-            <img src="/img/mypage_icon3.png" />
-            내가 좋아요한 답변
+            <img src={getAnswerTitle(props.type).icon} alt="title-icon" />
+            {getAnswerTitle(props.type).title}
           </span>
           <SortSelectBox defaultSort={sort} onSortChanged={(sort) => setSort(sort)} />
         </div>
@@ -69,4 +94,4 @@ const MyLikeAnswer = () => {
   )
 }
 
-export default MyLikeAnswer
+export default MyAnswers
