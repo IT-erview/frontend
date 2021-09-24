@@ -18,7 +18,7 @@ const MyRegisterAnswer = () => {
           </span>
           <SortSelectBox defaultSort={sort} onSortChanged={(sort) => setSort(sort)} />
         </div>
-        <InfiniteAnswerList question={-1} title="" sortBy={sort} type="myanswer" />
+        <InfiniteAnswerList sort={sort} type="myAnswer" />
       </div>
     </div>
   )

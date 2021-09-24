@@ -1,3 +1,4 @@
+// todo: sort 변경
 import axios from 'axios'
 import { Answer, Bookmark, Question } from './type'
 
@@ -57,18 +58,6 @@ const getMyQuestions = async (sort: string, desc = true, page = 0, rowsPerPage =
   return response.data as Array<Question>
 }
 
-const getMyAnswer = async (questionId: number) => {
-  try {
-    const response = await axios({
-      method: 'get',
-      url: `/api/v1/answer/${questionId}/mine`,
-    })
-    return response.data as Answer
-  } catch (e) {
-    return
-  }
-}
-
 const getBookmarks = async (sort: string, desc = true, page = 0, rowsPerPage = 30) => {
   const response = await axios({
     method: 'get',
@@ -79,7 +68,6 @@ const getBookmarks = async (sort: string, desc = true, page = 0, rowsPerPage = 3
   })
 }
 
-// todo: sort 변경
 const searchQuestions = async (
   keyword: string,
   sort: string,
@@ -109,6 +97,61 @@ const addBookmark = async (questionId: number) => {
   }
 }
 
+const getMyAnswer = async (questionId: number) => {
+  const response = await axios({
+    method: 'get',
+    url: `/api/v1/answer/${questionId}/mine`,
+  })
+  return response.data as Answer
+}
+
+const getAnswers = async (questionId: number, sort: string, page: number, rowsPerPage = 10, desc = true) => {
+  const response = await axios({
+    method: 'get',
+    url: `/api/v1/answer/question/${questionId}?page=${page}&size=${rowsPerPage}&sort=${sort}${desc ? ',desc' : ''}`,
+  })
+  // todo: api 수정 후 아래와 주석과 같은 형태로 코드 수정되어야함
+  // return response.data.content ? (response.data.content as Array<Answer>) : []
+  const content: Array<any> = response.data.content
+  if (!content) return []
+  return content.map((item: any) => {
+    const answer = item as Answer
+    answer.questionContent = item.question.content
+    return answer
+  })
+}
+const getMyAnswers = async (sort: string, page: number, rowsPerPage = 4, desc = true) => {
+  const response = await axios({
+    method: 'get',
+    url: `/api/v1/answer/mine?page=${page}&size=${rowsPerPage}&sort=${sort}${desc ? ',desc' : ''}`,
+  })
+  // todo: api 수정 후 아래와 주석과 같은 형태로 코드 수정되어야함
+  // return response.data.content ? (response.data.content as Array<Answer>) : []
+  const content: Array<any> = response.data.content
+  if (!content) return []
+  return content.map((item: any) => {
+    const answer = item as Answer
+    answer.questionContent = item.question.content
+    return answer
+  })
+}
+
+const getMyLikedAnswers = async (sort: string, page: number, rowsPerPage = 4, desc = true) => {
+  const response = await axios({
+    method: 'get',
+    url: `/api/v1/answer/like/mine?page=${page}&size=${rowsPerPage}&sort=${sort}${desc ? ',desc' : ''}`,
+  })
+  // todo: api 수정 후 아래와 주석과 같은 형태로 코드 수정되어야함
+  // return response.data.content ? (response.data.content as Array<Answer>) : []
+  const content: Array<any> = response.data.content
+  if (!content) return []
+  return content.map((item: any) => {
+    const answer = item as Answer
+    answer.questionContent = item.question.content
+    return answer
+  })
+}
+
 export {
   likeAnswer,
   getQuestion,
@@ -119,4 +162,7 @@ export {
   getBookmarks,
   searchQuestions,
   getMyQuestions,
+  getMyAnswers,
+  getAnswers,
+  getMyLikedAnswers,
 }

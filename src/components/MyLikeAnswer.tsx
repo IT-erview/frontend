@@ -19,11 +19,9 @@ const MyLikeAnswer = () => {
           <SortSelectBox defaultSort={sort} onSortChanged={(sort) => setSort(sort)} />
         </div>
         <InfiniteAnswerList
-          question={-1}
-          title=""
           // todo: 추후 sort로만 가야함. API 변경 필요
-          sortBy={sort === Sort.LIKED ? 'answerManager_liked' : 'answerManager_CreatedDate'}
-          type="mylike"
+          sort={sort === Sort.LIKED ? 'answerManager_liked' : 'answerManager_CreatedDate'}
+          type="myLikedAnswer"
         />
       </div>
     </div>

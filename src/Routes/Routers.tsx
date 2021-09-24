@@ -1,5 +1,4 @@
-import React, { Component } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 import MainPage from 'pages/MainPage'
 import QuestionRegisterPage from 'pages/QuestionRegisterPage'
 import QuestionSearchPage from 'pages/QuestionSearchPage'

@@ -10,7 +10,7 @@ import SortSelectBox, { Sort } from './SortSelectBox'
 // 북마크 개수, 해당되는 태그, 작성자 없음
 const QuestionDetail = (props: { questionId: number }) => {
   const [question, setQuestion] = useState<Question>()
-  const [myAnswer, setMyAnswer] = useState<Answer>()
+  const [myAnswer, setMyAnswer] = useState<Answer | null>()
   const [sort, setSort] = useState<Sort>(Sort.LIKED)
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const QuestionDetail = (props: { questionId: number }) => {
       </div>
       <div className="queiston-detail-others-answer">
         <div id="hr-line" />
-        <InfiniteAnswerList question={props.questionId} title={question?.content} sortBy={sort} type="" />
+        <InfiniteAnswerList sort={sort} type="answer" />
       </div>
     </div>
   )

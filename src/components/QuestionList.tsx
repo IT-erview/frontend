@@ -13,13 +13,13 @@ const QuestionList = (props: {
   const [questions, setQuestions] = useState<Array<Question>>([])
 
   useEffect(() => {
-    const loadQuestions = async () => {
+    const initQuestions = async () => {
       if (props.type === 'bookmark') return setQuestions(await getBookmarks(props.sort, false))
       if (props.type === 'question') return setQuestions(await getMyQuestions(props.sort))
       return setQuestions(await searchQuestions(props.keyword || '', props.sort, props.tagList))
     }
-    loadQuestions()
-  }, [props])
+    initQuestions()
+  }, [props.sort, props.keyword, props.tagList, props.type])
 
   return (
     <div>

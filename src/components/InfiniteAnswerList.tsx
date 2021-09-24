@@ -1,121 +1,85 @@
 import axios from 'axios'
 import InfiniteAnswer from 'components/InfiniteAnswer'
 import { useEffect, useState } from 'react'
-import Question from 'components/Question'
+import QuestionComponent from 'components/Question'
+import { Answer, Question } from 'common/type'
+import { getAnswers, getMyAnswer, getMyAnswers, getMyLikedAnswers, getMyQuestions } from 'common/api'
 
-const InfiniteAnswerList = (props: any) => {
-  const [listInfo, setListInfo] = useState<any>([])
-  const [skip, setSkip] = useState(0)
-  const [limit] = useState(10)
-  const [fetching, setFetching] = useState(false)
-  const [notExist, setNotExist] = useState('')
-
-  const [questionId, setQuestionId] = useState(props.question)
-  const [questionTitle, setQuestionTitle] = useState(props.title)
+const InfiniteAnswerList = (props: {
+  sort: string
+  type: 'answer' | 'myAnswer' | 'myLikedAnswer'
+  question?: Question
+}) => {
+  const ROWS_PER_PAGE = 4
+  const [answers, setAnswers] = useState<Array<Answer>>([])
   const [page, setPage] = useState(0)
-  const [sort, setSort] = useState(props.sortBy.toString())
 
   useEffect(() => {
-    console.log(props.sortBy)
-    setSort(props.sortBy.toString())
-    setPage(0)
-    setListInfo([])
-  }, [props.sortBy])
-
-  useEffect(() => {
-    setQuestionTitle(props.title)
-    setQuestionId(props.question)
-    const body = {
-      skip: skip,
-      limit: limit,
+    const initAnswers = async () => {
+      const fetchedAnswer =
+        props.type === 'myLikedAnswer'
+          ? await getMyLikedAnswers(props.sort, page, ROWS_PER_PAGE)
+          : props.type === 'myAnswer'
+          ? await getMyAnswers(props.sort, page, ROWS_PER_PAGE)
+          : // todo: question이 없는 문제가 여기까지 영향 발생
+            await getAnswers(props.question!.id, props.sort, page, ROWS_PER_PAGE)
+      // setAnswers((answers) => [...answers, ...fetchedAnswer])
+      setAnswers(fetchedAnswer)
     }
-    getData(body)
-  })
+    initAnswers()
+  }, [props.question, props.sort, props.type, page])
+  // setPage((page) => page + 1)
 
-  const getData = (body: any) => {
-    let answer = listInfo
-    let getUrl = `/api/v1/answer/question/${questionId}?page=${page}&size=10&sort=${sort},desc`
-    if (props.type === 'myanswer') {
-      getUrl = `/api/v1/answer/mine?page=${page}&size=4&sort=${sort},desc`
-    } else if (props.type === 'mylike') {
-      getUrl = `/api/v1/answer/like/mine?page=${page}&size=4&sort=${sort},desc`
-    } else {
-      getUrl = `/api/v1/answer/question/${questionId}?page=${page}&size=10&sort=${sort},desc`
-    }
+  const [fetching, setFetching] = useState(false)
 
-    axios
-      .get(getUrl, body)
-      .then((res) => {
-        console.log(body)
-        console.log(res.data)
-        if (res.data.content.length > 0) {
-          res.data.content.forEach((item: any) => {
-            if (answer.length < 1) {
-              answer.push(item)
-            } else {
-              let check = true
-              answer.forEach((ans: any) => {
-                if (JSON.stringify(ans) === JSON.stringify(item)) {
-                  check = false
-                }
-              })
-              if (check) {
-                answer.push(item)
-              }
-            }
-          })
-          setListInfo(answer)
-          setPage((p) => p + 1)
-        }
-      })
-      .catch((err) => console.log(err))
+  // if (listInfo.length === 0) {
+  //   setNotExist('등록된 답변이 없습니다.')
+  // } else {
+  //   setNotExist('')
+  // }
 
-    if (listInfo.length === 0) {
-      setNotExist('등록된 답변이 없습니다.')
-    } else {
-      setNotExist('')
-    }
-  }
+  // const fetchMoreData = () => {
+  //   setFetching(true)
+  //   let tmpSkip = skip + limit
+  //   let body = {
+  //     skip: tmpSkip,
+  //     limit: limit,
+  //     loadMore: true,
+  //   }
 
-  const fetchMoreData = () => {
-    setFetching(true)
-    let tmpSkip = skip + limit
-    let body = {
-      skip: tmpSkip,
-      limit: limit,
-      loadMore: true,
-    }
-
-    getData(body)
-    setSkip(tmpSkip)
-    setFetching(false)
-  }
+  //   getData(body)
+  //   setSkip(tmpSkip)
+  //   setFetching(false)
+  // }
 
   return (
     <div>
-      {props.type === 'myanswer' || props.type === 'mylike' ? (
-        listInfo.map((ans: any, index: any) => {
-          console.log(ans)
-          return (
-            <Question
-              key={ans.id}
-              id={ans.question.id}
+      {props.type === 'myAnswer' || props.type === 'myLikedAnswer' ? (
+        answers.map((answer, index) => {
+          // todo: question이 빈 케이스? 왜 있는지 모르겠으나, 실제로 쓰면 분리 필요해보임
+          return props.question ? (
+            <QuestionComponent
+              key={answer.id}
+              id={props.question ? props.question.id : -1}
               number={index + 1}
-              content={ans.question.content}
-              answer={ans.content}
-              tagList={ans.question.tagList}
+              content={answer.questionContent ? answer.questionContent : ''}
+              answer={answer}
+              tagList={props.question ? props.question.tagList : undefined}
+            />
+          ) : (
+            <QuestionComponent
+              key={answer.id}
+              id={-1}
+              number={index + 1}
+              content={answer.questionContent ? answer.questionContent : ''}
+              answer={answer}
             />
           )
         })
       ) : (
-        <InfiniteAnswer
-          questionTitle={questionTitle}
-          answers={listInfo}
-          fetchMoreData={fetchMoreData}
-          fetching={fetching}
-        />
+        <></>
       )}
-      {notExist}
+      {answers.length === 0 && '등록된 답변이 없습니다.'}
     </div>
   )
 }
