@@ -111,6 +111,7 @@ const InfiniteAnswerList = (props) => {
           answers={listInfo}
           fetchMoreData={fetchMoreData}
           fetching={fetching}
+          mine={props.mine}
         />
       )}
       {notExist}

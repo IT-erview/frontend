@@ -76,6 +76,7 @@ const QuestionDetail = () => {
           answer={answerContent.content}
           title={questionContent}
           like={answerContent.liked}
+          mine={answerContent.id}
         />
       </div>
       <div className="question-detail-others">
@@ -97,7 +98,13 @@ const QuestionDetail = () => {
       </div>
       <div className="queiston-detail-others-answer">
         <div id="hr-line" />
-        <InfiniteAnswerList question={questionId} title={questionContent} sortBy={sort} type="" />
+        <InfiniteAnswerList
+          question={questionId}
+          title={questionContent}
+          sortBy={sort}
+          type=""
+          mine={answerContent.id}
+        />
         {/* {console.log(sort)} */}
       </div>
     </div>

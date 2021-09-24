@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Answer from 'components/Answer'
 
-const InfiniteAnswer = ({ answers, fetching, fetchMoreData, questionTitle }) => {
+const InfiniteAnswer = ({ answers, fetching, fetchMoreData, questionTitle, mine }) => {
   const [answerInfo, setAnswerInfo] = useState(answers)
   useEffect(() => {
     setAnswerInfo(answers)
@@ -34,6 +34,7 @@ const InfiniteAnswer = ({ answers, fetching, fetchMoreData, questionTitle }) => 
             title={questionTitle}
             username={ans.username}
             like={ans.liked}
+            mine={mine}
           />
         ))}
     </div>
