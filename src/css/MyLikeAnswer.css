@@ -56,10 +56,11 @@
   color: #4d4d4e !important;
   border: 1px solid #707070 !important;
 }
-div > .each-question {
+
+.each-question {
   width: 100%;
 }
 
-.mypage-register-like > div > div > div > button {
+.mypage-register-like .each-question > button {
   width: 100%;
 }
