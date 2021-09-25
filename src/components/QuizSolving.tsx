@@ -3,6 +3,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { Form, Input } from 'reactstrap'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+// todo: refactoring
 import QuizResult from './QuizResult'
 
 const QuizSolving: React.FunctionComponent<{ quiz: any } & RouteComponentProps> = ({ quiz }: { quiz: any }) => {

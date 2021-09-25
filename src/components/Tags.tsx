@@ -1,3 +1,4 @@
+// todo: refactoring
 import { useEffect, useState } from 'react'
 import tagItems from 'constants/TagItems'
 import 'css/Tags.css'

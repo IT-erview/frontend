@@ -1,3 +1,4 @@
+// todo: refactoring
 import 'css/MyPageNavigation.css'
 import { useEffect } from 'react'
 import { withRouter } from 'react-router'

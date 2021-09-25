@@ -1,3 +1,4 @@
+// todo: refactoring
 import 'css/QuizResult.css'
 import { useEffect } from 'react'
 import { withRouter } from 'react-router-dom'

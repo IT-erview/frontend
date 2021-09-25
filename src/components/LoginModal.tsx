@@ -1,3 +1,4 @@
+// todo: 타 tsx 파일과 코드 스타일 맞추기
 import React from 'react'
 import 'css/LoginModal.css'
 import { GOOGLE_AUTH_URL, GITHUB_AUTH_URL } from 'constants/Oauth'

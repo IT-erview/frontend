@@ -1,3 +1,4 @@
+// todo: dummy 교체
 import 'css/MyPageProfile.css'
 
 const MyPageProfile = () => {

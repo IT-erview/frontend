@@ -1,3 +1,4 @@
+// todo: refactoring
 import QuestionRegister from 'components/QuestionRegister'
 import axios from 'axios'
 import { JWT_TOKEN } from 'constants/Oauth'

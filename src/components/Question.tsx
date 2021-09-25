@@ -1,4 +1,3 @@
-// todo: 이렇게 막아봤자 그냥 이동 가능하다.
 import { getMyAnswer } from 'common/api'
 import { Answer, Tag } from 'common/type'
 import { getZerofilledNumber } from 'common/util'
@@ -8,6 +7,7 @@ const MAX_DISPLAYED_TAG_COUNT = 3
 
 const Question = (props: { id: number; number: number; content: string; tagList?: Array<Tag>; answer?: Answer }) => {
   // todo: 전체적으로 적용필요
+  // todo: questionId 수정으로 이동 가능
   let isRequesting = false
   const moveToQuestionDetail = async () => {
     if (isRequesting) return

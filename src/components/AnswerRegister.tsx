@@ -1,3 +1,4 @@
+// todo: Refactoring
 import 'css/AnswerRegister.css'
 import { withRouter } from 'react-router-dom'
 import { Form, Input } from 'reactstrap'

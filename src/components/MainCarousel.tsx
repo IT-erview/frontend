@@ -1,3 +1,4 @@
+// todo: refactoring carousel로 쓰일 것인지?
 import React from 'react'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'

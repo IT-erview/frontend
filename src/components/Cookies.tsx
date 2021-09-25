@@ -1,3 +1,5 @@
+// todo: Refactoring
+// *hook -> https://github.com/reactivestack/cookies/tree/master/packages/react-cookie#usecookiesdependencies
 import { Cookies } from 'react-cookie'
 import { CookieSetOptions } from 'universal-cookie'
 
