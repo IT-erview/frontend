@@ -59,7 +59,7 @@ const QuestionDetail = (props: { questionId: number }) => {
         <h2>다른 사람의 답변</h2>
         <SortSelectBox defaultSort={sort} onSortChanged={(sort) => setSort(sort)} />
       </div>
-      <div className="queiston-detail-others-answer">
+      <div className="question-detail-others-answer">
         <div id="hr-line" />
         <InfiniteAnswerList answers={answers} onScrollEnd={() => {}} />
       </div>
