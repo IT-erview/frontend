@@ -36,6 +36,7 @@ const Navigation = (props: any) => {
     if (param === 'login') {
       alert('로그인 에러가 발생했습니다. 다른 소셜계정으로 로그인 해주세요.')
     }
+    console.log(JWT_TOKEN)
     if (JWT_TOKEN) {
       axios
         .get(`/api/v1/user/profile/`)

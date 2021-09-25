@@ -1,20 +1,31 @@
 import { useEffect, useState } from 'react'
 import 'css/QuestionDetail.css'
-import AnswerComponet from 'components/Answer'
+import AnswerComponent from 'components/Answer'
+import QuestionComponent from 'components/Question'
 
-import InfiniteAnswerList from 'components/InfiniteAnswerList'
 import { Answer, Question } from 'common/type'
 import { getAnswers, getMyAnswer, getQuestion } from 'common/api'
 import SortSelectBox, { Sort } from './SortSelectBox'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 // 북마크 개수, 해당되는 태그, 작성자 없음
 const QuestionDetail = (props: { questionId: number }) => {
   const ROWS_PER_PAGE = 4
+  const INITIAL_PAGE = 0
   const [question, setQuestion] = useState<Question>()
   const [myAnswer, setMyAnswer] = useState<Answer | null>()
   const [answers, setAnswers] = useState<Array<Answer>>([])
-  const [page, setPage] = useState(0)
+  const [hasMore, setHasMore] = useState(true)
+  const [page, setPage] = useState(INITIAL_PAGE)
   const [sort, setSort] = useState<Sort>(Sort.LIKED)
+
+  const fetchAnswers = async () => {
+    if (!hasMore) return
+    const nextPage = page + 1
+    const fetchedAnswer = await getAnswers(props.questionId, sort, page, ROWS_PER_PAGE)
+    setPage(nextPage)
+    setAnswers((answers) => [...answers, ...fetchedAnswer])
+  }
 
   useEffect(() => {
     const initMyAnswer = async () => {
@@ -25,17 +36,16 @@ const QuestionDetail = (props: { questionId: number }) => {
       const question = await getQuestion(props.questionId)
       setQuestion(question)
     }
+    const refreshAnswers = async () => {
+      const fetchedAnswer = await getAnswers(props.questionId, sort, INITIAL_PAGE, ROWS_PER_PAGE)
+      setHasMore(fetchedAnswer.length > 0)
+      setAnswers(fetchedAnswer)
+      setPage(INITIAL_PAGE)
+    }
     initMyAnswer()
     initQuestion()
+    refreshAnswers()
   }, [props.questionId, sort])
-
-  useEffect(() => {
-    const initAnswers = async () => {
-      const fetchedAnswer = await getAnswers(props.questionId, sort, page, ROWS_PER_PAGE)
-      setAnswers(fetchedAnswer)
-    }
-    initAnswers()
-  }, [sort, page])
 
   return (
     <div>
@@ -46,7 +56,7 @@ const QuestionDetail = (props: { questionId: number }) => {
       <div className="question-detail-answer">
         <span>나의 답변</span>
         {myAnswer && question && (
-          <AnswerComponet
+          <AnswerComponent
             id={myAnswer.id}
             number={1}
             answer={myAnswer.content}
@@ -61,7 +71,26 @@ const QuestionDetail = (props: { questionId: number }) => {
       </div>
       <div className="question-detail-others-answer">
         <div id="hr-line" />
-        <InfiniteAnswerList answers={answers} onScrollEnd={() => {}} />
+        <InfiniteScroll
+          style={{ overflow: 'inherit' }}
+          dataLength={answers.length}
+          next={fetchAnswers}
+          hasMore={hasMore}
+          loader={<></>}>
+          {answers.map((answer, index) => {
+            return (
+              <QuestionComponent
+                key={answer.id}
+                id={answer.questionId}
+                number={index + 1}
+                content={question?.content || answer.questionContent || ''}
+                answer={answer}
+                tagList={answer.tags}
+              />
+            )
+          })}
+          {answers.length === 0 && '등록된 답변이 없습니다.'}
+        </InfiniteScroll>
       </div>
     </div>
   )

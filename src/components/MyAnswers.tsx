@@ -39,7 +39,6 @@ const MyAnswers = (props: { type: MyAnswerType }) => {
   }
 
   const fetchAnswers = async () => {
-    console.log('fetch')
     if (!hasMore) return
     const nextPage = page + 1
     const fetchedAnswer = await getAnswers(props.type, sort, nextPage)
@@ -49,7 +48,6 @@ const MyAnswers = (props: { type: MyAnswerType }) => {
 
   useEffect(() => {
     const refreshAnswers = async () => {
-      console.log('refresg')
       const fetchedAnswer = await getAnswers(props.type, sort, INITIAL_PAGE)
       setHasMore(fetchedAnswer.length > 0)
       setAnswers(fetchedAnswer)
