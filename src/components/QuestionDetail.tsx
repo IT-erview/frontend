@@ -22,7 +22,7 @@ const QuestionDetail = (props: { questionId: number }) => {
   const fetchAnswers = async () => {
     if (!hasMore) return
     const nextPage = page + 1
-    const fetchedAnswer = await getAnswers(props.questionId, sort, page, ROWS_PER_PAGE)
+    const fetchedAnswer = await getAnswers(props.questionId, sort, nextPage, ROWS_PER_PAGE)
     setPage(nextPage)
     setAnswers((answers) => [...answers, ...fetchedAnswer])
   }
