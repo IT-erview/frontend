@@ -14,7 +14,7 @@ const QuizResult = (props: any) => {
   useEffect(() => {
     midTitle.innerHTML = '면접문제 결과'
     subTitle.innerHTML = '본인이 풀었던 문제를 확인해보세요!'
-  }, [])
+  }, [midTitle, subTitle])
 
   return (
     <div className="quiz-result-page">

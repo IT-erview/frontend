@@ -1,6 +1,6 @@
 import 'css/QuestionSearch.css'
 import Tags from 'components/Tags'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Input } from 'reactstrap'
 import QuestionList from 'components/QuestionList'
 import SortSelectBox, { Sort } from './SortSelectBox'

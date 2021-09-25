@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import { Form, Input, Button } from 'reactstrap'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
-import Question from './Question'
 
 const QuestionRegister = ({ history }: { history: any }) => {
   const [textContents, setTextContents] = useState('')
@@ -24,7 +23,7 @@ const QuestionRegister = ({ history }: { history: any }) => {
       // setCheckTextLength(textContentsLength + '/1000')
       textArea.style.setProperty('color', 'black')
     }
-  }, [textContents.length, textContentsLength])
+  }, [textContents.length, textContentsLength, register])
 
   const registerQuestionAndTags = () => {
     if (textContents.length < 20) {

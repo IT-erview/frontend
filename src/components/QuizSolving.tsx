@@ -17,7 +17,7 @@ const QuizSolving: React.FunctionComponent<{ quiz: any } & RouteComponentProps> 
   const [quizNum, setQuizNum] = useState(0)
   const [quizIdNum, setQuizIdNum] = useState(0)
   const [showResult, setShowResult] = useState(false)
-  const [allQuizTag, setAllQuizTag] = useState<Array<any>>([])
+  const [allQuizTag] = useState<Array<any>>([])
 
   let quizList: Array<any> = []
   let quizIdList: Array<any> = []
@@ -42,18 +42,18 @@ const QuizSolving: React.FunctionComponent<{ quiz: any } & RouteComponentProps> 
   })
 
   useEffect(() => {
-    quizIdList.map((item, i) => {
-      axios(`/api/v1/question/${quizIdList[i]}`)
-        .then((res) => {
-          // console.log(res.data.tagList)
-          quizTagList.push(res.data.tagList)
-          setAllQuizTag(quizTagList)
-          // console.log(quizTagList)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    })
+    // quizIdList.map((item, i) => {
+    //   return axios(`/api/v1/question/${quizIdList[i]}`)
+    //     .then((res) => {
+    //       // console.log(res.data.tagList)
+    //       quizTagList.push(res.data.tagList)
+    //       setAllQuizTag(quizTagList)
+    //       // console.log(quizTagList)
+    //     })
+    //     .catch((err) => {
+    //       console.log(err)
+    //     })
+    // })
   }, [])
 
   // note: ??

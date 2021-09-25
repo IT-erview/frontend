@@ -12,7 +12,7 @@ const MainCarousel = () => {
       {/* <img id="deem" src="/img/navigation-deem.png" /> */}
 
       <div id="background">
-        <img id="deem" src="/img/navigation-deem.png" />
+        <img id="deem" src="/img/navigation-deem.png" alt="deem" />
         <div id="background-info">
           <img className="space1" src="/img/main_img3.png" alt="" />
           <div className="iterview-info">

@@ -1,6 +1,6 @@
 import 'css/SetQuizOptions.css'
 import { useState } from 'react'
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button, DropdownItemProps } from 'reactstrap'
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button } from 'reactstrap'
 import { withRouter } from 'react-router-dom'
 import tagItems from 'constants/TagItems'
 import axios from 'axios'
@@ -12,7 +12,7 @@ const SetQuizOptions = (props: any) => {
   const tagToggle = () => setTagDropdownOpen((prevState) => !prevState)
   const cntToggle = () => setCntDropdownOpen((prevState) => !prevState)
 
-  const [selectedQuizTag, setselectedQuizTag] = useState([])
+  const [selectedQuizTag] = useState([])
   const [selectedQuizCnt, setSelectedQuizCnt] = useState(null)
 
   const quizCnt = new Array(30).map((cnt, i) => {
@@ -24,11 +24,11 @@ const SetQuizOptions = (props: any) => {
   const quizTagArr = JSON.parse(quizTag!)
 
   const [allQuiz, setAllQuiz] = useState<Array<any>>([])
-  const [request, setRequest] = useState(false)
+  // const [request, setRequest] = useState(false)
 
   let quizSize = localStorage.getItem('selectedQuizCnt')
   let quiz = allQuiz
-  let quizTagList = selectedQuizTag
+  // let quizTagList = selectedQuizTag
 
   // todo: 리팩토링 필요
   const selectedTag = (e: any) => {
@@ -145,7 +145,7 @@ const SetQuizOptions = (props: any) => {
               <Button
                 className="quiz-start-btn"
                 onClick={() => {
-                  setRequest(true)
+                  // setRequest(true)
                   // if (request) {
                   quizSize = localStorage.getItem('selectedQuizCnt')
                   console.log('퀴즈 시작시작시작')
@@ -157,7 +157,7 @@ const SetQuizOptions = (props: any) => {
                       })
                       console.log(allQuiz)
                       setAllQuiz(allQuiz)
-                      setRequest(false)
+                      // setRequest(false)
                     })
                     .catch((err) => {
                       console.log(err)

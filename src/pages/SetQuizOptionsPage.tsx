@@ -11,7 +11,7 @@ const SetQuizOptionsPage = () => {
   return (
     <>
       <Navigation />
-      <img id="deem" src="/img/navigation-deem.png" />
+      <img id="deem" src="/img/navigation-deem.png" alt="deem" />
       <div className="quiz-img">
         <div className="question-search-info-background">
           <img src={setQuizOptionsImg} alt="question-register-img" />

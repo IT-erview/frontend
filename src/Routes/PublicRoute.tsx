@@ -1,5 +1,5 @@
-import { Route, Redirect, RouteProps } from 'react-router-dom'
-import { JWT_TOKEN } from 'constants/Oauth'
+import { Route, RouteProps } from 'react-router-dom'
+
 const PublicRoute: React.FunctionComponent<
   {
     component: React.ElementType
