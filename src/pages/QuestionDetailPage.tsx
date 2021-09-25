@@ -16,9 +16,10 @@ const QuestionDetailPage = () => {
   const bookmarkIt = async () => {
     if (isRequesting) return
     isRequesting = true
-    const result = await addBookmark(questionId)
+    const result = await addBookmark(questionId).finally(() => {
+      isRequesting = false
+    })
     window.alert(result ? '북마크 되었습니다.' : '이미 북마크한 문제입니다.')
-    isRequesting = false
   }
   return (
     <>
