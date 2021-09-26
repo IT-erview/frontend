@@ -4,13 +4,13 @@ import { useState, useEffect } from 'react'
 import QuestionList from 'components/QuestionList'
 
 const MyRegisterQuestion = () => {
-  const [sort, setSort] = useState('bookmarkCount')
+  const [sort, setSort] = useState('popular')
 
   useEffect(() => {
-    const bookmarkBtn = document.getElementById('sort-by-bookmark')
+    const bookmarkBtn = document.getElementById('sort-by-popular')
     const latestBtn = document.getElementById('sort-by-latest')
 
-    if (sort === 'bookmarkCount') {
+    if (sort === 'popular') {
       bookmarkBtn.style.color = '#4d4d4e'
       bookmarkBtn.style.borderColor = '#707070'
       bookmarkBtn.style.fontWeight = 'bold'
@@ -41,14 +41,14 @@ const MyRegisterQuestion = () => {
           <button
             id="sort-by-latest"
             onClick={() => {
-              setSort('createdDate')
+              setSort('latest')
             }}>
             최신순
           </button>
           <button
-            id="sort-by-bookmark"
+            id="sort-by-popular"
             onClick={() => {
-              setSort('bookmarkCount')
+              setSort('popular')
             }}>
             인기순
           </button>

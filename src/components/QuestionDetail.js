@@ -13,13 +13,13 @@ const QuestionDetail = () => {
   const [questionId, setQuestionId] = useState(window.location.search.slice(1, window.location.search.length))
   const [questionContent, setQuesitonContent] = useState(localStorage.getItem('detailTitle'))
   const [answerContent, setAnswerContent] = useState({ content: '', liked: 0 })
-  const [sort, setSort] = useState('liked')
+  const [sort, setSort] = useState('popular')
 
   useEffect(() => {
-    const likeBtn = document.getElementById('sort-by-like')
+    const likeBtn = document.getElementById('sort-by-popular')
     const latestBtn = document.getElementById('sort-by-latest')
 
-    if (sort === 'liked') {
+    if (sort === 'popular') {
       likeBtn.style.color = '#4d4d4e'
       likeBtn.style.borderColor = '#707070'
       likeBtn.style.fontWeight = 'bold'
@@ -84,14 +84,14 @@ const QuestionDetail = () => {
         <button
           id="sort-by-latest"
           onClick={() => {
-            setSort('createdDate')
+            setSort('latest')
           }}>
           최신순
         </button>
         <button
-          id="sort-by-like"
+          id="sort-by-popular"
           onClick={() => {
-            setSort('liked')
+            setSort('popular')
           }}>
           인기순
         </button>
