@@ -15,7 +15,7 @@ import { getCookie } from 'components/Cookies'
 
 // header 설정
 axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`
-const enum FeatureDescriptionType {
+enum FeatureDescriptionType {
   SEARCH,
   REGISTER,
   MY_PAGE,

@@ -7,7 +7,7 @@ import SortSelectBox, { Sort } from './SortSelectBox'
 import { Answer } from 'common/type'
 import { getMyAnswers, getMyLikedAnswers } from 'common/api'
 
-export const enum MyAnswerType {
+export enum MyAnswerType {
   ALL,
   LIKED,
 }
