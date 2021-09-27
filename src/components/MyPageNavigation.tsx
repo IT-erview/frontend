@@ -1,94 +1,75 @@
 // todo: refactoring
 import 'css/MyPageNavigation.css'
-import { useEffect } from 'react'
+import { useState } from 'react'
 import { withRouter } from 'react-router'
 
+enum MypageInquireType {
+  REGISTERED_QUESTION,
+  REGISTERED_ANSWER,
+  LIKED,
+  BOOKMARKED,
+}
+
+const mypageInquires = [
+  {
+    title: '내가 등록한 문제',
+    type: MypageInquireType.REGISTERED_QUESTION,
+    url: '/MyPage/MyRegisterQuestion',
+    img: '/img/mypage_icon1.png',
+  },
+  {
+    title: '내가 등록한 답변',
+    type: MypageInquireType.REGISTERED_ANSWER,
+    url: '/MyPage/MyRegisterAnswer',
+    img: '/img/mypage_icon2.png',
+  },
+  {
+    title: '좋아요한 답변',
+    type: MypageInquireType.LIKED,
+    url: '/MyPage/MyLikeAnswer',
+    img: '/img/mypage_icon3.png',
+  },
+  {
+    title: '북마크한 문제',
+    type: MypageInquireType.BOOKMARKED,
+    url: '/MyPage/MyBookmarkQuestion',
+    img: '/img/mypage_icon4.png',
+  },
+]
 const MyPageNavigation = (props: any) => {
-  const changeBorderColor = (selected: any) => {
-    document.getElementById('text-question')!.style.borderBottom = '0'
-    document.getElementById('text-question')!.style.color = '#6a737d'
-    document.getElementById('text-question')!.style.fontWeight = 'normal'
+  const [focusedMypageInquireType, setFocuesdMypageInquireType] = useState<MypageInquireType>(
+    MypageInquireType.REGISTERED_QUESTION,
+  )
 
-    document.getElementById('text-answer')!.style.borderBottom = '0'
-    document.getElementById('text-answer')!.style.color = '#6a737d'
-    document.getElementById('text-answer')!.style.fontWeight = 'normal'
-
-    document.getElementById('text-like')!.style.borderBottom = '0'
-    document.getElementById('text-like')!.style.color = '#6a737d'
-    document.getElementById('text-like')!.style.fontWeight = 'normal'
-
-    document.getElementById('text-bookmark')!.style.borderBottom = '0'
-    document.getElementById('text-bookmark')!.style.color = '#6a737d'
-    document.getElementById('text-bookmark')!.style.fontWeight = 'normal'
-
-    selected.style.borderBottom = '2px solid #2188FF'
-    selected.style.color = 'black'
-    selected.style.fontWeight = 'bold'
+  const isFocused = (type: MypageInquireType) => {
+    return focusedMypageInquireType === type
   }
 
-  useEffect(() => {
-    const pathname = window.location.pathname
-    if (pathname.indexOf('MyRegisterQuestion') !== -1) {
-      document.getElementById('text-question')!.style.borderBottom = '2px solid #2188FF'
-      document.getElementById('text-question')!.style.color = 'black'
-      document.getElementById('text-question')!.style.fontWeight = 'bold'
-      changeBorderColor(document.getElementById('text-question'))
-    } else if (pathname.indexOf('MyRegisterAnswer') !== -1) {
-      document.getElementById('text-answer')!.style.borderBottom = '2px solid #2188FF'
-      document.getElementById('text-answer')!.style.color = 'black'
-      document.getElementById('text-answer')!.style.fontWeight = 'bold'
-      changeBorderColor(document.getElementById('text-answer'))
-    } else if (pathname.indexOf('MyLikeAnswer') !== -1) {
-      document.getElementById('text-like')!.style.borderBottom = '2px solid #2188FF'
-      document.getElementById('text-like')!.style.color = 'black'
-      document.getElementById('text-like')!.style.fontWeight = 'bold'
-      changeBorderColor(document.getElementById('text-like'))
-    } else if (pathname.indexOf('MyBookmarkQuestion') !== -1) {
-      document.getElementById('text-bookmark')!.style.borderBottom = '2px solid #2188FF'
-      document.getElementById('text-bookmark')!.style.color = 'black'
-      document.getElementById('text-bookmark')!.style.fontWeight = 'bold'
-      changeBorderColor(document.getElementById('text-bookmark'))
-    }
-  })
-  // const firstBorderColor = () => {}
+  const linkMypageInquire = (url: string) => {
+    props.history.push(url)
+  }
 
   return (
     <div className="mypage-navigation">
       <div className="mypage-category">
-        <button
-          onClick={() => {
-            props.history.push('/MyPage/MyRegisterQuestion')
-            changeBorderColor(document.getElementById('text-question'))
-          }}>
-          <img src="/img/mypage_icon1.png" alt="my-register-question" />
-          <span id="text-question">내가 등록한 문제</span>
-        </button>
-        <button
-          onClick={() => {
-            props.history.push('/MyPage/MyRegisterAnswer')
-            changeBorderColor(document.getElementById('text-answer'))
-          }}
-          className="here-title">
-          <img src="/img/mypage_icon2.png" alt="my-register-answer" />
-          <span id="text-answer">내가 등록한 답변</span>
-        </button>
-        <button
-          onClick={() => {
-            props.history.push('/MyPage/MyLikeAnswer')
-            changeBorderColor(document.getElementById('text-like'))
-          }}>
-          <img src="/img/mypage_icon3.png" alt="my-like-answer" />
-          <span id="text-like">좋아요한 답변</span>
-        </button>
-        <button
-          onClick={() => {
-            props.history.push('/MyPage/MyBookmarkQuestion')
-            changeBorderColor(document.getElementById('text-bookmark'))
-          }}>
-          <img src="/img/mypage_icon4.png" alt="my-bookmark-question" />
-          <span id="text-bookmark">북마크한 문제</span>
-        </button>
-        {/* <div className="line1" /> */}
+        {mypageInquires.map((inquire) => {
+          return (
+            <button
+              key={inquire.type}
+              style={{
+                borderBottom: isFocused(inquire.type) ? '2px solid #2188FF' : 'none',
+                color: isFocused(inquire.type) ? 'black' : '#6a737d',
+                fontWeight: isFocused(inquire.type) ? 'bold' : 'normal',
+              }}
+              onClick={() => {
+                setFocuesdMypageInquireType(inquire.type)
+                linkMypageInquire(inquire.url)
+              }}>
+              <img src={inquire.img} alt={inquire.title} />
+              <span id="text-question">{inquire.title}</span>
+            </button>
+          )
+        })}
       </div>
     </div>
   )
