@@ -3,56 +3,56 @@ import 'css/MyPageNavigation.css'
 import { useState } from 'react'
 import { withRouter } from 'react-router'
 
-enum MypageInquireType {
+enum MyPageInquireType {
   REGISTERED_QUESTION,
   REGISTERED_ANSWER,
   LIKED,
   BOOKMARKED,
 }
 
-const mypageInquires = [
+const myPageInquires = [
   {
     title: '내가 등록한 문제',
-    type: MypageInquireType.REGISTERED_QUESTION,
+    type: MyPageInquireType.REGISTERED_QUESTION,
     url: '/MyPage/MyRegisterQuestion',
     img: '/img/mypage_icon1.png',
   },
   {
     title: '내가 등록한 답변',
-    type: MypageInquireType.REGISTERED_ANSWER,
+    type: MyPageInquireType.REGISTERED_ANSWER,
     url: '/MyPage/MyRegisterAnswer',
     img: '/img/mypage_icon2.png',
   },
   {
     title: '좋아요한 답변',
-    type: MypageInquireType.LIKED,
+    type: MyPageInquireType.LIKED,
     url: '/MyPage/MyLikeAnswer',
     img: '/img/mypage_icon3.png',
   },
   {
     title: '북마크한 문제',
-    type: MypageInquireType.BOOKMARKED,
+    type: MyPageInquireType.BOOKMARKED,
     url: '/MyPage/MyBookmarkQuestion',
     img: '/img/mypage_icon4.png',
   },
 ]
 const MyPageNavigation = (props: any) => {
-  const [focusedMypageInquireType, setFocuesdMypageInquireType] = useState<MypageInquireType>(
-    MypageInquireType.REGISTERED_QUESTION,
+  const [focusedMyPageInquireType, setFocusedMyPageInquireType] = useState<MyPageInquireType>(
+    MyPageInquireType.REGISTERED_QUESTION,
   )
 
-  const isFocused = (type: MypageInquireType) => {
-    return focusedMypageInquireType === type
+  const isFocused = (type: MyPageInquireType) => {
+    return focusedMyPageInquireType === type
   }
 
-  const linkMypageInquire = (url: string) => {
+  const linkMyPageInquire = (url: string) => {
     props.history.push(url)
   }
 
   return (
     <div className="mypage-navigation">
       <div className="mypage-category">
-        {mypageInquires.map((inquire) => {
+        {myPageInquires.map((inquire) => {
           return (
             <button
               key={inquire.type}
@@ -62,8 +62,8 @@ const MyPageNavigation = (props: any) => {
                 fontWeight: isFocused(inquire.type) ? 'bold' : 'normal',
               }}
               onClick={() => {
-                setFocuesdMypageInquireType(inquire.type)
-                linkMypageInquire(inquire.url)
+                setFocusedMyPageInquireType(inquire.type)
+                linkMyPageInquire(inquire.url)
               }}>
               <img src={inquire.img} alt={inquire.title} />
               <span id="text-question">{inquire.title}</span>
