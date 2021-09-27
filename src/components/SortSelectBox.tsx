@@ -1,7 +1,7 @@
 import { CSSProperties, useState } from 'react'
 import 'css/QuestionDetail.css'
 
-export const enum Sort {
+export enum Sort {
   LIKED = 'liked',
   LATEST = 'createdDate',
 }
