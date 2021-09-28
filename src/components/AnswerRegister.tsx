@@ -2,57 +2,43 @@
 import 'css/AnswerRegister.css'
 import { withRouter } from 'react-router-dom'
 import { Form, Input } from 'reactstrap'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+import { useState } from 'react'
+import { MAX_ANSWER_CONTENTS_LENGTH, MIN_ANSWER_CONTENTS_LENGTH } from 'constants/constants'
+import { checkAnswerLength, isNumeric } from 'common/util'
+import { postAnswer } from 'common/api'
 
+const getQuestionInfo = () => {
+  const storageQuestionId = localStorage.getItem('detailId')
+  const storageQusetionTitle = localStorage.getItem('detailTitle')
+  return {
+    questionId: isNumeric(storageQuestionId) ? Number(storageQuestionId) : undefined,
+    questionTitle: storageQusetionTitle,
+  }
+}
 // note: prop의 quiz 사용처 없어보임
 const AnswerRegister = () => {
-  const [answerTextContents, setAnswerTextContents] = useState('')
-  const [answerContentsLength, setAnswerContentsLength] = useState(0)
-  useEffect(() => {
-    setAnswerContentsLength(answerTextContents.length)
-    const answerArea = document.getElementById('answer-text-length')
-    // todo: refactoring 필요. 일단 ! 처리
-    if (answerContentsLength >= 1 && answerContentsLength < 20) {
-      answerArea!.style.setProperty('color', 'red')
-    } else if (answerContentsLength >= 1000) {
-      answerArea!.style.setProperty('color', 'red')
-    } else {
-      answerArea!.style.setProperty('color', 'black')
-    }
-  }, [answerContentsLength, answerTextContents.length])
+  const [answerTextContents, setAnswerTextContents] = useState<string>('')
+  const { questionId, questionTitle } = getQuestionInfo()
+  if (questionId === undefined) return <></>
 
-  const AnswerRegisterBtn = () => {
-    return (
-      <button
-        className="quiz-btn"
-        onClick={() => {
-          if (answerTextContents.length >= 1 && answerTextContents.length < 20) {
-            window.alert('최소 20자 이상 입력해주세요')
-          } else {
-            axios({
-              method: 'post',
-              url: '/api/v1/answer',
-              data: {
-                content: answerTextContents,
-                questionId: localStorage.getItem('detailId'),
-              },
-            })
-              .then((res) => {
-                console.log(res.data)
-                alert('답변이 등록되었습니다!')
-                window.open(`/QuestionDetail?question_id=${localStorage.getItem('detailId')}`)
-                window.close()
-              })
-              .catch((err) => {
-                console.log(err)
-                alert('답변이 등록되지 않았습니다!')
-              })
-          }
-        }}>
-        답변등록
-      </button>
-    )
+  let isRequesting = false
+
+  const registerAnswer = async () => {
+    if (!checkAnswerLength(answerTextContents)) {
+      window.alert(`최소 ${MIN_ANSWER_CONTENTS_LENGTH}자 이상 입력해주세요`)
+      return
+    }
+    if (isRequesting) return
+    isRequesting = true
+    const result = await postAnswer(questionId, answerTextContents).finally(() => {
+      isRequesting = false
+    })
+    if (result) {
+      window.alert('답변이 등록되었습니다.')
+      window.open(`/QuestionDetail?question_id=${questionId}`)
+    } else {
+      window.alert('답변이 등록되지 않았습니다.')
+    }
   }
 
   return (
@@ -71,9 +57,11 @@ const AnswerRegister = () => {
           </div>
           <div className="quiz-contents-box">
             <h1 className="quiz-contents-title">문제 설명</h1>
-            <h1 className="quiz-contents">{localStorage.getItem('detailTitle')}</h1>
+            <h1 className="quiz-contents">{questionTitle}</h1>
           </div>
-          <span id="answer-text-length">({answerTextContents.length}/1000)</span>
+          <span id="answer-text-length" style={{ color: checkAnswerLength(answerTextContents) ? 'black' : 'red' }}>
+            ({answerTextContents.length}/{MAX_ANSWER_CONTENTS_LENGTH})
+          </span>
           <Input
             type="textarea"
             value={answerTextContents}
@@ -85,7 +73,9 @@ const AnswerRegister = () => {
             placeholder="답을 입력해주세요."
           />
         </Form>
-        <div className="next-quiz">{AnswerRegisterBtn()}</div>
+        <button className="quiz-btn" onClick={registerAnswer}>
+          답변등록
+        </button>
       </div>
     </div>
   )

@@ -121,6 +121,7 @@ const getAnswers = async (questionId: number, sort: string, page: number, rowsPe
     return answer
   })
 }
+
 const getMyAnswers = async (sort: string, page: number, rowsPerPage = 4, desc = true) => {
   const response = await axios({
     method: 'get',
@@ -154,6 +155,21 @@ const getMyLikedAnswers = async (sort: string, page: number, rowsPerPage = 4, de
     return answer
   })
 }
+const postAnswer = async (questionId: number, content: string) => {
+  try {
+    await axios({
+      method: 'post',
+      url: '/api/v1/answer',
+      data: {
+        content: content,
+        questionId: questionId,
+      },
+    })
+    return true
+  } catch (e) {
+    return false
+  }
+}
 
 export {
   likeAnswer,
@@ -168,4 +184,5 @@ export {
   getMyAnswers,
   getAnswers,
   getMyLikedAnswers,
+  postAnswer,
 }
