@@ -1,4 +1,4 @@
-import { MIN_ANSWER_CONTENTS_LENGTH } from 'constants/constants'
+import { MIN_ANSWER_CONTENTS_LENGTH } from 'common/config'
 
 export const getZerofilledNumber = (num: number) => {
   let result = ''
@@ -11,10 +11,5 @@ export const isNumeric = (str: string | null) => {
 }
 
 export const checkAnswerLength = (answer: string) => {
-  const answerLength = answer.length
-  if (answerLength > 0 && answerLength < MIN_ANSWER_CONTENTS_LENGTH) {
-    return false
-  } else {
-    return true
-  }
+  return answer.length >= MIN_ANSWER_CONTENTS_LENGTH
 }

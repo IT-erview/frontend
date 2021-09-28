@@ -1,21 +1,20 @@
-// todo: Refactoring
 import 'css/AnswerRegister.css'
 import { withRouter } from 'react-router-dom'
 import { Form, Input } from 'reactstrap'
 import { useState } from 'react'
-import { MAX_ANSWER_CONTENTS_LENGTH, MIN_ANSWER_CONTENTS_LENGTH } from 'constants/constants'
+import { MAX_ANSWER_CONTENTS_LENGTH, MIN_ANSWER_CONTENTS_LENGTH } from 'common/config'
 import { checkAnswerLength, isNumeric } from 'common/util'
 import { postAnswer } from 'common/api'
 
 const getQuestionInfo = () => {
   const storageQuestionId = localStorage.getItem('detailId')
-  const storageQusetionTitle = localStorage.getItem('detailTitle')
+  const storageQuestionTitle = localStorage.getItem('detailTitle')
   return {
     questionId: isNumeric(storageQuestionId) ? Number(storageQuestionId) : undefined,
-    questionTitle: storageQusetionTitle,
+    questionTitle: storageQuestionTitle,
   }
 }
-// note: prop의 quiz 사용처 없어보임
+
 const AnswerRegister = () => {
   const [answerTextContents, setAnswerTextContents] = useState<string>('')
   const { questionId, questionTitle } = getQuestionInfo()
