@@ -1,9 +1,8 @@
 import { getMyAnswer } from 'common/api'
 import { Answer, Tag } from 'common/type'
 import { getZerofilledNumber } from 'common/util'
+import { MAX_DISPLAYED_TAG_COUNT } from 'common/config'
 import 'css/Question.css'
-
-const MAX_DISPLAYED_TAG_COUNT = 3
 
 const Question = (props: { id: number; number: number; content: string; tagList?: Array<Tag>; answer?: Answer }) => {
   // todo: 전체적으로 적용필요
