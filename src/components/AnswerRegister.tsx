@@ -2,8 +2,8 @@ import 'css/AnswerRegister.css'
 import { withRouter } from 'react-router-dom'
 import { Form, Input } from 'reactstrap'
 import { useState } from 'react'
-import { MAX_ANSWER_CONTENTS_LENGTH, MIN_ANSWER_CONTENTS_LENGTH } from 'common/config'
-import { checkAnswerLength, isNumeric } from 'common/util'
+import { MAX_TEXT_CONTENTS_LENGTH, MIN_TEXT_CONTENTS_LENGTH } from 'common/config'
+import { checkTextContentsLength, isNumeric } from 'common/util'
 import { postAnswer } from 'common/api'
 
 const getQuestionInfo = () => {
@@ -23,8 +23,8 @@ const AnswerRegister = () => {
   let isRequesting = false
 
   const registerAnswer = async () => {
-    if (!checkAnswerLength(answerTextContents)) {
-      window.alert(`최소 ${MIN_ANSWER_CONTENTS_LENGTH}자 이상 입력해주세요`)
+    if (!checkTextContentsLength(answerTextContents)) {
+      window.alert(`최소 ${MIN_TEXT_CONTENTS_LENGTH}자 이상 입력해주세요`)
       return
     }
     if (isRequesting) return
@@ -58,13 +58,15 @@ const AnswerRegister = () => {
             <h1 className="quiz-contents-title">문제 설명</h1>
             <h1 className="quiz-contents">{questionTitle}</h1>
           </div>
-          <span id="answer-text-length" style={{ color: checkAnswerLength(answerTextContents) ? 'black' : 'red' }}>
-            ({answerTextContents.length}/{MAX_ANSWER_CONTENTS_LENGTH})
+          <span
+            id="answer-text-length"
+            style={{ color: checkTextContentsLength(answerTextContents) ? 'black' : 'red' }}>
+            ({answerTextContents.length}/{MAX_TEXT_CONTENTS_LENGTH})
           </span>
           <Input
             type="textarea"
             value={answerTextContents}
-            maxLength={1000}
+            maxLength={MAX_TEXT_CONTENTS_LENGTH}
             onChange={(e) => {
               setAnswerTextContents(e.target.value)
             }}
