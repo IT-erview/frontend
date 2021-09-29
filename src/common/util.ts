@@ -1,4 +1,4 @@
-import { MIN_ANSWER_CONTENTS_LENGTH } from 'common/config'
+import { MIN_TEXT_CONTENTS_LENGTH } from 'common/config'
 
 export const getZerofilledNumber = (num: number) => {
   let result = ''
@@ -10,6 +10,6 @@ export const isNumeric = (str: string | null) => {
   return str !== null && !isNaN(Number(str))
 }
 
-export const checkAnswerLength = (answer: string) => {
-  return answer.length >= MIN_ANSWER_CONTENTS_LENGTH
+export const checkTextContentsLength = (contents: string) => {
+  return contents.length >= MIN_TEXT_CONTENTS_LENGTH
 }
