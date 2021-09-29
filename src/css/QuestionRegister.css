@@ -93,13 +93,13 @@ textarea#question-contents.form-control {
 textarea#question-contents.form-control::placeholder {
   color: #635faa;
 }
-.quesiton-register-tags {
+.question-register-tags {
   margin: auto;
   text-align: right;
   margin-top: 33px;
 }
 
-.quesiton-register-tags > h2 {
+.question-register-tags > h2 {
   text-align: left;
   white-space: nowrap;
   font-size: 25pt;
@@ -107,7 +107,7 @@ textarea#question-contents.form-control::placeholder {
   padding-left: 55px;
 }
 
-.quesiton-register-tags > Button {
+.question-register-tags > Button {
   margin-right: 55px;
   margin-bottom: 40px;
   margin-top: 40px;
@@ -159,7 +159,7 @@ textarea#question-contents.form-control::placeholder {
   margin-bottom: 25px;
 }
 
-.quesiton-register-tags > div > .classification-tag-unselected {
+.question-register-tags > div > .classification-tag-unselected {
   background-color: white;
 }
 
