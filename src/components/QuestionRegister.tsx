@@ -1,76 +1,44 @@
 // todo: refactoring
 import 'css/QuestionRegister.css'
 import Tags from 'components/Tags'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Form, Input, Button } from 'reactstrap'
-import axios from 'axios'
 import { withRouter } from 'react-router-dom'
+import { MAX_TEXT_CONTENTS_LENGTH, MIN_TEXT_CONTENTS_LENGTH } from 'common/config'
+import { checkTextContentsLength } from 'common/util'
+import { postQuestion } from 'common/api'
+import { MAX_DISPLAYED_TAG_COUNT } from 'common/config'
+
+const getQuestionTag = () => {
+  const storageQuestionTag = localStorage.getItem('questionRegiTag')
+  if (typeof storageQuestionTag === 'string') return JSON.parse(storageQuestionTag)
+  return []
+}
 
 const QuestionRegister = ({ history }: { history: any }) => {
-  const [textContents, setTextContents] = useState('')
-  const [textContentsLength, setTextContentsLength] = useState(0)
-  const [register, setRegister] = useState(false)
-  const [questionRegiTagArr, setQuestionRegiTagArr] = useState([])
+  const [questionTextContents, setQuestionTextContents] = useState<string>('')
+  const [register, setRegister] = useState<boolean>(false)
+  const questionTag: Array<string> = getQuestionTag()
 
-  useEffect(() => {
-    setTextContentsLength(textContents.length)
-    const textArea = document.getElementById('text-counts')!
-    if (textContentsLength < 20 && !register) {
-      textArea.style.setProperty('color', 'red')
-    } else if (textContentsLength >= 1000 && !register) {
-      // setCheckTextLength('최대 글자수는 1000자 입니다')
-      textArea.style.setProperty('color', 'red')
-    } else if (!register) {
-      // setCheckTextLength(textContentsLength + '/1000')
-      textArea.style.setProperty('color', 'black')
+  let isRequesting = false
+
+  const registerQuestion = async () => {
+    if (!checkTextContentsLength(questionTextContents)) {
+      window.alert(`최소 ${MIN_TEXT_CONTENTS_LENGTH}자 이상 입력해주세요`)
+      return
     }
-  }, [textContents.length, textContentsLength, register])
-
-  const registerQuestionAndTags = () => {
-    if (textContents.length < 20) {
-      window.alert('최소 20자 이상 입력해주세요')
+    if (isRequesting) return
+    isRequesting = true
+    const result = await postQuestion(questionTextContents, questionTag).finally(() => {
+      isRequesting = false
+    })
+    if (result) {
+      window.alert('문제가 등록되었습니다.')
+      setRegister(true)
     } else {
-      const questionRegiTag = localStorage.getItem('questionRegiTag')
-      const questionTag = JSON.parse(questionRegiTag!)
-
-      console.log(localStorage.getItem('userName'))
-      axios({
-        method: 'post',
-        url: '/api/v1/question',
-        data: {
-          content: textContents,
-          bookmarkCount: 0,
-          tags: questionTag,
-        },
-        params: {
-          name: localStorage.getItem('userName'),
-        },
-      })
-        .then((res) => {
-          console.log(res)
-          window.alert('문제가 등록되었습니다.')
-          setRegister(true)
-        })
-        .catch((err) => {
-          console.log(err)
-          window.alert('문제가 등록되지 않았습니다.')
-          window.location.reload()
-        })
-      setQuestionRegiTagArr(questionTag)
+      window.alert('문제가 등록되지 않았습니다.')
     }
   }
-
-  const showQuestionTags = questionRegiTagArr.map((item, index) => {
-    if (index < 3) {
-      return (
-        <div className="question-register-after-tags" key={index}>
-          {item}
-        </div>
-      )
-    } else {
-      return <div key={index}></div>
-    }
-  })
 
   return (
     <div className="question-register">
@@ -92,11 +60,18 @@ const QuestionRegister = ({ history }: { history: any }) => {
               </span>
               <div className="question-register-after-question">
                 <h1>01</h1>
-                <h2>{textContents}</h2>
-                {/* {questionRegiTagArr} */}
-                {showQuestionTags}
+                <h2>{questionTextContents}</h2>
+                {questionTag &&
+                  questionTag.map((tag, index) => {
+                    return (
+                      index < MAX_DISPLAYED_TAG_COUNT && (
+                        <div className="question-register-after-tags" key={index}>
+                          {tag}
+                        </div>
+                      )
+                    )
+                  })}
               </div>
-
               <button
                 className="question-register-after-btn2"
                 onClick={() => {
@@ -120,24 +95,25 @@ const QuestionRegister = ({ history }: { history: any }) => {
             <Form>
               <h1>문제 입력</h1>
               <div className="question-register-hr" />
-              <span id="text-counts">( {textContentsLength} / 1000 )</span>
-
+              <span id="text-counts" style={{ color: checkTextContentsLength(questionTextContents) ? 'black' : 'red' }}>
+                ( {questionTextContents.length} / {MAX_TEXT_CONTENTS_LENGTH} )
+              </span>
               <Input
                 type="textarea"
-                value={textContents}
-                maxLength={1000}
+                value={questionTextContents}
+                maxLength={MAX_TEXT_CONTENTS_LENGTH}
                 onChange={(e) => {
-                  setTextContents(e.target.value)
+                  setQuestionTextContents(e.target.value)
                 }}
                 id="question-contents"
                 placeholder="알고싶은 면접 문제를 입력해주세요."
               />
             </Form>
-            <div className="quesiton-register-tags">
+            <div className="question-register-tags">
               <h2>문제 태그 선택</h2>
               <div className="question-register-hr2" />
               <Tags page="question-register" id="register-tags" />
-              <Button onClick={registerQuestionAndTags}>등록하기</Button>
+              <Button onClick={registerQuestion}>등록하기</Button>
             </div>
           </div>
         </>
