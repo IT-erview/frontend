@@ -171,6 +171,23 @@ const postAnswer = async (questionId: number, content: string) => {
   }
 }
 
+const postQuestion = async (content: string, tagList: Array<string>) => {
+  try {
+    await axios({
+      method: 'post',
+      url: '/api/v1/question',
+      data: {
+        content: content,
+        bookmarkCount: 0,
+        tags: tagList,
+      },
+    })
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
 export {
   likeAnswer,
   getQuestion,
@@ -185,4 +202,5 @@ export {
   getAnswers,
   getMyLikedAnswers,
   postAnswer,
+  postQuestion,
 }
