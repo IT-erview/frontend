@@ -1,4 +1,3 @@
-// todo: refactoring
 import 'css/QuestionRegister.css'
 import Tags from 'components/Tags'
 import { useState } from 'react'
@@ -9,16 +8,16 @@ import { checkTextContentsLength } from 'common/util'
 import { postQuestion } from 'common/api'
 import { MAX_DISPLAYED_TAG_COUNT } from 'common/config'
 
-const getQuestionTag = () => {
-  const storageQuestionTag = localStorage.getItem('questionRegiTag')
-  if (typeof storageQuestionTag === 'string') return JSON.parse(storageQuestionTag)
+const getQuestionTags = (): Array<string> => {
+  const storageQuestionTags = localStorage.getItem('questionRegiTag')
+  if (typeof storageQuestionTags === 'string') return JSON.parse(storageQuestionTags)
   return []
 }
 
 const QuestionRegister = ({ history }: { history: any }) => {
   const [questionTextContents, setQuestionTextContents] = useState<string>('')
-  const [register, setRegister] = useState<boolean>(false)
-  const questionTag: Array<string> = getQuestionTag()
+  const [isRegistered, setRegistered] = useState<boolean>(false)
+  const questionTags = getQuestionTags()
 
   let isRequesting = false
 
@@ -29,12 +28,12 @@ const QuestionRegister = ({ history }: { history: any }) => {
     }
     if (isRequesting) return
     isRequesting = true
-    const result = await postQuestion(questionTextContents, questionTag).finally(() => {
+    const result = await postQuestion(questionTextContents, questionTags).finally(() => {
       isRequesting = false
     })
     if (result) {
       window.alert('문제가 등록되었습니다.')
-      setRegister(true)
+      setRegistered(true)
     } else {
       window.alert('문제가 등록되지 않았습니다.')
     }
@@ -49,7 +48,7 @@ const QuestionRegister = ({ history }: { history: any }) => {
         <br />
         태그를 걸어주세요!
       </div>
-      {register ? (
+      {isRegistered ? (
         <>
           <div className="question-register-after">
             <div className="question-register-after-content">
@@ -61,8 +60,8 @@ const QuestionRegister = ({ history }: { history: any }) => {
               <div className="question-register-after-question">
                 <h1>01</h1>
                 <h2>{questionTextContents}</h2>
-                {questionTag &&
-                  questionTag.map((tag, index) => {
+                {questionTags &&
+                  questionTags.map((tag, index) => {
                     return (
                       index < MAX_DISPLAYED_TAG_COUNT && (
                         <div className="question-register-after-tags" key={index}>
