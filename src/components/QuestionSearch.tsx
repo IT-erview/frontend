@@ -5,8 +5,9 @@ import { useState } from 'react'
 import { Input } from 'reactstrap'
 import QuestionList from 'components/QuestionList'
 import SortSelectBox, { Sort } from './SortSelectBox'
+import { MAX_SEARCH_WORD_LENGTH } from 'common/config'
 
-// xd 복붙 시작 -->
+// 이미지로 대체 필요
 const searchIcon = () => {
   return (
     <div className="search-icon">
@@ -41,11 +42,23 @@ const searchIcon = () => {
 }
 // <-- xd 복붙 끝
 
+const getQuestionSearchTags = (): Array<string> => {
+  const storageQuestionSearchTags = localStorage.getItem('questionSearchTag')
+  if (typeof storageQuestionSearchTags === 'string') return JSON.parse(storageQuestionSearchTags)
+  return []
+}
+
 const QuestionSearch = () => {
-  const [searchWord, setSearchWord] = useState('')
-  const [questionSearchTag, setQuestionSearchTag] = useState([])
-  const [questionSearchWord, setQuestionSearchWord] = useState('')
+  const [questionSearchWord, setQuestionSearchWord] = useState<string>('')
+  const [questionSearchInput, setQuestionSearchInput] = useState<string>('')
+  const [questionSearchTags, setQuestionSearchTags] = useState<Array<string>>([])
   const [sort, setSort] = useState<Sort>(Sort.LIKED)
+
+  const setQuestionSearch = () => {
+    setQuestionSearchTags(getQuestionSearchTags)
+    setQuestionSearchWord(questionSearchInput)
+    setQuestionSearchInput('')
+  }
 
   return (
     <div className="question-search">
@@ -66,24 +79,15 @@ const QuestionSearch = () => {
         <Input
           id="question-search-input"
           type="textarea"
-          value={searchWord}
-          maxLength={20}
+          value={questionSearchInput}
+          maxLength={MAX_SEARCH_WORD_LENGTH}
           onChange={(e) => {
-            setSearchWord(e.target.value)
+            setQuestionSearchInput(e.target.value)
           }}
           placeholder="관련어를 검색해주세요"
         />
         {searchIcon()}
-        <button
-          onClick={() => {
-            const tagList = localStorage.getItem('questionSearchTag')
-            const questionSerachTagArr = JSON.parse(tagList!)
-            setQuestionSearchTag(questionSerachTagArr)
-            setQuestionSearchWord(searchWord)
-            setSearchWord('')
-          }}>
-          검색하기
-        </button>
+        <button onClick={setQuestionSearch}>검색하기</button>
       </div>
       <div className="searched-question">
         <div className="title-sort">
@@ -97,7 +101,7 @@ const QuestionSearch = () => {
         </div>
         <div className="question-section">
           <QuestionList
-            tagList={questionSearchTag}
+            tagList={questionSearchTags}
             sort={sort === Sort.LIKED ? 'bookmarkCount' : 'createdDate'}
             keyword={questionSearchWord}
             type={'search'}
