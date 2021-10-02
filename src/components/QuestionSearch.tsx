@@ -49,14 +49,14 @@ const getQuestionSearchTags = (): Array<string> => {
 }
 
 const QuestionSearch = () => {
-  const [questionSearchWord, setQuestionSearchWord] = useState<string>('')
+  const [keyword, setKeyword] = useState<string>('')
   const [questionSearchInput, setQuestionSearchInput] = useState<string>('')
   const [questionSearchTags, setQuestionSearchTags] = useState<Array<string>>([])
   const [sort, setSort] = useState<Sort>(Sort.LIKED)
 
-  const setQuestionSearch = () => {
+  const setOnInputChange = () => {
     setQuestionSearchTags(getQuestionSearchTags)
-    setQuestionSearchWord(questionSearchInput)
+    setKeyword(questionSearchInput)
     setQuestionSearchInput('')
   }
 
@@ -87,7 +87,7 @@ const QuestionSearch = () => {
           placeholder="관련어를 검색해주세요"
         />
         {searchIcon()}
-        <button onClick={setQuestionSearch}>검색하기</button>
+        <button onClick={setOnInputChange}>검색하기</button>
       </div>
       <div className="searched-question">
         <div className="title-sort">
@@ -103,7 +103,7 @@ const QuestionSearch = () => {
           <QuestionList
             tagList={questionSearchTags}
             sort={sort === Sort.LIKED ? 'bookmarkCount' : 'createdDate'}
-            keyword={questionSearchWord}
+            keyword={keyword}
             type={'search'}
           />
         </div>
