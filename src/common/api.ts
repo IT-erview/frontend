@@ -1,6 +1,21 @@
 // todo: sort 변경
-import axios from 'axios'
+import axios, { AxiosRequestConfig } from 'axios'
 import { Answer, Bookmark, Question } from './type'
+
+const request = async (config: AxiosRequestConfig) => {
+  try {
+    return await axios(config)
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      // todo: 공통 에러 처리
+    } else {
+      console.log(error)
+      // todo: 문구 변경
+      alert(error)
+    }
+    return null
+  }
+}
 
 const likeAnswer = (answerId: number, onSuccess: Function, onFailure: Function) => {
   axios({
@@ -25,6 +40,7 @@ const getQuestion = async (questionId: number) => {
     method: 'get',
     url: `/api/v1/question/${questionId}`,
   })
+  if (!response) return null
   return response.data as Question
 }
 
@@ -37,6 +53,7 @@ const getQuestions = async (page: number, rowsPerPage: number) => {
       size: rowsPerPage,
     },
   })
+  if (!response) return []
   return response.data as Array<Question>
 }
 
@@ -45,6 +62,7 @@ const getHitsAnswers = async () => {
     method: 'get',
     url: '/api/v1/answer/hits',
   })
+  if (!response) return []
   return response.data as Array<Answer>
 }
 
@@ -55,6 +73,7 @@ const getMyQuestions = async (sort: string, desc = true, page = 0, rowsPerPage =
     method: 'get',
     url: `/api/v1/question/mine?page=${page}&size=${rowsPerPage}&sort=${sort}${desc ? ',desc' : ''}`,
   })
+  if (!response) return []
   return response.data as Array<Question>
 }
 
@@ -63,6 +82,7 @@ const getBookmarks = async (sort: string, desc = true, page = 0, rowsPerPage = 3
     method: 'get',
     url: `/api/v1/bookmark/mine?page=${page}&size=${rowsPerPage}&sort=${sort}${desc ? ',desc' : ''}`,
   })
+  if (!response) return []
   return response.data.map((bookmark: Bookmark) => {
     return bookmark.question
   })
@@ -82,34 +102,33 @@ const searchQuestions = async (
       desc ? ',desc' : ''
     }`,
   })
+  if (!response) return []
   return response.data as Array<Question>
 }
 
 const addBookmark = async (questionId: number) => {
-  try {
-    await axios({
-      method: 'post',
-      url: `/api/v1/bookmark/${questionId}`,
-    })
-    return true
-  } catch (e) {
-    return false
-  }
+  const response = await axios({
+    method: 'post',
+    url: `/api/v1/bookmark/${questionId}`,
+  })
+  return response ? true : false
 }
 
 const getMyAnswer = async (questionId: number) => {
-  const response = await axios({
+  const response = await request({
     method: 'get',
     url: `/api/v1/answer/${questionId}/mine`,
   })
+  if (!response) return null
   return response.data as Answer
 }
 
 const getAnswers = async (questionId: number, sort: string, page: number, rowsPerPage = 10, desc = true) => {
-  const response = await axios({
+  const response = await request({
     method: 'get',
     url: `/api/v1/answer/question/${questionId}?page=${page}&size=${rowsPerPage}&sort=${sort}${desc ? ',desc' : ''}`,
   })
+  if (!response) return []
   // todo: api 수정 후 아래와 주석과 같은 형태로 코드 수정되어야함
   // return response.data.content ? (response.data.content as Array<Answer>) : []
   const content: Array<any> = response.data.content
@@ -123,10 +142,11 @@ const getAnswers = async (questionId: number, sort: string, page: number, rowsPe
 }
 
 const getMyAnswers = async (sort: string, page: number, rowsPerPage = 4, desc = true) => {
-  const response = await axios({
+  const response = await request({
     method: 'get',
     url: `/api/v1/answer/mine?page=${page}&size=${rowsPerPage}&sort=${sort}${desc ? ',desc' : ''}`,
   })
+  if (!response) return []
   // todo: api 수정 후 아래와 주석과 같은 형태로 코드 수정되어야함
   // return response.data.content ? (response.data.content as Array<Answer>) : []
   const content: Array<any> = response.data.content
@@ -140,10 +160,11 @@ const getMyAnswers = async (sort: string, page: number, rowsPerPage = 4, desc = 
 }
 
 const getMyLikedAnswers = async (sort: string, page: number, rowsPerPage = 4, desc = true) => {
-  const response = await axios({
+  const response = await request({
     method: 'get',
     url: `/api/v1/answer/like/mine?page=${page}&size=${rowsPerPage}&sort=${sort}${desc ? ',desc' : ''}`,
   })
+  if (!response) return []
   // todo: api 수정 후 아래와 주석과 같은 형태로 코드 수정되어야함
   // return response.data.content ? (response.data.content as Array<Answer>) : []
   const content: Array<any> = response.data.content
@@ -156,36 +177,28 @@ const getMyLikedAnswers = async (sort: string, page: number, rowsPerPage = 4, de
   })
 }
 const postAnswer = async (questionId: number, content: string) => {
-  try {
-    await axios({
-      method: 'post',
-      url: '/api/v1/answer',
-      data: {
-        content: content,
-        questionId: questionId,
-      },
-    })
-    return true
-  } catch (e) {
-    return false
-  }
+  const response = await request({
+    method: 'post',
+    url: '/api/v1/answer',
+    data: {
+      content: content,
+      questionId: questionId,
+    },
+  })
+  return response ? true : false
 }
 
 const postQuestion = async (content: string, tagList: Array<string>) => {
-  try {
-    await axios({
-      method: 'post',
-      url: '/api/v1/question',
-      data: {
-        content: content,
-        bookmarkCount: 0,
-        tags: tagList,
-      },
-    })
-    return true
-  } catch (e) {
-    return false
-  }
+  const response = await axios({
+    method: 'post',
+    url: '/api/v1/question',
+    data: {
+      content: content,
+      bookmarkCount: 0,
+      tags: tagList,
+    },
+  })
+  return response ? true : false
 }
 
 export {

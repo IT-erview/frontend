@@ -34,7 +34,7 @@ const QuestionDetail = (props: { questionId: number }) => {
     }
     const initQuestion = async () => {
       const question = await getQuestion(props.questionId)
-      setQuestion(question)
+      if (question) setQuestion(question)
     }
     const refreshAnswers = async () => {
       const fetchedAnswer = await getAnswers(props.questionId, sort, INITIAL_PAGE, ROWS_PER_PAGE)
