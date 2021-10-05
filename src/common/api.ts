@@ -36,7 +36,7 @@ const likeAnswer = (answerId: number, onSuccess: Function, onFailure: Function) 
 }
 
 const getQuestion = async (questionId: number) => {
-  const response = await axios({
+  const response = await request({
     method: 'get',
     url: `/api/v1/question/${questionId}`,
   })
@@ -45,7 +45,7 @@ const getQuestion = async (questionId: number) => {
 }
 
 const getQuestions = async (page: number, rowsPerPage: number) => {
-  const response = await axios({
+  const response = await request({
     method: 'get',
     url: '/api/v1/question/all',
     params: {
@@ -58,7 +58,7 @@ const getQuestions = async (page: number, rowsPerPage: number) => {
 }
 
 const getHitsAnswers = async () => {
-  const response = await axios({
+  const response = await request({
     method: 'get',
     url: '/api/v1/answer/hits',
   })
@@ -69,7 +69,7 @@ const getHitsAnswers = async () => {
 ///api/v1/question/mine?page=0&size=30&sort=${props.sortBy},desc
 // todo: sort 변경
 const getMyQuestions = async (sort: string, desc = true, page = 0, rowsPerPage = 30) => {
-  const response = await axios({
+  const response = await request({
     method: 'get',
     url: `/api/v1/question/mine?page=${page}&size=${rowsPerPage}&sort=${sort}${desc ? ',desc' : ''}`,
   })
@@ -78,7 +78,7 @@ const getMyQuestions = async (sort: string, desc = true, page = 0, rowsPerPage =
 }
 
 const getBookmarks = async (sort: string, desc = true, page = 0, rowsPerPage = 30) => {
-  const response = await axios({
+  const response = await request({
     method: 'get',
     url: `/api/v1/bookmark/mine?page=${page}&size=${rowsPerPage}&sort=${sort}${desc ? ',desc' : ''}`,
   })
@@ -96,7 +96,7 @@ const searchQuestions = async (
   page = 0,
   rowsPerPage = 30,
 ) => {
-  const response = await axios({
+  const response = await request({
     method: 'get',
     url: `/api/v1/question/search?keyword=${keyword}&page=${page}&size=${rowsPerPage}&tags=${tagList}&sort=${sort}${
       desc ? ',desc' : ''
@@ -107,7 +107,7 @@ const searchQuestions = async (
 }
 
 const addBookmark = async (questionId: number) => {
-  const response = await axios({
+  const response = await request({
     method: 'post',
     url: `/api/v1/bookmark/${questionId}`,
   })
@@ -189,7 +189,7 @@ const postAnswer = async (questionId: number, content: string) => {
 }
 
 const postQuestion = async (content: string, tagList: Array<string>) => {
-  const response = await axios({
+  const response = await request({
     method: 'post',
     url: '/api/v1/question',
     data: {

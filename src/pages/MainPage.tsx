@@ -51,8 +51,8 @@ const featureDescriptions = [
 
 const MainPage = () => {
   const history = useHistory()
-  const [questions, setQuestions] = useState<Array<Question>>()
-  const [hitsAnswers, setHitsAnswers] = useState<Array<Answer>>()
+  const [questions, setQuestions] = useState<Array<Question>>([])
+  const [hitsAnswers, setHitsAnswers] = useState<Array<Answer>>([])
 
   const [focusedFeatureDescriptionType, setFocusedFeatureDescriptionType] = useState<FeatureDescriptionType>(
     FeatureDescriptionType.SEARCH,
@@ -64,12 +64,10 @@ const MainPage = () => {
 
   useEffect(() => {
     const initQuestions = async () => {
-      const questions = await getQuestions(0, 3)
-      setQuestions(questions)
+      setQuestions(await getQuestions(0, 3))
     }
     const initHitsAnswers = async () => {
-      const answers = await getHitsAnswers()
-      setHitsAnswers(answers)
+      setHitsAnswers(await getHitsAnswers())
     }
     initQuestions()
     initHitsAnswers()
@@ -169,7 +167,7 @@ const MainPage = () => {
             </h1>
             <button className="hit-question-btn">더보기</button>
             <hr className="hit-question-hr" />
-            {questions &&
+            {questions.length > 0 &&
               questions.map((question, idx) => {
                 return (
                   <QuestionComponent
@@ -192,7 +190,7 @@ const MainPage = () => {
             </h1>
             <button className="hit-answer-btn">더보기</button>
             <hr className="hit-answer-hr" />
-            {hitsAnswers &&
+            {hitsAnswers.length > 0 &&
               hitsAnswers.map((answer, idx) => {
                 return (
                   <QuestionComponent
