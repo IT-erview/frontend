@@ -49,7 +49,7 @@ const QuizResult: React.FunctionComponent<{ quizzes: Array<QuestionType> } & Rou
           </div>
         </div>
         <div className="selected-quiz-tag">
-          <div className="selectd-quiz-tag-content">
+          <div className="selected-quiz-tag-content">
             <h4>퀴즈 태그</h4>
             <hr className="hr2" />
             {quizTags.map((tag: string, index: number) => {
