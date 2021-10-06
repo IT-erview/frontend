@@ -5,7 +5,7 @@ import { useState } from 'react'
 import QuizResult from 'components/QuizResult'
 import { MAX_TEXT_CONTENTS_LENGTH } from 'common/config'
 import { checkTextContentsLength } from 'common/util'
-import { postQuizAnswer } from 'common/api'
+import { postQuizAnswers } from 'common/api'
 
 const QuizSolving: React.FunctionComponent<{ quiz: any } & RouteComponentProps> = ({ quiz }: { quiz: any }) => {
   const [answerTextContents, setAnswerTextContents] = useState<string>('')
@@ -32,7 +32,7 @@ const QuizSolving: React.FunctionComponent<{ quiz: any } & RouteComponentProps> 
   }
 
   const submitQuizAnswer = () => {
-    postQuizAnswer(quizAnswers)
+    postQuizAnswers(quizAnswers)
     setShowResult(true)
   }
 
