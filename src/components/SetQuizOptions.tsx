@@ -5,7 +5,8 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button } from 're
 import { withRouter } from 'react-router-dom'
 import tagItems from 'constants/TagItems'
 import axios from 'axios'
-import QuizSolving from './QuizSolving'
+import QuizSolving from 'components/QuizSolving'
+import { Question } from 'common/type'
 
 const SetQuizOptions = (props: any) => {
   const [tagDropdownOpen, setTagDropdownOpen] = useState(false)
@@ -24,7 +25,7 @@ const SetQuizOptions = (props: any) => {
   const quizTag = localStorage.getItem('selectedQuizTag')
   const quizTagArr = JSON.parse(quizTag!)
 
-  const [allQuiz, setAllQuiz] = useState<Array<any>>([])
+  const [allQuiz, setAllQuiz] = useState<Array<Question>>([])
   // const [request, setRequest] = useState(false)
 
   let quizSize = localStorage.getItem('selectedQuizCnt')
