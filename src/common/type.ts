@@ -34,3 +34,8 @@ export type Question = {
 export type Tag = {
   tagTitle: string
 }
+
+export type Quiz = {
+  content: string
+  questionId: number
+}
