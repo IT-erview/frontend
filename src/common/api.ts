@@ -1,6 +1,6 @@
 // todo: sort 변경
 import axios, { AxiosRequestConfig } from 'axios'
-import { Answer, Bookmark, Question } from './type'
+import { Answer, Bookmark, Question, Quiz } from './type'
 
 const request = async (config: AxiosRequestConfig) => {
   try {
@@ -188,7 +188,7 @@ const postAnswer = async (questionId: number, content: string) => {
   return response ? true : false
 }
 
-const postQuizAnswers = async (quizAnswers: Array<{ content: string; questionId: number }>) => {
+const postQuizAnswers = async (quizAnswers: Array<Quiz>) => {
   const response = await request({
     method: 'post',
     url: '/api/v1/answer/',
