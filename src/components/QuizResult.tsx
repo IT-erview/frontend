@@ -66,14 +66,14 @@ const QuizResult = (props: any) => {
           <div className="hr4" />
         </div>
         <div className="each-questions">
-          {props.id.map(() => {
+          {props.quiz.map(() => {
             return (
               <Question
                 key={keyIndex++}
-                id={props.id[arrIndex]}
+                id={props.quiz[arrIndex].id}
                 number={++index}
-                content={props.content[arrIndex]}
-                tagList={props.tag[arrIndex++]}
+                content={props.quiz[arrIndex].content}
+                tagList={props.quiz[arrIndex++].tagList}
               />
             )
           })}

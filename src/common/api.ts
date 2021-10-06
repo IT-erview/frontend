@@ -188,6 +188,15 @@ const postAnswer = async (questionId: number, content: string) => {
   return response ? true : false
 }
 
+const postQuizAnswer = async (quizAnswers: Array<{ content: string; questionId: number }>) => {
+  const response = await request({
+    method: 'post',
+    url: '/api/v1/answer/',
+    data: quizAnswers,
+  })
+  return response ? true : false
+}
+
 const postQuestion = async (content: string, tagList: Array<string>) => {
   const response = await request({
     method: 'post',
@@ -215,5 +224,6 @@ export {
   getAnswers,
   getMyLikedAnswers,
   postAnswer,
+  postQuizAnswer,
   postQuestion,
 }

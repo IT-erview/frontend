@@ -1,150 +1,57 @@
 import 'css/QuizSolving.css'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { Form, Input } from 'reactstrap'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-// todo: refactoring
-import QuizResult from './QuizResult'
+import { useState } from 'react'
+import QuizResult from 'components/QuizResult'
+import { MAX_TEXT_CONTENTS_LENGTH } from 'common/config'
+import { checkTextContentsLength } from 'common/util'
+import { postQuizAnswer } from 'common/api'
 
 const QuizSolving: React.FunctionComponent<{ quiz: any } & RouteComponentProps> = ({ quiz }: { quiz: any }) => {
-  const [answerTextContents, setAnswerTextContents] = useState('')
-  const [allAnswer, setAllAnswer] = useState<
+  const [answerTextContents, setAnswerTextContents] = useState<string>('')
+  const [quizAnswers, setQuizAnswers] = useState<
     Array<{
       content: any
       questionId: any
     }>
   >([])
-  const [answerContentsLength, setAnswerContentsLength] = useState(0)
-  const [quizNum, setQuizNum] = useState(0)
-  const [quizIdNum, setQuizIdNum] = useState(0)
-  const [showResult, setShowResult] = useState(false)
-  const [allQuizTag] = useState<Array<any>>([])
+  const [showResult, setShowResult] = useState<boolean>(false)
+  const [quizIndex, setQuizIndex] = useState<number>(0)
 
-  let quizList: Array<any> = []
-  let quizIdList: Array<any> = []
-  let quizTagList = allQuizTag
-  let answerList = allAnswer
-
-  useEffect(() => {
-    setAnswerContentsLength(answerTextContents.length)
-    const answerArea = document.getElementById('answer-text-length')!
-    if (answerContentsLength >= 0 && answerContentsLength < 20) {
-      answerArea.style.setProperty('color', 'red')
-    } else if (answerContentsLength >= 1000) {
-      answerArea.style.setProperty('color', 'red')
+  const nextQuestion = () => {
+    if (checkTextContentsLength(answerTextContents)) {
+      setQuizAnswers([...quizAnswers, { content: answerTextContents, questionId: quiz[quizIndex].id }])
+      setAnswerTextContents('')
+      setQuizIndex((prev) => prev + 1)
+      if (quiz.length === quizIndex + 1) {
+        submitQuizAnswer()
+      }
     } else {
-      answerArea.style.setProperty('color', 'black')
+      window.alert('최소 20자 이상 입력해주세요')
     }
-  }, [answerContentsLength, answerTextContents.length])
-
-  quiz.forEach((item: any) => {
-    quizList.push(item.content)
-    quizIdList.push(item.id)
-  })
-
-  useEffect(() => {
-    // quizIdList.map((item, i) => {
-    //   return axios(`/api/v1/question/${quizIdList[i]}`)
-    //     .then((res) => {
-    //       // console.log(res.data.tagList)
-    //       quizTagList.push(res.data.tagList)
-    //       setAllQuizTag(quizTagList)
-    //       // console.log(quizTagList)
-    //     })
-    //     .catch((err) => {
-    //       console.log(err)
-    //     })
-    // })
-  }, [])
-
-  // note: ??
-  localStorage.setItem('quizId', quizIdList.toString())
-
-  const nextBtn = () => {
-    return (
-      <button
-        className="quiz-btn"
-        onClick={() => {
-          if (answerTextContents.length === 0) {
-            window.alert('퀴즈에 대한 답변을 입력해주세요!')
-          } else if (answerTextContents.length >= 1 && answerTextContents.length < 20) {
-            window.alert('최소 20자 이상 입력해주세요')
-          } else {
-            if (answerTextContents.length === 0) {
-              setQuizNum(quizNum + 1)
-              setQuizIdNum(quizIdNum + 1)
-            } else {
-              answerList.push({ content: answerTextContents, questionId: quizIdList[quizNum] })
-              setAllAnswer(answerList)
-              setAnswerTextContents('')
-              setQuizNum(quizNum + 1)
-              setQuizIdNum(quizIdNum + 1)
-              // console.log(answerList)
-            }
-          }
-        }}>
-        다음 문제로 넘어가기
-      </button>
-    )
   }
 
-  const exitQuizBtn = () => {
-    // console.log(quizNum)
-    return (
-      <button
-        className="quiz-btn"
-        onClick={() => {
-          if (answerTextContents.length >= 1 && answerTextContents.length < 20) {
-            window.alert('최소 20자 이상 입력해주세요')
-          } else {
-            if (answerTextContents.length === 0) {
-              postAnswer()
-              setShowResult(true)
-            } else {
-              answerList.push({ content: answerTextContents, questionId: quizIdList[quizNum] })
-              setAllAnswer(answerList)
-              // console.log(answerList)
-              postAnswer()
-              setShowResult(true)
-            }
-          }
-        }}>
-        퀴즈 종료 하기
-      </button>
-    )
-  }
-
-  const postAnswer = () => {
-    axios({
-      method: 'post',
-      url: '/api/v1/answer/',
-      data: allAnswer,
-    })
-      .then((res) => {
-        console.log(res)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+  const submitQuizAnswer = () => {
+    postQuizAnswer(quizAnswers)
+    setShowResult(true)
   }
 
   return (
     <div>
       {showResult ? (
-        <QuizResult id={quizIdList} content={quizList} tag={quizTagList}></QuizResult>
+        <QuizResult quiz={quiz} />
       ) : (
         <div className="quiz-box">
           <Form>
             <div className="breadcrumbs">
               <img src="/img/LOGO1.png" alt="iterview-logo" />
-              {/* {console.log(quiz)} */}
               <span>테스트 문제 {'>'} </span>
               <span>인기 문제 {'>'} </span>
               <span className="subhead">문제 제목</span>
             </div>
             <div className="quiz-title">
               <img src="/img/figure1.png" alt="quiz-logo" />
-              <span className="quiz-number">Quiz {quizNum + 1}.</span>
+              <span className="quiz-number">Quiz {quizIndex + 1}.</span>
               <span className="time-title">
                 <img className="timer-img" src="/img/nav_icon5.png" alt="quiz-timer-img"></img>
                 이번퀴즈 총 소요시간
@@ -155,14 +62,17 @@ const QuizSolving: React.FunctionComponent<{ quiz: any } & RouteComponentProps> 
             </div>
             <div className="quiz-contents-box">
               <h1 className="quiz-contents-title">문제 설명</h1>
-              <h1 className="quiz-contents">{quizList[quizNum]}</h1>
+              <h1 className="quiz-contents">{quiz[quizIndex].content}</h1>
             </div>
-            {/* {console.log(quizContents)} */}
-            <span id="answer-text-length">({answerTextContents.length}/1000)</span>
+            <span
+              id="answer-text-length"
+              style={{ color: checkTextContentsLength(answerTextContents) ? 'black' : 'red' }}>
+              ({answerTextContents.length}/{MAX_TEXT_CONTENTS_LENGTH})
+            </span>
             <Input
               type="textarea"
               value={answerTextContents}
-              maxLength={1000}
+              maxLength={MAX_TEXT_CONTENTS_LENGTH}
               onChange={(e) => {
                 setAnswerTextContents(e.target.value)
               }}
@@ -170,7 +80,11 @@ const QuizSolving: React.FunctionComponent<{ quiz: any } & RouteComponentProps> 
               placeholder="답을 입력해주세요."
             />
           </Form>
-          <div className="next-quiz">{quizNum !== quizList.length - 1 ? nextBtn() : exitQuizBtn()}</div>
+          <div className="next-quiz">
+            <button className="quiz-btn" onClick={() => nextQuestion()}>
+              {quiz.length !== quizIndex + 1 ? '다음 문제로 넘어가기' : '퀴즈 종료하기'}
+            </button>
+          </div>
         </div>
       )}
     </div>
