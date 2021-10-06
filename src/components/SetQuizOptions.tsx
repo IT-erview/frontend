@@ -173,7 +173,7 @@ const SetQuizOptions = (props: any) => {
           </div>
         </div>
       ) : (
-        <QuizSolving quiz={allQuiz}></QuizSolving>
+        <QuizSolving quizzes={allQuiz}></QuizSolving>
       )}
     </div>
   )
