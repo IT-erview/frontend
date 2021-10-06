@@ -1,7 +1,7 @@
 // todo: refactoring
 import 'css/QuizResult.css'
 import { useEffect } from 'react'
-import { withRouter } from 'react-router-dom'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 import Question from 'components/Question'
 import { Question as QuestionType } from 'common/type'
 
@@ -11,7 +11,11 @@ const getQuizTags = (): Array<string> => {
   return []
 }
 
-const QuizResult = (props: any) => {
+const QuizResult: React.FunctionComponent<{ quizzes: Array<QuestionType> } & RouteComponentProps> = ({
+  quizzes,
+}: {
+  quizzes: Array<QuestionType>
+}) => {
   const quizTags = getQuizTags()
 
   const changeTitle = () => {
@@ -74,7 +78,7 @@ const QuizResult = (props: any) => {
           <div className="hr4" />
         </div>
         <div className="each-questions">
-          {props.quiz.map((item: QuestionType, index: number) => {
+          {quizzes.map((item: QuestionType, index: number) => {
             return (
               <Question key={index} id={item.id} number={index + 1} content={item.content} tagList={item.tagList} />
             )
