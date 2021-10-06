@@ -2,20 +2,28 @@
 import 'css/QuizResult.css'
 import { useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
-import Question from './Question'
+import Question from 'components/Question'
+import { Question as QuestionType } from 'common/type'
+
+const getQuizTags = (): Array<string> => {
+  const storageQuizTags = localStorage.getItem('selectedQuizTag')
+  if (typeof storageQuizTags === 'string') return JSON.parse(storageQuizTags)
+  return []
+}
 
 const QuizResult = (props: any) => {
-  let index = 0
-  let arrIndex = 0
-  let keyIndex = 0
-  const tagItem = JSON.parse(localStorage.selectedQuizTag)
-  const midTitle = document.getElementById('quiz-option-title')!
-  const subTitle = document.getElementById('quiz-option-sub-title')!
+  const quizTags = getQuizTags()
 
-  useEffect(() => {
+  const changeTitle = () => {
+    const midTitle = document.getElementById('quiz-option-title')!
+    const subTitle = document.getElementById('quiz-option-sub-title')!
     midTitle.innerHTML = '면접문제 결과'
     subTitle.innerHTML = '본인이 풀었던 문제를 확인해보세요!'
-  }, [midTitle, subTitle])
+  }
+
+  useEffect(() => {
+    changeTitle()
+  }, [])
 
   return (
     <div className="quiz-result-page">
@@ -40,10 +48,10 @@ const QuizResult = (props: any) => {
           <div className="selectd-quiz-tag-content">
             <h4>퀴즈 태그</h4>
             <hr className="hr2" />
-            {tagItem.map((item: any, i: any) => {
+            {quizTags.map((tag: string, index: number) => {
               return (
-                <button key={i} className="tag-btn">
-                  {item}
+                <button key={index} className="tag-btn">
+                  {tag}
                 </button>
               )
             })}
@@ -66,15 +74,9 @@ const QuizResult = (props: any) => {
           <div className="hr4" />
         </div>
         <div className="each-questions">
-          {props.quiz.map(() => {
+          {props.quiz.map((item: QuestionType, index: number) => {
             return (
-              <Question
-                key={keyIndex++}
-                id={props.quiz[arrIndex].id}
-                number={++index}
-                content={props.quiz[arrIndex].content}
-                tagList={props.quiz[arrIndex++].tagList}
-              />
+              <Question key={index} id={item.id} number={index + 1} content={item.content} tagList={item.tagList} />
             )
           })}
         </div>
