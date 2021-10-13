@@ -130,7 +130,7 @@ const MainPage = () => {
               일일이 찾아야 했던 면접 질문과 답변들, 검증되지 않았던 정보들, 한번에 검색하고 검증된 정보를 받아보세요.
             </span>
             <div className="main-question-search-tag">
-              <Tags page="main-question-search" />
+              <Tags page="question-search" />
             </div>
             <button
               className="main-search-btn"

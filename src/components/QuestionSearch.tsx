@@ -6,6 +6,8 @@ import { Input } from 'reactstrap'
 import QuestionList from 'components/QuestionList'
 import SortSelectBox, { Sort } from './SortSelectBox'
 import { MAX_SEARCH_WORD_LENGTH } from 'common/config'
+import { useSelector } from 'react-redux'
+import { ReducerType } from 'modules/rootReducer'
 
 // 이미지로 대체 필요
 const searchIcon = () => {
@@ -42,20 +44,13 @@ const searchIcon = () => {
 }
 // <-- xd 복붙 끝
 
-const getQuestionSearchTags = (): Array<string> => {
-  const storageQuestionSearchTags = localStorage.getItem('questionSearchTag')
-  if (typeof storageQuestionSearchTags === 'string') return JSON.parse(storageQuestionSearchTags)
-  return []
-}
-
 const QuestionSearch = () => {
   const [keyword, setKeyword] = useState<string>('')
   const [questionSearchInput, setQuestionSearchInput] = useState<string>('')
-  const [questionSearchTags, setQuestionSearchTags] = useState<Array<string>>([])
+  const questionSearchTags = useSelector<ReducerType, Array<string>>((state) => state.searchTags)
   const [sort, setSort] = useState<Sort>(Sort.LIKED)
 
   const setOnInputChange = () => {
-    setQuestionSearchTags(getQuestionSearchTags)
     setKeyword(questionSearchInput)
     setQuestionSearchInput('')
   }
@@ -73,7 +68,7 @@ const QuestionSearch = () => {
         <img src="img/figure1.png" alt="question-search-tag-icon" />
         <span>문제 검색</span>
         <div className="question-tag-hr"></div>
-        <Tags className="question-tags" page="question-search" />
+        <Tags page="question-search" />
       </div>
       <div className="question-search-word">
         <Input

@@ -7,17 +7,13 @@ import { MAX_TEXT_CONTENTS_LENGTH, MIN_TEXT_CONTENTS_LENGTH } from 'common/confi
 import { checkTextContentsLength } from 'common/util'
 import { postQuestion } from 'common/api'
 import { MAX_DISPLAYED_TAG_COUNT } from 'common/config'
-
-const getQuestionTags = (): Array<string> => {
-  const storageQuestionTags = localStorage.getItem('questionRegiTag')
-  if (typeof storageQuestionTags === 'string') return JSON.parse(storageQuestionTags)
-  return []
-}
+import { useSelector } from 'react-redux'
+import { ReducerType } from 'modules/rootReducer'
 
 const QuestionRegister = ({ history }: { history: any }) => {
   const [questionTextContents, setQuestionTextContents] = useState<string>('')
   const [isRegistered, setRegistered] = useState<boolean>(false)
-  const questionTags = getQuestionTags()
+  const questionTags = useSelector<ReducerType, Array<string>>((state) => state.registerTags)
 
   let isRequesting = false
 
@@ -111,7 +107,9 @@ const QuestionRegister = ({ history }: { history: any }) => {
             <div className="question-register-tags">
               <h2>문제 태그 선택</h2>
               <div className="question-register-hr2" />
-              <Tags page="question-register" id="register-tags" />
+              <div id="register-tags">
+                <Tags page="question-register" />
+              </div>
               <Button onClick={registerQuestion}>등록하기</Button>
             </div>
           </div>
