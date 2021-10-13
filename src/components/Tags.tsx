@@ -1,38 +1,45 @@
 // todo: refactoring
-import { useEffect, useState } from 'react'
 import tagItems from 'constants/TagItems'
 import 'css/Tags.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { addRegisterTag, deleteRegisterTag } from 'modules/registerTags'
+import { addSearchTag, deleteSearchTag } from 'modules/searchTags'
+import { ReducerType } from 'modules/rootReducer'
+import { useState } from 'react'
 
-const Tags = (props: any) => {
-  const [selectedTag, setSelectedTag] = useState([])
+const Tags = (props: { page: 'question-register' | 'question-search' }) => {
+  const dispatch = useDispatch()
+  const alreadyTag = useSelector<ReducerType, Array<string>>((state) =>
+    props.page === 'question-register' ? state.registerTags : state.searchTags,
+  )
+  const [selectedTag, setSelectedTag] = useState(alreadyTag)
+  console.log(selectedTag)
 
   const selectThisTag = (e: any) => {
+    switch (props.page) {
+      case 'question-register':
+        dispatch(addRegisterTag(e.target.id))
+        break
+      case 'question-search':
+        dispatch(addSearchTag(e.target.id))
+        break
+    }
     setSelectedTag(selectedTag.concat(e.target.id))
   }
   const deselectThisTag = (e: any) => {
+    switch (props.page) {
+      case 'question-register':
+        dispatch(deleteRegisterTag(e.target.id))
+        break
+      case 'question-search':
+        dispatch(deleteSearchTag(e.target.id))
+        break
+    }
     setSelectedTag(selectedTag.filter((element) => element !== e.target.id))
   }
 
-  useEffect(() => {
-    if (localStorage.getItem('questionSearchTag')) {
-      // setSelectedTag(JSON.parse(localStorage.getItem('questionSearchTag')))
-    }
-  }, [])
-
-  useEffect(() => {
-    if (props.page === 'question-register') {
-      localStorage.setItem('questionRegiTag', JSON.stringify(selectedTag))
-    } else if (props.page === 'question-search') {
-      localStorage.setItem('questionSearchTag', JSON.stringify(selectedTag))
-    } else if (props.page === 'main-question-search') {
-      localStorage.setItem('questionSearchTag', JSON.stringify(selectedTag))
-    }
-  })
-
   const TagButtons = tagItems.map((tagItem) => {
-    // note: s
-    if (selectedTag) {
-      // if (selectedTag && selectedTag.includes(tagItem.name)) {
+    if (selectedTag && selectedTag.includes(tagItem.name)) {
       return (
         <button className="classification-tag-selected" key={tagItem.id} id={tagItem.name} onClick={deselectThisTag}>
           {tagItem.name}
