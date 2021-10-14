@@ -4,20 +4,15 @@ import { useEffect } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import Question from 'components/Question'
 import { Question as QuestionType } from 'common/type'
-
-const getQuizTags = (): Array<string> => {
-  const storageQuizTags = localStorage.getItem('selectedQuizTag')
-  if (typeof storageQuizTags === 'string') return JSON.parse(storageQuizTags)
-  return []
-}
+import { useSelector } from 'react-redux'
+import { ReducerType } from 'modules/rootReducer'
 
 const QuizResult: React.FunctionComponent<{ quizzes: Array<QuestionType> } & RouteComponentProps> = ({
   quizzes,
 }: {
   quizzes: Array<QuestionType>
 }) => {
-  const quizTags = getQuizTags()
-
+  const quizTags = useSelector<ReducerType, Array<string>>((state) => state.quizTags)
   const changeTitle = () => {
     const midTitle = document.getElementById('quiz-option-title')!
     const subTitle = document.getElementById('quiz-option-sub-title')!

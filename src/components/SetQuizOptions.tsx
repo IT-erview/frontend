@@ -4,29 +4,29 @@ import { useState } from 'react'
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button } from 'reactstrap'
 import { withRouter } from 'react-router-dom'
 import tagItems from 'constants/TagItems'
-import axios from 'axios'
 import QuizSolving from 'components/QuizSolving'
 import { Question } from 'common/type'
 import { useDispatch, useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
 import { addQuizTag, deleteQuizTag } from 'modules/quizTags'
+import { getQuizQuestions } from 'common/api'
 
 const SetQuizOptions = () => {
   const [tagDropdownOpen, setTagDropdownOpen] = useState<boolean>(false)
   const [cntDropdownOpen, setCntDropdownOpen] = useState<boolean>(false)
   const tagToggle = () => setTagDropdownOpen((prevState) => !prevState)
   const cntToggle = () => setCntDropdownOpen((prevState) => !prevState)
-  const [selectedQuizCnt, setSelectedQuizCnt] = useState<number>(0)
-  const selectedQuizTag = useSelector<ReducerType, Array<string>>((state) => state.quizTags)
+  const [quizCount, setQuizCount] = useState<number>(0)
+  const quizTags = useSelector<ReducerType, Array<string>>((state) => state.quizTags)
   const dispatch = useDispatch()
   const quizMinToMax = Array.from({ length: 26 }, (undefined, i) => i + 5)
 
-  const [allQuiz, setAllQuiz] = useState<Array<Question>>([])
+  const [quizzes, setQuizzes] = useState<Array<Question>>([])
   // todo: 리팩토링 필요
   const selectTag = (e: any) => {
-    if (selectedQuizTag.length > 9) {
+    if (quizTags.length > 9) {
       alert('지정할 수 있는 태그는 최대 10개입니다')
-    } else if (selectedQuizTag.includes(e.target.id)) {
+    } else if (quizTags.includes(e.target.id)) {
       alert('이미 선택된 태그입니다.')
     } else {
       dispatch(addQuizTag(e.target.id))
@@ -35,10 +35,13 @@ const SetQuizOptions = () => {
   const deselectTag = (e: any) => {
     dispatch(deleteQuizTag(e.target.id))
   }
+  const getQuizzes = async () => {
+    setQuizzes(await getQuizQuestions(quizCount, quizTags))
+  }
 
   return (
     <div>
-      {allQuiz.length === 0 ? (
+      {quizzes.length === 0 ? (
         <div>
           <div id="quiz-info-detail">
             풀고싶은
@@ -95,7 +98,7 @@ const SetQuizOptions = () => {
                     <DropdownMenu className="quiz-dropdown-menu">
                       {quizMinToMax.map((cnt, i) => {
                         return (
-                          <DropdownItem key={i} onClick={() => setSelectedQuizCnt(cnt)}>
+                          <DropdownItem key={i} onClick={() => setQuizCount(cnt)}>
                             {cnt}
                           </DropdownItem>
                         )
@@ -109,7 +112,7 @@ const SetQuizOptions = () => {
               <div>
                 <h4>선택된 퀴즈 태그</h4>
                 <hr className="two-line" />
-                {selectedQuizTag.map((tag, i) => {
+                {quizTags.map((tag, i) => {
                   return (
                     <Button className="selected-tag-btn" key={i} id={tag} onClick={deselectTag}>
                       {tag} ⅹ
@@ -120,29 +123,17 @@ const SetQuizOptions = () => {
               <div>
                 <h4>선택된 퀴즈 수</h4>
                 <hr className="two-line" />
-                <span className="quiz-cnt">{selectedQuizCnt}</span>
+                <span className="quiz-cnt">{quizCount}</span>
                 <span>개</span>
               </div>
-              <Button
-                className="quiz-start-btn"
-                onClick={() => {
-                  console.log('퀴즈 시작시작시작')
-                  axios
-                    .get(`/api/v1/question/quiz?size=${selectedQuizCnt}&tags=${selectedQuizTag}`)
-                    .then((res) => {
-                      setAllQuiz(res.data)
-                    })
-                    .catch((err) => {
-                      console.log(err)
-                    })
-                }}>
+              <Button className="quiz-start-btn" onClick={getQuizzes}>
                 시작하기
               </Button>
             </div>
           </div>
         </div>
       ) : (
-        <QuizSolving quizzes={allQuiz}></QuizSolving>
+        <QuizSolving quizzes={quizzes}></QuizSolving>
       )}
     </div>
   )
