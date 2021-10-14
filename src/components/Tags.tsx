@@ -15,7 +15,7 @@ const Tags = (props: { page: 'question-register' | 'question-search' }) => {
   const [selectedTag, setSelectedTag] = useState(alreadyTag)
   console.log(selectedTag)
 
-  const selectThisTag = (e: any) => {
+  const selectTag = (e: any) => {
     switch (props.page) {
       case 'question-register':
         dispatch(addRegisterTag(e.target.id))
@@ -26,7 +26,7 @@ const Tags = (props: { page: 'question-register' | 'question-search' }) => {
     }
     setSelectedTag(selectedTag.concat(e.target.id))
   }
-  const deselectThisTag = (e: any) => {
+  const deselectTag = (e: any) => {
     switch (props.page) {
       case 'question-register':
         dispatch(deleteRegisterTag(e.target.id))
@@ -41,13 +41,13 @@ const Tags = (props: { page: 'question-register' | 'question-search' }) => {
   const TagButtons = tagItems.map((tagItem) => {
     if (selectedTag && selectedTag.includes(tagItem.name)) {
       return (
-        <button className="classification-tag-selected" key={tagItem.id} id={tagItem.name} onClick={deselectThisTag}>
+        <button className="classification-tag-selected" key={tagItem.id} id={tagItem.name} onClick={deselectTag}>
           {tagItem.name}
         </button>
       )
     } else {
       return (
-        <button className="classification-tag-unselected" key={tagItem.id} id={tagItem.name} onClick={selectThisTag}>
+        <button className="classification-tag-unselected" key={tagItem.id} id={tagItem.name} onClick={selectTag}>
           {tagItem.name}
         </button>
       )
