@@ -6,7 +6,7 @@ import SortSelectBox, { Sort } from './SortSelectBox'
 import { MAX_SEARCH_WORD_LENGTH } from 'common/config'
 import { useDispatch, useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
-import { Question, TagForFrontend } from 'common/type'
+import { Question, TagSelectorItem } from 'common/type'
 import TagSelector from './TagSelector'
 import { setSearchTagSelected } from 'modules/searchTags'
 import QuestionList from './QuestionList'
@@ -50,7 +50,7 @@ const searchIcon = () => {
 const QuestionSearch = () => {
   const dispatch = useDispatch()
   const [questionSearchInput, setQuestionSearchInput] = useState<string>('')
-  const questionSearchTags = useSelector<ReducerType, Array<TagForFrontend>>((state) => state.searchTags)
+  const questionSearchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.searchTags)
   const [sort, setSort] = useState<Sort>(Sort.POPULAR)
   const [questions, setQuestions] = useState<Array<Question>>([])
 

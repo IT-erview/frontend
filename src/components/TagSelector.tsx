@@ -1,10 +1,10 @@
 // todo: refactoring
 import 'css/Tags.css'
 import { useState } from 'react'
-import { TagForFrontend } from 'common/type'
+import { TagSelectorItem } from 'common/type'
 
 const TagSelector = (props: {
-  tags: Array<TagForFrontend>
+  tags: Array<TagSelectorItem>
   onTagSelect: (tagId: number, isSelected: boolean) => void
 }) => {
   const [tags, setTags] = useState(props.tags)

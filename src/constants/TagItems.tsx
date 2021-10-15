@@ -1,6 +1,7 @@
-import { TagForFrontend } from 'common/type'
+import { TagSelectorItem } from 'common/type'
 
-const tagItems: Array<TagForFrontend> = [
+// todo: api 연결
+const tagItems: Array<TagSelectorItem> = [
   {
     id: 1,
     name: '알고리즘',

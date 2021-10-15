@@ -9,7 +9,7 @@ import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'
 import QuestionComponent from 'components/Question'
 import { getHitsAnswers, getQuestions } from 'common/api'
-import { Answer, Question, TagForFrontend } from 'common/type'
+import { Answer, Question, TagSelectorItem } from 'common/type'
 import { getCookie } from 'components/Cookies'
 import TagSelector from 'components/TagSelector'
 import { setSearchTagSelected } from 'modules/searchTags'
@@ -60,7 +60,7 @@ const MainPage = () => {
   const [focusedFeatureDescriptionType, setFocusedFeatureDescriptionType] = useState<FeatureDescriptionType>(
     FeatureDescriptionType.SEARCH,
   )
-  const questionSearchTags = useSelector<ReducerType, Array<TagForFrontend>>((state) => state.searchTags)
+  const questionSearchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.searchTags)
 
   const isFocused = (type: FeatureDescriptionType) => {
     return focusedFeatureDescriptionType === type

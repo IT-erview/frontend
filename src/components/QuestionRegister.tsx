@@ -9,14 +9,14 @@ import { MAX_DISPLAYED_TAG_COUNT } from 'common/config'
 import { useDispatch, useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
 import TagSelector from './TagSelector'
-import { TagForFrontend } from 'common/type'
+import { TagSelectorItem } from 'common/type'
 import { setRegisterTagSelected } from 'modules/registerTags'
 
 const QuestionRegister = ({ history }: { history: any }) => {
   const dispatch = useDispatch()
   const [questionTextContents, setQuestionTextContents] = useState<string>('')
   const [isRegistered, setRegistered] = useState<boolean>(false)
-  const questionTags = useSelector<ReducerType, Array<TagForFrontend>>((state) => state.registerTags)
+  const questionTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.registerTags)
 
   let isRequesting = false
 
