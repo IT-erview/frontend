@@ -40,8 +40,7 @@ export type Quiz = {
   questionId: number
 }
 
-// todo: type 네이밍 분리 작업 바로 다음 커밋 예정
-export type TagForFrontend = {
+export type TagSelectorItem = {
   id: number
   name: string
   isSelected: boolean
