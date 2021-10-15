@@ -1,13 +1,14 @@
 // todo: refactoring
 import 'css/QuestionSearch.css'
-import Tags from 'components/Tags'
 import { useState } from 'react'
 import { Input } from 'reactstrap'
-import QuestionList from 'components/QuestionList'
 import SortSelectBox, { Sort } from './SortSelectBox'
 import { MAX_SEARCH_WORD_LENGTH } from 'common/config'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
+import { TagForFrontend } from 'common/type'
+import TagSelector from './TagSelector'
+import { setSearchTagSelected } from 'modules/searchTags'
 
 // 이미지로 대체 필요
 const searchIcon = () => {
@@ -45,15 +46,18 @@ const searchIcon = () => {
 // <-- xd 복붙 끝
 
 const QuestionSearch = () => {
-  const [keyword, setKeyword] = useState<string>('')
+  const dispatch = useDispatch()
+  // const [keyword, setKeyword] = useState<string>('')
   const [questionSearchInput, setQuestionSearchInput] = useState<string>('')
-  const questionSearchTags = useSelector<ReducerType, Array<string>>((state) => state.searchTags)
+  const questionSearchTags = useSelector<ReducerType, Array<TagForFrontend>>((state) => state.searchTags)
   const [sort, setSort] = useState<Sort>(Sort.LIKED)
 
   const setOnInputChange = () => {
-    setKeyword(questionSearchInput)
+    // setKeyword(questionSearchInput)
     setQuestionSearchInput('')
   }
+
+  const onTagSelect = (tagId: number, isSelected: boolean) => dispatch(setSearchTagSelected({ tagId, isSelected }))
 
   return (
     <div className="question-search">
@@ -68,7 +72,7 @@ const QuestionSearch = () => {
         <img src="img/figure1.png" alt="question-search-tag-icon" />
         <span>문제 검색</span>
         <div className="question-tag-hr"></div>
-        <Tags page="question-search" />
+        <TagSelector tags={questionSearchTags} onTagSelect={onTagSelect} />
       </div>
       <div className="question-search-word">
         <Input
@@ -95,12 +99,12 @@ const QuestionSearch = () => {
           </div>
         </div>
         <div className="question-section">
-          <QuestionList
+          {/* <QuestionList
             tagList={questionSearchTags}
             sort={sort === Sort.LIKED ? 'bookmarkCount' : 'createdDate'}
             keyword={keyword}
             type={'search'}
-          />
+          /> */}
         </div>
       </div>
     </div>
