@@ -39,3 +39,10 @@ export type Quiz = {
   content: string
   questionId: number
 }
+
+// todo: type 네이밍 분리 작업 바로 다음 커밋 예정
+export type TagForFrontend = {
+  id: number
+  name: string
+  isSelected: boolean
+}
