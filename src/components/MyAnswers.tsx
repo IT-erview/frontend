@@ -15,7 +15,7 @@ export enum MyAnswerType {
 const MyAnswers = (props: { type: MyAnswerType }) => {
   const ROWS_PER_PAGE = 4
   const INITIAL_PAGE = 0
-  const [sort, setSort] = useState<Sort>(Sort.LIKED)
+  const [sort, setSort] = useState<Sort>(Sort.POPULAR)
   const [page, setPage] = useState(INITIAL_PAGE)
   const [hasMore, setHasMore] = useState(true)
   const [answers, setAnswers] = useState<Array<Answer>>([])

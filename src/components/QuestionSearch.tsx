@@ -6,9 +6,11 @@ import SortSelectBox, { Sort } from './SortSelectBox'
 import { MAX_SEARCH_WORD_LENGTH } from 'common/config'
 import { useDispatch, useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
-import { TagForFrontend } from 'common/type'
+import { Question, TagForFrontend } from 'common/type'
 import TagSelector from './TagSelector'
 import { setSearchTagSelected } from 'modules/searchTags'
+import QuestionList from './QuestionList'
+import { searchQuestions } from 'common/api'
 
 // 이미지로 대체 필요
 const searchIcon = () => {
@@ -47,13 +49,18 @@ const searchIcon = () => {
 
 const QuestionSearch = () => {
   const dispatch = useDispatch()
-  // const [keyword, setKeyword] = useState<string>('')
   const [questionSearchInput, setQuestionSearchInput] = useState<string>('')
   const questionSearchTags = useSelector<ReducerType, Array<TagForFrontend>>((state) => state.searchTags)
-  const [sort, setSort] = useState<Sort>(Sort.LIKED)
+  const [sort, setSort] = useState<Sort>(Sort.POPULAR)
+  const [questions, setQuestions] = useState<Array<Question>>([])
 
-  const setOnInputChange = () => {
-    // setKeyword(questionSearchInput)
+  const search = async () => {
+    const searchResults = await searchQuestions(
+      questionSearchInput,
+      sort,
+      questionSearchTags.filter((tag) => tag.isSelected).map((tag) => tag.name),
+    )
+    setQuestions(searchResults)
     setQuestionSearchInput('')
   }
 
@@ -86,7 +93,7 @@ const QuestionSearch = () => {
           placeholder="관련어를 검색해주세요"
         />
         {searchIcon()}
-        <button onClick={setOnInputChange}>검색하기</button>
+        <button onClick={search}>검색하기</button>
       </div>
       <div className="searched-question">
         <div className="title-sort">
@@ -99,12 +106,7 @@ const QuestionSearch = () => {
           </div>
         </div>
         <div className="question-section">
-          {/* <QuestionList
-            tagList={questionSearchTags}
-            sort={sort === Sort.LIKED ? 'bookmarkCount' : 'createdDate'}
-            keyword={keyword}
-            type={'search'}
-          /> */}
+          <QuestionList questions={questions} />
         </div>
       </div>
     </div>

@@ -29,7 +29,7 @@ const QuestionRegister = ({ history }: { history: any }) => {
     isRequesting = true
     const result = await postQuestion(
       questionTextContents,
-      questionTags.map((tag) => tag.name),
+      questionTags.filter((tag) => tag.isSelected).map((tag) => tag.name),
     ).finally(() => {
       isRequesting = false
     })
@@ -68,8 +68,8 @@ const QuestionRegister = ({ history }: { history: any }) => {
                   questionTags.map((tag, index) => {
                     return (
                       index < MAX_DISPLAYED_TAG_COUNT && (
-                        <div className="question-register-after-tags" key={index}>
-                          {tag}
+                        <div className="question-register-after-tags" key={tag.id}>
+                          {tag.name}
                         </div>
                       )
                     )

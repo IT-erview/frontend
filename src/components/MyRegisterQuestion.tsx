@@ -1,11 +1,21 @@
 import 'css/MyRegisterQuestion.css'
 import MyPageProfile from 'components/MyPageProfile'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import QuestionList from 'components/QuestionList'
 import SortSelectBox, { Sort } from './SortSelectBox'
+import { getMyQuestions } from 'common/api'
+import { Question } from 'common/type'
 
 const MyRegisterQuestion = () => {
-  const [sort, setSort] = useState<Sort>(Sort.LIKED)
+  const [sort, setSort] = useState<Sort>(Sort.POPULAR)
+  const [questions, setQuestions] = useState<Array<Question>>([])
+
+  useEffect(() => {
+    const initQuestions = async () => {
+      setQuestions(await getMyQuestions(sort))
+    }
+    initQuestions()
+  }, [sort])
 
   return (
     <div className="mypage-register-question">
@@ -18,7 +28,7 @@ const MyRegisterQuestion = () => {
           </span>
           <SortSelectBox defaultSort={sort} onSortChanged={(sort) => setSort(sort)} />
         </div>
-        <QuestionList sort={sort === Sort.LIKED ? 'bookmarkCount' : 'createdDate'} type={'question'} />
+        <QuestionList questions={questions} />
       </div>
     </div>
   )

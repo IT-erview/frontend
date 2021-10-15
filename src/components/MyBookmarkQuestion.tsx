@@ -1,11 +1,21 @@
 import 'css/MyBookmarkQuestion.css'
 import MyPageProfile from 'components/MyPageProfile'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import QuestionList from 'components/QuestionList'
 import SortSelectBox, { Sort } from './SortSelectBox'
+import { getBookmarks } from 'common/api'
+import { Question } from 'common/type'
 
 const MyBookmarkQuestion = () => {
-  const [sort, setSort] = useState<Sort>(Sort.LIKED)
+  const [sort, setSort] = useState<Sort>(Sort.POPULAR)
+  const [questions, setQuestions] = useState<Array<Question>>([])
+
+  useEffect(() => {
+    const initQuestions = async () => {
+      setQuestions(await getBookmarks(sort, false))
+    }
+    initQuestions()
+  }, [sort])
 
   return (
     <div className="mypage-register-bookmark">
@@ -18,10 +28,7 @@ const MyBookmarkQuestion = () => {
           </span>
           <SortSelectBox defaultSort={sort} onSortChanged={(sort) => setSort(sort)} />
         </div>
-        <QuestionList
-          sort={sort === Sort.LIKED ? 'question_bookmarkCount' : 'question_createdDate'}
-          type={'bookmark'}
-        />
+        <QuestionList questions={questions} />
       </div>
     </div>
   )
