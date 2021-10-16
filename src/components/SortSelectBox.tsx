@@ -2,8 +2,8 @@ import { CSSProperties, useState } from 'react'
 import 'css/QuestionDetail.css'
 
 export enum Sort {
-  LIKED = 'liked',
-  LATEST = 'createdDate',
+  POPULAR = 'popular',
+  LATEST = 'latest',
 }
 
 const SortSelectBox = (props: { defaultSort: Sort; onSortChanged: (sort: Sort) => void }) => {
@@ -34,7 +34,7 @@ const SortSelectBox = (props: { defaultSort: Sort; onSortChanged: (sort: Sort) =
       <button style={getSortButtonStyles(Sort.LATEST)} id="sort-by-latest" onClick={() => onSortSelect(Sort.LATEST)}>
         최신순
       </button>
-      <button style={getSortButtonStyles(Sort.LIKED)} id="sort-by-like" onClick={() => onSortSelect(Sort.LIKED)}>
+      <button style={getSortButtonStyles(Sort.POPULAR)} id="sort-by-like" onClick={() => onSortSelect(Sort.POPULAR)}>
         인기순
       </button>
     </>

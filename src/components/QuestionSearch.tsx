@@ -1,13 +1,16 @@
 // todo: refactoring
 import 'css/QuestionSearch.css'
-import Tags from 'components/Tags'
 import { useState } from 'react'
 import { Input } from 'reactstrap'
-import QuestionList from 'components/QuestionList'
-import SortSelectBox, { Sort } from './SortSelectBox'
+import SortSelectBox, { Sort } from 'components/SortSelectBox'
 import { MAX_SEARCH_WORD_LENGTH } from 'common/config'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
+import { Question, TagSelectorItem } from 'common/type'
+import TagSelector from 'components/TagSelector'
+import { setSearchTagSelected } from 'modules/searchTags'
+import QuestionList from 'components/QuestionList'
+import { searchQuestions } from 'common/api'
 
 // 이미지로 대체 필요
 const searchIcon = () => {
@@ -45,15 +48,24 @@ const searchIcon = () => {
 // <-- xd 복붙 끝
 
 const QuestionSearch = () => {
-  const [keyword, setKeyword] = useState<string>('')
+  const dispatch = useDispatch()
   const [questionSearchInput, setQuestionSearchInput] = useState<string>('')
-  const questionSearchTags = useSelector<ReducerType, Array<string>>((state) => state.searchTags)
-  const [sort, setSort] = useState<Sort>(Sort.LIKED)
 
-  const setOnInputChange = () => {
-    setKeyword(questionSearchInput)
+  const questionSearchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.searchTags)
+  const [sort, setSort] = useState<Sort>(Sort.POPULAR)
+  const [questions, setQuestions] = useState<Array<Question>>([])
+
+  const search = async () => {
+    const searchResults = await searchQuestions(
+      questionSearchInput,
+      sort,
+      questionSearchTags.filter((tag) => tag.isSelected).map((tag) => tag.name),
+    )
+    setQuestions(searchResults)
     setQuestionSearchInput('')
   }
+
+  const onTagSelect = (tagId: number, isSelected: boolean) => dispatch(setSearchTagSelected({ tagId, isSelected }))
 
   return (
     <div className="question-search">
@@ -68,7 +80,8 @@ const QuestionSearch = () => {
         <img src="img/figure1.png" alt="question-search-tag-icon" />
         <span>문제 검색</span>
         <div className="question-tag-hr"></div>
-        <Tags page="question-search" />
+
+        <TagSelector tags={questionSearchTags} onTagSelect={onTagSelect} />
       </div>
       <div className="question-search-word">
         <Input
@@ -82,7 +95,7 @@ const QuestionSearch = () => {
           placeholder="관련어를 검색해주세요"
         />
         {searchIcon()}
-        <button onClick={setOnInputChange}>검색하기</button>
+        <button onClick={search}>검색하기</button>
       </div>
       <div className="searched-question">
         <div className="title-sort">
@@ -95,12 +108,7 @@ const QuestionSearch = () => {
           </div>
         </div>
         <div className="question-section">
-          <QuestionList
-            tagList={questionSearchTags}
-            sort={sort === Sort.LIKED ? 'bookmarkCount' : 'createdDate'}
-            keyword={keyword}
-            type={'search'}
-          />
+          <QuestionList questions={questions} />
         </div>
       </div>
     </div>

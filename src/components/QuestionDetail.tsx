@@ -17,7 +17,7 @@ const QuestionDetail = (props: { questionId: number }) => {
   const [answers, setAnswers] = useState<Array<Answer>>([])
   const [hasMore, setHasMore] = useState(true)
   const [page, setPage] = useState(INITIAL_PAGE)
-  const [sort, setSort] = useState<Sort>(Sort.LIKED)
+  const [sort, setSort] = useState<Sort>(Sort.POPULAR)
 
   const fetchAnswers = async () => {
     if (!hasMore) return

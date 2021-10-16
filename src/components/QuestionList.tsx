@@ -1,30 +1,12 @@
-import { useEffect, useState } from 'react'
 import 'css/Navigation.css'
 import QuestionComponent from 'components/Question'
-import { getBookmarks, getMyQuestions, searchQuestions } from 'common/api'
 import { Question } from 'common/type'
 
-const QuestionList = (props: {
-  sort: string
-  type: 'bookmark' | 'question' | 'search'
-  tagList?: Array<string>
-  keyword?: string
-}) => {
-  const [questions, setQuestions] = useState<Array<Question>>([])
-
-  useEffect(() => {
-    const initQuestions = async () => {
-      if (props.type === 'bookmark') return setQuestions(await getBookmarks(props.sort, false))
-      if (props.type === 'question') return setQuestions(await getMyQuestions(props.sort))
-      return setQuestions(await searchQuestions(props.keyword || '', props.sort, props.tagList))
-    }
-    initQuestions()
-  }, [props.sort, props.keyword, props.tagList, props.type])
-
+const QuestionList = (props: { questions: Array<Question> }) => {
   return (
     <div>
-      {(questions.length > 0 &&
-        questions.map((question, index) => (
+      {(props.questions.length > 0 &&
+        props.questions.map((question, index) => (
           <div key={question.id}>
             <div>
               <QuestionComponent

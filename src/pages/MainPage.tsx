@@ -1,7 +1,6 @@
 // memo 제외하고 대부분 완료
 import 'css/MainPage.css'
 import MainCarousel from 'components/MainCarousel'
-import Tags from 'components/Tags'
 import { Link, useHistory } from 'react-router-dom'
 import { JWT_TOKEN } from 'constants/Oauth'
 import axios from 'axios'
@@ -10,8 +9,12 @@ import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'
 import QuestionComponent from 'components/Question'
 import { getHitsAnswers, getQuestions } from 'common/api'
-import { Answer, Question } from 'common/type'
+import { Answer, Question, TagSelectorItem } from 'common/type'
 import { getCookie } from 'components/Cookies'
+import TagSelector from 'components/TagSelector'
+import { setSearchTagSelected } from 'modules/searchTags'
+import { useDispatch, useSelector } from 'react-redux'
+import { ReducerType } from 'modules/rootReducer'
 
 // header 설정
 axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`
@@ -50,17 +53,20 @@ const featureDescriptions = [
 ]
 
 const MainPage = () => {
+  const dispatch = useDispatch()
   const history = useHistory()
   const [questions, setQuestions] = useState<Array<Question>>([])
   const [hitsAnswers, setHitsAnswers] = useState<Array<Answer>>([])
-
   const [focusedFeatureDescriptionType, setFocusedFeatureDescriptionType] = useState<FeatureDescriptionType>(
     FeatureDescriptionType.SEARCH,
   )
+  const questionSearchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.searchTags)
 
   const isFocused = (type: FeatureDescriptionType) => {
     return focusedFeatureDescriptionType === type
   }
+
+  const onTagSelect = (tagId: number, isSelected: boolean) => dispatch(setSearchTagSelected({ tagId, isSelected }))
 
   useEffect(() => {
     const initQuestions = async () => {
@@ -130,7 +136,7 @@ const MainPage = () => {
               일일이 찾아야 했던 면접 질문과 답변들, 검증되지 않았던 정보들, 한번에 검색하고 검증된 정보를 받아보세요.
             </span>
             <div className="main-question-search-tag">
-              <Tags page="question-search" />
+              <TagSelector tags={questionSearchTags} onTagSelect={onTagSelect} />
             </div>
             <button
               className="main-search-btn"

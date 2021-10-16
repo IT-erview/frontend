@@ -39,3 +39,9 @@ export type Quiz = {
   content: string
   questionId: number
 }
+
+export type TagSelectorItem = {
+  id: number
+  name: string
+  isSelected: boolean
+}

@@ -1,17 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { TagSelectorItem } from 'common/type'
+import tagItems from 'constants/TagItems'
 
 const searchTags = createSlice({
-  name: 'searchTagReducer',
-  initialState: [],
+  name: 'searchTagsReducer',
+  initialState: tagItems,
   reducers: {
-    addSearchTag: (state: Array<string>, action) => {
-      state.push(action.payload)
-    },
-    deleteSearchTag: (state, action) => {
-      return state.filter((tag) => tag !== action.payload)
+    setSearchTagSelected: (
+      state: Array<TagSelectorItem>,
+      action: PayloadAction<{ tagId: number; isSelected: boolean }>,
+    ) => {
+      return state.map((tag) =>
+        tag.id === action.payload.tagId ? { ...tag, isSelected: action.payload.isSelected } : tag,
+      )
     },
   },
 })
 
-export const { addSearchTag, deleteSearchTag } = searchTags.actions
+export const { setSearchTagSelected } = searchTags.actions
 export default searchTags.reducer

@@ -1,5 +1,4 @@
 import 'css/QuestionRegister.css'
-import Tags from 'components/Tags'
 import { useState } from 'react'
 import { Form, Input, Button } from 'reactstrap'
 import { withRouter } from 'react-router-dom'
@@ -7,13 +6,17 @@ import { MAX_TEXT_CONTENTS_LENGTH, MIN_TEXT_CONTENTS_LENGTH } from 'common/confi
 import { checkTextContentsLength } from 'common/util'
 import { postQuestion } from 'common/api'
 import { MAX_DISPLAYED_TAG_COUNT } from 'common/config'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
+import TagSelector from 'components/TagSelector'
+import { TagSelectorItem } from 'common/type'
+import { setRegisterTagSelected } from 'modules/registerTags'
 
 const QuestionRegister = ({ history }: { history: any }) => {
+  const dispatch = useDispatch()
   const [questionTextContents, setQuestionTextContents] = useState<string>('')
   const [isRegistered, setRegistered] = useState<boolean>(false)
-  const questionTags = useSelector<ReducerType, Array<string>>((state) => state.registerTags)
+  const questionTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.registerTags)
 
   let isRequesting = false
 
@@ -24,7 +27,10 @@ const QuestionRegister = ({ history }: { history: any }) => {
     }
     if (isRequesting) return
     isRequesting = true
-    const result = await postQuestion(questionTextContents, questionTags).finally(() => {
+    const result = await postQuestion(
+      questionTextContents,
+      questionTags.filter((tag) => tag.isSelected).map((tag) => tag.name),
+    ).finally(() => {
       isRequesting = false
     })
     if (result) {
@@ -34,6 +40,8 @@ const QuestionRegister = ({ history }: { history: any }) => {
       window.alert('문제가 등록되지 않았습니다.')
     }
   }
+
+  const onTagSelect = (tagId: number, isSelected: boolean) => dispatch(setRegisterTagSelected({ tagId, isSelected }))
 
   return (
     <div className="question-register">
@@ -60,8 +68,8 @@ const QuestionRegister = ({ history }: { history: any }) => {
                   questionTags.map((tag, index) => {
                     return (
                       index < MAX_DISPLAYED_TAG_COUNT && (
-                        <div className="question-register-after-tags" key={index}>
-                          {tag}
+                        <div className="question-register-after-tags" key={tag.id}>
+                          {tag.name}
                         </div>
                       )
                     )
@@ -108,7 +116,7 @@ const QuestionRegister = ({ history }: { history: any }) => {
               <h2>문제 태그 선택</h2>
               <div className="question-register-hr2" />
               <div id="register-tags">
-                <Tags page="question-register" />
+                <TagSelector tags={questionTags} onTagSelect={onTagSelect} />
               </div>
               <Button onClick={registerQuestion}>등록하기</Button>
             </div>

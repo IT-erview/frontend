@@ -1,17 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { TagSelectorItem } from 'common/type'
+import tagItems from 'constants/TagItems'
 
 const registerTags = createSlice({
-  name: 'registerTagReducer',
-  initialState: [],
+  name: 'registerTagsReducer',
+  initialState: tagItems,
   reducers: {
-    addRegisterTag: (state: Array<string>, action) => {
-      state.push(action.payload)
-    },
-    deleteRegisterTag: (state, action) => {
-      return state.filter((tag) => tag !== action.payload)
+    setRegisterTagSelected: (
+      state: Array<TagSelectorItem>,
+      action: PayloadAction<{ tagId: number; isSelected: boolean }>,
+    ) => {
+      return state.map((tag) =>
+        tag.id === action.payload.tagId ? { ...tag, isSelected: action.payload.isSelected } : tag,
+      )
     },
   },
 })
 
-export const { addRegisterTag, deleteRegisterTag } = registerTags.actions
+export const { setRegisterTagSelected } = registerTags.actions
 export default registerTags.reducer
