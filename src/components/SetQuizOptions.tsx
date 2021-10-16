@@ -23,17 +23,20 @@ const SetQuizOptions = () => {
 
   const [quizzes, setQuizzes] = useState<Array<Question>>([])
   // todo: 리팩토링 필요
-  const selectTag = (e: any) => {
+  const selectTag = (tag: React.MouseEvent<HTMLElement>) => {
+    const tagId = (tag.target as HTMLElement).id
+
     if (quizTags.length > 9) {
       alert('지정할 수 있는 태그는 최대 10개입니다')
-    } else if (quizTags.includes(e.target.id)) {
+    } else if (quizTags.includes(tagId)) {
       alert('이미 선택된 태그입니다.')
     } else {
-      dispatch(addQuizTag(e.target.id))
+      dispatch(addQuizTag(tagId))
     }
   }
-  const deselectTag = (e: any) => {
-    dispatch(deleteQuizTag(e.target.id))
+  const deselectTag = (tag: React.MouseEvent<HTMLElement>) => {
+    const tagId = (tag.target as HTMLElement).id
+    dispatch(deleteQuizTag(tagId))
   }
   const getQuizzes = async () => {
     setQuizzes(await getQuizQuestions(quizCount, quizTags))
