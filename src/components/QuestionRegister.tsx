@@ -19,7 +19,6 @@ const QuestionRegister = ({ history }: { history: any }) => {
   const questionTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.registerTags)
 
   let isRequesting = false
-
   const registerQuestion = async () => {
     if (!checkTextContentsLength(questionTextContents)) {
       window.alert(`최소 ${MIN_TEXT_CONTENTS_LENGTH}자 이상 입력해주세요`)
@@ -67,7 +66,8 @@ const QuestionRegister = ({ history }: { history: any }) => {
                 {questionTags &&
                   questionTags.map((tag, index) => {
                     return (
-                      index < MAX_DISPLAYED_TAG_COUNT && (
+                      index < MAX_DISPLAYED_TAG_COUNT &&
+                      tag.isSelected && (
                         <div className="question-register-after-tags" key={tag.id}>
                           {tag.name}
                         </div>

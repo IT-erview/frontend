@@ -1,6 +1,6 @@
 // todo: refactoring
 import 'css/QuestionSearch.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Input } from 'reactstrap'
 import SortSelectBox, { Sort } from 'components/SortSelectBox'
 import { MAX_SEARCH_WORD_LENGTH } from 'common/config'
@@ -64,6 +64,10 @@ const QuestionSearch = () => {
     setQuestions(searchResults)
     setQuestionSearchInput('')
   }
+
+  useEffect(() => {
+    search()
+  }, [])
 
   const onTagSelect = (tagId: number, isSelected: boolean) => dispatch(setSearchTagSelected({ tagId, isSelected }))
 

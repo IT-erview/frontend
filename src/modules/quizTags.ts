@@ -1,20 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { TagSelectorItem } from 'common/type'
+import tagItems from 'constants/TagItems'
 
 const quizTags = createSlice({
   name: 'quizTagsReducer',
-  initialState: [],
+  initialState: tagItems,
   reducers: {
-    addQuizTag: (state: Array<string>, action) => {
-      state.push(action.payload)
-    },
-    deleteQuizTag: (state, action) => {
-      return state.filter((tag) => tag !== action.payload)
-    },
-    clearQuizTag: () => {
-      return []
+    setQuizTagSelected: (
+      state: Array<TagSelectorItem>,
+      action: PayloadAction<{ tagId: number; isSelected: boolean }>,
+    ) => {
+      return state.map((tag) =>
+        tag.id === action.payload.tagId ? { ...tag, isSelected: action.payload.isSelected } : tag,
+      )
     },
   },
 })
 
-export const { addQuizTag, deleteQuizTag, clearQuizTag } = quizTags.actions
+export const { setQuizTagSelected } = quizTags.actions
 export default quizTags.reducer

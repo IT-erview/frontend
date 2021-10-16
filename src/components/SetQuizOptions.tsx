@@ -5,11 +5,11 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button } from 're
 import { withRouter } from 'react-router-dom'
 import tagItems from 'constants/TagItems'
 import QuizSolving from 'components/QuizSolving'
-import { Question } from 'common/type'
+import { Question, TagSelectorItem } from 'common/type'
 import { useDispatch, useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
-import { addQuizTag, deleteQuizTag } from 'modules/quizTags'
 import { getQuizQuestions } from 'common/api'
+import { setQuizTagSelected } from 'modules/quizTags'
 
 const SetQuizOptions = () => {
   const [tagDropdownOpen, setTagDropdownOpen] = useState<boolean>(false)
@@ -17,29 +17,36 @@ const SetQuizOptions = () => {
   const tagToggle = () => setTagDropdownOpen((prevState) => !prevState)
   const cntToggle = () => setCntDropdownOpen((prevState) => !prevState)
   const [quizCount, setQuizCount] = useState<number>(0)
-  const quizTags = useSelector<ReducerType, Array<string>>((state) => state.quizTags)
+  const quizTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.quizTags)
   const dispatch = useDispatch()
   const quizMinToMax = Array.from({ length: 26 }, (undefined, i) => i + 5)
 
   const [quizzes, setQuizzes] = useState<Array<Question>>([])
   // todo: 리팩토링 필요
   const selectTag = (tag: React.MouseEvent<HTMLElement>) => {
-    const tagId = (tag.target as HTMLElement).id
-
-    if (quizTags.length > 9) {
-      alert('지정할 수 있는 태그는 최대 10개입니다')
-    } else if (quizTags.includes(tagId)) {
+    const tagName = (tag.target as HTMLElement).id as string
+    const tagIndex = quizTags.findIndex((tag) => tag.name === tagName) as number
+    if (quizTags[tagIndex].isSelected) {
       alert('이미 선택된 태그입니다.')
     } else {
-      dispatch(addQuizTag(tagId))
+      const tagId = quizTags[tagIndex].id
+      dispatch(setQuizTagSelected({ tagId, isSelected: true }))
     }
   }
   const deselectTag = (tag: React.MouseEvent<HTMLElement>) => {
-    const tagId = (tag.target as HTMLElement).id
-    dispatch(deleteQuizTag(tagId))
+    const tagName = (tag.target as HTMLElement).id as string
+    const tagIndex = quizTags.findIndex((tag) => tag.name === tagName) as number
+    const tagId = quizTags[tagIndex].id
+
+    dispatch(setQuizTagSelected({ tagId, isSelected: false }))
   }
   const getQuizzes = async () => {
-    setQuizzes(await getQuizQuestions(quizCount, quizTags))
+    setQuizzes(
+      await getQuizQuestions(
+        quizCount,
+        quizTags.filter((tag) => tag.isSelected).map((tag) => tag.name),
+      ),
+    )
   }
 
   return (
@@ -99,9 +106,9 @@ const SetQuizOptions = () => {
                       퀴즈 갯수 선택
                     </DropdownToggle>
                     <DropdownMenu className="quiz-dropdown-menu">
-                      {quizMinToMax.map((cnt, i) => {
+                      {quizMinToMax.map((cnt: number, index) => {
                         return (
-                          <DropdownItem key={i} onClick={() => setQuizCount(cnt)}>
+                          <DropdownItem key={index} onClick={() => setQuizCount(cnt)}>
                             {cnt}
                           </DropdownItem>
                         )
@@ -115,11 +122,13 @@ const SetQuizOptions = () => {
               <div>
                 <h4>선택된 퀴즈 태그</h4>
                 <hr className="two-line" />
-                {quizTags.map((tag, i) => {
+                {quizTags.map((tag: TagSelectorItem) => {
                   return (
-                    <Button className="selected-tag-btn" key={i} id={tag} onClick={deselectTag}>
-                      {tag} ⅹ
-                    </Button>
+                    tag.isSelected && (
+                      <Button className="selected-tag-btn" key={tag.id} id={tag.name} onClick={deselectTag}>
+                        {tag.name} ⅹ
+                      </Button>
+                    )
                   )
                 })}
               </div>
