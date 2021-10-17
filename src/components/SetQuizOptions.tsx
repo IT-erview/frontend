@@ -23,21 +23,15 @@ const SetQuizOptions = () => {
 
   const [quizzes, setQuizzes] = useState<Array<Question>>([])
   // todo: 리팩토링 필요
-  const selectTag = (tag: React.MouseEvent<HTMLElement>) => {
-    const tagName = (tag.target as HTMLElement).id as string
-    const tagIndex = quizTags.findIndex((tag) => tag.name === tagName) as number
+  const selectTag = (tagId: number) => {
+    const tagIndex = tagId - 1
     if (quizTags[tagIndex].isSelected) {
       alert('이미 선택된 태그입니다.')
     } else {
-      const tagId = quizTags[tagIndex].id
       dispatch(setQuizTagSelected({ tagId, isSelected: true }))
     }
   }
-  const deselectTag = (tag: React.MouseEvent<HTMLElement>) => {
-    const tagName = (tag.target as HTMLElement).id as string
-    const tagIndex = quizTags.findIndex((tag) => tag.name === tagName) as number
-    const tagId = quizTags[tagIndex].id
-
+  const deselectTag = (tagId: number) => {
     dispatch(setQuizTagSelected({ tagId, isSelected: false }))
   }
   const getQuizzes = async () => {
@@ -86,10 +80,10 @@ const SetQuizOptions = () => {
                       태그 선택
                     </DropdownToggle>
                     <DropdownMenu className="quiz-dropdown-menu">
-                      {tagItems.map((tagItem, i) => {
+                      {tagItems.map((tag, i) => {
                         return (
-                          <DropdownItem key={i} onClick={selectTag} id={tagItem.name}>
-                            {tagItem.name}
+                          <DropdownItem key={i} onClick={() => selectTag(tag.id)} id={tag.name}>
+                            {tag.name}
                           </DropdownItem>
                         )
                       })}
@@ -125,7 +119,11 @@ const SetQuizOptions = () => {
                 {quizTags.map((tag: TagSelectorItem) => {
                   return (
                     tag.isSelected && (
-                      <Button className="selected-tag-btn" key={tag.id} id={tag.name} onClick={deselectTag}>
+                      <Button
+                        className="selected-tag-btn"
+                        key={tag.id}
+                        id={tag.name}
+                        onClick={() => deselectTag(tag.id)}>
                         {tag.name} ⅹ
                       </Button>
                     )
