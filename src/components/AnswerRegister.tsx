@@ -3,8 +3,15 @@ import { withRouter } from 'react-router-dom'
 import { Form, Input } from 'reactstrap'
 import { useEffect, useState } from 'react'
 import { MAX_TEXT_CONTENTS_LENGTH, MIN_TEXT_CONTENTS_LENGTH } from 'common/config'
-import { checkTextContentsLength, getParsedParameters, getQuestionContent } from 'common/util'
-import { postAnswer } from 'common/api'
+import { checkTextContentsLength, isNumeric } from 'common/util'
+import { postAnswer, getQuestion } from 'common/api'
+
+const getParsedParameters = () => {
+  const questionIdParameters = new URLSearchParams(window.location.search).get('question_id')
+  return {
+    questionId: isNumeric(questionIdParameters) ? Number(questionIdParameters) : undefined,
+  }
+}
 
 const AnswerRegister = () => {
   const [answerTextContents, setAnswerTextContents] = useState<string>('')
@@ -12,8 +19,14 @@ const AnswerRegister = () => {
   const [questionContent, setQuestionContent] = useState<string>('')
 
   useEffect(() => {
-    getQuestionContent(questionId, setQuestionContent)
-  }, [])
+    const getQuestionContent = async () => {
+      if (questionId) {
+        const question = await getQuestion(questionId)
+        if (question) setQuestionContent(question.content)
+      }
+    }
+    getQuestionContent()
+  }, [questionId])
 
   if (questionId === undefined) return <></>
 

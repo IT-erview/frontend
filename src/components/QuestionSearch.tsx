@@ -1,6 +1,6 @@
 // todo: refactoring
 import 'css/QuestionSearch.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { Input } from 'reactstrap'
 import SortSelectBox, { Sort } from 'components/SortSelectBox'
 import { MAX_SEARCH_WORD_LENGTH } from 'common/config'
@@ -55,7 +55,7 @@ const QuestionSearch = () => {
   const [sort, setSort] = useState<Sort>(Sort.POPULAR)
   const [questions, setQuestions] = useState<Array<Question>>([])
 
-  const search = async () => {
+  const search = useCallback(async () => {
     const searchResults = await searchQuestions(
       questionSearchInput,
       sort,
@@ -63,11 +63,11 @@ const QuestionSearch = () => {
     )
     setQuestions(searchResults)
     setQuestionSearchInput('')
-  }
+  }, [questionSearchInput, questionSearchTags, sort])
 
   useEffect(() => {
     search()
-  }, [])
+  }, [search])
 
   const onTagSelect = (tagId: number, isSelected: boolean) => dispatch(setSearchTagSelected({ tagId, isSelected }))
 

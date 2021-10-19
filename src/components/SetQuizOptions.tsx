@@ -19,7 +19,7 @@ const SetQuizOptions = () => {
   const [quizCount, setQuizCount] = useState<number>(0)
   const quizTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.quizTags)
   const dispatch = useDispatch()
-  const quizMinToMax = Array.from({ length: 26 }, (undefined, i) => i + 5)
+  const quizMinToMax = Array.from({ length: 26 }, (v, i) => i + 5)
 
   const [quizzes, setQuizzes] = useState<Array<Question>>([])
   // todo: 리팩토링 필요

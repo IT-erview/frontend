@@ -1,5 +1,4 @@
 import { MIN_TEXT_CONTENTS_LENGTH } from 'common/config'
-import { getQuestion } from 'common/api'
 
 export const getZerofilledNumber = (num: number) => {
   let result = ''
@@ -13,18 +12,4 @@ export const isNumeric = (str: string | null) => {
 
 export const checkTextContentsLength = (contents: string) => {
   return contents.length >= MIN_TEXT_CONTENTS_LENGTH
-}
-
-export const getParsedParameters = () => {
-  const questionIdParameters = new URLSearchParams(window.location.search).get('question_id')
-  return {
-    questionId: isNumeric(questionIdParameters) ? Number(questionIdParameters) : undefined,
-  }
-}
-
-export const getQuestionContent = async (questionId: number | undefined, setQuestionContent: Function) => {
-  if (questionId !== undefined) {
-    const question = await getQuestion(questionId)
-    if (question) setQuestionContent(question.content)
-  }
 }

@@ -1,15 +1,28 @@
 import QuestionDetail from 'components/QuestionDetail'
-import { addBookmark } from 'common/api'
-import { getParsedParameters, getQuestionContent } from 'common/util'
+import { addBookmark, getQuestion } from 'common/api'
+import { isNumeric } from 'common/util'
 import { useEffect, useState } from 'react'
+
+const getParsedParameters = () => {
+  const questionIdParameters = new URLSearchParams(window.location.search).get('question_id')
+  return {
+    questionId: isNumeric(questionIdParameters) ? Number(questionIdParameters) : undefined,
+  }
+}
 
 const QuestionDetailPage = () => {
   const questionId = getParsedParameters().questionId
   const [questionContent, setQuestionContent] = useState<string>('')
 
   useEffect(() => {
-    getQuestionContent(questionId, setQuestionContent)
-  }, [])
+    const getQuestionContent = async () => {
+      if (questionId) {
+        const question = await getQuestion(questionId)
+        if (question) setQuestionContent(question.content)
+      }
+    }
+    getQuestionContent()
+  }, [questionId])
 
   if (questionId === undefined) return <></>
   let isRequesting = false
