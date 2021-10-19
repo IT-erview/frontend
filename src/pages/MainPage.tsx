@@ -79,15 +79,9 @@ const MainPage = () => {
     initHitsAnswers()
   }, [])
 
-  // memo: 무슨역할?
-  const removeLocalStorage = () => {
-    localStorage.removeItem('questionSearchTag')
-  }
-
   return (
     <div className="Main">
       <Navigation />
-      {removeLocalStorage()}
       <MainCarousel />
       <div className="body">
         <div className="main-mypage-box">

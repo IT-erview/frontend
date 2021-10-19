@@ -3,21 +3,16 @@ import 'css/QuizResult.css'
 import { useEffect } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import Question from 'components/Question'
-import { Question as QuestionType } from 'common/type'
-
-const getQuizTags = (): Array<string> => {
-  const storageQuizTags = localStorage.getItem('selectedQuizTag')
-  if (typeof storageQuizTags === 'string') return JSON.parse(storageQuizTags)
-  return []
-}
+import { Question as QuestionType, TagSelectorItem } from 'common/type'
+import { useSelector } from 'react-redux'
+import { ReducerType } from 'modules/rootReducer'
 
 const QuizResult: React.FunctionComponent<{ quizzes: Array<QuestionType> } & RouteComponentProps> = ({
   quizzes,
 }: {
   quizzes: Array<QuestionType>
 }) => {
-  const quizTags = getQuizTags()
-
+  const quizTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.quizTags)
   const changeTitle = () => {
     const midTitle = document.getElementById('quiz-option-title')!
     const subTitle = document.getElementById('quiz-option-sub-title')!
@@ -52,11 +47,13 @@ const QuizResult: React.FunctionComponent<{ quizzes: Array<QuestionType> } & Rou
           <div className="selected-quiz-tag-content">
             <h4>퀴즈 태그</h4>
             <hr className="hr2" />
-            {quizTags.map((tag: string, index: number) => {
+            {quizTags.map((tag: TagSelectorItem) => {
               return (
-                <button key={index} className="tag-btn">
-                  {tag}
-                </button>
+                tag.isSelected && (
+                  <button key={tag.id} className="tag-btn">
+                    {tag.name}
+                  </button>
+                )
               )
             })}
           </div>

@@ -1,23 +1,33 @@
 import 'css/AnswerRegister.css'
 import { withRouter } from 'react-router-dom'
 import { Form, Input } from 'reactstrap'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { MAX_TEXT_CONTENTS_LENGTH, MIN_TEXT_CONTENTS_LENGTH } from 'common/config'
 import { checkTextContentsLength, isNumeric } from 'common/util'
-import { postAnswer } from 'common/api'
+import { postAnswer, getQuestion } from 'common/api'
 
-const getQuestionInfo = () => {
-  const storageQuestionId = localStorage.getItem('detailId')
-  const storageQuestionTitle = localStorage.getItem('detailTitle')
+const getParsedParameters = () => {
+  const questionIdParameters = new URLSearchParams(window.location.search).get('question_id')
   return {
-    questionId: isNumeric(storageQuestionId) ? Number(storageQuestionId) : undefined,
-    questionTitle: storageQuestionTitle,
+    questionId: isNumeric(questionIdParameters) ? Number(questionIdParameters) : undefined,
   }
 }
 
 const AnswerRegister = () => {
   const [answerTextContents, setAnswerTextContents] = useState<string>('')
-  const { questionId, questionTitle } = getQuestionInfo()
+  const questionId = getParsedParameters().questionId
+  const [questionContent, setQuestionContent] = useState<string>('')
+
+  useEffect(() => {
+    const getQuestionContent = async () => {
+      if (questionId) {
+        const question = await getQuestion(questionId)
+        if (question) setQuestionContent(question.content)
+      }
+    }
+    getQuestionContent()
+  }, [questionId])
+
   if (questionId === undefined) return <></>
 
   let isRequesting = false
@@ -35,6 +45,7 @@ const AnswerRegister = () => {
     if (result) {
       window.alert('답변이 등록되었습니다.')
       window.open(`/QuestionDetail?question_id=${questionId}`)
+      window.close()
     } else {
       window.alert('답변이 등록되지 않았습니다.')
     }
@@ -56,7 +67,7 @@ const AnswerRegister = () => {
           </div>
           <div className="quiz-contents-box">
             <h1 className="quiz-contents-title">문제 설명</h1>
-            <h1 className="quiz-contents">{questionTitle}</h1>
+            <h1 className="quiz-contents">{questionContent}</h1>
           </div>
           <span
             id="answer-text-length"

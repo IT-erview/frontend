@@ -1,6 +1,7 @@
 import QuestionDetail from 'components/QuestionDetail'
-import { addBookmark } from 'common/api'
+import { addBookmark, getQuestion } from 'common/api'
 import { isNumeric } from 'common/util'
+import { useEffect, useState } from 'react'
 
 const getParsedParameters = () => {
   const questionIdParameters = new URLSearchParams(window.location.search).get('question_id')
@@ -11,8 +12,21 @@ const getParsedParameters = () => {
 
 const QuestionDetailPage = () => {
   const questionId = getParsedParameters().questionId
+  const [questionContent, setQuestionContent] = useState<string>('')
+
+  useEffect(() => {
+    const getQuestionContent = async () => {
+      if (questionId) {
+        const question = await getQuestion(questionId)
+        if (question) setQuestionContent(question.content)
+      }
+    }
+    getQuestionContent()
+  }, [questionId])
+
   if (questionId === undefined) return <></>
   let isRequesting = false
+
   const bookmarkIt = async () => {
     if (isRequesting) return
     isRequesting = true
@@ -30,7 +44,7 @@ const QuestionDetailPage = () => {
         <div id="top-hr-line" />
         <div className="question-detail-title">
           <img src="/img/figure1.png" alt="question-detail-title-icon" />
-          <span>{localStorage.getItem('detailTitle')}</span>
+          <span>{questionContent}</span>
           <button onClick={bookmarkIt}>북마크로 문제 저장하기</button>
         </div>
       </div>

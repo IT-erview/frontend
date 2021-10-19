@@ -57,6 +57,15 @@ const getQuestions = async (page: number, rowsPerPage: number) => {
   return response.data as Array<Question>
 }
 
+const getQuizQuestions = async (quizCnt: number, tagList: Array<string>) => {
+  const response = await request({
+    method: 'get',
+    url: `/api/v1/question/quiz?size=${quizCnt}&tags=${tagList}`,
+  })
+  if (!response) return []
+  return response.data as Array<Question>
+}
+
 const getHitsAnswers = async () => {
   const response = await request({
     method: 'get',
@@ -214,6 +223,7 @@ export {
   likeAnswer,
   getQuestion,
   getQuestions,
+  getQuizQuestions,
   getHitsAnswers,
   getMyAnswer,
   addBookmark,

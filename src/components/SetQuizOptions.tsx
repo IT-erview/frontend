@@ -4,56 +4,48 @@ import { useState } from 'react'
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button } from 'reactstrap'
 import { withRouter } from 'react-router-dom'
 import tagItems from 'constants/TagItems'
-import axios from 'axios'
 import QuizSolving from 'components/QuizSolving'
-import { Question } from 'common/type'
+import { Question, TagSelectorItem } from 'common/type'
+import { useDispatch, useSelector } from 'react-redux'
+import { ReducerType } from 'modules/rootReducer'
+import { getQuizQuestions } from 'common/api'
+import { setQuizTagSelected } from 'modules/quizTags'
 
-const SetQuizOptions = (props: any) => {
-  const [tagDropdownOpen, setTagDropdownOpen] = useState(false)
-  const [cntDropdownOpen, setCntDropdownOpen] = useState(false)
+const SetQuizOptions = () => {
+  const [tagDropdownOpen, setTagDropdownOpen] = useState<boolean>(false)
+  const [cntDropdownOpen, setCntDropdownOpen] = useState<boolean>(false)
   const tagToggle = () => setTagDropdownOpen((prevState) => !prevState)
   const cntToggle = () => setCntDropdownOpen((prevState) => !prevState)
+  const [quizCount, setQuizCount] = useState<number>(0)
+  const quizTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.quizTags)
+  const dispatch = useDispatch()
+  const quizMinToMax = Array.from({ length: 26 }, (v, i) => i + 5)
 
-  const [selectedQuizTag] = useState([])
-  const [selectedQuizCnt, setSelectedQuizCnt] = useState(null)
-
-  const quizCnt = new Array(30).map((cnt, i) => {
-    return i
-  })
-  const quizMinToMax = quizCnt.slice(4, 30)
-
-  const quizTag = localStorage.getItem('selectedQuizTag')
-  const quizTagArr = JSON.parse(quizTag!)
-
-  const [allQuiz, setAllQuiz] = useState<Array<Question>>([])
-  // const [request, setRequest] = useState(false)
-
-  let quizSize = localStorage.getItem('selectedQuizCnt')
-  let quiz = allQuiz
-  // let quizTagList = selectedQuizTag
-
+  const [quizzes, setQuizzes] = useState<Array<Question>>([])
   // todo: 리팩토링 필요
-  const selectedTag = (e: any) => {
-    // if (selectedQuizTag.length > 9) {
-    //   alert('지정할 수 있는 태그는 최대 10개입니다')
-    // }
-    // if (!selectedQuizTag.includes(e.target.id) && selectedQuizTag.length <= 9) {
-    //   setselectedQuizTag(selectedQuizTag.concat(e.target.id))
-    //   quizTagList.push(e.target.id)
-    // } else if (selectedQuizTag.includes(e.target.id)) {
-    //   alert('이미 선택된 태그입니다.')
-    // }
+  const selectTag = (tagId: number) => {
+    const tagIndex = tagId - 1
+    if (quizTags[tagIndex].isSelected) {
+      alert('이미 선택된 태그입니다.')
+    } else {
+      dispatch(setQuizTagSelected({ tagId, isSelected: true }))
+    }
   }
-  const deselectedTag = (e: any) => {
-    // setselectedQuizTag(selectedQuizTag.filter((element) => element !== e.target.id))
+  const deselectTag = (tagId: number) => {
+    dispatch(setQuizTagSelected({ tagId, isSelected: false }))
   }
-  const selectedCnt = (e: any) => {
-    setSelectedQuizCnt(e.target.id)
+  const getQuizzes = async () => {
+    setQuizzes(
+      await getQuizQuestions(
+        quizCount,
+        quizTags.filter((tag) => tag.isSelected).map((tag) => tag.name),
+      ),
+    )
   }
 
   return (
     <div>
-      {allQuiz.length === 0 ? (
+      {quizzes.length === 0 ? (
         <div>
           <div id="quiz-info-detail">
             풀고싶은
@@ -88,10 +80,10 @@ const SetQuizOptions = (props: any) => {
                       태그 선택
                     </DropdownToggle>
                     <DropdownMenu className="quiz-dropdown-menu">
-                      {tagItems.map((tagItem, i) => {
+                      {tagItems.map((tag, i) => {
                         return (
-                          <DropdownItem key={i} onClick={selectedTag} id={tagItem.name}>
-                            {tagItem.name} {localStorage.setItem('selectedQuizTag', JSON.stringify(selectedQuizTag))}
+                          <DropdownItem key={i} onClick={() => selectTag(tag.id)} id={tag.name}>
+                            {tag.name}
                           </DropdownItem>
                         )
                       })}
@@ -108,11 +100,10 @@ const SetQuizOptions = (props: any) => {
                       퀴즈 갯수 선택
                     </DropdownToggle>
                     <DropdownMenu className="quiz-dropdown-menu">
-                      {quizMinToMax.map((cnt, i) => {
+                      {quizMinToMax.map((cnt: number, index) => {
                         return (
-                          <DropdownItem key={i} onClick={selectedCnt}>
-                            {/* <DropdownItem key={i} onClick={selectedCnt} id={cnt + 1}> */}
-                            {cnt + 1}
+                          <DropdownItem key={index} onClick={() => setQuizCount(cnt)}>
+                            {cnt}
                           </DropdownItem>
                         )
                       })}
@@ -120,60 +111,39 @@ const SetQuizOptions = (props: any) => {
                   </Dropdown>
                 </div>
               </div>
-              {/* {console.log(selectedQuizCnt)} */}
             </div>
             <div className="quiz-setting-result-box">
               <div>
                 <h4>선택된 퀴즈 태그</h4>
                 <hr className="two-line" />
-                {selectedQuizTag.map((selectedTag, i) => {
+                {quizTags.map((tag: TagSelectorItem) => {
                   return (
-                    <Button className="selected-tag-btn" key={i} id={selectedTag} onClick={deselectedTag}>
-                      {selectedTag} ⅹ
-                    </Button>
+                    tag.isSelected && (
+                      <Button
+                        className="selected-tag-btn"
+                        key={tag.id}
+                        id={tag.name}
+                        onClick={() => deselectTag(tag.id)}>
+                        {tag.name} ⅹ
+                      </Button>
+                    )
                   )
                 })}
-                {/* {console.log(quizTagArr)} */}
               </div>
               <div>
                 <h4>선택된 퀴즈 수</h4>
                 <hr className="two-line" />
-                <span className="quiz-cnt">
-                  {selectedQuizCnt}
-                  {localStorage.setItem('selectedQuizCnt', selectedQuizCnt!)}
-                </span>
+                <span className="quiz-cnt">{quizCount}</span>
                 <span>개</span>
               </div>
-              <Button
-                className="quiz-start-btn"
-                onClick={() => {
-                  // setRequest(true)
-                  // if (request) {
-                  quizSize = localStorage.getItem('selectedQuizCnt')
-                  console.log('퀴즈 시작시작시작')
-                  axios
-                    .get(`/api/v1/question/quiz?size=${quizSize}&tags=${quizTagArr}`)
-                    .then((res) => {
-                      res.data.forEach((item: any) => {
-                        quiz.push(item)
-                      })
-                      console.log(allQuiz)
-                      setAllQuiz(allQuiz)
-                      // setRequest(false)
-                    })
-                    .catch((err) => {
-                      console.log(err)
-                      // window.alert('퀴즈 갯수를 선택해주세요.')
-                    })
-                  // }
-                }}>
+              <Button className="quiz-start-btn" onClick={getQuizzes}>
                 시작하기
               </Button>
             </div>
           </div>
         </div>
       ) : (
-        <QuizSolving quizzes={allQuiz}></QuizSolving>
+        <QuizSolving quizzes={quizzes}></QuizSolving>
       )}
     </div>
   )

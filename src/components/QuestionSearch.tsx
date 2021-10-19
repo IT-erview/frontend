@@ -1,15 +1,15 @@
 // todo: refactoring
 import 'css/QuestionSearch.css'
-import { useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { Input } from 'reactstrap'
-import SortSelectBox, { Sort } from './SortSelectBox'
+import SortSelectBox, { Sort } from 'components/SortSelectBox'
 import { MAX_SEARCH_WORD_LENGTH } from 'common/config'
 import { useDispatch, useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
 import { Question, TagSelectorItem } from 'common/type'
-import TagSelector from './TagSelector'
+import TagSelector from 'components/TagSelector'
 import { setSearchTagSelected } from 'modules/searchTags'
-import QuestionList from './QuestionList'
+import QuestionList from 'components/QuestionList'
 import { searchQuestions } from 'common/api'
 
 // 이미지로 대체 필요
@@ -50,11 +50,12 @@ const searchIcon = () => {
 const QuestionSearch = () => {
   const dispatch = useDispatch()
   const [questionSearchInput, setQuestionSearchInput] = useState<string>('')
+
   const questionSearchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.searchTags)
   const [sort, setSort] = useState<Sort>(Sort.POPULAR)
   const [questions, setQuestions] = useState<Array<Question>>([])
 
-  const search = async () => {
+  const search = useCallback(async () => {
     const searchResults = await searchQuestions(
       questionSearchInput,
       sort,
@@ -62,7 +63,11 @@ const QuestionSearch = () => {
     )
     setQuestions(searchResults)
     setQuestionSearchInput('')
-  }
+  }, [questionSearchInput, questionSearchTags, sort])
+
+  useEffect(() => {
+    search()
+  }, [search])
 
   const onTagSelect = (tagId: number, isSelected: boolean) => dispatch(setSearchTagSelected({ tagId, isSelected }))
 
@@ -79,6 +84,7 @@ const QuestionSearch = () => {
         <img src="img/figure1.png" alt="question-search-tag-icon" />
         <span>문제 검색</span>
         <div className="question-tag-hr"></div>
+
         <TagSelector tags={questionSearchTags} onTagSelect={onTagSelect} />
       </div>
       <div className="question-search-word">
