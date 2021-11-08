@@ -1,15 +1,19 @@
 // todo: refactoring
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from 'css/Navigation.module.css'
-import { Link, withRouter } from 'react-router-dom'
+import { Link, useHistory, withRouter } from 'react-router-dom'
 import LoginModal from './LoginModal'
+import { ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap'
+import { removeCookie } from './Cookies'
+import { JWT_TOKEN } from 'constants/Oauth'
+import axios from 'axios'
 
 const Navigation = (props: any) => {
   const [modalOpen, setModalOpen] = useState(false)
-  // const [userProfile, setUserProfile] = useState(null)
-  // const [dropdownOpen, setOpen] = useState(false)
-  // const history = useHistory()
-  // const toggle = () => setOpen(!dropdownOpen)
+  const [userProfile, setUserProfile] = useState(null)
+  const [dropdownOpen, setOpen] = useState(false)
+  const history = useHistory()
+  const toggle = () => setOpen(!dropdownOpen)
 
   const openModal = () => {
     setModalOpen(true)
@@ -18,31 +22,31 @@ const Navigation = (props: any) => {
     setModalOpen(false)
   }
 
-  // useEffect(() => {
-  //   var param = new URLSearchParams(window.location.search).get('error')
-  //   if (param === 'login') {
-  //     alert('로그인 에러가 발생했습니다. 다른 소셜계정으로 로그인 해주세요.')
-  //   }
-  //   console.log(JWT_TOKEN)
-  //   if (JWT_TOKEN) {
-  //     axios
-  //       .get(`/api/v1/user/profile/`)
-  //       .then((res) => {
-  //         console.log(res.data)
-  //         setUserProfile(res.data)
-  //         localStorage.setItem('userName', res.data.username)
-  //       })
-  //       .catch((err) => {
-  //         console.log(err)
-  //         if (err.response.status === 401) {
-  //           window.alert('로그인 에러입니다.')
-  //         }
-  //         setUserProfile(null)
-  //         removeCookie('Authorization', { path: '/' })
-  //         localStorage.removeItem('userName')
-  //       })
-  //   }
-  // }, [])
+  useEffect(() => {
+    var param = new URLSearchParams(window.location.search).get('error')
+    if (param === 'login') {
+      alert('로그인 에러가 발생했습니다. 다른 소셜계정으로 로그인 해주세요.')
+    }
+    console.log(JWT_TOKEN)
+    if (JWT_TOKEN) {
+      axios
+        .get(`/api/v1/user/profile/`)
+        .then((res) => {
+          console.log(res.data)
+          setUserProfile(res.data)
+          localStorage.setItem('userName', res.data.username)
+        })
+        .catch((err) => {
+          console.log(err)
+          if (err.response.status === 401) {
+            window.alert('로그인 에러입니다.')
+          }
+          setUserProfile(null)
+          removeCookie('Authorization', { path: '/' })
+          localStorage.removeItem('userName')
+        })
+    }
+  }, [])
 
   return (
     <div className={styles.topbar}>
@@ -156,19 +160,69 @@ const Navigation = (props: any) => {
             />
           </svg>
         </div>
-        <button className={styles.loginText} onClick={openModal}>
-          <span>LOGIN</span>
-        </button>
-        <button className={styles.loginDropdown}>
-          <svg width="24" height="13" viewBox="0 0 24 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M1 1.4231L11.1538 10.7308V10.7308C11.6212 11.1981 12.3788 11.1981 12.8462 10.7308V10.7308L23 1.4231"
-              stroke="#111036"
-              stroke-width="2"
-              stroke-linecap="round"
-            />
-          </svg>
-        </button>
+
+        {/* jwt_token이 존재하면 login 처리 */}
+        {userProfile ? (
+          <ButtonDropdown className="dropdown-btn-par" isOpen={dropdownOpen} toggle={toggle}>
+            <DropdownToggle className="dropdown-btn" caret>
+              {/* note: 구조변경필요 일단 주석 */}
+              {/* {userProfile?.username}님 */}
+              <img src="/img/nav_icon6.png" alt="nav_icon" />
+            </DropdownToggle>
+            <DropdownMenu className="dropdown-menu">
+              <DropdownItem
+                onClick={() => {
+                  history.push('/MyPage/MyRegisterQuestion')
+                }}>
+                내가 등록한 문제
+              </DropdownItem>
+              <DropdownItem
+                onClick={() => {
+                  history.push('/MyPage/MyRegisterAnswer')
+                }}>
+                내가 등록한 답변
+              </DropdownItem>
+              <DropdownItem
+                onClick={() => {
+                  history.push('/MyPage/MyLikeAnswer')
+                }}>
+                좋아요한 답변
+              </DropdownItem>
+              <DropdownItem
+                onClick={() => {
+                  history.push('/MyPage/MyBookmarkQuestion')
+                }}>
+                북마크한 문제
+              </DropdownItem>
+              <DropdownItem divider />
+              <a
+                className="logout-btn"
+                href="/"
+                onClick={() => {
+                  removeCookie('Authorization', { path: '/' })
+                  localStorage.removeItem('userName')
+                }}>
+                로그아웃
+              </a>
+            </DropdownMenu>
+          </ButtonDropdown>
+        ) : (
+          <>
+            <button className={styles.loginText} onClick={openModal}>
+              <span>LOGIN</span>
+            </button>
+            <button className={styles.loginDropdown}>
+              <svg width="24" height="13" viewBox="0 0 24 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M1 1.4231L11.1538 10.7308V10.7308C11.6212 11.1981 12.3788 11.1981 12.8462 10.7308V10.7308L23 1.4231"
+                  stroke="#111036"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </button>
+          </>
+        )}
         <LoginModal open={modalOpen} close={closeModal}></LoginModal>
       </div>
     </div>
