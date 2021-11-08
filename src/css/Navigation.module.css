@@ -1,0 +1,321 @@
+span {
+  /* Header 3 */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 18px;
+  /* line-height: 15px; */
+  /* identical to box height, or 83% */
+  color: #111036;
+}
+
+.topbar {
+  /* topbar */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px;
+
+  /* position: absolute; */
+  position: relative;
+  width: 100%;
+  height: 75px;
+  left: 0px;
+  top: 0px;
+}
+
+.logoSpace {
+  /* topbar/menu/space */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px 0px 0px 120px;
+
+  position: static;
+  width: 250px;
+  height: 75px;
+  left: 0px;
+  top: 0px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  /* margin: 0px 285px; */
+}
+
+.logo {
+  /* iterview logo_상단 로고(dark) */
+
+  position: static;
+  left: 48%;
+  right: 14.8%;
+  top: 23.33%;
+  bottom: 23.33%;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 0px 10px;
+}
+
+.menuSpace {
+  /* topbar/menu/space */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 0px 0px 10px;
+
+  position: static;
+  /* width: 850px; */
+  width: 1150px;
+  height: 75px;
+  left: 534.5px;
+  top: 0px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  /* margin: 0px 285px; */
+
+  /* 따로 추가 */
+  flex-wrap: wrap;
+}
+
+.home {
+  /* main/top/home */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+
+  position: static;
+  width: 130px;
+  height: 75px;
+  left: 20px;
+  top: 0px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  /* margin: 0px 50px; */
+}
+
+.my {
+  /* main/top/my */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+
+  position: static;
+  width: 130px;
+  height: 75px;
+  left: 200px;
+  top: 0px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  margin: 0px 50px;
+}
+
+.search {
+  /* main/top/search */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+
+  position: static;
+  width: 130px;
+  height: 75px;
+  left: 380px;
+  top: 0px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 2;
+  flex-grow: 0;
+  /* margin: 0px 50px; */
+}
+
+.add {
+  /* main/top/add */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+
+  position: static;
+  width: 130px;
+  height: 75px;
+  left: 560px;
+  left: 29.18%;
+  top: 0px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 3;
+  flex-grow: 0;
+  margin: 0px 50px;
+}
+
+.quiz {
+  /* main/top/quiz */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px 10px 0px 0px;
+
+  position: static;
+  width: 100px;
+  height: 75px;
+  left: 740px;
+  top: 0px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 4;
+  flex-grow: 0;
+  /* margin: 0px 50px; */
+}
+
+.loginSpace {
+  /* topbar/login/space */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px 120px 20px 0px;
+
+  position: static;
+  width: 250px;
+  height: 75px;
+  left: 1669px;
+  top: 0px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 2;
+  flex-grow: 0;
+  /* margin: 0px 285px; */
+}
+
+.loginIcon {
+  /* topbar/login/image/button/space */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0px;
+
+  position: static;
+  width: 15px;
+  height: 35px;
+  left: -15px;
+  top: 20px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 0px 0px;
+}
+
+.loginText {
+  /* topbar/login/button/space */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 5px;
+
+  position: static;
+  width: 70px;
+  height: 35px;
+  left: 0px;
+  top: 20px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  margin: 0px 0px;
+}
+
+.loginDropdown {
+  /* topbar/login/more/button/space */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+
+  position: static;
+  width: 60px;
+  height: 35px;
+  left: 70px;
+  top: 20px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 2;
+  flex-grow: 0;
+  margin: 0px 0px;
+}
