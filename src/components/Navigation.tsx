@@ -88,7 +88,9 @@ const Navigation = (props: any) => {
         <button className={styles.loginText} onClick={openModal}>
           <span>LOGIN</span>
         </button>
-        <span className={styles.loginDropdown}>/</span>
+        <button className={styles.loginDropdown}>
+          <img src="/img/login_dropdown.png" alt="login_icon" />
+        </button>
         <LoginModal open={modalOpen} close={closeModal}></LoginModal>
       </div>
     </div>
