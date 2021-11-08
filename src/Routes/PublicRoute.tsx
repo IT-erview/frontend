@@ -1,0 +1,14 @@
+import { Route, RouteProps } from 'react-router-dom'
+
+const PublicRoute: React.FunctionComponent<
+  {
+    component: React.ElementType
+  } & RouteProps
+> = ({ component: Component, ...rest }) => {
+  return (
+    // restricted = false meaning public route
+    // restricted = true meaning restricted route
+    <Route {...rest} render={(props) => <Component {...props} />} />
+  )
+}
+export default PublicRoute
