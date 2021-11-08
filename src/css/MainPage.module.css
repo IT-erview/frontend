@@ -1,0 +1,84 @@
+.banner {
+  /* 메인페이지 배너 */
+
+  /* position: absolute; */
+  width: 1920px;
+  height: 852px;
+  left: 0px;
+  top: 74px;
+
+  filter: drop-shadow(3px 3px 20px rgba(0, 0, 0, 0.1));
+}
+
+.backgroundBox {
+  /* Mask Group */
+
+  position: absolute;
+  width: 1920px;
+  height: 804px;
+  left: 0px;
+  top: 0px;
+}
+.backgroundCover {
+  /* Rectangle 101 */
+
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 0%;
+  bottom: 5.63%;
+
+  background: #c4c4c4;
+  border-radius: 300px 300px 300px 0px;
+}
+.logo {
+  /* iterview logo */
+
+  position: absolute;
+  left: 26.98%;
+  right: 62.92%;
+  top: 9.39%;
+  bottom: 78.05%;
+}
+.introduction {
+  /* IT’erview는 개발자들의 면접을 효율적으로 도와주는 서비스입니다. 체계적인 면접 학습을 경험해보세요. */
+
+  position: absolute;
+  left: 39.22%;
+  right: 37.97%;
+  top: 17.02%;
+  bottom: 78.05%;
+  /* Body */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  /* line-height: 18px; */
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+
+  color: #ffffff;
+  /* 따로 추가 */
+  text-align: left;
+}
+
+.contentIntroductionBox {
+  /* Group 8 */
+
+  position: absolute;
+  width: 845.5px;
+  height: 118.15px;
+  left: 545.5px;
+  top: 284px;
+}
+.questionSearchBox {
+  /* 문제검색 박스 */
+
+  position: absolute;
+  width: 1060px;
+  height: 400px;
+  left: 430px;
+  top: 452px;
+}

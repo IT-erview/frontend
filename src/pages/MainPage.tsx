@@ -1,89 +1,92 @@
 // memo 제외하고 대부분 완료
 import 'css/MainPage.css'
-import MainCarousel from 'components/MainCarousel'
-import { Link, useHistory } from 'react-router-dom'
 import { JWT_TOKEN } from 'constants/Oauth'
 import axios from 'axios'
-import { useEffect, useState } from 'react'
 import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'
-import QuestionComponent from 'components/Question'
-import { getHitsAnswers, getQuestions } from 'common/api'
-import { Answer, Question, TagSelectorItem } from 'common/type'
-import { getCookie } from 'components/Cookies'
-import TagSelector from 'components/TagSelector'
-import { setSearchTagSelected } from 'modules/searchTags'
-import { useDispatch, useSelector } from 'react-redux'
-import { ReducerType } from 'modules/rootReducer'
+import styles from 'css/MainPage.module.css'
 
 // header 설정
 axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`
-enum FeatureDescriptionType {
-  SEARCH,
-  REGISTER,
-  MY_PAGE,
-  QUIZ,
-}
+// enum FeatureDescriptionType {
+//   SEARCH,
+//   REGISTER,
+//   MY_PAGE,
+//   QUIZ,
+// }
 // memo: 쓰임새 보고 global로 변경
-const isAuthorized = () => {
-  return getCookie('Authorization')
-}
+// const isAuthorized = () => {
+//   return getCookie('Authorization')
+// }
 
-const featureDescriptions = [
-  {
-    title: '문제 검색',
-    description: '문제 검색 기능을 통해 태그와 키워드로 원하는 문제를 검색해보세요!',
-    type: FeatureDescriptionType.SEARCH,
-  },
-  {
-    title: '문제 등록',
-    description: '문제 등록 기능을 통해 궁금했던 문제를 등록하여 다른사람의 답변을 받아보세요!',
-    type: FeatureDescriptionType.REGISTER,
-  },
-  {
-    title: '마이페이지',
-    description: "마이페이지 기능을 통해 나의 IT'erview 기록들을 확인해보세요!",
-    type: FeatureDescriptionType.MY_PAGE,
-  },
-  {
-    title: '퀴즈',
-    description: '퀴즈 기능을 통해 모의 면접을 경험해보세요!',
-    type: FeatureDescriptionType.QUIZ,
-  },
-]
+// const featureDescriptions = [
+//   {
+//     title: '문제 검색',
+//     description: '문제 검색 기능을 통해 태그와 키워드로 원하는 문제를 검색해보세요!',
+//     type: FeatureDescriptionType.SEARCH,
+//   },
+//   {
+//     title: '문제 등록',
+//     description: '문제 등록 기능을 통해 궁금했던 문제를 등록하여 다른사람의 답변을 받아보세요!',
+//     type: FeatureDescriptionType.REGISTER,
+//   },
+//   {
+//     title: '마이페이지',
+//     description: "마이페이지 기능을 통해 나의 IT'erview 기록들을 확인해보세요!",
+//     type: FeatureDescriptionType.MY_PAGE,
+//   },
+//   {
+//     title: '퀴즈',
+//     description: '퀴즈 기능을 통해 모의 면접을 경험해보세요!',
+//     type: FeatureDescriptionType.QUIZ,
+//   },
+// ]
 
 const MainPage = () => {
-  const dispatch = useDispatch()
-  const history = useHistory()
-  const [questions, setQuestions] = useState<Array<Question>>([])
-  const [hitsAnswers, setHitsAnswers] = useState<Array<Answer>>([])
-  const [focusedFeatureDescriptionType, setFocusedFeatureDescriptionType] = useState<FeatureDescriptionType>(
-    FeatureDescriptionType.SEARCH,
-  )
-  const questionSearchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.searchTags)
+  // const dispatch = useDispatch()
+  // const history = useHistory()
+  // const [questions, setQuestions] = useState<Array<Question>>([])
+  // const [hitsAnswers, setHitsAnswers] = useState<Array<Answer>>([])
+  // const [focusedFeatureDescriptionType, setFocusedFeatureDescriptionType] = useState<FeatureDescriptionType>(
+  //   FeatureDescriptionType.SEARCH,
+  // )
+  // const questionSearchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.searchTags)
 
-  const isFocused = (type: FeatureDescriptionType) => {
-    return focusedFeatureDescriptionType === type
-  }
+  // const isFocused = (type: FeatureDescriptionType) => {
+  //   return focusedFeatureDescriptionType === type
+  // }
 
-  const onTagSelect = (tagId: number, isSelected: boolean) => dispatch(setSearchTagSelected({ tagId, isSelected }))
+  // const onTagSelect = (tagId: number, isSelected: boolean) => dispatch(setSearchTagSelected({ tagId, isSelected }))
 
-  useEffect(() => {
-    const initQuestions = async () => {
-      setQuestions(await getQuestions(0, 3))
-    }
-    const initHitsAnswers = async () => {
-      setHitsAnswers(await getHitsAnswers())
-    }
-    initQuestions()
-    initHitsAnswers()
-  }, [])
+  // useEffect(() => {
+  //   const initQuestions = async () => {
+  //     setQuestions(await getQuestions(0, 3))
+  //   }
+  //   const initHitsAnswers = async () => {
+  //     setHitsAnswers(await getHitsAnswers())
+  //   }
+  //   initQuestions()
+  //   initHitsAnswers()
+  // }, [])
 
   return (
     <div className="Main">
       <Navigation />
-      <MainCarousel />
-      <div className="body">
+      <div className={styles.banner}>
+        <div className={styles.backgroundBox}>
+          <img className={styles.backgroundCover} src="img/background_0.png" alt="background" />
+        </div>
+        <div className={styles.logo}>
+          <img src="img/iterview_logo_white.png" alt="logo" />
+        </div>
+        <p className={styles.introduction}>
+          IT’erview는 개발자들의 면접을 효율적으로 도와주는 서비스입니다. 체계적인 면접 학습을 경험해보세요.
+        </p>
+        <div className={styles.contentIntroductionBox}></div>
+        <div className={styles.qustionSearchBox}></div>
+      </div>
+      {/* <MainCarousel /> */}
+      {/* <div className="body">
         <div className="main-mypage-box">
           <div>
             IT'erview를 <br />
@@ -206,7 +209,7 @@ const MainPage = () => {
             {!isAuthorized() && <span id="answer-login-text">로그인 후 볼 수 있습니다.</span>}
           </div>
         </div>
-      </div>
+      </div> */}
       <Footer />
     </div>
   )
