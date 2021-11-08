@@ -82,7 +82,37 @@ const MainPage = () => {
         <p className={styles.introduction}>
           IT’erview는 개발자들의 면접을 효율적으로 도와주는 서비스입니다. 체계적인 면접 학습을 경험해보세요.
         </p>
-        <div className={styles.contentIntroductionBox}></div>
+        {/* <div className={styles.contentIntroductionBox}> */}
+        <div>
+          <div className={styles.contentIntroductionUp}>
+            <svg width="24" height="12" viewBox="0 0 24 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M1 1L11.1538 10.3077V10.3077C11.6212 10.775 12.3788 10.775 12.8462 10.3077V10.3077L23 1"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+          <div className={styles.contentIntroductionTitle}>
+            <p className={styles.contentIntroductionTitleText}>퀴즈</p>
+          </div>
+          <div className={styles.contentIntroductionContent}>
+            마이페이지, 문제검색, 퀴즈에 대한 자세한 설명 및 사용법을 설명해주는 박스입니다.
+            <br />
+            사용자가 로그인하면 해당 박스는 사용자의 개인 정보를 보여주는 박스로 변경될 예정입니다.
+          </div>
+          <div className={styles.contentIntroductionDown}>
+            <svg width="24" height="12" viewBox="0 0 24 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M1 1L11.1538 10.3077V10.3077C11.6212 10.775 12.3788 10.775 12.8462 10.3077V10.3077L23 1"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        </div>
         <div className={styles.qustionSearchBox}></div>
       </div>
       {/* <MainCarousel /> */}

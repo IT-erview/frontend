@@ -160,7 +160,7 @@ const Navigation = (props: any) => {
             />
           </svg>
         </div>
-
+        {/* 기획 나오는거 보고 추가작업 */}
         {/* jwt_token이 존재하면 login 처리 */}
         {userProfile ? (
           <ButtonDropdown className="dropdown-btn-par" isOpen={dropdownOpen} toggle={toggle}>
@@ -223,6 +223,7 @@ const Navigation = (props: any) => {
             </button>
           </>
         )}
+        {/* 네이게이션 안에 있을 필요 없음. 이동 */}
         <LoginModal open={modalOpen} close={closeModal}></LoginModal>
       </div>
     </div>

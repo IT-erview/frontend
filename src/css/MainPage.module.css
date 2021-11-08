@@ -73,6 +73,86 @@
   left: 545.5px;
   top: 284px;
 }
+.contentIntroductionUp {
+  /* white/더보기 */
+
+  position: absolute;
+  left: 28.79%;
+  right: 68.06%;
+  top: 33.01%;
+  bottom: 65.8%;
+
+  transform: rotate(-180deg);
+}
+.contentIntroductionDown {
+  /* white/더보기 */
+
+  position: absolute;
+  left: 29.79%;
+  right: 69.06%;
+  top: 46.01%;
+  bottom: 52.8%;
+}
+.contentIntroductionTitle {
+  /* Frame 24 */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  /* padding: 15px 21px; */
+  padding: 12px 0;
+
+  position: absolute;
+  left: 28.41%;
+  right: 67.68%;
+  top: 37.32%;
+  bottom: 56.81%;
+
+  border: 4px solid #ffffff;
+  box-sizing: border-box;
+  border-radius: 25px 25px 0px 25px;
+}
+.contentIntroductionTitleText {
+  /* header 3 */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 20px;
+  /* display: flex; */
+  align-items: center;
+
+  color: #ffffff;
+  width: 100%;
+}
+.contentIntroductionContent {
+  /* 마이페이지, 문제검색, 퀴즈에 대한 자세한 설명 및 사용법을 설명해주는 박스입니다. 사용자가 로그인하면 해당 박스는 사용자의 개인 정보를 보여주는 박스로 변경될 예정입니다. */
+
+  position: absolute;
+  left: 36.15%;
+  right: 27.55%;
+  top: 38.5%;
+  bottom: 56.22%;
+
+  /* header 3 */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 18px;
+  /* line-height: 20px; */
+  line-height: 24px;
+  display: flex;
+  align-items: flex-end;
+
+  color: #ffffff;
+
+  /**/
+  text-align: left;
+}
 .questionSearchBox {
   /* 문제검색 박스 */
 
