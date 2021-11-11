@@ -1,0 +1,103 @@
+.modal {
+  position: absolute;
+  top: 418px;
+  left: 745px;
+  height: 245px;
+  width: 430px;
+  border-radius: 15px;
+  /* Font / White */
+
+  background: #ffffff;
+  box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  z-index: 2;
+}
+
+.header {
+  position: absolute;
+  left: 37.91%;
+  right: 37.43%;
+  top: 17.14%;
+  bottom: 66.94%;
+}
+.iterviewLogo {
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 0%;
+  bottom: 0%;
+  height: 39px;
+  width: 91px;
+  left: 0px;
+  top: 0px;
+  border-radius: 0px;
+}
+
+.googleLogin {
+  height: 40px;
+  width: 360.081298828125px;
+  left: 35px;
+  top: 123px;
+
+  position: absolute;
+  left: 8.14%;
+  right: 8.12%;
+  top: 50.2%;
+  bottom: 33.47%;
+
+  /* Light / Primary */
+  color: black;
+
+  background: #e3e2f0;
+  border-radius: 23px 23px 23px 0px;
+}
+.githubLogin {
+  height: 40px;
+  width: 360.081298828125px;
+  left: 35px;
+  top: 173px;
+
+  position: absolute;
+  left: 8.14%;
+  right: 8.12%;
+  top: 70.61%;
+  bottom: 13.06%;
+
+  /* Font / Black */
+  color: white;
+  background: #000000;
+  border-radius: 23px 23px 23px 0px;
+}
+.googleLogo {
+  position: absolute;
+  left: 33px;
+  height: 22px;
+  width: 22px;
+  border-radius: 0px;
+  top: 9px;
+}
+
+.githubLogo {
+  position: absolute;
+  left: 33px;
+  height: 22px;
+  width: 22px;
+  border-radius: 0px;
+  top: 9px;
+}
+
+.close {
+  float: right;
+  margin: 15px;
+  color: rgb(184, 184, 184);
+}
+
+span {
+  font-family: NanumSquare;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 40px;
+  letter-spacing: -0.02em;
+  text-align: left;
+}
