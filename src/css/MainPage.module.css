@@ -1,12 +1,13 @@
 .banner {
   /* 메인페이지 배너 */
 
-  /* position: absolute; */
+  position: relative;
   margin: auto;
   width: 1920px;
   height: 852px;
   left: 0px;
-  top: 74px;
+  top: 75px;
+  margin-bottom: 75px;
 
   filter: drop-shadow(3px 3px 20px rgba(0, 0, 0, 0.1));
 }
