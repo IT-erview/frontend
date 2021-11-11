@@ -1,9 +1,10 @@
 .modal {
   position: absolute;
   top: 418px;
-  left: 745px;
+  /* left: 745px; */
   height: 245px;
   width: 430px;
+  left: calc(50% - 215px);
   border-radius: 15px;
   /* Font / White */
 
