@@ -90,6 +90,13 @@
   float: right;
   margin: 15px;
   color: rgb(184, 184, 184);
+  /* background-color: green; */
+  width: 20px;
+  height: 20px;
+}
+
+.close:hover {
+  color: black;
 }
 
 span {

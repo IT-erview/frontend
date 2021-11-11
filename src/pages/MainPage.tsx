@@ -5,6 +5,9 @@ import axios from 'axios'
 import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'
 import styles from 'css/MainPage.module.css'
+import { useSelector } from 'react-redux'
+import { ReducerType } from 'modules/rootReducer'
+import LoginModal from 'components/LoginModal'
 
 // header 설정
 axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`
@@ -69,54 +72,57 @@ const MainPage = () => {
   //   initHitsAnswers()
   // }, [])
 
+  const loginModal = useSelector<ReducerType, boolean>((state) => state.loginModal)
+
   return (
-    <div className="Main">
-      <Navigation />
-      <div className={styles.banner}>
-        <div className={styles.backgroundBox}>
-          <img className={styles.backgroundCover} src="img/background_0.png" alt="background" />
+    <>
+      <div className={loginModal ? 'Main blur' : 'Main'}>
+        <Navigation />
+        <div className={styles.banner}>
+          <div className={styles.backgroundBox}>
+            <img className={styles.backgroundCover} src="img/background_0.png" alt="background" />
+          </div>
+          <div className={styles.logo}>
+            <img src="img/iterview_logo_white.png" alt="logo" />
+          </div>
+          <p className={styles.introduction}>
+            IT’erview는 개발자들의 면접을 효율적으로 도와주는 서비스입니다. 체계적인 면접 학습을 경험해보세요.
+          </p>
+          {/* <div className={styles.contentIntroductionBox}> */}
+          <div>
+            <div className={styles.contentIntroductionUp}>
+              <svg width="24" height="12" viewBox="0 0 24 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M1 1L11.1538 10.3077V10.3077C11.6212 10.775 12.3788 10.775 12.8462 10.3077V10.3077L23 1"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </div>
+            <div className={styles.contentIntroductionTitle}>
+              <p className={styles.contentIntroductionTitleText}>퀴즈</p>
+            </div>
+            <div className={styles.contentIntroductionContent}>
+              마이페이지, 문제검색, 퀴즈에 대한 자세한 설명 및 사용법을 설명해주는 박스입니다.
+              <br />
+              사용자가 로그인하면 해당 박스는 사용자의 개인 정보를 보여주는 박스로 변경될 예정입니다.
+            </div>
+            <div className={styles.contentIntroductionDown}>
+              <svg width="24" height="12" viewBox="0 0 24 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M1 1L11.1538 10.3077V10.3077C11.6212 10.775 12.3788 10.775 12.8462 10.3077V10.3077L23 1"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </div>
+          </div>
+          <div className={styles.qustionSearchBox}></div>
         </div>
-        <div className={styles.logo}>
-          <img src="img/iterview_logo_white.png" alt="logo" />
-        </div>
-        <p className={styles.introduction}>
-          IT’erview는 개발자들의 면접을 효율적으로 도와주는 서비스입니다. 체계적인 면접 학습을 경험해보세요.
-        </p>
-        {/* <div className={styles.contentIntroductionBox}> */}
-        <div>
-          <div className={styles.contentIntroductionUp}>
-            <svg width="24" height="12" viewBox="0 0 24 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M1 1L11.1538 10.3077V10.3077C11.6212 10.775 12.3788 10.775 12.8462 10.3077V10.3077L23 1"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          </div>
-          <div className={styles.contentIntroductionTitle}>
-            <p className={styles.contentIntroductionTitleText}>퀴즈</p>
-          </div>
-          <div className={styles.contentIntroductionContent}>
-            마이페이지, 문제검색, 퀴즈에 대한 자세한 설명 및 사용법을 설명해주는 박스입니다.
-            <br />
-            사용자가 로그인하면 해당 박스는 사용자의 개인 정보를 보여주는 박스로 변경될 예정입니다.
-          </div>
-          <div className={styles.contentIntroductionDown}>
-            <svg width="24" height="12" viewBox="0 0 24 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M1 1L11.1538 10.3077V10.3077C11.6212 10.775 12.3788 10.775 12.8462 10.3077V10.3077L23 1"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          </div>
-        </div>
-        <div className={styles.qustionSearchBox}></div>
-      </div>
-      {/* <MainCarousel /> */}
-      {/* <div className="body">
+        {/* <MainCarousel /> */}
+        {/* <div className="body">
         <div className="main-mypage-box">
           <div>
             IT'erview를 <br />
@@ -240,8 +246,10 @@ const MainPage = () => {
           </div>
         </div>
       </div> */}
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+      <LoginModal />
+    </>
   )
 }
 

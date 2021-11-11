@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react'
 import styles from 'css/Navigation.module.css'
 import { Link, useHistory, withRouter } from 'react-router-dom'
-import LoginModal from './LoginModal'
 import { ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap'
 import { removeCookie } from './Cookies'
 import { JWT_TOKEN } from 'constants/Oauth'
@@ -225,8 +224,6 @@ const Navigation = (props: any) => {
             </button>
           </>
         )}
-        {/* 네이게이션 안에 있을 필요 없음. 이동 */}
-        <LoginModal />
       </div>
     </div>
   )

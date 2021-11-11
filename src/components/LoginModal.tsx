@@ -19,8 +19,7 @@ function LoginModal() {
   }
 
   return (
-    // 모달이 열릴때 openModal 클래스가 생성
-    <>
+    <div>
       {loginModal ? (
         <div className={styles.modal}>
           <section>
@@ -48,7 +47,7 @@ function LoginModal() {
           </section>
         </div>
       ) : null}
-    </>
+    </div>
   )
 }
 

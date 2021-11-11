@@ -330,3 +330,12 @@
   color: black;
   font-size: 16pt;
 }
+
+.blur {
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+}
+
+button:hover {
+  cursor: pointer !important;
+}
