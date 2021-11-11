@@ -1,13 +1,13 @@
 // todo: refactoring
 import LoginModal from 'components/LoginModal'
-import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { setModalOpen } from 'modules/loginModal'
 
 const LoginPage = () => {
-  const [modalOpen, setModalOpen] = useState(true)
+  const dispatch = useDispatch()
 
-  const closeModal = () => {
-    setModalOpen(false)
-  }
-  return <LoginModal open={modalOpen} close={closeModal} />
+  dispatch(setModalOpen(true))
+
+  return <LoginModal />
 }
 export default LoginPage

@@ -2,18 +2,26 @@
 import React from 'react'
 import styles from 'css/LoginModal.module.css'
 import { GOOGLE_AUTH_URL, GITHUB_AUTH_URL } from 'constants/Oauth'
+import { useSelector, useDispatch } from 'react-redux'
+import { ReducerType } from 'modules/rootReducer'
+import { setModalOpen } from 'modules/loginModal'
 
 const iterviewLogo = '/img/iterview_logo_dark.png'
 const googleLogo = '/img/google_logo.png'
 const githubLogo = '/img/github_logo.png'
 
-function LoginModal(props: any) {
-  const { open, close } = props
+function LoginModal() {
+  const loginModal = useSelector<ReducerType, boolean>((state) => state.loginModal)
+  const dispatch = useDispatch()
+
+  const close = () => {
+    dispatch(setModalOpen(false))
+  }
 
   return (
     // 모달이 열릴때 openModal 클래스가 생성
     <>
-      {open ? (
+      {loginModal ? (
         <div className={styles.modal}>
           <section>
             <button className={styles.close} onClick={close}>

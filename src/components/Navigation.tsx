@@ -7,19 +7,19 @@ import { ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reac
 import { removeCookie } from './Cookies'
 import { JWT_TOKEN } from 'constants/Oauth'
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { setModalOpen } from 'modules/loginModal'
 
 const Navigation = (props: any) => {
-  const [modalOpen, setModalOpen] = useState(false)
   const [userProfile, setUserProfile] = useState(null)
   const [dropdownOpen, setOpen] = useState(false)
   const history = useHistory()
+  const dispatch = useDispatch()
+
   const toggle = () => setOpen(!dropdownOpen)
 
   const openModal = () => {
-    setModalOpen(true)
-  }
-  const closeModal = () => {
-    setModalOpen(false)
+    dispatch(setModalOpen(true))
   }
 
   useEffect(() => {
@@ -226,7 +226,7 @@ const Navigation = (props: any) => {
           </>
         )}
         {/* 네이게이션 안에 있을 필요 없음. 이동 */}
-        <LoginModal open={modalOpen} close={closeModal}></LoginModal>
+        <LoginModal />
       </div>
     </div>
   )
