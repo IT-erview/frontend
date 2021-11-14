@@ -1,10 +1,10 @@
-span {
+.navText {
   /* Header 3 */
 
   font-family: NanumSquare;
   font-style: normal;
-  font-weight: 800 !important;
-  font-size: 18px !important;
+  font-weight: 800;
+  font-size: 18px;
   /* line-height: 15px; */
   /* identical to box height, or 83% */
   color: #111036;
