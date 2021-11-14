@@ -119,7 +119,16 @@ const MainPage = () => {
               </svg>
             </div>
           </div>
-          <div className={styles.qustionSearchBox}></div>
+          <div className={styles.questionSearchBox}>
+            <div className={styles.questionSearchTitle}>문제 검색</div>
+            <p className={styles.questionSearchText}>검색어를 입력해주세요.</p>
+            <button className={styles.questionSearchBtn}>검색하기</button>
+            <button className={styles.questionSearchResetBtn}>검색어 초기화 X</button>
+            <div className={styles.questionSearchLine} />
+            <p className={styles.questionSearchExplanation}>
+              일일이 찾아야 했던 면접 질문과 답변들, 검증되지 않았던 정보들, 한 번에 검색하고 검증된 정보를 받아보세요.
+            </p>
+          </div>
         </div>
         {/* <MainCarousel /> */}
         {/* <div className="body">
