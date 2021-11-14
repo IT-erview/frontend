@@ -69,7 +69,7 @@ const Navigation = (props: any) => {
               </svg>
             </div>
             <div className={styles.menuText}>
-              <span>Home</span>
+              <span className={styles.navText}>Home</span>
             </div>
           </div>
         </Link>
@@ -86,7 +86,7 @@ const Navigation = (props: any) => {
               </svg>
             </div>
             <div className={styles.menuText}>
-              <span>마이페이지</span>
+              <span className={styles.navText}>마이페이지</span>
             </div>
           </div>
         </Link>
@@ -104,7 +104,7 @@ const Navigation = (props: any) => {
               </svg>
             </div>
             <div className={styles.menuText}>
-              <span>문제검색</span>
+              <span className={styles.navText}>문제검색</span>
             </div>
           </div>
         </Link>
@@ -121,7 +121,7 @@ const Navigation = (props: any) => {
               </svg>
             </div>
             <div className={styles.menuText}>
-              <span>문제등록</span>
+              <span className={styles.navText}>문제등록</span>
             </div>
           </div>
         </Link>
