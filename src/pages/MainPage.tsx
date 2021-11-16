@@ -8,6 +8,8 @@ import styles from 'css/MainPage.module.css'
 import { useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
 import LoginModal from 'components/LoginModal'
+import { MAX_SEARCH_TAG_LENGTH } from 'common/config'
+import { useState } from 'react'
 
 // header 설정
 axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`
@@ -73,6 +75,7 @@ const MainPage = () => {
   // }, [])
 
   const loginModal = useSelector<ReducerType, boolean>((state) => state.loginModal)
+  const [tagSearchText, setTagSearchText] = useState<string>('')
 
   return (
     <>
@@ -121,9 +124,20 @@ const MainPage = () => {
           </div>
           <div className={styles.questionSearchBox}>
             <div className={styles.questionSearchTitle}>문제 검색</div>
-            <p className={styles.questionSearchText}>검색어를 입력해주세요.</p>
+            <input
+              type="text"
+              maxLength={MAX_SEARCH_TAG_LENGTH}
+              value={tagSearchText}
+              onChange={(e) => {
+                setTagSearchText(e.target.value)
+              }}
+              placeholder="검색어를 입력해주세요."
+              className={styles.questionSearchText}
+            />
             <button className={styles.questionSearchBtn}>검색하기</button>
-            <button className={styles.questionSearchResetBtn}>검색어 초기화 X</button>
+            <button onClick={() => setTagSearchText('')} className={styles.questionSearchResetBtn}>
+              검색어 초기화 X
+            </button>
             <div className={styles.questionSearchLine} />
             <p className={styles.questionSearchExplain}>
               일일이 찾아야 했던 면접 질문과 답변들, 검증되지 않았던 정보들, 한 번에 검색하고 검증된 정보를 받아보세요.
