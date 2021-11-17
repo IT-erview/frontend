@@ -1,25 +1,18 @@
 // todo: refactoring
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from 'css/Navigation.module.css'
 import { Link, useHistory, withRouter } from 'react-router-dom'
 import { ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap'
 import { removeCookie } from './Cookies'
 import { JWT_TOKEN } from 'constants/Oauth'
 import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setModalOpen } from 'modules/loginModal'
-import { getTags } from 'common/api'
-import { setAllTags } from 'modules/allTags'
-import { ReducerType } from 'modules/rootReducer'
-import { TagSelectorItem } from 'common/type'
-import { setRegisterTags } from 'modules/registerTags'
-import { setQuizTags } from 'modules/quizTags'
-import { setSearchTags } from 'modules/searchTags'
 
 const Navigation = (props: any) => {
   const [userProfile, setUserProfile] = useState(null)
   const [dropdownOpen, setOpen] = useState(false)
-  const allTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.allTags)
+  // }, [dispatch])
   const history = useHistory()
   const dispatch = useDispatch()
 
@@ -28,13 +21,6 @@ const Navigation = (props: any) => {
   const openModal = () => {
     dispatch(setModalOpen(true))
   }
-
-  const getAllTags = useCallback(async () => {
-    const tags = await getTags()
-    if (tags) {
-      dispatch(setAllTags(tags))
-    }
-  }, [dispatch])
 
   useEffect(() => {
     var param = new URLSearchParams(window.location.search).get('error')
@@ -49,9 +35,6 @@ const Navigation = (props: any) => {
           console.log(res.data)
           setUserProfile(res.data)
           localStorage.setItem('userName', res.data.username)
-          if (allTags.length === 0) {
-            getAllTags()
-          }
         })
         .catch((err) => {
           console.log(err)
@@ -63,13 +46,7 @@ const Navigation = (props: any) => {
           localStorage.removeItem('userName')
         })
     }
-  }, [getAllTags, allTags.length])
-
-  useEffect(() => {
-    dispatch(setRegisterTags(allTags))
-    dispatch(setQuizTags(allTags))
-    dispatch(setSearchTags(allTags))
-  }, [allTags, dispatch])
+  }, [])
 
   return (
     <div className={styles.topbar}>

@@ -5,12 +5,17 @@ import axios from 'axios'
 import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'
 import styles from 'css/MainPage.module.css'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
 import LoginModal from 'components/LoginModal'
 import { MAX_SEARCH_TAG_LENGTH } from 'common/config'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { TagSelectorItem } from 'common/type'
+import { getTags } from 'common/api'
+import { setAllTags } from 'modules/allTags'
+import { setSearchTags } from 'modules/searchTags'
+import { setQuizTags } from 'modules/quizTags'
+import { setRegisterTags } from 'modules/registerTags'
 
 // header 설정
 axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`
@@ -49,7 +54,9 @@ axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`
 // ]
 
 const MainPage = () => {
-  // const dispatch = useDispatch()
+  const allTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.allTags)
+  const [renewTags, setRenewTags] = useState<boolean>(false)
+  const dispatch = useDispatch()
   // const history = useHistory()
   // const [questions, setQuestions] = useState<Array<Question>>([])
   // const [hitsAnswers, setHitsAnswers] = useState<Array<Answer>>([])
@@ -74,6 +81,28 @@ const MainPage = () => {
   //   initQuestions()
   //   initHitsAnswers()
   // }, [])
+  const getAllTags = useCallback(async () => {
+    const tags = await getTags()
+    if (tags) {
+      dispatch(setAllTags(tags))
+      setRenewTags(true)
+    }
+  }, [dispatch])
+
+  useEffect(() => {
+    if (allTags.length === 0) {
+      getAllTags()
+    }
+  }, [getAllTags, allTags.length])
+
+  useEffect(() => {
+    if (renewTags) {
+      dispatch(setSearchTags(allTags))
+      dispatch(setQuizTags(allTags))
+      dispatch(setRegisterTags(allTags))
+      setRenewTags(false)
+    }
+  }, [allTags, dispatch, renewTags])
 
   const [tagSearchText, setTagSearchText] = useState<string>('')
   const loginModal = useSelector<ReducerType, boolean>((state) => state.loginModal)
