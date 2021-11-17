@@ -220,12 +220,18 @@ const postQuestion = async (content: string, tagList: Array<string>) => {
 }
 
 const getTags = async () => {
-  const response = await request({
-    method: 'get',
-    url: `/api/v1/tag/`,
+  const response = await fetch('/api/v1/tag/').then((res) => {
+    return res.json()
   })
-  if (!response) return null
-  return response.data as Array<TagItem>
+  return JSON.parse(JSON.stringify(response)) as Array<TagItem>
+
+  // 500 오류
+  // const response = await request({
+  //   method: 'get',
+  //   url: `/api/v1/tag/`,
+  // })
+  // if (!response) return null
+  // return response.data as Array<TagItem>
 }
 
 export {
