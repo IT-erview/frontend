@@ -3,7 +3,7 @@ import { TagItem, TagSelectorItem } from 'common/type'
 
 const allTags = createSlice({
   name: 'allTagsReducer',
-  initialState: <Array<TagSelectorItem>>[],
+  initialState: [] as Array<TagSelectorItem>,
   reducers: {
     setAllTags: (state: Array<TagSelectorItem>, action: PayloadAction<Array<TagItem>>) => {
       action.payload.map((tag) => state.push({ id: tag.tagId, name: tag.tagTitle, isSelected: false }))

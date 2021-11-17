@@ -10,6 +10,7 @@ import { ReducerType } from 'modules/rootReducer'
 import LoginModal from 'components/LoginModal'
 import { MAX_SEARCH_TAG_LENGTH } from 'common/config'
 import { useState } from 'react'
+import { TagSelectorItem } from 'common/type'
 
 // header 설정
 axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`
@@ -74,8 +75,9 @@ const MainPage = () => {
   //   initHitsAnswers()
   // }, [])
 
-  const loginModal = useSelector<ReducerType, boolean>((state) => state.loginModal)
   const [tagSearchText, setTagSearchText] = useState<string>('')
+  const loginModal = useSelector<ReducerType, boolean>((state) => state.loginModal)
+  const searchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.searchTags)
 
   return (
     <>
@@ -142,6 +144,7 @@ const MainPage = () => {
             <p className={styles.questionSearchExplain}>
               일일이 찾아야 했던 면접 질문과 답변들, 검증되지 않았던 정보들, 한 번에 검색하고 검증된 정보를 받아보세요.
             </p>
+            {console.log(searchTags)}
           </div>
         </div>
         {/* <MainCarousel /> */}

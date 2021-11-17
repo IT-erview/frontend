@@ -3,7 +3,7 @@ import { TagSelectorItem } from 'common/type'
 
 const searchTags = createSlice({
   name: 'searchTagsReducer',
-  initialState: <Array<TagSelectorItem>>[],
+  initialState: [] as Array<TagSelectorItem>,
   reducers: {
     setSearchTags: (state: Array<TagSelectorItem>, action: PayloadAction<Array<TagSelectorItem>>) => {
       return action.payload

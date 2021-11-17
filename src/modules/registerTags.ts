@@ -3,7 +3,7 @@ import { TagSelectorItem } from 'common/type'
 
 const registerTags = createSlice({
   name: 'registerTagsReducer',
-  initialState: <Array<TagSelectorItem>>[],
+  initialState: [] as Array<TagSelectorItem>,
   reducers: {
     setRegisterTags: (state: Array<TagSelectorItem>, action: PayloadAction<Array<TagSelectorItem>>) => {
       return action.payload
