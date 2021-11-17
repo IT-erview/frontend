@@ -3,7 +3,6 @@ import 'css/SetQuizOptions.css'
 import { useState } from 'react'
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button } from 'reactstrap'
 import { withRouter } from 'react-router-dom'
-import tagItems from 'constants/TagItems'
 import QuizSolving from 'components/QuizSolving'
 import { Question, TagSelectorItem } from 'common/type'
 import { useDispatch, useSelector } from 'react-redux'
@@ -18,6 +17,7 @@ const SetQuizOptions = () => {
   const cntToggle = () => setCntDropdownOpen((prevState) => !prevState)
   const [quizCount, setQuizCount] = useState<number>(0)
   const quizTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.quizTags)
+
   const dispatch = useDispatch()
   const quizMinToMax = Array.from({ length: 26 }, (v, i) => i + 5)
 
@@ -80,7 +80,7 @@ const SetQuizOptions = () => {
                       태그 선택
                     </DropdownToggle>
                     <DropdownMenu className="quiz-dropdown-menu">
-                      {tagItems.map((tag, i) => {
+                      {quizTags.map((tag, i) => {
                         return (
                           <DropdownItem key={i} onClick={() => selectTag(tag.id)} id={tag.name}>
                             {tag.name}

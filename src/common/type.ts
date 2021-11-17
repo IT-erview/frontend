@@ -30,7 +30,7 @@ export type Question = {
   userName: string
   tagList: Array<Tag>
 }
-
+// ToDo: Tag 통일하여 수정 필요
 export type Tag = {
   tagTitle: string
 }
@@ -44,4 +44,9 @@ export type TagSelectorItem = {
   id: number
   name: string
   isSelected: boolean
+}
+
+export type TagItem = {
+  tagId: number
+  tagTitle: string
 }

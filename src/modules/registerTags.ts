@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { TagSelectorItem } from 'common/type'
-import tagItems from 'constants/TagItems'
 
 const registerTags = createSlice({
   name: 'registerTagsReducer',
-  initialState: tagItems,
+  initialState: <Array<TagSelectorItem>>[],
   reducers: {
+    setRegisterTags: (state: Array<TagSelectorItem>, action: PayloadAction<Array<TagSelectorItem>>) => {
+      return action.payload
+    },
     setRegisterTagSelected: (
       state: Array<TagSelectorItem>,
       action: PayloadAction<{ tagId: number; isSelected: boolean }>,
@@ -17,5 +19,5 @@ const registerTags = createSlice({
   },
 })
 
-export const { setRegisterTagSelected } = registerTags.actions
+export const { setRegisterTags, setRegisterTagSelected } = registerTags.actions
 export default registerTags.reducer

@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { TagSelectorItem } from 'common/type'
-import tagItems from 'constants/TagItems'
 
 const searchTags = createSlice({
   name: 'searchTagsReducer',
-  initialState: tagItems,
+  initialState: <Array<TagSelectorItem>>[],
   reducers: {
+    setSearchTags: (state: Array<TagSelectorItem>, action: PayloadAction<Array<TagSelectorItem>>) => {
+      return action.payload
+    },
     setSearchTagSelected: (
       state: Array<TagSelectorItem>,
       action: PayloadAction<{ tagId: number; isSelected: boolean }>,
@@ -17,5 +19,5 @@ const searchTags = createSlice({
   },
 })
 
-export const { setSearchTagSelected } = searchTags.actions
+export const { setSearchTags, setSearchTagSelected } = searchTags.actions
 export default searchTags.reducer

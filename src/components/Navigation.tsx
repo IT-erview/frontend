@@ -6,12 +6,20 @@ import { ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reac
 import { removeCookie } from './Cookies'
 import { JWT_TOKEN } from 'constants/Oauth'
 import axios from 'axios'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setModalOpen } from 'modules/loginModal'
+import { getTags } from 'common/api'
+import { setAllTags } from 'modules/allTags'
+import { ReducerType } from 'modules/rootReducer'
+import { TagSelectorItem } from 'common/type'
+import { setRegisterTags } from 'modules/registerTags'
+import { setQuizTags } from 'modules/quizTags'
+import { setSearchTags } from 'modules/searchTags'
 
 const Navigation = (props: any) => {
   const [userProfile, setUserProfile] = useState(null)
   const [dropdownOpen, setOpen] = useState(false)
+  const allTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.allTags)
   const history = useHistory()
   const dispatch = useDispatch()
 
@@ -19,6 +27,13 @@ const Navigation = (props: any) => {
 
   const openModal = () => {
     dispatch(setModalOpen(true))
+  }
+
+  const getAllTags = async () => {
+    const tags = await getTags()
+    if (tags) {
+      dispatch(setAllTags(tags))
+    }
   }
 
   useEffect(() => {
@@ -46,6 +61,18 @@ const Navigation = (props: any) => {
         })
     }
   }, [])
+
+  useEffect(() => {
+    if (allTags.length === 0) {
+      getAllTags()
+    }
+  }, [getAllTags])
+
+  useEffect(() => {
+    dispatch(setRegisterTags(allTags))
+    dispatch(setQuizTags(allTags))
+    dispatch(setSearchTags(allTags))
+  }, [allTags])
 
   return (
     <div className={styles.topbar}>
