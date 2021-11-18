@@ -57,6 +57,10 @@ const MainPage = () => {
   const allTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.allTags)
   const [renewTags, setRenewTags] = useState<boolean>(false)
   const dispatch = useDispatch()
+  const [tagSearchText, setTagSearchText] = useState<string>('')
+  const loginModal = useSelector<ReducerType, boolean>((state) => state.loginModal)
+  const searchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.searchTags)
+  const [searchingTags, setSearchingTags] = useState<Array<TagSelectorItem>>([])
   // const history = useHistory()
   // const [questions, setQuestions] = useState<Array<Question>>([])
   // const [hitsAnswers, setHitsAnswers] = useState<Array<Answer>>([])
@@ -101,13 +105,25 @@ const MainPage = () => {
       dispatch(setQuizTags(allTags))
       dispatch(setRegisterTags(allTags))
       setRenewTags(false)
+    } else {
+      setSearchingTags(searchTags)
     }
-  }, [allTags, dispatch, renewTags])
+  }, [searchTags, allTags, dispatch, renewTags])
 
-  const [tagSearchText, setTagSearchText] = useState<string>('')
-  const loginModal = useSelector<ReducerType, boolean>((state) => state.loginModal)
-  const searchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.searchTags)
+  // const onTagSelect = (tagId: number, isSelected: boolean) => dispatch(setSearchTagSelected({ tagId, isSelected }))
 
+  const findTags = (tags: Array<TagSelectorItem>, text: string) => {
+    const result = [] as Array<TagSelectorItem>
+    tags.forEach((tag) => {
+      if (tag.name.indexOf(text) !== -1) result.push(tag)
+    })
+    if (result.length === 0) return tags
+    else return result
+  }
+
+  useEffect(() => {
+    setSearchingTags(findTags(searchTags, tagSearchText))
+  }, [searchTags, tagSearchText])
   return (
     <>
       <div className={loginModal ? 'Main blur' : 'Main'}>
@@ -173,7 +189,15 @@ const MainPage = () => {
             <p className={styles.questionSearchExplain}>
               일일이 찾아야 했던 면접 질문과 답변들, 검증되지 않았던 정보들, 한 번에 검색하고 검증된 정보를 받아보세요.
             </p>
-            {console.log(searchTags)}
+            <div className={styles.questionSearchTag}>
+              {searchingTags.map((tag, index) => {
+                return (
+                  <button key={index} className={styles.questionSearchTagBtn}>
+                    {tag.name}
+                  </button>
+                )
+              })}
+            </div>
           </div>
         </div>
         {/* <MainCarousel /> */}
