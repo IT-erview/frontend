@@ -59,7 +59,7 @@ const QuestionSearch = () => {
     const searchResults = await searchQuestions(
       questionSearchInput,
       sort,
-      questionSearchTags.filter((tag) => tag.isSelected).map((tag) => tag.name),
+      questionSearchTags.filter((tag) => tag.isSelected).map((tag) => tag.id),
     )
     setQuestions(searchResults)
     setQuestionSearchInput('')

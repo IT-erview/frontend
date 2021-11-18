@@ -100,7 +100,7 @@ const getBookmarks = async (sort: string, desc = true, page = 0, rowsPerPage = 3
 const searchQuestions = async (
   keyword: string,
   sort: string,
-  tagList: Array<string> = [],
+  tagList: Array<number> = [],
   desc = true,
   page = 0,
   rowsPerPage = 30,

@@ -13,9 +13,10 @@ import { useCallback, useEffect, useState } from 'react'
 import { TagSelectorItem } from 'common/type'
 import { getTags } from 'common/api'
 import { setAllTags } from 'modules/allTags'
-import { setSearchTags } from 'modules/searchTags'
+import { setSearchTags, setSearchTagSelected } from 'modules/searchTags'
 import { setQuizTags } from 'modules/quizTags'
 import { setRegisterTags } from 'modules/registerTags'
+import { useHistory } from 'react-router'
 
 // header 설정
 axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`
@@ -54,42 +55,21 @@ axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`
 // ]
 
 const MainPage = () => {
-  const allTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.allTags)
-  const [renewTags, setRenewTags] = useState<boolean>(false)
   const dispatch = useDispatch()
-  const [tagSearchText, setTagSearchText] = useState<string>('')
+  const allTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.allTags)
   const loginModal = useSelector<ReducerType, boolean>((state) => state.loginModal)
   const searchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.searchTags)
+  const [renew, setRenew] = useState<boolean>(false)
+  const [tagSearchText, setTagSearchText] = useState<string>('')
   const [searchingTags, setSearchingTags] = useState<Array<TagSelectorItem>>([])
-  // const history = useHistory()
-  // const [questions, setQuestions] = useState<Array<Question>>([])
-  // const [hitsAnswers, setHitsAnswers] = useState<Array<Answer>>([])
-  // const [focusedFeatureDescriptionType, setFocusedFeatureDescriptionType] = useState<FeatureDescriptionType>(
-  //   FeatureDescriptionType.SEARCH,
-  // )
-  // const questionSearchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.searchTags)
 
-  // const isFocused = (type: FeatureDescriptionType) => {
-  //   return focusedFeatureDescriptionType === type
-  // }
+  const history = useHistory()
 
-  // const onTagSelect = (tagId: number, isSelected: boolean) => dispatch(setSearchTagSelected({ tagId, isSelected }))
-
-  // useEffect(() => {
-  //   const initQuestions = async () => {
-  //     setQuestions(await getQuestions(0, 3))
-  //   }
-  //   const initHitsAnswers = async () => {
-  //     setHitsAnswers(await getHitsAnswers())
-  //   }
-  //   initQuestions()
-  //   initHitsAnswers()
-  // }, [])
   const getAllTags = useCallback(async () => {
     const tags = await getTags()
     if (tags) {
       dispatch(setAllTags(tags))
-      setRenewTags(true)
+      setRenew(true)
     }
   }, [dispatch])
 
@@ -100,17 +80,17 @@ const MainPage = () => {
   }, [getAllTags, allTags.length])
 
   useEffect(() => {
-    if (renewTags) {
+    if (renew) {
       dispatch(setSearchTags(allTags))
       dispatch(setQuizTags(allTags))
       dispatch(setRegisterTags(allTags))
-      setRenewTags(false)
+      setRenew(false)
     } else {
       setSearchingTags(searchTags)
     }
-  }, [searchTags, allTags, dispatch, renewTags])
+  }, [searchTags, allTags, dispatch, renew])
 
-  // const onTagSelect = (tagId: number, isSelected: boolean) => dispatch(setSearchTagSelected({ tagId, isSelected }))
+  const onTagSelect = (tagId: number, isSelected: boolean) => dispatch(setSearchTagSelected({ tagId, isSelected }))
 
   const findTags = (tags: Array<TagSelectorItem>, text: string) => {
     const result = [] as Array<TagSelectorItem>
@@ -181,7 +161,13 @@ const MainPage = () => {
               placeholder="검색어를 입력해주세요."
               className={styles.questionSearchText}
             />
-            <button className={styles.questionSearchBtn}>검색하기</button>
+            <button
+              onClick={() => {
+                history.push('/QuestionSearch')
+              }}
+              className={styles.questionSearchBtn}>
+              검색하기
+            </button>
             <button onClick={() => setTagSearchText('')} className={styles.questionSearchResetBtn}>
               검색어 초기화 X
             </button>
@@ -191,8 +177,18 @@ const MainPage = () => {
             </p>
             <div className={styles.questionSearchTag}>
               {searchingTags.map((tag, index) => {
-                return (
-                  <button key={index} className={styles.questionSearchTagBtn}>
+                return tag.isSelected ? (
+                  <button
+                    key={index}
+                    onClick={() => onTagSelect(tag.id, !tag.isSelected)}
+                    className={styles.questionSearchTagSelected}>
+                    {tag.name}
+                  </button>
+                ) : (
+                  <button
+                    key={index}
+                    onClick={() => onTagSelect(tag.id, !tag.isSelected)}
+                    className={styles.questionSearchTagDeselected}>
                     {tag.name}
                   </button>
                 )

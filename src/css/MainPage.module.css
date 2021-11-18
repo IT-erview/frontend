@@ -283,28 +283,43 @@
   position: relative;
 
   width: 880px;
+  height: 120px;
+
   margin: auto;
   margin-top: 25px;
 
   text-align: left;
 }
-
-.questionSearchTagBtn {
+.questionSearchTag > button {
   /* Frame 3 */
   position: relative;
   font-family: NanumSquare;
   font-style: normal;
   font-weight: bold;
   font-size: 14px;
-  line-height: 16px;
+  /* line-height: 16px; */
 
-  color: #796aca;
+  padding: 5px 18px;
 
-  padding: 7px 20px;
-
-  border: 2px solid #796aca;
   box-sizing: border-box;
   border-radius: 17px 17px 17px 0px;
-  margin: 0px 5px 7.5px 5px;
-  margin-bottom: 7.5px;
+
+  margin: 0px 5px 8px 5px;
+}
+
+.questionSearchTag > button:hover {
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  transition-duration: 0.3s;
+}
+
+.questionSearchTagDeselected {
+  color: #796aca;
+  border: 2px solid #796aca;
+  transition-duration: 0.2s;
+}
+
+.questionSearchTagSelected {
+  color: #ffffff;
+  border: 2px solid #ffffff;
 }
