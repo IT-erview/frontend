@@ -69,6 +69,17 @@ const MainPage = () => {
     else return result
   }
 
+  const showTags = searchingTags.map((tag, index) => {
+    return (
+      <button
+        key={index}
+        onClick={() => onTagSelect(tag.id, !tag.isSelected)}
+        className={tag.isSelected ? styles.questionSearchTagSelected : styles.questionSearchTagDeselected}>
+        {tag.name}
+      </button>
+    )
+  })
+
   useEffect(() => {
     setSearchingTags(findTags(searchTags, tagSearchText))
   }, [searchTags, tagSearchText])
@@ -144,25 +155,7 @@ const MainPage = () => {
             <p className={styles.questionSearchExplain}>
               일일이 찾아야 했던 면접 질문과 답변들, 검증되지 않았던 정보들, 한 번에 검색하고 검증된 정보를 받아보세요.
             </p>
-            <div className={styles.questionSearchTag}>
-              {searchingTags.map((tag, index) => {
-                return tag.isSelected ? (
-                  <button
-                    key={index}
-                    onClick={() => onTagSelect(tag.id, !tag.isSelected)}
-                    className={styles.questionSearchTagSelected}>
-                    {tag.name}
-                  </button>
-                ) : (
-                  <button
-                    key={index}
-                    onClick={() => onTagSelect(tag.id, !tag.isSelected)}
-                    className={styles.questionSearchTagDeselected}>
-                    {tag.name}
-                  </button>
-                )
-              })}
-            </div>
+            <div className={styles.questionSearchTag}>{showTags}</div>
           </div>
         </div>
         {/* <MainCarousel /> */}
