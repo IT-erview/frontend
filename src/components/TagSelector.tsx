@@ -1,6 +1,6 @@
 // todo: refactoring
 import 'css/Tags.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TagSelectorItem } from 'common/type'
 
 const TagSelector = (props: {
@@ -13,6 +13,10 @@ const TagSelector = (props: {
     props.onTagSelect(tagId, isSelected)
     setTags(tags.map((tag) => (tag.id === tagId ? { ...tag, isSelected } : tag)))
   }
+
+  useEffect(() => {
+    setTags(props.tags)
+  }, [props.tags])
 
   return (
     <div className="classification-tag-btn">

@@ -9,13 +9,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
 import LoginModal from 'components/LoginModal'
 import { MAX_SEARCH_TAG_LENGTH } from 'common/config'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TagSelectorItem } from 'common/type'
-import { getTags } from 'common/api'
-import { setAllTags } from 'modules/allTags'
-import { setSearchTags, setSearchTagSelected } from 'modules/searchTags'
-import { setQuizTags } from 'modules/quizTags'
-import { setRegisterTags } from 'modules/registerTags'
+import { setSearchTagSelected } from 'modules/searchTags'
 import { useHistory } from 'react-router'
 
 // header 설정
@@ -56,39 +52,11 @@ axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`
 
 const MainPage = () => {
   const dispatch = useDispatch()
-  const allTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.allTags)
   const loginModal = useSelector<ReducerType, boolean>((state) => state.loginModal)
   const searchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.searchTags)
-  const [renew, setRenew] = useState<boolean>(false)
   const [tagSearchText, setTagSearchText] = useState<string>('')
   const [searchingTags, setSearchingTags] = useState<Array<TagSelectorItem>>([])
-
   const history = useHistory()
-
-  const getAllTags = useCallback(async () => {
-    const tags = await getTags()
-    if (tags) {
-      dispatch(setAllTags(tags))
-      setRenew(true)
-    }
-  }, [dispatch])
-
-  useEffect(() => {
-    if (allTags.length === 0) {
-      getAllTags()
-    }
-  }, [getAllTags, allTags.length])
-
-  useEffect(() => {
-    if (renew) {
-      dispatch(setSearchTags(allTags))
-      dispatch(setQuizTags(allTags))
-      dispatch(setRegisterTags(allTags))
-      setRenew(false)
-    } else {
-      setSearchingTags(searchTags)
-    }
-  }, [searchTags, allTags, dispatch, renew])
 
   const onTagSelect = (tagId: number, isSelected: boolean) => dispatch(setSearchTagSelected({ tagId, isSelected }))
 
@@ -104,6 +72,7 @@ const MainPage = () => {
   useEffect(() => {
     setSearchingTags(findTags(searchTags, tagSearchText))
   }, [searchTags, tagSearchText])
+
   return (
     <>
       <div className={loginModal ? 'Main blur' : 'Main'}>

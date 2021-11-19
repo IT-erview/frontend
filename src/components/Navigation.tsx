@@ -1,20 +1,51 @@
 // todo: refactoring
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import styles from 'css/Navigation.module.css'
 import { Link, useHistory, withRouter } from 'react-router-dom'
 import { ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap'
 import { removeCookie } from './Cookies'
 import { JWT_TOKEN } from 'constants/Oauth'
 import axios from 'axios'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setModalOpen } from 'modules/loginModal'
+import { TagSelectorItem } from 'common/type'
+import { ReducerType } from 'modules/rootReducer'
+import { getTags } from 'common/api'
+import { setAllTags } from 'modules/allTags'
+import { setSearchTags } from 'modules/searchTags'
+import { setQuizTags } from 'modules/quizTags'
+import { setRegisterTags } from 'modules/registerTags'
 
 const Navigation = (props: any) => {
   const [userProfile, setUserProfile] = useState(null)
   const [dropdownOpen, setOpen] = useState(false)
-  // }, [dispatch])
   const history = useHistory()
   const dispatch = useDispatch()
+  const allTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.allTags)
+  const [renew, setRenew] = useState<boolean>(false)
+
+  const getAllTags = useCallback(async () => {
+    const tags = await getTags()
+    if (tags) {
+      dispatch(setAllTags(tags))
+      setRenew(true)
+    }
+  }, [dispatch])
+
+  useEffect(() => {
+    if (allTags.length === 0 && !renew) {
+      getAllTags()
+    }
+  }, [getAllTags, allTags.length, renew, allTags])
+
+  useEffect(() => {
+    if (renew) {
+      dispatch(setSearchTags(allTags))
+      dispatch(setQuizTags(allTags))
+      dispatch(setRegisterTags(allTags))
+      setRenew(false)
+    }
+  }, [allTags, dispatch, renew])
 
   const toggle = () => setOpen(!dropdownOpen)
 
