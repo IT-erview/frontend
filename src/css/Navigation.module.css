@@ -342,16 +342,9 @@
 
   /* Auto Layout */
 
-  /* display: flex; */
-  /* flex-direction: row; */
-  /* justify-content: flex-end; */
   align-items: center;
-  /* padding: 20px 120px 20px 0px; */
-
-  /* position: static; */
   width: 340px;
   height: 75px;
-  left: 1669px;
   top: 0px;
 
   /* Inside Auto Layout */
@@ -363,58 +356,34 @@
   /* margin: 0px 285px; */
 }
 
-.loginIcon {
-  /* topbar/login/image/button/space */
-
-  /* Auto Layout */
-
-  /* display: flex; */
-  /* flex-direction: row; */
-  justify-content: center;
-  align-items: center;
-  /* padding: 10px 0px; */
-
-  position: static;
-  width: 18px;
-  height: 18px;
-  left: -15px;
-  margin-top: 30px;
-
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-  margin: 0px 0px;
+.login {
+  /* topbar/login/button/space */
+  display: relative;
+  height: 75px;
 }
 
-.loginText {
-  /* topbar/login/button/space */
-
+.loginIcon {
+  /* topbar/login/image/button/space */
   /* Auto Layout */
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 5px;
-
-  position: static;
-  width: 70px;
-  height: 35px;
-  left: 0px;
-  top: 20px;
-
+  width: 15px;
+  height: 15px;
+  float: left;
+  margin-right: 8px;
   /* Inside Auto Layout */
-
-  flex: none;
-  order: 1;
-  flex-grow: 0;
-  margin: 0px 0px;
+}
+.loginText {
+  /* styleName: Header 3; */
+  font-family: NanumSquare;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 15px;
+  letter-spacing: 0em;
+  text-align: right;
 }
 
 .loginDropdown {
   /* topbar/login/more/button/space */
-
   /* Auto Layout */
 
   display: flex;
@@ -464,9 +433,8 @@
 }
 
 .arrow {
-  height: 10.153846740722656px;
+  height: 10px;
   width: 22px;
-  border-radius: 113px;
   margin-left: 28px;
 }
 .dropdownMenu {

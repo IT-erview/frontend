@@ -235,33 +235,24 @@ const Navigation = (props: any) => {
           </>
         ) : (
           <>
-            <div className={styles.loginIcon}>
-              <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="7.5" cy="7.5" r="7" stroke="#111036" />
-                <path
-                  d="M10.3334 5.00008C10.3334 6.56489 9.06489 7.83342 7.50008 7.83342C5.93527 7.83342 4.66675 6.56489 4.66675 5.00008C4.66675 3.43527 5.93527 2.16675 7.50008 2.16675C9.06489 2.16675 10.3334 3.43527 10.3334 5.00008Z"
-                  stroke="#111036"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M3.33325 12.9167C4.07399 9.58341 4.99992 9.16675 7.49992 9.16675C9.99992 9.16675 10.9258 9.58341 11.6666 12.9167"
-                  stroke="#111036"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </div>
-            <button className={styles.loginText} onClick={openModal}>
-              <span>LOGIN</span>
-            </button>
-            <button className={styles.loginDropdown} onClick={openModal}>
-              <svg width="24" height="13" viewBox="0 0 24 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M1 1.4231L11.1538 10.7308V10.7308C11.6212 11.1981 12.3788 11.1981 12.8462 10.7308V10.7308L23 1.4231"
-                  stroke="#111036"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
+            <button className={styles.login} onClick={openModal}>
+              <div className={styles.loginIcon}>
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="7.5" cy="7.5" r="7" stroke="#111036" />
+                  <path
+                    d="M10.3334 5.00008C10.3334 6.56489 9.06489 7.83342 7.50008 7.83342C5.93527 7.83342 4.66675 6.56489 4.66675 5.00008C4.66675 3.43527 5.93527 2.16675 7.50008 2.16675C9.06489 2.16675 10.3334 3.43527 10.3334 5.00008Z"
+                    stroke="#111036"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M3.33325 12.9167C4.07399 9.58341 4.99992 9.16675 7.49992 9.16675C9.99992 9.16675 10.9258 9.58341 11.6666 12.9167"
+                    stroke="#111036"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
+              <span className={styles.loginText}>LOGIN</span>
+              <img src="/img/nav_icon7.png" alt="dropdown-arrow" className={styles.arrow} />
             </button>
           </>
         )}
