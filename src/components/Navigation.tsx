@@ -54,6 +54,13 @@ const Navigation = (props: any) => {
     dispatch(setModalOpen(true))
   }
 
+  const logout = () => {
+    removeCookie('Authorization', { path: '/' })
+    localStorage.removeItem('userName')
+    history.push('/')
+    window.location.reload()
+  }
+
   const dropdownMenu = () => {
     if (isOpen)
       return (
@@ -78,7 +85,9 @@ const Navigation = (props: any) => {
           </div>
           <div className={styles.dropdownLine} />
 
-          <button className={styles.logout}>로그아웃</button>
+          <button className={styles.logout} onClick={logout}>
+            로그아웃
+          </button>
         </div>
       )
     else return null
@@ -223,8 +232,6 @@ const Navigation = (props: any) => {
             </button>
 
             {dropdownMenu()}
-            {console.log(userImgUrl)}
-            {console.log(history)}
           </>
         ) : (
           <>
