@@ -2,7 +2,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import styles from 'css/Navigation.module.css'
 import { Link, useHistory, withRouter } from 'react-router-dom'
-import { ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap'
 import { removeCookie } from './Cookies'
 import { JWT_TOKEN } from 'constants/Oauth'
 import axios from 'axios'
@@ -17,8 +16,10 @@ import { setQuizTags } from 'modules/quizTags'
 import { setRegisterTags } from 'modules/registerTags'
 
 const Navigation = (props: any) => {
-  const [userProfile, setUserProfile] = useState(null)
-  const [dropdownOpen, setOpen] = useState(false)
+  const [userEmail, setUserEmail] = useState<string>('')
+  const [userName, setUserName] = useState<string>('')
+  const [userImgUrl, setUserImgUrl] = useState<string>('')
+  const [isOpen, setOpen] = useState(false)
   const history = useHistory()
   const dispatch = useDispatch()
   const allTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.allTags)
@@ -47,10 +48,40 @@ const Navigation = (props: any) => {
     }
   }, [allTags, dispatch, renew])
 
-  const toggle = () => setOpen(!dropdownOpen)
+  const toggle = () => setOpen((prev) => !prev)
 
   const openModal = () => {
     dispatch(setModalOpen(true))
+  }
+
+  const dropdownMenu = () => {
+    if (isOpen)
+      return (
+        <div className={styles.dropdownMenu}>
+          <div className={styles.userProfile}>
+            <img src={userImgUrl} alt="user-profile-img" className={styles.userProfileImg} />
+            <p className={styles.userProfileName}>{userName} 님</p>
+            <p className={styles.userProfileEmail}>{userEmail}</p>
+          </div>
+          <div className={styles.dropdownLine} />
+          <div className={styles.option}>
+            <button className={styles.optionText}>프로필 수정</button>
+            <br />
+            <button>마이페이지</button>
+          </div>
+          <div className={styles.dropdownLine} />
+
+          <div className={styles.option}>
+            <button className={styles.optionText}>자주하는 질문</button>
+            <br />
+            <button>고객센터</button>
+          </div>
+          <div className={styles.dropdownLine} />
+
+          <button className={styles.logout}>로그아웃</button>
+        </div>
+      )
+    else return null
   }
 
   useEffect(() => {
@@ -64,7 +95,9 @@ const Navigation = (props: any) => {
         .get(`/api/v1/user/profile/`)
         .then((res) => {
           console.log(res.data)
-          setUserProfile(res.data)
+          setUserName(res.data.username)
+          setUserImgUrl(res.data.imageUrl)
+          setUserEmail(res.data.email)
           localStorage.setItem('userName', res.data.username)
         })
         .catch((err) => {
@@ -72,7 +105,8 @@ const Navigation = (props: any) => {
           if (err.response.status === 401) {
             window.alert('로그인 에러입니다.')
           }
-          setUserProfile(null)
+          setUserName('')
+          setUserImgUrl('')
           removeCookie('Authorization', { path: '/' })
           localStorage.removeItem('userName')
         })
@@ -178,69 +212,37 @@ const Navigation = (props: any) => {
         </Link>
       </div>
       <div className={styles.loginSpace}>
-        <div className={styles.loginIcon}>
-          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="7.5" cy="7.5" r="7" stroke="#111036" />
-            <path
-              d="M10.3334 5.00008C10.3334 6.56489 9.06489 7.83342 7.50008 7.83342C5.93527 7.83342 4.66675 6.56489 4.66675 5.00008C4.66675 3.43527 5.93527 2.16675 7.50008 2.16675C9.06489 2.16675 10.3334 3.43527 10.3334 5.00008Z"
-              stroke="#111036"
-              strokeLinecap="round"
-            />
-            <path
-              d="M3.33325 12.9167C4.07399 9.58341 4.99992 9.16675 7.49992 9.16675C9.99992 9.16675 10.9258 9.58341 11.6666 12.9167"
-              stroke="#111036"
-              strokeLinecap="round"
-            />
-          </svg>
-        </div>
         {/* 기획 나오는거 보고 추가작업 */}
         {/* jwt_token이 존재하면 login 처리 */}
-        {userProfile ? (
-          <ButtonDropdown className="dropdown-btn-par" isOpen={dropdownOpen} toggle={toggle}>
-            <DropdownToggle className="dropdown-btn" caret>
-              {/* note: 구조변경필요 일단 주석 */}
-              {/* {userProfile?.username}님 */}
-              <img src="/img/nav_icon6.png" alt="nav_icon" />
-            </DropdownToggle>
-            <DropdownMenu className="dropdown-menu">
-              <DropdownItem
-                onClick={() => {
-                  history.push('/MyPage/MyRegisterQuestion')
-                }}>
-                내가 등록한 문제
-              </DropdownItem>
-              <DropdownItem
-                onClick={() => {
-                  history.push('/MyPage/MyRegisterAnswer')
-                }}>
-                내가 등록한 답변
-              </DropdownItem>
-              <DropdownItem
-                onClick={() => {
-                  history.push('/MyPage/MyLikeAnswer')
-                }}>
-                좋아요한 답변
-              </DropdownItem>
-              <DropdownItem
-                onClick={() => {
-                  history.push('/MyPage/MyBookmarkQuestion')
-                }}>
-                북마크한 문제
-              </DropdownItem>
-              <DropdownItem divider />
-              <a
-                className="logout-btn"
-                href="/"
-                onClick={() => {
-                  removeCookie('Authorization', { path: '/' })
-                  localStorage.removeItem('userName')
-                }}>
-                로그아웃
-              </a>
-            </DropdownMenu>
-          </ButtonDropdown>
+        {userName ? (
+          <>
+            <button className={styles.dropdown} onClick={toggle}>
+              <img src={userImgUrl} alt="user-profile-img" className={styles.navProfileImg} />
+              {userName} 님
+              <img src="/img/nav_icon7.png" alt="dropdown-arrow" className={styles.arrow} />
+            </button>
+
+            {dropdownMenu()}
+            {console.log(userImgUrl)}
+            {console.log(history)}
+          </>
         ) : (
           <>
+            <div className={styles.loginIcon}>
+              <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="7.5" cy="7.5" r="7" stroke="#111036" />
+                <path
+                  d="M10.3334 5.00008C10.3334 6.56489 9.06489 7.83342 7.50008 7.83342C5.93527 7.83342 4.66675 6.56489 4.66675 5.00008C4.66675 3.43527 5.93527 2.16675 7.50008 2.16675C9.06489 2.16675 10.3334 3.43527 10.3334 5.00008Z"
+                  stroke="#111036"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M3.33325 12.9167C4.07399 9.58341 4.99992 9.16675 7.49992 9.16675C9.99992 9.16675 10.9258 9.58341 11.6666 12.9167"
+                  stroke="#111036"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </div>
             <button className={styles.loginText} onClick={openModal}>
               <span>LOGIN</span>
             </button>

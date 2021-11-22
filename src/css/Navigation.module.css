@@ -29,9 +29,9 @@
   align-items: center;
   padding: 0px;
 
-  /* position: absolute; */
+  position: absolute;
   /* position: relative; */
-  position: fixed;
+  /* position: fixed; */
   width: 100%;
   height: 75px;
   left: 0px;
@@ -342,14 +342,14 @@
 
   /* Auto Layout */
 
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+  /* display: flex; */
+  /* flex-direction: row; */
+  /* justify-content: flex-end; */
   align-items: center;
-  padding: 20px 120px 20px 0px;
+  /* padding: 20px 120px 20px 0px; */
 
-  position: static;
-  width: 250px;
+  /* position: static; */
+  width: 340px;
   height: 75px;
   left: 1669px;
   top: 0px;
@@ -359,6 +359,7 @@
   flex: none;
   order: 2;
   flex-grow: 0;
+
   /* margin: 0px 285px; */
 }
 
@@ -367,17 +368,17 @@
 
   /* Auto Layout */
 
-  display: flex;
-  flex-direction: row;
+  /* display: flex; */
+  /* flex-direction: row; */
   justify-content: center;
   align-items: center;
-  padding: 10px 0px;
+  /* padding: 10px 0px; */
 
   position: static;
-  width: 15px;
-  height: 35px;
+  width: 18px;
+  height: 18px;
   left: -15px;
-  top: 20px;
+  margin-top: 30px;
 
   /* Inside Auto Layout */
 
@@ -391,7 +392,6 @@
   /* topbar/login/button/space */
 
   /* Auto Layout */
-
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -435,4 +435,144 @@
   order: 2;
   flex-grow: 0;
   margin: 0px 0px;
+}
+
+.dropdown {
+  text-align: center;
+  height: 25px;
+  line-height: 18px;
+  /* styleName: Header 3; */
+  font-family: NanumSquare;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0em;
+  margin: auto;
+  margin-top: 25px;
+  margin-left: 28px;
+}
+.dropdown:focus {
+  outline: 0;
+}
+
+.navProfileImg {
+  float: left;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.arrow {
+  height: 10.153846740722656px;
+  width: 22px;
+  border-radius: 113px;
+  margin-left: 28px;
+}
+.dropdownMenu {
+  /* Rectangle 105 */
+  height: 371px;
+  width: 340px;
+
+  position: relative;
+  z-index: 2;
+
+  margin-top: 23px;
+  /* Font / White */
+
+  background: #ffffff;
+  box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  text-align: left;
+}
+
+.userProfile {
+  height: 111px;
+}
+.userProfileImg {
+  width: 45px;
+  height: 45px;
+  float: left;
+  margin-top: 33px;
+  margin-left: 25px;
+  margin-right: 11px;
+  border-radius: 50%;
+}
+
+.userProfileName {
+  /* Header 2 */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 20px;
+  /* identical to box height, or 77% */
+
+  /* Basic / Secondary */
+
+  color: #111036;
+  padding-top: 35px;
+}
+
+.userProfileEmail {
+  /* iterview.cs@gmail.com */
+  /* Boby 1 */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.02em;
+
+  /* Basic / Secondary 30% */
+
+  color: rgba(17, 16, 54, 0.3);
+  margin-top: 7px;
+}
+
+.dropdownLine {
+  margin: 0;
+  height: 1px;
+  width: 300px;
+  margin: auto;
+  background-color: #1110364d;
+}
+
+.option {
+  /* Boby 1 */
+  margin-left: 33px;
+  margin-top: 23px;
+  margin-bottom: 23px;
+}
+
+.option > button {
+  font-family: NanumSquare;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: -0.02em;
+  text-align: left;
+
+  color: #000000;
+}
+.optionText {
+  margin-bottom: 18px;
+}
+
+.logout {
+  margin-left: 33px;
+  margin-top: 22px;
+
+  font-family: NanumSquare;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 15px;
+  letter-spacing: 0em;
+  text-align: left;
 }
