@@ -9,10 +9,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
 import LoginModal from 'components/LoginModal'
 import { MAX_SEARCH_TAG_LENGTH } from 'common/config'
-import { useEffect, useState } from 'react'
-import { TagSelectorItem } from 'common/type'
+import { useCallback, useEffect, useState } from 'react'
+import { Answer, Question as QuestionType, TagSelectorItem } from 'common/type'
 import { setSearchTagSelected } from 'modules/searchTags'
 import { useHistory } from 'react-router'
+import Question from 'components/Question'
+import { getHitsAnswers, getHitsQuestions } from 'common/api'
 
 // header 설정
 axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`
@@ -56,7 +58,13 @@ const MainPage = () => {
   const searchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.searchTags)
   const [tagSearchText, setTagSearchText] = useState<string>('')
   const [searchingTags, setSearchingTags] = useState<Array<TagSelectorItem>>([])
+  const [hitsQuestions, setHitQuestions] = useState<Array<QuestionType>>([])
+  const [hitsAnswers, setHitAnswers] = useState<Array<Answer>>([])
   const history = useHistory()
+  const [questionSort, setQuestionSort] = useState<string>('weekly')
+  const [answerSort, setAnswerSort] = useState<string>('weekly')
+  const [moreQuestion, setMoreQuestion] = useState<boolean>(false)
+  const [moreAnswer, setMoreAnswer] = useState<boolean>(false)
 
   const onTagSelect = (tagId: number, isSelected: boolean) => dispatch(setSearchTagSelected({ tagId, isSelected }))
 
@@ -80,9 +88,93 @@ const MainPage = () => {
     )
   })
 
+  const showHitsQuestions = () => {
+    return (
+      <div className="hit-question">
+        <h1 className="hit-question-title">
+          <img src="/img/figure3.png" alt="figur3_icon" />
+          인기있는 면접 문제
+        </h1>
+        <button className="hit-question-btn" onClick={() => setQuestionSort('weekly')}>
+          주간
+        </button>
+        <button className="hit-question-btn" onClick={() => setQuestionSort('monthly')}>
+          월간
+        </button>
+        <hr className="hit-question-hr" />
+        {hitsQuestions.length > 0 &&
+          hitsQuestions.map((question, idx) => {
+            if (!moreQuestion && idx >= 3) return null
+            return (
+              <Question
+                key={question.id}
+                id={question.id}
+                number={idx + 1}
+                content={question.content}
+                tagList={question.tagList}
+                answer={question.mostLikedAnswer}
+              />
+            )
+          })}
+        <button onClick={() => setMoreQuestion((prev) => !prev)}>더보기</button>
+      </div>
+    )
+  }
+
+  const showHitsAnswers = () => {
+    return (
+      <div className="hit-answer">
+        <h1 className="hit-answer-title">
+          <img src="/img/figure4.png" alt="figur3_icon" />
+          베스트 면접 답변
+        </h1>
+        <button className="hit-question-btn" onClick={() => setAnswerSort('weekly')}>
+          주간
+        </button>
+        <button className="hit-question-btn" onClick={() => setAnswerSort('monthly')}>
+          월간
+        </button>
+        <hr className="hit-answer-hr" />
+        {hitsAnswers.length > 0 &&
+          hitsAnswers.map((answer, idx) => {
+            if (!moreAnswer && idx >= 3) return null
+
+            return (
+              <Question
+                key={answer.id}
+                id={answer.questionId}
+                number={idx + 1}
+                content={answer.questionContent!}
+                tagList={answer.tags}
+                answer={answer}
+              />
+            )
+          })}
+        <button onClick={() => setMoreAnswer((prev) => !prev)}>더보기</button>
+      </div>
+    )
+  }
+
   useEffect(() => {
     setSearchingTags(findTags(searchTags, tagSearchText))
   }, [searchTags, tagSearchText])
+
+  const getQuestions = useCallback(async () => {
+    const question = await getHitsQuestions(questionSort)
+    setHitQuestions(question)
+  }, [questionSort])
+
+  const getAnswers = useCallback(async () => {
+    const answers = await getHitsAnswers(answerSort)
+    setHitAnswers(answers)
+  }, [answerSort])
+
+  useEffect(() => {
+    getQuestions()
+  }, [getQuestions])
+  useEffect(() => {
+    getAnswers()
+  }, [getAnswers])
 
   return (
     <>
@@ -98,7 +190,6 @@ const MainPage = () => {
           <p className={styles.introduction}>
             IT’erview는 개발자들의 면접을 효율적으로 도와주는 서비스입니다. 체계적인 면접 학습을 경험해보세요.
           </p>
-          {/* <div className={styles.contentIntroductionBox}> */}
           <div>
             <div className={styles.contentIntroductionUp}>
               <svg width="24" height="12" viewBox="0 0 24 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -158,131 +249,12 @@ const MainPage = () => {
             <div className={styles.questionSearchTag}>{showTags}</div>
           </div>
         </div>
-        {/* <MainCarousel /> */}
-        {/* <div className="body">
-        <div className="main-mypage-box">
-          <div>
-            IT'erview를 <br />
-            알아가 볼까요?
-          </div>
-          <h1>마이페이지</h1>
-          <span>마이페이지에서 나의 IT'erview 기록들을 확인해보세요!</span>
-          <Link to="/MyPage/MyRegisterQuestion">
-            <button className="main-mypage-btn">마이 페이지</button>
-          </Link>
-        </div>
-        <div className="intro-functions">
-          {featureDescriptions.map((feature) => {
-            return (
-              <button
-                key={feature.type}
-                style={{
-                  borderBottom: isFocused(feature.type) ? '0.01px solid #2f00ff' : 'none',
-                }}
-                onClick={() => {
-                  setFocusedFeatureDescriptionType(feature.type)
-                }}>
-                <span>{feature.title}</span>
-              </button>
-            )
-          })}
-          <hr className="intro-hr" />
-          <div className="function-explain">
-            {featureDescriptions.map((feature) => {
-              return isFocused(feature.type) && <span key={feature.type}>{feature.description}</span>
-            })}
-          </div>
-          <br />
-          <br />
-        </div>
-        <div className="main-question-section">
-          <div>
-            <h1 className="search-title">
-              <img src="/img/figure1.png" alt="figure1_icon" />
-              문제 검색
-            </h1>
-            <hr className="search-hr" />
-            <span className="search-subtext">
-              일일이 찾아야 했던 면접 질문과 답변들, 검증되지 않았던 정보들, 한번에 검색하고 검증된 정보를 받아보세요.
-            </span>
-            <div className="main-question-search-tag">
-              <TagSelector tags={questionSearchTags} onTagSelect={onTagSelect} />
-            </div>
-            <button
-              className="main-search-btn"
-              onClick={() => {
-                history.push('/QuestionSearch')
-              }}>
-              검색하기
-            </button>
-          </div>
-          <div>
-            <h1 className="register-title">
-              <img src="/img/figure2.png" alt="figure1_icon" />
-              문제 등록
-            </h1>
-            <hr className="register-hr" />
-            <span className="register-subtext">
-              면접문제를 어떻게 풀어야할지 막막하시죠? 어려운 문제를 등록해주세요. 함께 해결해드릴게요. <br />
-              나의 의견과 다른 분들의 답변과 비교해보시고, 마음에 드는 답변을 모아보세요.
-            </span>
-            <button
-              className="main-register-btn"
-              onClick={() => {
-                history.push('/QuestionRegister')
-              }}>
-              등록하기
-            </button>
+        <div className="body">
+          <div className="hit-section">
+            {showHitsQuestions()}
+            {showHitsAnswers()}
           </div>
         </div>
-        <div className="hit-section">
-          <div className="hit-question">
-            <h1 className="hit-question-title">
-              <img src="/img/figure3.png" alt="figur3_icon" />
-              인기있는 면접 문제
-            </h1>
-            <button className="hit-question-btn">더보기</button>
-            <hr className="hit-question-hr" />
-            {questions.length > 0 &&
-              questions.map((question, idx) => {
-                return (
-                  <QuestionComponent
-                    key={question.id}
-                    id={question.id}
-                    // idx+1 ??
-                    number={idx + 1}
-                    content={question.content}
-                    tagList={question.tagList}
-                    answer={question.mostLikedAnswer}
-                  />
-                )
-              })}
-            {!isAuthorized() && <span id="question-login-text">로그인 후 볼 수 있습니다.</span>}
-          </div>
-          <div className="hit-answer">
-            <h1 className="hit-answer-title">
-              <img src="/img/figure4.png" alt="figur3_icon" />
-              베스트 면접 답변
-            </h1>
-            <button className="hit-answer-btn">더보기</button>
-            <hr className="hit-answer-hr" />
-            {hitsAnswers.length > 0 &&
-              hitsAnswers.map((answer, idx) => {
-                return (
-                  <QuestionComponent
-                    key={answer.id}
-                    id={answer.questionId}
-                    number={idx + 1}
-                    content={answer.questionContent!}
-                    tagList={answer.tags}
-                    answer={answer}
-                  />
-                )
-              })}
-            {!isAuthorized() && <span id="answer-login-text">로그인 후 볼 수 있습니다.</span>}
-          </div>
-        </div>
-      </div> */}
         <Footer />
       </div>
       <LoginModal />
