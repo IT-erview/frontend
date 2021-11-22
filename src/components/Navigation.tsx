@@ -230,7 +230,6 @@ const Navigation = (props: any) => {
               {userName} 님
               <img src="/img/nav_icon7.png" alt="dropdown-arrow" className={styles.arrow} />
             </button>
-
             {dropdownMenu()}
           </>
         ) : (
