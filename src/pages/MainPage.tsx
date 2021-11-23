@@ -171,7 +171,7 @@ const MainPage = () => {
 
   return (
     <>
-      <div className={loginModal ? 'Main blur' : 'Main'}>
+      <div className={loginModal ? styles.blur : ''}>
         <Navigation />
         <div className={styles.banner}>
           <div className={styles.backgroundBox}>
