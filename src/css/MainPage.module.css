@@ -323,3 +323,33 @@
   color: #ffffff;
   border: 2px solid #ffffff;
 }
+
+.hitsAnswers > div > button {
+  background: #231d4c;
+}
+
+.hitsAnswers > div > button > div > h1 {
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+
+  color: #a0a0a0;
+}
+
+.hitsAnswers > div > button > div > p {
+  /* header 3 */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 20px;
+
+  color: #ffffff;
+}
+
+/* .hitsAnswers > div> button >  */

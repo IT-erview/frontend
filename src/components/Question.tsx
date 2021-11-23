@@ -2,7 +2,7 @@ import { getMyAnswer } from 'common/api'
 import { Answer, Tag } from 'common/type'
 import { getZerofilledNumber } from 'common/util'
 import { MAX_DISPLAYED_TAG_COUNT } from 'common/config'
-import 'css/Question.css'
+import styles from 'css/Question.module.css'
 
 const Question = (props: { id: number; number: number; content: string; tagList?: Array<Tag>; answer?: Answer }) => {
   // todo: 전체적으로 적용필요
@@ -21,22 +21,26 @@ const Question = (props: { id: number; number: number; content: string; tagList?
   }
 
   return (
-    <div className="each-question">
-      <button onClick={moveToQuestionDetail}>
-        <div className="question-number">{getZerofilledNumber(props.number)}</div>
-        <div className="question-content">
-          {props.content}
-          <br />
-          <span>{props.answer ? props.answer.content : '(등록된 답변이 없습니다)'}</span>
+    <div>
+      <button onClick={moveToQuestionDetail} className={styles.questionBox}>
+        <div className={styles.questionInfo}>
+          <div className={styles.questionNumber}>{getZerofilledNumber(props.number)}</div>
+          <div className={styles.line}></div>
+          <div className={styles.like}>(이미지) 643</div>
+          <div className={styles.bookmark}>(이미지) 245</div>
         </div>
-        <div className="question-tag">
+        <div className={styles.questionContent}>
+          <h1 className={styles.questionTitle}>{props.content}</h1>
+          <p className={styles.questionAnswer}>{props.answer ? props.answer.content : '(등록된 답변이 없습니다)'}</p>
+        </div>
+        <div className={styles.questionTags}>
           {props.tagList &&
             props.tagList.map((tag, index) => {
               return (
                 index < MAX_DISPLAYED_TAG_COUNT && (
-                  <div className="question-tags" key={index}>
+                  <span className={styles.questionTag} key={index}>
                     {tag.tagTitle}
-                  </div>
+                  </span>
                 )
               )
             })}

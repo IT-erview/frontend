@@ -1,5 +1,5 @@
 // memo 제외하고 대부분 완료
-import 'css/MainPage.css'
+// import 'css/MainPage.css'
 import { JWT_TOKEN } from 'constants/Oauth'
 import axios from 'axios'
 import Navigation from 'components/Navigation'
@@ -90,11 +90,8 @@ const MainPage = () => {
 
   const showHitsQuestions = () => {
     return (
-      <div className="hit-question">
-        <h1 className="hit-question-title">
-          <img src="/img/figure3.png" alt="figur3_icon" />
-          인기있는 면접 문제
-        </h1>
+      <div className={styles.hitsQuestion}>
+        <h1 className="hit-question-title">베스트 면접 문제</h1>
         <button className="hit-question-btn" onClick={() => setQuestionSort('weekly')}>
           주간
         </button>
@@ -116,18 +113,15 @@ const MainPage = () => {
               />
             )
           })}
-        <button onClick={() => setMoreQuestion((prev) => !prev)}>더보기</button>
+        <button onClick={() => setMoreQuestion((prev) => !prev)}>더보기 + </button>
       </div>
     )
   }
 
   const showHitsAnswers = () => {
     return (
-      <div className="hit-answer">
-        <h1 className="hit-answer-title">
-          <img src="/img/figure4.png" alt="figur3_icon" />
-          베스트 면접 답변
-        </h1>
+      <div className={styles.hitsAnswers}>
+        <h1 className="hit-answer-title">베스트 면접 답변</h1>
         <button className="hit-question-btn" onClick={() => setAnswerSort('weekly')}>
           주간
         </button>
@@ -138,7 +132,6 @@ const MainPage = () => {
         {hitsAnswers.length > 0 &&
           hitsAnswers.map((answer, idx) => {
             if (!moreAnswer && idx >= 3) return null
-
             return (
               <Question
                 key={answer.id}
@@ -150,7 +143,7 @@ const MainPage = () => {
               />
             )
           })}
-        <button onClick={() => setMoreAnswer((prev) => !prev)}>더보기</button>
+        <button onClick={() => setMoreAnswer((prev) => !prev)}>더보기 +</button>
       </div>
     )
   }
