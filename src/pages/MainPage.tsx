@@ -90,15 +90,22 @@ const MainPage = () => {
 
   const showHitsQuestions = () => {
     return (
-      <div className={styles.hitsQuestion}>
-        <h1 className="hit-question-title">베스트 면접 문제</h1>
-        <button className="hit-question-btn" onClick={() => setQuestionSort('weekly')}>
-          주간
-        </button>
-        <button className="hit-question-btn" onClick={() => setQuestionSort('monthly')}>
-          월간
-        </button>
-        <hr className="hit-question-hr" />
+      <div className={styles.hitsQuestions}>
+        <span className={styles.hitsTitle}>베스트 면접 문제</span>
+        <div className={styles.sort}>
+          <button
+            className={questionSort === 'weekly' ? styles.sortSelected : styles.sortDeselected}
+            onClick={() => setQuestionSort('weekly')}>
+            주간
+          </button>
+          |
+          <button
+            className={questionSort === 'monthly' ? styles.sortSelected : styles.sortDeselected}
+            onClick={() => setQuestionSort('monthly')}>
+            월간
+          </button>
+        </div>
+        <div className={styles.hitsLine}></div>
         {hitsQuestions.length > 0 &&
           hitsQuestions.map((question, idx) => {
             if (!moreQuestion && idx >= 3) return null
@@ -113,7 +120,11 @@ const MainPage = () => {
               />
             )
           })}
-        <button onClick={() => setMoreQuestion((prev) => !prev)}>더보기 + </button>
+        <div className={styles.more}>
+          <button onClick={() => setMoreQuestion((prev) => !prev)} className={styles.moreBtn}>
+            더보기 +
+          </button>
+        </div>
       </div>
     )
   }
@@ -121,14 +132,22 @@ const MainPage = () => {
   const showHitsAnswers = () => {
     return (
       <div className={styles.hitsAnswers}>
-        <h1 className="hit-answer-title">베스트 면접 답변</h1>
-        <button className="hit-question-btn" onClick={() => setAnswerSort('weekly')}>
-          주간
-        </button>
-        <button className="hit-question-btn" onClick={() => setAnswerSort('monthly')}>
-          월간
-        </button>
-        <hr className="hit-answer-hr" />
+        <h1 className={styles.hitsTitle}>베스트 면접 답변</h1>
+        <div className={styles.sort}>
+          <button
+            className={answerSort === 'weekly' ? styles.sortSelected : styles.sortDeselected}
+            onClick={() => setAnswerSort('weekly')}>
+            주간
+          </button>
+          |
+          <button
+            className={answerSort === 'monthly' ? styles.sortSelected : styles.sortDeselected}
+            onClick={() => setAnswerSort('monthly')}>
+            월간
+          </button>
+        </div>
+
+        <div className={styles.hitsLine}></div>
         {hitsAnswers.length > 0 &&
           hitsAnswers.map((answer, idx) => {
             if (!moreAnswer && idx >= 3) return null
@@ -143,7 +162,11 @@ const MainPage = () => {
               />
             )
           })}
-        <button onClick={() => setMoreAnswer((prev) => !prev)}>더보기 +</button>
+        <div className={styles.more}>
+          <button onClick={() => setMoreAnswer((prev) => !prev)} className={styles.moreBtn}>
+            더보기 +
+          </button>
+        </div>
       </div>
     )
   }
@@ -171,7 +194,7 @@ const MainPage = () => {
 
   return (
     <>
-      <div className={loginModal ? styles.blur : ''}>
+      <div className={loginModal ? styles.blur : styles.main}>
         <Navigation />
         <div className={styles.banner}>
           <div className={styles.backgroundBox}>
@@ -248,8 +271,8 @@ const MainPage = () => {
             {showHitsAnswers()}
           </div>
         </div>
-        <Footer />
       </div>
+      <Footer />
       <LoginModal />
     </>
   )
