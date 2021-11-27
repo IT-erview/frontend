@@ -1,0 +1,53 @@
+.banner {
+  position: relative;
+  width: 1920px;
+  height: 364px;
+  margin: auto;
+  margin-top: 75px;
+  text-align: left;
+}
+
+.bannerImg {
+  border-radius: 120px 120px 120px 0px;
+}
+
+.bannerTitle {
+  position: absolute;
+  left: 512px;
+  top: 152px;
+
+  /* Header 2 */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 30px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #ffffff;
+}
+
+.bannerContent {
+  /* 아직도 암기식으로 면접을 준비하시나요? 체계적으로 전략적으로 학습해보세요! */
+
+  position: absolute;
+  left: 515px;
+  top: 208px;
+
+  /* Header 3 */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+
+  color: #ffffff;
+}
