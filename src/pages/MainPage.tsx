@@ -176,8 +176,8 @@ const MainPage = () => {
   }, [searchTags, tagSearchText])
 
   const getQuestions = useCallback(async () => {
-    const question = await getHitsQuestions(questionSort)
-    setHitQuestions(question)
+    const questions = await getHitsQuestions(questionSort)
+    setHitQuestions(questions)
   }, [questionSort])
 
   const getAnswers = useCallback(async () => {
