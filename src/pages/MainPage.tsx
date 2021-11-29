@@ -71,7 +71,9 @@ const MainPage = () => {
   const findTags = (tags: Array<TagSelectorItem>, text: string) => {
     const result = [] as Array<TagSelectorItem>
     tags.forEach((tag) => {
-      if (tag.name.indexOf(text) !== -1) result.push(tag)
+      const tagNameLower = tag.name.toLowerCase()
+      const textLower = text.toLowerCase()
+      if (tagNameLower.indexOf(textLower) !== -1) result.push(tag)
     })
     if (result.length === 0) return tags
     else return result
