@@ -228,7 +228,11 @@ const Navigation = (props: any) => {
             <button className={styles.dropdown} onClick={toggle}>
               <img src={userImgUrl} alt="user-profile-img" className={styles.navProfileImg} />
               {userName} 님
-              <img src="/img/nav_icon7.png" alt="dropdown-arrow" className={styles.arrow} />
+              <img
+                src="/img/nav_icon7.png"
+                alt="dropdown-arrow"
+                className={isOpen ? styles.arrowToggle : styles.arrow}
+              />
             </button>
             {dropdownMenu()}
           </>

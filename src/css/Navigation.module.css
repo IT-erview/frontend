@@ -437,6 +437,13 @@
   width: 22px;
   margin-left: 28px;
 }
+
+.arrowToggle {
+  height: 10px;
+  width: 22px;
+  margin-left: 28px;
+  transform: rotate(180deg);
+}
 .dropdownMenu {
   /* Rectangle 105 */
   height: 371px;
