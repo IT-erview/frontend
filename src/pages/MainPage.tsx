@@ -124,7 +124,7 @@ const MainPage = () => {
           })}
         <div className={styles.more}>
           <button onClick={() => setMoreQuestion((prev) => !prev)} className={styles.moreBtn}>
-            더보기 +
+            {hitsQuestions.length > 3 ? (!moreQuestion ? '더보기 +' : '숨기기 -') : null}
           </button>
         </div>
       </div>
@@ -166,7 +166,7 @@ const MainPage = () => {
           })}
         <div className={styles.more}>
           <button onClick={() => setMoreAnswer((prev) => !prev)} className={styles.moreBtn}>
-            더보기 +
+            {hitsAnswers.length > 3 ? (!moreAnswer ? '더보기 +' : '숨기기 -') : null}
           </button>
         </div>
       </div>
