@@ -407,13 +407,22 @@ button:hover {
   /* header 3 */
   text-align: center;
 }
-.moreBtn {
+.moreHideBtn {
   font-family: NanumSquare;
   font-style: normal;
   font-weight: 800;
   font-size: 18px;
   line-height: 20px;
-  color: #6a737d;
+  /* color: #6a737d; */
+  color: #a0a0a0;
+
   margin-top: 45px;
   background-color: white !important;
+}
+
+.moreHideArrow {
+  height: 5.5px;
+  width: 12px;
+  margin-bottom: 3px;
+  margin-left: 5px;
 }

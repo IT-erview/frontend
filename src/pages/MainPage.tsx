@@ -91,6 +91,20 @@ const MainPage = () => {
     )
   })
 
+  const moreHideBtn = (hitsLength: number, more: boolean) => {
+    if (hitsLength > 3) {
+      return more ? (
+        <>
+          {'숨기기'} <img src="img/hide_btn.png" alt="hideBtn" className={styles.moreHideArrow} />
+        </>
+      ) : (
+        <>
+          {'더보기'} <img src="img/more_btn.png" alt="moreBtn" className={styles.moreHideArrow} />
+        </>
+      )
+    } else return null
+  }
+
   const showHitsQuestions = () => {
     return (
       <div className={styles.hitsQuestions}>
@@ -124,8 +138,8 @@ const MainPage = () => {
             )
           })}
         <div className={styles.more}>
-          <button onClick={() => setMoreQuestion((prev) => !prev)} className={styles.moreBtn}>
-            {hitsQuestions.length > 3 ? (!moreQuestion ? '더보기 +' : '숨기기 -') : null}
+          <button onClick={() => setMoreQuestion((prev) => !prev)} className={styles.moreHideBtn}>
+            {moreHideBtn(hitsQuestions.length, moreQuestion)}
           </button>
         </div>
       </div>
@@ -167,8 +181,8 @@ const MainPage = () => {
             )
           })}
         <div className={styles.more}>
-          <button onClick={() => setMoreAnswer((prev) => !prev)} className={styles.moreBtn}>
-            {hitsAnswers.length > 3 ? (!moreAnswer ? '더보기 +' : '숨기기 -') : null}
+          <button onClick={() => setMoreAnswer((prev) => !prev)} className={styles.moreHideBtn}>
+            {moreHideBtn(hitsAnswers.length, moreAnswer)}
           </button>
         </div>
       </div>
