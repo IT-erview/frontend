@@ -10,11 +10,12 @@ import { ReducerType } from 'modules/rootReducer'
 import LoginModal from 'components/LoginModal'
 import { MAX_SEARCH_TAG_LENGTH } from 'common/config'
 import { useCallback, useEffect, useState } from 'react'
-import { Answer, Question as QuestionType, TagSelectorItem } from 'common/type'
+import { Answer as AnswerType, Question as QuestionType, TagSelectorItem } from 'common/type'
 import { setSearchTagSelected } from 'modules/searchTags'
 import { useHistory } from 'react-router'
 import Question from 'components/Question'
 import { getHitsAnswers, getHitsQuestions } from 'common/api'
+import Answer from 'components/Answer'
 
 // header 설정
 axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`
@@ -59,7 +60,7 @@ const MainPage = () => {
   const [tagSearchText, setTagSearchText] = useState<string>('')
   const [searchingTags, setSearchingTags] = useState<Array<TagSelectorItem>>([])
   const [hitsQuestions, setHitQuestions] = useState<Array<QuestionType>>([])
-  const [hitsAnswers, setHitAnswers] = useState<Array<Answer>>([])
+  const [hitsAnswers, setHitAnswers] = useState<Array<AnswerType>>([])
   const history = useHistory()
   const [questionSort, setQuestionSort] = useState<string>('weekly')
   const [answerSort, setAnswerSort] = useState<string>('weekly')
@@ -154,13 +155,14 @@ const MainPage = () => {
           hitsAnswers.map((answer, idx) => {
             if (!moreAnswer && idx >= 3) return null
             return (
-              <Question
+              <Answer
                 key={answer.id}
                 id={answer.questionId}
                 number={idx + 1}
                 content={answer.questionContent!}
                 tagList={answer.tags}
-                answer={answer}
+                answer={answer.content}
+                like={answer.liked}
               />
             )
           })}
