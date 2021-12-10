@@ -2,6 +2,7 @@ export type Answer = {
   content: string
   createdDate: Date
   id: number
+  like: boolean
   liked: number
   modifiedDate: Date
   questionId: number
@@ -21,6 +22,7 @@ export type Bookmark = {
 
 export type Question = {
   bookmarkCount: number
+  bookmark: boolean
   content: string
   createdDate: Date
   email: string
