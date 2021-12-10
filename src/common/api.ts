@@ -204,12 +204,12 @@ const postQuestion = async (content: string, tagList: Array<string>) => {
     data: {
       content: content,
       bookmarkCount: 0,
-      // tags: [1],
-      // depth: 1,
-      // expectedKeywords: [1],
-      // keywordId: 1,
-      // level: 1,
-      // minKeywordCount: 1,
+      tags: [5],
+      depth: 1,
+      expectedKeywords: [1],
+      keywordId: 1,
+      level: 1,
+      minKeywordCount: 1,
     },
   })
   return response ? true : false

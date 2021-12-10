@@ -1,7 +1,6 @@
 import 'css/MyLikeAnswer.css'
 import MyPageProfile from 'components/MyPageProfile'
 import { useEffect, useState } from 'react'
-import QuestionComponent from 'components/Question'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import SortSelectBox, { Sort } from './SortSelectBox'
 import { Answer } from 'common/type'
@@ -75,14 +74,15 @@ const MyAnswers = (props: { type: MyAnswerType }) => {
           loader={<></>}>
           {answers.map((answer, index) => {
             return (
-              <QuestionComponent
-                key={answer.id}
-                id={answer.questionId}
-                number={index + 1}
-                content={answer.questionContent || ''}
-                answer={answer}
-                tagList={answer.tags}
-              />
+              // <QuestionComponent
+              //   key={answer.id}
+              //   id={answer.questionId}
+              //   number={index + 1}
+              //   content={answer.questionContent || ''}
+              //   answer={answer}
+              //   tagList={answer.tags}
+              // />
+              ''
             )
           })}
           {answers.length === 0 && '등록된 답변이 없습니다.'}
