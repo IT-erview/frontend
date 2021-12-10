@@ -66,8 +66,18 @@ const MainPage = () => {
   const [answerSort, setAnswerSort] = useState<string>('weekly')
   const [moreQuestion, setMoreQuestion] = useState<boolean>(false)
   const [moreAnswer, setMoreAnswer] = useState<boolean>(false)
+  const [selectedTags, setSelectedTags] = useState<Array<TagSelectorItem>>([])
 
   const onTagSelect = (tagId: number, isSelected: boolean) => dispatch(setSearchTagSelected({ tagId, isSelected }))
+
+  const selectTag = (tag: TagSelectorItem) => {
+    onTagSelect(tag.id, !tag.isSelected)
+    if (tag.isSelected) {
+      setSelectedTags(selectedTags.filter((item) => item.id !== tag.id))
+    } else {
+      setSelectedTags([...selectedTags, { id: tag.id, name: tag.name, isSelected: !tag.isSelected }])
+    }
+  }
 
   const findTags = (tags: Array<TagSelectorItem>, text: string) => {
     const result = [] as Array<TagSelectorItem>
@@ -80,11 +90,19 @@ const MainPage = () => {
     else return result
   }
 
+  const showSelectedTags = selectedTags.map((tag, index) => {
+    return (
+      <button key={index} className={styles.selectedTags} onClick={() => selectTag(tag)}>
+        {tag.name} X
+      </button>
+    )
+  })
+
   const showTags = searchingTags.map((tag, index) => {
     return (
       <button
         key={index}
-        onClick={() => onTagSelect(tag.id, !tag.isSelected)}
+        onClick={() => selectTag(tag)}
         className={tag.isSelected ? styles.questionSearchTagSelected : styles.questionSearchTagDeselected}>
         {tag.name}
       </button>
@@ -283,6 +301,11 @@ const MainPage = () => {
             <p className={styles.questionSearchExplain}>
               일일이 찾아야 했던 면접 질문과 답변들, 검증되지 않았던 정보들, 한 번에 검색하고 검증된 정보를 받아보세요.
             </p>
+            <div className={styles.selectedTagBox}>
+              {showSelectedTags}
+              <div className={selectedTags.length > 0 ? styles.selectedTagsLine : ''} />
+            </div>
+
             <div className={styles.questionSearchTag}>{showTags}</div>
           </div>
         </div>
