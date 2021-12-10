@@ -7,7 +7,15 @@ import { JWT_TOKEN } from 'constants/Oauth'
 import { useDispatch } from 'react-redux'
 import { setModalOpen } from 'modules/loginModal'
 
-const Question = (props: { id: number; number: number; content: string; tagList?: Array<Tag>; answer?: Answer }) => {
+const Question = (props: {
+  id: number
+  number: number
+  content: string
+  tagList?: Array<Tag>
+  answer?: Answer
+  bookmark?: boolean
+  bookmarkCount?: number
+}) => {
   // todo: 전체적으로 적용필요
   // todo: questionId 수정으로 이동 가능
   let isRequesting = false
@@ -35,8 +43,17 @@ const Question = (props: { id: number; number: number; content: string; tagList?
         <div className={styles.questionInfo}>
           <div className={styles.questionNumber}>{getZerofilledNumber(props.number)}</div>
           <div className={styles.line}></div>
-          <div className={styles.like}>(이미지) 643</div>
-          <div className={styles.bookmark}>(이미지) 245</div>
+          <div className={styles.bookmarkSpace}>
+            {console.log(props.bookmark)}
+            <img
+              src={props.bookmark ? 'img/bookmark_true.png' : 'img/bookmark_false.png'}
+              alt="questionBookmark"
+              className={styles.bookmark}
+            />
+            <div className={styles.bookmarkCount}>
+              <p className={styles.bookmarkCountText}>{props.bookmarkCount}</p>
+            </div>
+          </div>
         </div>
         <div className={styles.questionContent}>
           <h1 className={styles.questionTitle}>{props.content}</h1>

@@ -9,7 +9,8 @@ const Answer = (props: {
   number: number
   content: string
   answer: string
-  like: number
+  likeCount: number
+  like: boolean
   tagList?: Array<Tag>
 }) => {
   // const like = () => {
@@ -29,12 +30,21 @@ const Answer = (props: {
         <div className={styles.questionInfo}>
           <div className={styles.questionNumber}>{getZerofilledNumber(props.number)}</div>
           <div className={styles.line}></div>
-          <div className={styles.like}>(이미지) 643</div>
-          <div className={styles.bookmark}>(이미지) 245</div>
+          <div className={styles.likeSpace}>
+            {/* <button onClick={like}>좋아요! {props.like}</button> */}
+            <img
+              src={props.like ? 'img/like_true.png' : 'img/like_false.png'}
+              alt="answerLike"
+              className={styles.like}
+            />
+            <div className={styles.likeCount}>
+              <p>{props.likeCount}</p>
+            </div>
+          </div>
         </div>
         <div className={styles.questionContent}>
           <h1 className={styles.questionTitle}>{props.content}</h1>
-          <p className={styles.questionAnswer}>{props.answer ? props.content : '(등록된 답변이 없습니다)'}</p>
+          <p className={styles.questionAnswer}>{props.answer}</p>
         </div>
         <div className={styles.questionTags}>
           {props.tagList &&
@@ -50,16 +60,6 @@ const Answer = (props: {
         </div>
       </button>
     </div>
-    // <div className="each-answer">
-    //   <div className="answer-card">
-    //     <div className="answer-number">{getZerofilledNumber(props.number)}</div>
-    //     <div className="answer-content">
-    //       <h1>{props.title}</h1>
-    //       <h5>{props.answer}</h5>
-    //     </div>
-    //     <button onClick={like}>좋아요! {props.like}</button>
-    //   </div>
-    // </div>
   )
 }
 
