@@ -134,6 +134,8 @@ const MainPage = () => {
                 content={question.content}
                 tagList={question.tagList}
                 answer={question.mostLikedAnswer}
+                bookmarkCount={question.bookmarkCount}
+                bookmark={question.bookmark}
               />
             )
           })}
@@ -176,7 +178,8 @@ const MainPage = () => {
                 content={answer.questionContent!}
                 tagList={answer.tags}
                 answer={answer.content}
-                like={answer.liked}
+                likeCount={answer.liked}
+                like={answer.like}
               />
             )
           })}
