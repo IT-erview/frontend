@@ -72,6 +72,7 @@ const MainPage = () => {
 
   const selectTag = (tag: TagSelectorItem) => {
     onTagSelect(tag.id, !tag.isSelected)
+    setTagSearchText('')
     if (tag.isSelected) {
       setSelectedTags(selectedTags.filter((item) => item.id !== tag.id))
     } else {
