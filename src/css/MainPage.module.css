@@ -393,17 +393,18 @@ button:hover {
   color: #a1a1a1;
 }
 
-.sort > button {
+.sortSelected {
   margin-right: 5px;
   margin-left: 5px;
-  background-color: white !important;
-}
-.sortSelected {
+  background-color: white;
   color: #000000;
 }
 
 .sortDeselected {
-  color: #a1a1a1;
+  margin-right: 5px;
+  margin-left: 5px;
+  background-color: white;
+  color: #a0a0a0;
 }
 
 .hitsLine {
@@ -426,10 +427,9 @@ button:hover {
   font-size: 18px;
   line-height: 20px;
   /* color: #6a737d; */
-  color: #a0a0a0;
-
+  color: #6a737d;
   margin-top: 45px;
-  background-color: white !important;
+  background-color: white;
 }
 
 .moreHideArrow {
