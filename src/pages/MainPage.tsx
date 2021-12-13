@@ -110,6 +110,13 @@ const MainPage = () => {
     )
   })
 
+  const resetSelectedTags = () => {
+    selectedTags.forEach((tag) => {
+      onTagSelect(tag.id, !tag.isSelected)
+    })
+    setSelectedTags([])
+  }
+
   const moreHideBtn = (hitsLength: number, more: boolean) => {
     if (hitsLength > 3) {
       return more ? (
@@ -295,7 +302,7 @@ const MainPage = () => {
               className={styles.questionSearchBtn}>
               검색하기
             </button>
-            <button onClick={() => setTagSearchText('')} className={styles.questionSearchResetBtn}>
+            <button onClick={resetSelectedTags} className={styles.questionSearchResetBtn}>
               검색어 초기화 X
             </button>
             <div className={styles.questionSearchLine} />
