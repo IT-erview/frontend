@@ -60,8 +60,9 @@ const QuestionDetail = (props: { questionId: number }) => {
             id={myAnswer.id}
             number={1}
             answer={myAnswer.content}
-            title={question.content}
-            like={myAnswer.liked}
+            content={question.content}
+            likeCount={myAnswer.liked}
+            like={myAnswer.like}
           />
         )}
       </div>

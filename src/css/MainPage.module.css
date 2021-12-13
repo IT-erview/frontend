@@ -273,6 +273,7 @@
   font-weight: normal;
   font-size: 16px;
   line-height: 18px;
+  margin-bottom: 15px;
 
   color: #796aca;
 }
@@ -286,40 +287,191 @@
   height: 120px;
 
   margin: auto;
-  margin-top: 25px;
-
+  margin-top: 10px;
   text-align: left;
 }
-.questionSearchTag > button {
-  /* Frame 3 */
+
+.questionSearchTagDeselected {
   position: relative;
   font-family: NanumSquare;
   font-style: normal;
   font-weight: bold;
   font-size: 14px;
-  /* line-height: 16px; */
 
   padding: 5px 18px;
 
   box-sizing: border-box;
   border-radius: 17px 17px 17px 0px;
 
-  margin: 0px 5px 8px 5px;
-}
-
-.questionSearchTag > button:hover {
-  color: #ffffff;
-  border: 2px solid #ffffff;
-  transition-duration: 0.3s;
-}
-
-.questionSearchTagDeselected {
+  margin: 0px 10px 8px 0px;
   color: #796aca;
   border: 2px solid #796aca;
   transition-duration: 0.2s;
 }
-
 .questionSearchTagSelected {
+  position: relative;
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+
+  padding: 5px 18px;
+
+  box-sizing: border-box;
+  border-radius: 17px 17px 17px 0px;
+
+  margin: 0px 10px 8px 0px;
+  color: #796aca;
+  border: 2px solid #796aca;
+  background: rgba(121, 106, 202, 0.3);
+}
+.questionSearchTagDeselected:hover {
+  background: rgba(121, 106, 202, 0.3);
+
+  transition-duration: 0.3s;
+}
+.questionSearchTagSelected:hover {
+  background: rgba(121, 106, 202, 0.3);
+
+  transition-duration: 0.3s;
+}
+
+.main {
+  width: 1920px;
+  margin: auto;
+  margin-bottom: 100px;
+}
+.blur {
+  width: 1920px;
+  margin: auto;
+
+  filter: blur(6px);
+  -webkit-filter: blur(6px);
+}
+
+button:hover {
+  cursor: pointer !important;
+}
+
+.hitsQuestions {
+  width: 1062px;
+  margin: auto;
+  text-align: left;
+}
+
+.hitsAnswers {
+  width: 1062px;
+  margin: auto;
+  text-align: left;
+  margin-top: 75px;
+}
+
+.hitsTitle {
+  /* 베스트 면접 문제 */
+  /* Header 2 */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 20px;
+  /* identical to box height, or 77% */
+
+  color: #000000;
+  margin-left: 92px;
+}
+
+.sort {
+  float: right;
+  margin-top: 5px;
+  margin-right: 85px;
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 18px;
+  color: #a1a1a1;
+}
+
+.sort > button {
+  margin-right: 5px;
+  margin-left: 5px;
+  background-color: white !important;
+}
+.sortSelected {
+  color: #000000;
+}
+
+.sortDeselected {
+  color: #a1a1a1;
+}
+
+.hitsLine {
+  /* Line 2 */
+  height: 2px;
+  margin-top: 32px;
+  width: 1060px;
+  color: #e7e7e7;
+  background-color: #e7e7e7;
+}
+
+.more {
+  /* header 3 */
+  text-align: center;
+}
+.moreHideBtn {
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 20px;
+  /* color: #6a737d; */
+  color: #a0a0a0;
+
+  margin-top: 45px;
+  background-color: white !important;
+}
+
+.moreHideArrow {
+  height: 5.5px;
+  width: 12px;
+  margin-bottom: 3px;
+  margin-left: 5px;
+}
+.selectedTagBox {
+  position: relative;
+  width: 880px;
+  margin: auto;
+  text-align: left;
+  margin-top: 25px;
+}
+.selectedTags {
+  position: relative;
+  /* Frame 27 */
+
+  /* Auto Layout */
+
+  padding: 6px 10px;
+
+  border: 1px solid #ffffff;
+  box-sizing: border-box;
+  border-radius: 15px 15px 15px 0px;
+
+  /* 버튼 X */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 12px;
+  letter-spacing: -0.02em;
+
   color: #ffffff;
-  border: 2px solid #ffffff;
+
+  margin-right: 8px;
+  margin-bottom: 12px;
+}
+
+.selectedTagsLine {
+  border-bottom: 1px dashed #ffffff;
 }

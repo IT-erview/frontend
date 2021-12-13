@@ -66,15 +66,6 @@ const getQuizQuestions = async (quizCnt: number, tagList: Array<string>) => {
   return response.data as Array<Question>
 }
 
-const getHitsAnswers = async () => {
-  const response = await request({
-    method: 'get',
-    url: '/api/v1/answer/hits',
-  })
-  if (!response) return []
-  return response.data as Array<Answer>
-}
-
 ///api/v1/question/mine?page=0&size=30&sort=${props.sortBy},desc
 // todo: sort 변경
 const getMyQuestions = async (sort: string, desc = true, page = 0, rowsPerPage = 30) => {
@@ -213,7 +204,12 @@ const postQuestion = async (content: string, tagList: Array<string>) => {
     data: {
       content: content,
       bookmarkCount: 0,
-      tags: tagList,
+      tags: [5],
+      depth: 1,
+      expectedKeywords: [1],
+      keywordId: 1,
+      level: 1,
+      minKeywordCount: 1,
     },
   })
   return response ? true : false
@@ -234,12 +230,25 @@ const getTags = async () => {
   // return response.data as Array<TagItem>
 }
 
+const getHitsQuestions = async (sort: string) => {
+  const response = await fetch(`/api/v1/question/hits?option=${sort}`).then((res) => {
+    return res.json()
+  })
+  return JSON.parse(JSON.stringify(response)) as Array<Question>
+}
+
+const getHitsAnswers = async (sort: string) => {
+  const response = await fetch(`/api/v1/answer/hits?option=${sort}`).then((res) => {
+    return res.json()
+  })
+  return JSON.parse(JSON.stringify(response)) as Array<Answer>
+}
+
 export {
   likeAnswer,
   getQuestion,
   getQuestions,
   getQuizQuestions,
-  getHitsAnswers,
   getMyAnswer,
   addBookmark,
   getBookmarks,
@@ -252,4 +261,6 @@ export {
   postQuizAnswers,
   postQuestion,
   getTags,
+  getHitsQuestions,
+  getHitsAnswers,
 }
