@@ -47,13 +47,6 @@ const SetQuizOptions = () => {
     <div>
       {quizzes.length === 0 ? (
         <div>
-          <div id="quiz-info-detail">
-            풀고싶은
-            <br />
-            문제종류와 갯수를
-            <br />
-            선택해주세요!
-          </div>
           <div className="set-quiz-options">
             <div className="set-quiz-options-box">
               <div className="user-info">

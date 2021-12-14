@@ -25,10 +25,6 @@
   line-height: 30px;
   /* identical to box height */
 
-  display: flex;
-  align-items: center;
-  text-align: center;
-
   color: #ffffff;
 }
 
@@ -46,8 +42,36 @@
   font-weight: 800;
   font-size: 18px;
   line-height: 20px;
-  display: flex;
-  align-items: center;
 
   color: #ffffff;
+}
+
+.bannerInfo {
+  /* Frame 30 */
+  position: absolute;
+  left: calc(50% - 221px / 2 + 418.5px);
+  top: 253px;
+  /* Auto Layout */
+  height: 152px;
+  width: 221px;
+  text-align: center;
+
+  background: #e3e2f0;
+  box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 65px 65px 65px 0px;
+}
+
+.bannerInfoText {
+  /* header 3 */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 20px;
+  padding-top: 41px;
+  color: #000000;
+}
+
+.userInfo {
 }
