@@ -216,32 +216,30 @@ const postQuestion = async (content: string, tagList: Array<string>) => {
 }
 
 const getTags = async () => {
-  const response = await fetch('/api/v1/tag/').then((res) => {
-    return res.json()
+  const response = await request({
+    method: 'get',
+    url: `/api/v1/tag/`,
   })
-  return JSON.parse(JSON.stringify(response)) as Array<TagItem>
-
-  // 500 오류
-  // const response = await request({
-  //   method: 'get',
-  //   url: `/api/v1/tag/`,
-  // })
-  // if (!response) return null
-  // return response.data as Array<TagItem>
+  if (!response) return null
+  return response.data as Array<TagItem>
 }
 
 const getHitsQuestions = async (sort: string) => {
-  const response = await fetch(`/api/v1/question/hits?option=${sort}`).then((res) => {
-    return res.json()
+  const response = await request({
+    method: 'get',
+    url: `/api/v1/question/hits?option=${sort}`,
   })
-  return JSON.parse(JSON.stringify(response)) as Array<Question>
+  if (!response) return null
+  return response.data as Array<Question>
 }
 
 const getHitsAnswers = async (sort: string) => {
-  const response = await fetch(`/api/v1/answer/hits?option=${sort}`).then((res) => {
-    return res.json()
+  const response = await request({
+    method: 'get',
+    url: `/api/v1/answer/hits?option=${sort}`,
   })
-  return JSON.parse(JSON.stringify(response)) as Array<Answer>
+  if (!response) return null
+  return response.data as Array<Answer>
 }
 
 export {

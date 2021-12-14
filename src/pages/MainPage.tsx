@@ -18,7 +18,7 @@ import { getHitsAnswers, getHitsQuestions } from 'common/api'
 import Answer from 'components/Answer'
 
 // header 설정
-axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`
+axios.defaults.headers.common['Authorization'] = JWT_TOKEN ? `Bearer ${JWT_TOKEN}` : ''
 // enum FeatureDescriptionType {
 //   SEARCH,
 //   REGISTER,
@@ -141,6 +141,7 @@ const MainPage = () => {
           </button>
         </div>
         <div className={styles.hitsLine}></div>
+        {console.log(hitsQuestions)}
         {hitsQuestions.length > 0 &&
           hitsQuestions.map((question, idx) => {
             if (!moreQuestion && idx >= 3) return null
@@ -216,12 +217,12 @@ const MainPage = () => {
 
   const getQuestions = useCallback(async () => {
     const questions = await getHitsQuestions(questionSort)
-    setHitQuestions(questions)
+    if (questions) setHitQuestions(questions)
   }, [questionSort])
 
   const getAnswers = useCallback(async () => {
     const answers = await getHitsAnswers(answerSort)
-    setHitAnswers(answers)
+    if (answers) setHitAnswers(answers)
   }, [answerSort])
 
   useEffect(() => {
