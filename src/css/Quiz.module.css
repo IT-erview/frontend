@@ -216,16 +216,225 @@
   border-radius: 15px 15px 15px 0px;
 }
 
-.line {
+.verticalLine {
   height: 75px;
   margin-top: 18px;
   border-right: 1px solid rgba(17, 16, 54, 0.3);
 }
 
-.noneBtn {
-  width: 60px;
-  height: 24px;
-  border: 1.5px dashed rgba(17, 16, 54, 0.3);
+.selectTagsBox {
+  width: 1060px;
+  margin: auto;
+  margin-top: 76px;
+  text-align: left;
+}
+.selectTagsTitle {
+  /* 문제 종류 */
+  margin-left: 75px;
+  /* Header 2 */
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 20px;
+  /* identical to box height, or 77% */
+
+  color: #000000;
+}
+
+.horizontalLine {
+  height: 2px;
+  width: 1060px;
+  margin-top: 32px;
+  background-color: #e7e7e7;
+}
+.selectTagsCheckbox {
+  /* Rectangle 105 */
+  position: relative;
+  margin-top: 25px;
+  width: 1060px;
+  height: 75px;
+  /* Font / White */
+  background: #ffffff;
+  box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  z-index: 2;
+}
+.checkboxTitle {
+  /* 문제 종류 */
+  line-height: 75px;
+  margin-left: 90px;
+  /* Boby 1 */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  /* or 29px */
+
+  /* Font / Light */
+  color: #a0a0a0;
+}
+.tagsResetBtn {
+  float: right;
+  /* line-height: 75px; */
+  margin-top: 29px;
+  margin-right: 31px;
+  /* Body */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  /* Font / Light */
+
+  color: #a0a0a0;
+}
+.dropdownBtn {
+  float: right;
+  height: 75px;
+  margin-right: 46px;
+}
+.dropdownArrow {
+  width: 15px;
+  height: 7px;
+}
+
+.dropdownArrowToggle {
+  width: 15px;
+  height: 7px;
+  transform: rotate(180deg);
+  transition-duration: 0.3s;
+}
+
+.dropdownClose {
+  margin-top: -20px;
+  width: 1060px;
+  height: 0px;
+  transition: all 0.4s ease-in;
+  transform-origin: top left;
+  transform: scaleY(0);
+}
+.dropdownOpen {
+  position: relative;
+  width: 1060px;
+  height: 300px;
+  margin-top: -20px;
+  /* Font / White */
+  background: #ffffff;
+  box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 15px 15px;
+  z-index: 0;
+  transition: all 0.4s ease-out;
+  transform-origin: top left;
+  transform: scaleY(1);
+  overflow-y: scroll;
+}
+
+.dropdownTags {
+  padding-top: 20px;
+  margin-left: 90px;
+  margin-right: 90px;
+}
+.tag {
+  width: 50%;
+  float: left;
+  padding-bottom: 20px;
+}
+
+.tagNameDeselected {
+  /* Boby 1 */
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 18px;
+  color: #000000;
+  display: flex;
+}
+
+.tagNameSelected {
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 18px;
+  display: flex;
+}
+input {
+  display: none;
+}
+label:hover {
+  cursor: pointer;
+  color: #796aca;
+}
+label:hover > .checkbox {
+  border-color: #796aca;
+}
+
+.checkboxDeselected {
+  width: 16px;
+  height: 16px;
+  border: 1px solid #111036;
   box-sizing: border-box;
-  border-radius: 15px 15px 15px 0px;
+  border-radius: 5px;
+  margin-right: 25px;
+}
+
+.checkboxSelected {
+  width: 16px;
+  height: 16px;
+  border: 1px solid #111036;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin-right: 25px;
+  background: #111036;
+}
+
+.selectedTagsBox {
+  position: relative;
+
+  width: 1060px;
+  margin: auto;
+  margin-top: 76px;
+  text-align: left;
+}
+
+.selectedTagsBoxTitle {
+  position: relative;
+
+  margin-left: 75px;
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 20px;
+
+  color: #000000;
+}
+.selectedTags {
+  position: relative;
+  width: 1060px;
+  height: 323px;
+  margin-top: 25px;
+  background: #231d4c;
+  box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  padding-top: 50px;
+}
+.selectedTagsTitle {
+  position: relative;
+  /* Header 2 */
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 26px;
+  /* identical to box height, or 77% */
+  /* Font / White */
+  color: #ffffff;
+  margin-left: 90px;
 }
