@@ -74,4 +74,158 @@
 }
 
 .userInfo {
+  /* Rectangle 105 */
+  display: flex;
+  width: 1060px;
+  margin: auto;
+  height: 110px;
+  position: relative;
+  margin-top: 70px;
+  /* Font / White */
+
+  background: #ffffff;
+  box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  text-align: left;
+}
+
+.userProfileSection {
+  margin-left: 90px;
+  display: flex;
+  width: 320px;
+}
+.userProfileImg {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  float: left;
+  margin-top: 33px;
+  margin-right: 11px;
+}
+.userName {
+  /* 김문준 님 */
+  position: relative;
+  /* Header 2 */
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 26px;
+  /* identical to box height, or 77% */
+  /* Basic / Secondary */
+  margin-top: 36px;
+  color: #111036;
+}
+
+.userEmail {
+  /* iterview.cs@gmail.com */
+  position: relative;
+  /* Boby 1 */
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 5px;
+  /* identical to box height, or 29px */
+  /* Basic / Secondary 30% */
+  color: rgba(17, 16, 54, 0.3);
+}
+.userDetailSection {
+  width: 257px;
+  display: flex;
+}
+.userDetailTitle {
+  /* 퀴즈로 푼 문제 */
+  /* Boby 1 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  /* identical to box height, or 29px */
+  /* Basic / Secondary */
+  color: #111036;
+  margin-left: 48px;
+}
+.userDetailCnt {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: right;
+  gap: 5px;
+  margin-left: 40px;
+  /* Header 3 */
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 18px;
+
+  /* identical to box height, or 83% */
+  /* Font / Black */
+  color: #000000;
+}
+.userTagsSection {
+  width: 393px;
+}
+
+.userTagsTitle {
+  /* 많이 푼 문제 종류 */
+  /* Boby 1 */
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 180%;
+  margin-left: 48px;
+
+  /* identical to box height, or 29px */
+  /* Basic / Secondary */
+  color: #111036;
+  margin-top: 27px;
+}
+.userTags {
+  margin-left: 48px;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  color: rgba(17, 16, 54, 0.3);
+}
+
+.userTag {
+  /* 버튼 */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  letter-spacing: -0.02em;
+  /* Basic / Secondary 30% */
+  color: rgba(17, 16, 54, 0.3);
+  /* Inside Auto Layout */
+
+  /* Frame 4 */
+
+  /* Auto Layout */
+  padding: 6px 15px;
+  border: 1.5px solid rgba(17, 16, 54, 0.3);
+  box-sizing: border-box;
+  border-radius: 15px 15px 15px 0px;
+}
+
+.line {
+  height: 75px;
+  margin-top: 18px;
+  border-right: 1px solid rgba(17, 16, 54, 0.3);
+}
+
+.noneBtn {
+  width: 60px;
+  height: 24px;
+  border: 1.5px dashed rgba(17, 16, 54, 0.3);
+  box-sizing: border-box;
+  border-radius: 15px 15px 15px 0px;
 }
