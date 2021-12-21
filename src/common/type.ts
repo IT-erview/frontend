@@ -52,3 +52,9 @@ export type TagItem = {
   tagId: number
   tagTitle: string
 }
+
+export type TagCount = {
+  tagId: number
+  tagTitle: string
+  tagCount: number
+}

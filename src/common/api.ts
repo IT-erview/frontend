@@ -1,6 +1,6 @@
 // todo: sort 변경
 import axios, { AxiosRequestConfig } from 'axios'
-import { Answer, Bookmark, Question, Quiz, TagItem } from 'common/type'
+import { Answer, Bookmark, Question, Quiz, TagCount, TagItem } from 'common/type'
 
 const request = async (config: AxiosRequestConfig) => {
   try {
@@ -242,6 +242,15 @@ const getHitsAnswers = async (sort: string) => {
   return response.data as Array<Answer>
 }
 
+const getQuestionStat = async () => {
+  const response = await request({
+    method: 'get',
+    url: '/api/v1/question/stat',
+  })
+  if (!response) return null
+  return response.data as Array<TagCount>
+}
+
 export {
   likeAnswer,
   getQuestion,
@@ -261,4 +270,5 @@ export {
   getTags,
   getHitsQuestions,
   getHitsAnswers,
+  getQuestionStat,
 }
