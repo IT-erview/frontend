@@ -72,6 +72,7 @@ const MainPage = () => {
 
   const selectTag = (tag: TagSelectorItem) => {
     onTagSelect(tag.id, !tag.isSelected)
+    setTagSearchText('')
     if (tag.isSelected) {
       setSelectedTags(selectedTags.filter((item) => item.id !== tag.id))
     } else {
@@ -108,6 +109,13 @@ const MainPage = () => {
       </button>
     )
   })
+
+  const resetSelectedTags = () => {
+    selectedTags.forEach((tag) => {
+      onTagSelect(tag.id, !tag.isSelected)
+    })
+    setSelectedTags([])
+  }
 
   const moreHideBtn = (hitsLength: number, more: boolean) => {
     if (hitsLength > 3) {
@@ -295,18 +303,20 @@ const MainPage = () => {
               className={styles.questionSearchBtn}>
               검색하기
             </button>
-            <button onClick={() => setTagSearchText('')} className={styles.questionSearchResetBtn}>
-              검색어 초기화 X
-            </button>
+
             <div className={styles.questionSearchLine} />
             <p className={styles.questionSearchExplain}>
               일일이 찾아야 했던 면접 질문과 답변들, 검증되지 않았던 정보들, 한 번에 검색하고 검증된 정보를 받아보세요.
             </p>
             <div className={styles.selectedTagBox}>
-              {showSelectedTags}
+              <div className={styles.selectedTagsSection}>{showSelectedTags}</div>
+              <button
+                onClick={resetSelectedTags}
+                className={selectedTags.length > 0 ? styles.questionSearchResetBtn : styles.questionSearchResetNone}>
+                검색어 초기화 X
+              </button>
               <div className={selectedTags.length > 0 ? styles.selectedTagsLine : ''} />
             </div>
-
             <div className={styles.questionSearchTag}>{showTags}</div>
           </div>
         </div>
