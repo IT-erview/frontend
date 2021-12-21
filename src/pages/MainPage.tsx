@@ -66,7 +66,9 @@ const MainPage = () => {
   const [answerSort, setAnswerSort] = useState<string>('weekly')
   const [moreQuestion, setMoreQuestion] = useState<boolean>(false)
   const [moreAnswer, setMoreAnswer] = useState<boolean>(false)
-  const [selectedTags, setSelectedTags] = useState<Array<TagSelectorItem>>([])
+  const [selectedTags, setSelectedTags] = useState<Array<TagSelectorItem>>(
+    searchTags.filter((tag) => tag.isSelected === true),
+  )
 
   const onTagSelect = (tagId: number, isSelected: boolean) => dispatch(setSearchTagSelected({ tagId, isSelected }))
 
