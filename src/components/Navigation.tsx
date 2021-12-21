@@ -57,6 +57,8 @@ const Navigation = (props: any) => {
   const logout = () => {
     removeCookie('Authorization', { path: '/' })
     localStorage.removeItem('userName')
+    localStorage.removeItem('userEmail')
+    localStorage.removeItem('userImgUrl')
     history.push('/')
     window.location.reload()
   }
@@ -108,6 +110,8 @@ const Navigation = (props: any) => {
           setUserImgUrl(res.data.imageUrl)
           setUserEmail(res.data.email)
           localStorage.setItem('userName', res.data.username)
+          localStorage.setItem('userImgUrl', res.data.imageUrl)
+          localStorage.setItem('userEmail', res.data.email)
         })
         .catch((err) => {
           console.log(err)
