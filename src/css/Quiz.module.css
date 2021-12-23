@@ -275,7 +275,7 @@
   /* Font / Light */
   color: #a0a0a0;
 }
-.tagsResetBtn {
+.tagsResetCheckboxBtn {
   float: right;
   /* line-height: 75px; */
   margin-top: 29px;
@@ -395,7 +395,7 @@ label:hover > .checkbox {
   background: #111036;
 }
 
-.selectedTagsBox {
+.selectedTagsSection {
   position: relative;
 
   width: 1060px;
@@ -404,7 +404,7 @@ label:hover > .checkbox {
   text-align: left;
 }
 
-.selectedTagsBoxTitle {
+.selectedTagsTitle {
   position: relative;
 
   margin-left: 75px;
@@ -416,7 +416,7 @@ label:hover > .checkbox {
 
   color: #000000;
 }
-.selectedTags {
+.selectedTagsBox {
   position: relative;
   width: 1060px;
   height: 323px;
@@ -424,7 +424,8 @@ label:hover > .checkbox {
   background: #231d4c;
   box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
-  padding-top: 50px;
+  padding-top: 45px;
+  margin-bottom: 146px;
 }
 .selectedTagsTitle {
   position: relative;
@@ -437,4 +438,70 @@ label:hover > .checkbox {
   /* Font / White */
   color: #ffffff;
   margin-left: 90px;
+}
+
+.horizontalTagLine {
+  height: 2px;
+  width: 878px;
+  margin: auto;
+  margin-top: 30px;
+  background-color: #796aca;
+}
+
+.tagsResetBtn {
+  float: right;
+  margin-right: 90px;
+  margin-top: 10px;
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 18px;
+  /* Font / Light */
+  color: #a0a0a0;
+}
+
+.selectedTags {
+  width: 878px;
+  height: 150px;
+  margin: auto;
+  margin-top: 11px;
+}
+.selectedTag {
+  position: relative;
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+
+  padding: 5px 18px;
+
+  box-sizing: border-box;
+  border-radius: 17px 17px 17px 0px;
+
+  margin: 0px 10px 8px 0px;
+  color: #796aca;
+  border: 2px solid #796aca;
+}
+.quizStart {
+  /* Auto Layout */
+
+  padding: 15px 33px;
+
+  background: #796aca;
+  border: 4px solid #796aca;
+  box-sizing: border-box;
+  border-radius: 25px 25px 25px 0px;
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 20px;
+  letter-spacing: -0.02em;
+
+  color: #ffffff;
+
+  float: right;
+  margin-right: 90px;
 }
