@@ -151,7 +151,6 @@ const MainPage = () => {
           </button>
         </div>
         <div className={styles.hitsLine}></div>
-        {console.log(hitsQuestions)}
         {hitsQuestions.length > 0 &&
           hitsQuestions.map((question, idx) => {
             if (!moreQuestion && idx >= 3) return null

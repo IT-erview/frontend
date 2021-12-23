@@ -44,7 +44,6 @@ const Question = (props: {
           <div className={styles.questionNumber}>{getZerofilledNumber(props.number)}</div>
           <div className={styles.line}></div>
           <div className={styles.bookmarkSpace}>
-            {console.log(props.bookmark)}
             <img
               src={props.bookmark ? 'img/bookmark_true.png' : 'img/bookmark_false.png'}
               alt="questionBookmark"

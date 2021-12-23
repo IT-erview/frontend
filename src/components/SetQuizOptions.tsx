@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import QuizSolving from 'components/QuizSolving'
-import { Question, TagCount, TagSelectorItem } from 'common/type'
+import { QuizQuestion, TagCount, TagSelectorItem } from 'common/type'
 import { useDispatch, useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
 import { getQuestionStat, getQuizQuestions } from 'common/api'
@@ -19,7 +19,7 @@ const SetQuizOptions = () => {
   const userEmail = localStorage.getItem('userEmail') as string
   const dispatch = useDispatch()
   const [tagStat, setTagStat] = useState<Array<TagCount>>([])
-  const [quizzes, setQuizzes] = useState<Array<Question>>([])
+  const [quizzes, setQuizzes] = useState<QuizQuestion | null>(null)
   // todo: 리팩토링 필요
   const selectTag = (tagId: number, isSelected: boolean) => {
     dispatch(setQuizTagSelected({ tagId, isSelected: !isSelected }))
@@ -28,12 +28,8 @@ const SetQuizOptions = () => {
     dispatch(setQuizTagSelected({ tagId, isSelected: false }))
   }
   const getQuizzes = async () => {
-    setQuizzes(
-      await getQuizQuestions(
-        1,
-        quizTags.filter((tag) => tag.isSelected).map((tag) => tag.name),
-      ),
-    )
+    const getQuiz = await getQuizQuestions(quizTags.filter((tag) => tag.isSelected).map((tag) => tag.id))
+    if (getQuiz) setQuizzes(getQuiz)
   }
 
   const getQuestionTagStat = useCallback(async () => {
@@ -59,6 +55,7 @@ const SetQuizOptions = () => {
           {tag.name} X
         </button>
       )
+    else return null
   })
 
   const resetSelectedTags = () => {
@@ -69,7 +66,7 @@ const SetQuizOptions = () => {
 
   const quizDropdown = quizTags.map((tag) => {
     return (
-      <div className={styles.tag}>
+      <div className={styles.tag} key={tag.id}>
         <input type="checkbox" id={tag.name} name={tag.name} onChange={() => selectTag(tag.id, tag.isSelected)} />
         <label htmlFor={tag.name} className={tag.isSelected ? styles.tagNameSelected : styles.tagNameDeselected}>
           <div className={tag.isSelected ? styles.checkboxSelected : styles.checkboxDeselected} />
@@ -85,7 +82,7 @@ const SetQuizOptions = () => {
 
   return (
     <div>
-      {quizzes.length === 0 ? (
+      {!quizzes ? (
         <div>
           <div className={styles.userInfo}>
             {/* Todo: imgUrl 없다면 기본 프로필 사진으로 대체 */}
@@ -156,7 +153,9 @@ const SetQuizOptions = () => {
           </div>
         </div>
       ) : (
-        <QuizSolving quizzes={quizzes}></QuizSolving>
+        <>
+          <QuizSolving quizzes={quizzes}></QuizSolving>
+        </>
       )}
     </div>
   )

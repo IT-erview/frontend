@@ -1,6 +1,6 @@
 // todo: sort 변경
 import axios, { AxiosRequestConfig } from 'axios'
-import { Answer, Bookmark, Question, Quiz, TagCount, TagItem } from 'common/type'
+import { Answer, Bookmark, Question, Quiz, QuizQuestion, TagCount, TagItem } from 'common/type'
 
 const request = async (config: AxiosRequestConfig) => {
   try {
@@ -57,13 +57,13 @@ const getQuestions = async (page: number, rowsPerPage: number) => {
   return response.data as Array<Question>
 }
 
-const getQuizQuestions = async (quizCnt: number, tagList: Array<string>) => {
+const getQuizQuestions = async (tagList: Array<number>) => {
   const response = await request({
     method: 'get',
-    url: `/api/v1/question/quiz?size=${quizCnt}&tags=${tagList}`,
+    url: `/api/v1/question/quiz?tags=${tagList}`,
   })
-  if (!response) return []
-  return response.data as Array<Question>
+  if (!response) return null
+  return response.data as QuizQuestion
 }
 
 ///api/v1/question/mine?page=0&size=30&sort=${props.sortBy},desc

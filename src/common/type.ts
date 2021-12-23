@@ -58,3 +58,19 @@ export type TagCount = {
   tagTitle: string
   tagCount: number
 }
+
+export type QuizQuestion = {
+  id: number
+  content: string
+  username: string
+  email: string
+  tagList: Array<Tag>
+  coreKeyword: {
+    id: number
+    name: string
+  }
+  expectedKeywordList: Array<Tag> | null
+  expectedKeywordCount: Array<Tag> | null
+  depth: number
+  level: number
+}

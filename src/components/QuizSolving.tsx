@@ -2,16 +2,15 @@ import 'css/QuizSolving.css'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { Form, Input } from 'reactstrap'
 import { useState } from 'react'
-import QuizResult from 'components/QuizResult'
 import { MAX_TEXT_CONTENTS_LENGTH } from 'common/config'
 import { checkTextContentsLength } from 'common/util'
 import { postQuizAnswers } from 'common/api'
-import { Question, Quiz } from 'common/type'
+import { Quiz, QuizQuestion } from 'common/type'
 
-const QuizSolving: React.FunctionComponent<{ quizzes: Array<Question> } & RouteComponentProps> = ({
+const QuizSolving: React.FunctionComponent<{ quizzes: QuizQuestion } & RouteComponentProps> = ({
   quizzes,
 }: {
-  quizzes: Array<Question>
+  quizzes: QuizQuestion
 }) => {
   const [answerTextContents, setAnswerTextContents] = useState<string>('')
   const [quizAnswers, setQuizAnswers] = useState<Array<Quiz>>([])
@@ -20,12 +19,10 @@ const QuizSolving: React.FunctionComponent<{ quizzes: Array<Question> } & RouteC
 
   const nextQuestion = () => {
     if (checkTextContentsLength(answerTextContents)) {
-      setQuizAnswers([...quizAnswers, { content: answerTextContents, questionId: quizzes[quizIndex].id }])
+      setQuizAnswers([...quizAnswers, { content: answerTextContents, questionId: quizzes.id }])
       setAnswerTextContents('')
       setQuizIndex((prev) => prev + 1)
-      if (quizzes.length === quizIndex + 1) {
-        submitQuizAnswer()
-      }
+      submitQuizAnswer()
     } else {
       window.alert('최소 20자 이상 입력해주세요')
     }
@@ -38,8 +35,11 @@ const QuizSolving: React.FunctionComponent<{ quizzes: Array<Question> } & RouteC
 
   return (
     <div>
+      {console.log('ZZZZZZZZ')}
+      {console.log(quizzes)}
       {showResult ? (
-        <QuizResult quizzes={quizzes} />
+        // <QuizResult quizzes={quizzes} />
+        <>zz</>
       ) : (
         <div className="quiz-box">
           <Form>
@@ -62,7 +62,7 @@ const QuizSolving: React.FunctionComponent<{ quizzes: Array<Question> } & RouteC
             </div>
             <div className="quiz-contents-box">
               <h1 className="quiz-contents-title">문제 설명</h1>
-              <h1 className="quiz-contents">{quizzes[quizIndex].content}</h1>
+              <h1 className="quiz-contents">{quizzes.content}</h1>
             </div>
             <span
               id="answer-text-length"
@@ -82,7 +82,7 @@ const QuizSolving: React.FunctionComponent<{ quizzes: Array<Question> } & RouteC
           </Form>
           <div className="next-quiz">
             <button className="quiz-btn" onClick={() => nextQuestion()}>
-              {quizzes.length !== quizIndex + 1 ? '다음 문제로 넘어가기' : '퀴즈 종료하기'}
+              '다음 문제로 넘어가기'
             </button>
           </div>
         </div>
