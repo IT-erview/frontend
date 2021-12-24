@@ -28,8 +28,14 @@ const SetQuizOptions = () => {
     dispatch(setQuizTagSelected({ tagId, isSelected: false }))
   }
   const getQuizzes = async () => {
-    const getQuiz = await getQuizQuestions(quizTags.filter((tag) => tag.isSelected).map((tag) => tag.id))
-    if (getQuiz) setQuizzes(getQuiz)
+    const tagList = quizTags.filter((tag) => tag.isSelected).map((tag) => tag.id)
+    if (tagList.length === 0) {
+      const randomConfirm = window.confirm('선택한 태그가 없습니다. 랜덤으로 문제를 불러올까요?')
+      if (randomConfirm) {
+        const getQuiz = await getQuizQuestions(tagList)
+        if (getQuiz) setQuizzes(getQuiz)
+      }
+    }
   }
 
   const getQuestionTagStat = useCallback(async () => {
@@ -79,75 +85,94 @@ const SetQuizOptions = () => {
   useEffect(() => {
     getQuestionTagStat()
   }, [getQuestionTagStat])
+  const setQuizOptionsImg = '/img/quiz_img.png'
 
   return (
     <div>
       {!quizzes ? (
         <div>
-          <div className={styles.userInfo}>
-            {/* Todo: imgUrl 없다면 기본 프로필 사진으로 대체 */}
-            <div className={styles.userProfileSection}>
-              <img src={userImgUrl} alt="userProfileImg" className={styles.userProfileImg}></img>
-              <div>
-                <p className={styles.userName}>{userName} 님</p>
-                <p className={styles.userEmail}>{userEmail}</p>
-              </div>
-            </div>
-            <div className={styles.verticalLine} />
-            <div className={styles.userDetailSection}>
-              {/* Todo: 실제 데이터로 교체 */}
-              <div className={styles.userDetailTitle}>
-                <p>퀴즈로 푼 문제</p>
-                <p>좋아요</p>
-              </div>
-              <div className={styles.userDetailCnt}>
-                <p>170</p>
-                <p>50</p>
-              </div>
-            </div>
-            <div className={styles.verticalLine} />
-            <div className={styles.userTagsSection}>
-              <p className={styles.userTagsTitle}>많이 푼 문제 종류</p>
-              <div className={styles.userTags}>
-                {showTagStat}
-                {tagStat.length > 3 ? '...' : tagStat.length > 0 ? null : '대체 텍스트'}
-              </div>
+          <div className={styles.banner}>
+            <img src={setQuizOptionsImg} alt="question_banner_img" className={styles.bannerImg} />
+            <p className={styles.bannerTitle}>면접문제 학습</p>
+            <p className={styles.bannerContent}>
+              아직도 암기식으로 면접을 준비하시나요?
+              <br />
+              체계적으로 전략적으로 학습해보세요!
+            </p>
+            <div className={styles.bannerInfo}>
+              <p className={styles.bannerInfoText}>
+                풀고 싶은
+                <br /> 문제 종류와 개수를
+                <br /> 선택해주세요!
+              </p>
             </div>
           </div>
-
-          <div className={styles.selectTagsBox}>
-            <p className={styles.selectTagsTitle}>문제 종류</p>
-            <div className={styles.horizontalLine} />
-            <div className={styles.selectTagsCheckbox}>
-              <span className={styles.checkboxTitle}>문제 종류</span>
-              <button className={styles.dropdownBtn} onClick={tagToggle}>
-                <img
-                  src="img/dropdown.png"
-                  alt="dropdownArrow"
-                  className={tagDropdownOpen ? styles.dropdownArrowToggle : styles.dropdownArrow}
-                />
-              </button>
-              <button className={styles.tagsResetCheckboxBtn} onClick={resetSelectedTags}>
-                필터 초기화 X
-              </button>
+          <div className={styles.body}>
+            <div className={styles.userInfo}>
+              {/* Todo: imgUrl 없다면 기본 프로필 사진으로 대체 */}
+              <div className={styles.userProfileSection}>
+                <img src={userImgUrl} alt="userProfileImg" className={styles.userProfileImg}></img>
+                <div>
+                  <p className={styles.userName}>{userName} 님</p>
+                  <p className={styles.userEmail}>{userEmail}</p>
+                </div>
+              </div>
+              <div className={styles.verticalLine} />
+              <div className={styles.userDetailSection}>
+                {/* Todo: 실제 데이터로 교체 */}
+                <div className={styles.userDetailTitle}>
+                  <p>퀴즈로 푼 문제</p>
+                  <p>좋아요</p>
+                </div>
+                <div className={styles.userDetailCnt}>
+                  <p>170</p>
+                  <p>50</p>
+                </div>
+              </div>
+              <div className={styles.verticalLine} />
+              <div className={styles.userTagsSection}>
+                <p className={styles.userTagsTitle}>많이 푼 문제 종류</p>
+                <div className={styles.userTags}>
+                  {showTagStat}
+                  {tagStat.length > 3 ? '...' : tagStat.length > 0 ? null : '대체 텍스트'}
+                </div>
+              </div>
             </div>
-            <div className={tagDropdownOpen ? styles.dropdownOpen : styles.dropdownClose}>
-              <div className={styles.dropdownTags}>{tagDropdownOpen ? quizDropdown : null}</div>
-            </div>
 
-            <div className={styles.selectedTagsSection}>
-              <p className={styles.selectedTagsTitle}>문제 풀기</p>
+            <div className={styles.selectTagsBox}>
+              <p className={styles.selectTagsTitle}>문제 종류</p>
               <div className={styles.horizontalLine} />
-              <div className={styles.selectedTagsBox}>
-                <span className={styles.selectedTagsTitle}>선택된 문제 종류</span>
-                <button className={styles.tagsResetBtn} onClick={resetSelectedTags}>
+              <div className={styles.selectTagsCheckbox}>
+                <span className={styles.checkboxTitle}>문제 종류</span>
+                <button className={styles.dropdownBtn} onClick={tagToggle}>
+                  <img
+                    src="img/dropdown.png"
+                    alt="dropdownArrow"
+                    className={tagDropdownOpen ? styles.dropdownArrowToggle : styles.dropdownArrow}
+                  />
+                </button>
+                <button className={styles.tagsResetCheckboxBtn} onClick={resetSelectedTags}>
                   필터 초기화 X
                 </button>
-                <div className={styles.horizontalTagLine} />
-                <div className={styles.selectedTags}>{showSelectedTags}</div>
-                <button onClick={getQuizzes} className={styles.quizStart}>
-                  시작
-                </button>
+              </div>
+              <div className={tagDropdownOpen ? styles.dropdownOpen : styles.dropdownClose}>
+                <div className={styles.dropdownTags}>{tagDropdownOpen ? quizDropdown : null}</div>
+              </div>
+
+              <div className={styles.selectedTagsSection}>
+                <p className={styles.selectedTagsTitle}>문제 풀기</p>
+                <div className={styles.horizontalLine} />
+                <div className={styles.selectedTagsBox}>
+                  <span className={styles.selectedTagsTitle}>선택된 문제 종류</span>
+                  <button className={styles.tagsResetBtn} onClick={resetSelectedTags}>
+                    필터 초기화 X
+                  </button>
+                  <div className={styles.horizontalTagLine} />
+                  <div className={styles.selectedTags}>{showSelectedTags}</div>
+                  <button onClick={getQuizzes} className={styles.quizStart}>
+                    시작
+                  </button>
+                </div>
               </div>
             </div>
           </div>

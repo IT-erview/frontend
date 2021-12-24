@@ -11,6 +11,11 @@
   border-radius: 120px 120px 120px 0px;
 }
 
+.body {
+  width: 1920px;
+  margin: auto;
+}
+
 .bannerTitle {
   position: absolute;
   left: 512px;
