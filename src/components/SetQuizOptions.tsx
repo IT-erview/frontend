@@ -31,11 +31,16 @@ const SetQuizOptions = (props: { setQuizzes: Function }) => {
   const getQuizzes = async () => {
     const tagList = quizTags.filter((tag) => tag.isSelected).map((tag) => tag.id)
     if (tagList.length === 0) {
-      const randomConfirm = window.confirm('선택한 태그가 없습니다. 랜덤으로 문제를 불러올까요?')
+      const randomConfirm = window.confirm('선택된 태그가 없습니다. 랜덤으로 문제를 불러올까요?')
       if (randomConfirm) {
         const getQuiz = await getQuizQuestions(tagList)
+        console.log(getQuiz)
         if (getQuiz) props.setQuizzes(getQuiz)
       }
+    } else {
+      const getQuiz = await getQuizQuestions(tagList)
+      if (getQuiz) props.setQuizzes(getQuiz)
+      else window.alert('해당 태그에 해당하는 문제가 없습니다!')
     }
   }
 
