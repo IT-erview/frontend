@@ -6,11 +6,16 @@ import { QuizQuestion } from 'common/type'
 import { useState, useEffect } from 'react'
 import QuizSolving from 'components/QuizSolving'
 import { useHistory } from 'react-router-dom'
+import { useBeforeunload } from 'react-beforeunload'
 
 const SetQuizOptionsPage = () => {
   // const quizTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.quizTags)
   const [quizzes, setQuizzes] = useState<QuizQuestion | null>(null)
   const history = useHistory()
+
+  useBeforeunload((event) => {
+    if (quizzes) event.preventDefault()
+  })
 
   useEffect(() => {
     if (quizzes) {
@@ -20,6 +25,7 @@ const SetQuizOptionsPage = () => {
       }
     }
   }, [quizzes, history])
+
   return (
     <>
       <Navigation />
