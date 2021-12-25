@@ -35,8 +35,6 @@ const QuizSolving: React.FunctionComponent<{ quizzes: QuizQuestion } & RouteComp
 
   return (
     <div>
-      {console.log('ZZZZZZZZ')}
-      {console.log(quizzes)}
       {showResult ? (
         // <QuizResult quizzes={quizzes} />
         <>zz</>
