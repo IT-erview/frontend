@@ -409,9 +409,8 @@ label:hover > .checkbox {
   text-align: left;
 }
 
-.selectedTagsTitle {
+.selectedTagsSectionTitle {
   position: relative;
-
   margin-left: 75px;
   font-family: NanumSquare;
   font-style: normal;
@@ -509,4 +508,292 @@ label:hover > .checkbox {
 
   float: right;
   margin-right: 90px;
+}
+
+/* Quiz Solving Page */
+
+.solvingBanner {
+  width: 1920px;
+  margin: auto;
+  margin-top: 75px;
+}
+.solvingBannerImg {
+  width: 1920px;
+  height: 225px;
+  border-radius: 75px 75px 75px 0px;
+}
+.solvingBannerText {
+  /* 테스트 문제 */
+  /* header 3 */
+  position: relative;
+  float: left;
+  margin-top: -160px;
+  margin-left: 500px;
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 20px;
+  /* identical to box height */
+
+  /* Basic / Primary */
+
+  color: #796aca;
+  text-align: left;
+}
+.solvingBannerArrow {
+  width: 5px;
+  height: 12px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.solvingBannerTag {
+  /* 운영체제 */
+  /* header 3 */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 20px;
+  /* identical to box height */
+
+  /* Font / Light */
+  color: #a0a0a0;
+}
+
+.questionTitle {
+  /* 멀티프로세스는 무엇이고, 왜 사용할까요? */
+  /* Header 2 */
+  margin-top: 53.5px;
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 20px;
+  /* or 77% */
+
+  display: flex;
+  align-items: center;
+
+  /* Font / White */
+
+  color: #ffffff;
+}
+.answerTitle {
+  text-align: left;
+  margin-top: 67px;
+  margin-left: 500px;
+  /* Header 3 */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 15px;
+
+  color: #000000;
+}
+.answerTextLength {
+  float: right;
+  margin-right: 500px;
+  /* Boby 1 */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 15px;
+
+  /* identical to box height, or 29px */
+  /* Font / Light */
+
+  color: #a0a0a0;
+}
+
+.answerForm {
+  position: relative;
+  width: 1060px;
+  height: 360px;
+  margin: auto;
+  margin-top: 25px;
+}
+.answerInput {
+  width: calc(1060px - 140px);
+  height: calc(360px - 90px);
+  padding: 45px 70px;
+  background: #ffffff;
+  border: 0;
+  box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  resize: none;
+
+  /* Boby 1 */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  /* or 29px */
+  outline-color: #dddddd;
+}
+.quizHorizontalLine {
+  height: 2px;
+  width: 1060px;
+  margin: auto;
+  margin-top: 34px;
+  background-color: #e7e7e7;
+}
+.answerInput::-webkit-input-placeholder {
+  color: #a0a0a0;
+}
+
+.answerInput:-ms-input-placeholder {
+  color: #a0a0a0;
+}
+
+.coreKeywordBox {
+  position: relative;
+
+  width: 1060px;
+  height: 75px;
+  margin: auto;
+  margin-top: 25px;
+  background: #796aca;
+  box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  text-align: left;
+  z-index: 2;
+}
+
+.coreKeywordTitle {
+  /* Header 3 */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 75px;
+  /* or 83% */
+
+  /* Font / White */
+  margin-left: 75px;
+  color: #ffffff;
+}
+.keywordDropdownBtn {
+  float: right;
+  height: 75px;
+  margin-right: 65px;
+}
+.keywordDropdown {
+  width: 15px;
+  height: 7px;
+}
+.keywordDropdownToggle {
+  width: 15px;
+  height: 7px;
+  transform: rotate(180deg);
+  transition-duration: 0.3s;
+}
+
+.keywordDropdownOpen {
+  position: relative;
+  width: 1060px;
+  height: 95px;
+  margin: auto;
+  margin-top: -20px;
+  margin-bottom: 30px;
+
+  /* Font / White */
+  background: #796aca;
+  box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 0 0 15px 15px;
+  z-index: 0;
+  transition: all 0.4s ease-out;
+  transform-origin: top left;
+  transform: scaleY(1);
+
+  text-align: left;
+}
+
+.keywordDropdownClose {
+  margin: auto;
+  margin-top: -20px;
+  margin-bottom: 50px;
+
+  width: 1060px;
+  height: 0px;
+  transition: all 0.4s ease-in;
+  transform-origin: top left;
+  transform: scaleY(0);
+}
+
+.dropdownKeywords {
+  padding-top: 20px;
+  height: 75px;
+  color: palegoldenrod;
+}
+.coreKeyword {
+  float: left;
+  margin-top: 22px;
+  margin-left: 74px;
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px;
+  /* identical to box height */
+
+  /* Font / White */
+
+  color: #ffffff;
+  padding: 7px 20px;
+  border: 2px solid #ffffff;
+  box-sizing: border-box;
+  border-radius: 17px 17px 17px 0px;
+}
+
+.quizBtn {
+  width: 1060px;
+  margin: auto;
+  margin-bottom: 115px;
+  text-align: right;
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  /* Basic / Primary */
+}
+
+.otherAnswers {
+  padding: 10px 26px;
+
+  border: 3px solid #796aca;
+  box-sizing: border-box;
+  border-radius: 23px 23px 23px 0px;
+  margin-right: 18px;
+  color: #796aca;
+}
+.nextQuestion {
+  padding: 10px 26px;
+
+  border: 3px solid #796aca;
+  box-sizing: border-box;
+  border-radius: 23px 23px 23px 0px;
+  color: #796aca;
+
+  margin-right: 18px;
+}
+
+.exit {
+  padding: 10px 26px;
+  border: 3px solid #796aca;
+  box-sizing: border-box;
+  border-radius: 23px 23px 23px 0px;
+  color: #796aca;
 }

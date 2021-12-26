@@ -1,27 +1,29 @@
-import 'css/QuizSolving.css'
+// import 'css/QuizSolving.css'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { Form, Input } from 'reactstrap'
 import { useState } from 'react'
 import { MAX_TEXT_CONTENTS_LENGTH } from 'common/config'
 import { checkTextContentsLength } from 'common/util'
 import { postQuizAnswers } from 'common/api'
 import { Quiz, QuizQuestion } from 'common/type'
+import styles from 'css/Quiz.module.css'
+import { Form, Input } from 'reactstrap'
 
-const QuizSolving: React.FunctionComponent<{ quizzes: QuizQuestion } & RouteComponentProps> = ({
-  quizzes,
+const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteComponentProps> = ({
+  quiz,
 }: {
-  quizzes: QuizQuestion
+  quiz: QuizQuestion
 }) => {
   const [answerTextContents, setAnswerTextContents] = useState<string>('')
   const [quizAnswers, setQuizAnswers] = useState<Array<Quiz>>([])
   const [showResult, setShowResult] = useState<boolean>(false)
-  const [quizIndex, setQuizIndex] = useState<number>(0)
+  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false)
+
+  const keywordToggle = () => setDropdownOpen((prev) => !prev)
 
   const nextQuestion = () => {
     if (checkTextContentsLength(answerTextContents)) {
-      setQuizAnswers([...quizAnswers, { content: answerTextContents, questionId: quizzes.id }])
+      setQuizAnswers([...quizAnswers, { content: answerTextContents, questionId: quiz.id }])
       setAnswerTextContents('')
-      setQuizIndex((prev) => prev + 1)
       submitQuizAnswer()
     } else {
       window.alert('최소 20자 이상 입력해주세요')
@@ -39,51 +41,69 @@ const QuizSolving: React.FunctionComponent<{ quizzes: QuizQuestion } & RouteComp
         // <QuizResult quizzes={quizzes} />
         <>zz</>
       ) : (
-        <div className="quiz-box">
-          <Form>
-            <div className="breadcrumbs">
-              <img src="/img/LOGO1.png" alt="iterview-logo" />
-              <span>테스트 문제 {'>'} </span>
-              <span>인기 문제 {'>'} </span>
-              <span className="subhead">문제 제목</span>
+        <>
+          <div className={styles.solvingBanner}>
+            <img className={styles.solvingBannerImg} src="img/quiz_solving_img.png" alt="quiz_solving_banner_img" />
+            <div className={styles.solvingBannerText}>
+              테스트 문제
+              <img src="img/quiz_solving_arrow.png" className={styles.solvingBannerArrow} alt="quiz_solving_arrow" />
+              인기 문제
+              <img src="img/quiz_solving_arrow.png" className={styles.solvingBannerArrow} alt="quiz_solving_arrow" />
+              <span className={styles.solvingBannerTag}>{quiz.tagList[0].tagTitle}</span>
+              <p className={styles.questionTitle}>{quiz.content}</p>
             </div>
-            <div className="quiz-title">
-              <img src="/img/figure1.png" alt="quiz-logo" />
-              <span className="quiz-number">Quiz {quizIndex + 1}.</span>
-              <span className="time-title">
-                <img className="timer-img" src="/img/nav_icon5.png" alt="quiz-timer-img"></img>
-                이번퀴즈 총 소요시간
-                <span id="time">
-                  <span id="hour">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
-                </span>
-              </span>
-            </div>
-            <div className="quiz-contents-box">
-              <h1 className="quiz-contents-title">문제 설명</h1>
-              <h1 className="quiz-contents">{quizzes.content}</h1>
-            </div>
-            <span
-              id="answer-text-length"
-              style={{ color: checkTextContentsLength(answerTextContents) ? 'black' : 'red' }}>
-              ({answerTextContents.length}/{MAX_TEXT_CONTENTS_LENGTH})
-            </span>
-            <Input
-              type="textarea"
-              value={answerTextContents}
-              maxLength={MAX_TEXT_CONTENTS_LENGTH}
-              onChange={(e) => {
-                setAnswerTextContents(e.target.value)
-              }}
-              id="quiz-contents"
-              placeholder="답을 입력해주세요."
-            />
-          </Form>
-          <div className="next-quiz">
-            <button className="quiz-btn" onClick={() => nextQuestion()}>
-              '다음 문제로 넘어가기'
-            </button>
           </div>
-        </div>
+          <div className={styles.body}>
+            <p className={styles.answerTitle}>
+              답변 작성
+              <span
+                className={styles.answerTextLength}
+                style={{ color: checkTextContentsLength(answerTextContents) ? '#a0a0a0' : 'red' }}>
+                {answerTextContents.length} / {MAX_TEXT_CONTENTS_LENGTH}
+              </span>
+            </p>
+            <div className={styles.quizHorizontalLine} />
+            <Form className={styles.answerForm}>
+              <Input
+                className={styles.answerInput}
+                type="textarea"
+                value={answerTextContents}
+                maxLength={MAX_TEXT_CONTENTS_LENGTH}
+                onChange={(e) => {
+                  setAnswerTextContents(e.target.value)
+                }}
+                placeholder="답변을 작성해주세요. '다음 문제로 넘어가기' 버튼을 누르시면 답변은 자동 저장됩니다."
+              />
+            </Form>
+            <div className={styles.coreKeywordBox}>
+              <span className={styles.coreKeywordTitle}>핵심 키워드 보기</span>
+              <button className={styles.keywordDropdownBtn} onClick={keywordToggle}>
+                <img
+                  src="img/quiz_keyword_dropdown.png"
+                  alt="dropdownArrow"
+                  className={dropdownOpen ? styles.keywordDropdownToggle : styles.keywordDropdown}
+                />
+              </button>
+            </div>
+            <div className={dropdownOpen ? styles.keywordDropdownOpen : styles.keywordDropdownClose}>
+              <div className={styles.dropdownKeywords}>
+                {dropdownOpen ? <div className={styles.coreKeyword}>{quiz.coreKeyword.name}</div> : null}
+              </div>
+            </div>
+            <div className={styles.quizBtn}>
+              <button className={styles.otherAnswers} onClick={() => nextQuestion()}>
+                다른 사람의 답변
+              </button>
+              <button className={styles.nextQuestion} onClick={() => nextQuestion()}>
+                다음 문제로 넘어가기
+              </button>
+              <button className={styles.exit} onClick={() => nextQuestion()}>
+                종료
+              </button>
+            </div>
+          </div>
+          <div className="next-quiz"></div>
+        </>
       )}
     </div>
   )

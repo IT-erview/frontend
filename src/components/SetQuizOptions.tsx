@@ -165,7 +165,7 @@ const SetQuizOptions = (props: { setQuizzes: Function }) => {
             </div>
 
             <div className={styles.selectedTagsSection}>
-              <p className={styles.selectedTagsTitle}>문제 풀기</p>
+              <p className={styles.selectedTagsSectionTitle}>문제 풀기</p>
               <div className={styles.horizontalLine} />
               <div className={styles.selectedTagsBox}>
                 <span className={styles.selectedTagsTitle}>선택된 문제 종류</span>

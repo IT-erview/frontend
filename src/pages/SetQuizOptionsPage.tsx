@@ -29,7 +29,7 @@ const SetQuizOptionsPage = () => {
   return (
     <>
       <Navigation />
-      {quizzes ? <QuizSolving quizzes={quizzes} /> : <SetQuizOptions setQuizzes={setQuizzes} />}
+      {quizzes ? <QuizSolving quiz={quizzes} /> : <SetQuizOptions setQuizzes={setQuizzes} />}
       <Footer />
     </>
   )
