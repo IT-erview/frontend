@@ -11,5 +11,5 @@ export const isNumeric = (str: string | null) => {
 }
 
 export const checkTextContentsLength = (contents: string) => {
-  return contents.length >= MIN_TEXT_CONTENTS_LENGTH
+  return contents.length >= MIN_TEXT_CONTENTS_LENGTH || contents.length === 0
 }
