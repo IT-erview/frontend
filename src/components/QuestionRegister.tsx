@@ -130,6 +130,7 @@ const QuestionRegister = ({ history }: { history: any }) => {
                   return (
                     <button
                       className={tag.id === selectedTag ? 'selectedTag' : 'deselectedTag'}
+                      key={tag.id}
                       onClick={() => onTagSelect(tag.id)}>
                       {tag.name}
                     </button>

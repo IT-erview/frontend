@@ -14,6 +14,7 @@ import { setAllTags } from 'modules/allTags'
 import { setSearchTags } from 'modules/searchTags'
 import { setQuizTags } from 'modules/quizTags'
 import { setRegisterTags } from 'modules/registerTags'
+import { setResetQuiz } from 'modules/resetQuiz'
 
 const Navigation = (props: any) => {
   const [userEmail, setUserEmail] = useState<string>('')
@@ -95,6 +96,10 @@ const Navigation = (props: any) => {
     else return null
   }
 
+  const quizReset = () => {
+    dispatch(setResetQuiz(true))
+  }
+
   useEffect(() => {
     var param = new URLSearchParams(window.location.search).get('error')
     if (param === 'login') {
@@ -120,6 +125,9 @@ const Navigation = (props: any) => {
           setUserImgUrl('')
           removeCookie('Authorization', { path: '/' })
           localStorage.removeItem('userName')
+          localStorage.removeItem('userImgUrl')
+          localStorage.removeItem('userEmail')
+          window.location.reload()
         })
     }
   }, [])
@@ -202,7 +210,7 @@ const Navigation = (props: any) => {
             </div>
           </div>
         </Link>
-        <Link to="/SetQuizOptions">
+        <Link to="/SetQuizOptions" onClick={quizReset}>
           <div className={styles.quiz}>
             <div className={styles.menuIcon}>
               <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
