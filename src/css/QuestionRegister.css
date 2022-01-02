@@ -269,3 +269,20 @@ textarea#question-contents.form-control::placeholder {
   font-size: 16pt;
   background-image: linear-gradient(to right, #ffab00 0%, #eb2d2e 30%, #e91388 95%, #c8198a 100%);
 }
+#register-tags {
+  text-align: center;
+  width: 90%;
+  margin: auto;
+}
+#register-tags > button {
+  border: 1px solid;
+  margin: 5px;
+  font-size: 25px;
+  padding: 3px;
+}
+.deselectedTag {
+  background-color: rgb(255, 255, 255);
+}
+.selectedTag {
+  background-color: rgb(230, 209, 255);
+}

@@ -39,7 +39,7 @@ const AnswerRegister = () => {
     }
     if (isRequesting) return
     isRequesting = true
-    const result = await postAnswer(questionId, answerTextContents).finally(() => {
+    const result = await postAnswer({ questionId: questionId, content: answerTextContents }).finally(() => {
       isRequesting = false
     })
     if (result) {

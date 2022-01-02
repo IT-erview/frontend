@@ -176,40 +176,42 @@ const getMyLikedAnswers = async (sort: string, page: number, rowsPerPage = 4, de
     return answer
   })
 }
-const postAnswer = async (questionId: number, content: string) => {
+const postAnswer = async (answer: Quiz) => {
   const response = await request({
     method: 'post',
     url: '/api/v1/answer',
     data: {
-      content: content,
-      questionId: questionId,
+      content: answer.content,
+      questionId: answer.questionId,
     },
   })
   return response ? true : false
 }
 
-const postQuizAnswers = async (quizAnswers: Array<Quiz>) => {
+const postQuizAnswers = async (answer: Quiz) => {
   const response = await request({
     method: 'post',
-    url: '/api/v1/answer/',
-    data: quizAnswers,
+    url: '/api/v1/question/quiz',
+    data: {
+      content: answer.content,
+      questionId: answer.questionId,
+    },
   })
   return response ? true : false
 }
 
-const postQuestion = async (content: string, tagList: Array<string>) => {
+const postQuestion = async (content: string, tag: number) => {
   const response = await request({
     method: 'post',
     url: '/api/v1/question',
     data: {
       content: content,
       bookmarkCount: 0,
-      tags: [5],
+      tags: [tag],
       depth: 1,
       expectedKeywords: [1],
       keywordId: 1,
       level: 1,
-      minKeywordCount: 1,
     },
   })
   return response ? true : false

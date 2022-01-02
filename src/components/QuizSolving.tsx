@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { MAX_TEXT_CONTENTS_LENGTH } from 'common/config'
 import { checkTextContentsLength } from 'common/util'
 import { postQuizAnswers } from 'common/api'
-import { Quiz, QuizQuestion } from 'common/type'
+import { QuizQuestion } from 'common/type'
 import styles from 'css/Quiz.module.css'
 import { Form, Input } from 'reactstrap'
 
@@ -14,7 +14,6 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
   quiz: QuizQuestion
 }) => {
   const [answerTextContents, setAnswerTextContents] = useState<string>('')
-  const [quizAnswers, setQuizAnswers] = useState<Array<Quiz>>([])
   const [showResult, setShowResult] = useState<boolean>(false)
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false)
 
@@ -22,18 +21,20 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
 
   const nextQuestion = () => {
     if (checkTextContentsLength(answerTextContents)) {
-      setQuizAnswers([...quizAnswers, { content: answerTextContents, questionId: quiz.id }])
+      console.log(answerTextContents)
+      const res = postQuizAnswers({ content: answerTextContents, questionId: quiz.id })
+      console.log(res)
       setAnswerTextContents('')
-      submitQuizAnswer()
+      // submitQuizAnswer()
     } else {
       window.alert('최소 20자 이상 입력해주세요')
     }
   }
 
-  const submitQuizAnswer = () => {
-    postQuizAnswers(quizAnswers)
-    setShowResult(true)
-  }
+  // const submitQuizAnswer = () => {
+  //   postQuizAnswers(quizAnswer)
+  //   setShowResult(true)
+  // }
 
   return (
     <div>
@@ -94,10 +95,10 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
               <button className={styles.otherAnswers} onClick={() => nextQuestion()}>
                 다른 사람의 답변
               </button>
-              <button className={styles.nextQuestion} onClick={() => nextQuestion()}>
+              <button className={styles.nextQuestion} onClick={nextQuestion}>
                 다음 문제로 넘어가기
               </button>
-              <button className={styles.exit} onClick={() => nextQuestion()}>
+              <button className={styles.exit} onClick={() => setShowResult(true)}>
                 종료
               </button>
             </div>

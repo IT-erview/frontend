@@ -6,17 +6,16 @@ import { MAX_TEXT_CONTENTS_LENGTH, MIN_TEXT_CONTENTS_LENGTH } from 'common/confi
 import { checkTextContentsLength } from 'common/util'
 import { postQuestion } from 'common/api'
 import { MAX_DISPLAYED_TAG_COUNT } from 'common/config'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
-import TagSelector from 'components/TagSelector'
 import { TagSelectorItem } from 'common/type'
-import { setRegisterTagSelected } from 'modules/registerTags'
 
+// 디자인 적용 전 데이터 등록을 위한 기능만 구현
 const QuestionRegister = ({ history }: { history: any }) => {
-  const dispatch = useDispatch()
   const [questionTextContents, setQuestionTextContents] = useState<string>('')
   const [isRegistered, setRegistered] = useState<boolean>(false)
   const questionTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.registerTags)
+  const [selectedTag, setSelectedTag] = useState<number>(-1)
 
   let isRequesting = false
   const registerQuestion = async () => {
@@ -24,12 +23,12 @@ const QuestionRegister = ({ history }: { history: any }) => {
       window.alert(`최소 ${MIN_TEXT_CONTENTS_LENGTH}자 이상 입력해주세요`)
       return
     }
+    if (selectedTag === -1) {
+      window.alert(`태그를 선택해주세요.`)
+    }
     if (isRequesting) return
     isRequesting = true
-    const result = await postQuestion(
-      questionTextContents,
-      questionTags.filter((tag) => tag.isSelected).map((tag) => tag.name),
-    ).finally(() => {
+    const result = await postQuestion(questionTextContents, selectedTag).finally(() => {
       isRequesting = false
     })
     if (result) {
@@ -40,7 +39,17 @@ const QuestionRegister = ({ history }: { history: any }) => {
     }
   }
 
-  const onTagSelect = (tagId: number, isSelected: boolean) => dispatch(setRegisterTagSelected({ tagId, isSelected }))
+  const onTagSelect = (tagId: number) => {
+    // questionTags.map((tag) => {
+    //   if (tag.isSelected === true && tag.id !== tagId) {
+    //     console.log(tag.name)
+    //     dispatch(setRegisterTagSelected({ tagId, isSelected: false }))
+    //     return tag
+    //   }
+    // })
+    // dispatch(setRegisterTagSelected({ tagId, isSelected }))
+    setSelectedTag(tagId)
+  }
 
   return (
     <div className="question-register">
@@ -116,7 +125,16 @@ const QuestionRegister = ({ history }: { history: any }) => {
               <h2>문제 태그 선택</h2>
               <div className="question-register-hr2" />
               <div id="register-tags">
-                <TagSelector tags={questionTags} onTagSelect={onTagSelect} />
+                {/* <TagSelector tags={questionTags} onTagSelect={onTagSelect} /> */}
+                {questionTags.map((tag) => {
+                  return (
+                    <button
+                      className={tag.id === selectedTag ? 'selectedTag' : 'deselectedTag'}
+                      onClick={() => onTagSelect(tag.id)}>
+                      {tag.name}
+                    </button>
+                  )
+                })}
               </div>
               <Button onClick={registerQuestion}>등록하기</Button>
             </div>
