@@ -1,0 +1,50 @@
+.exitAnswerModal {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    padding: 30px;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    border-radius: 15px;
+    z-index: 200;
+}
+
+.logo {
+    display: inline-block;
+    text-align: center;
+}
+
+h3 {
+    margin-top: 30px;
+}
+
+.buttonWrap {
+    margin-top: 20px;
+}
+
+.modalButton {
+    display: block;
+    width: 300px;
+    height: 30px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    color: white;
+}
+
+.buttonBlue {
+    background-color: mediumpurple;
+}
+
+.buttonDarkBlue {
+    margin-top: 10px;
+    background-color: purple;
+}
+
+.buttonExitWrap {
+    border-top: 1px solid #d8d8d8;
+    padding-top: 20px;
+    margin-top: 20px;
+}
