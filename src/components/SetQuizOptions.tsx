@@ -9,8 +9,9 @@ import styles from 'css/Quiz.module.css'
 import { useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
 import { TagSelectorItem } from 'common/type'
+import { setQuizQuestions } from 'modules/quizQuestions'
 
-const SetQuizOptions = (props: { setQuizzes: Function }) => {
+const SetQuizOptions = () => {
   const [tagDropdownOpen, setTagDropdownOpen] = useState<boolean>(false)
   const tagToggle = () => setTagDropdownOpen((prevState) => !prevState)
   const userName = localStorage.getItem('userName') as string
@@ -35,11 +36,11 @@ const SetQuizOptions = (props: { setQuizzes: Function }) => {
       if (randomConfirm) {
         const getQuiz = await getQuizQuestions(tagList)
         console.log(getQuiz)
-        if (getQuiz) props.setQuizzes(getQuiz)
+        if (getQuiz) dispatch(setQuizQuestions(getQuiz))
       }
     } else {
       const getQuiz = await getQuizQuestions(tagList)
-      if (getQuiz) props.setQuizzes(getQuiz)
+      if (getQuiz) dispatch(setQuizQuestions(getQuiz))
       else window.alert('해당 태그에 해당하는 문제가 없습니다!')
     }
   }

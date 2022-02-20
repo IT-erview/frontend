@@ -5,7 +5,7 @@ interface ModalDefaultType {
   onClickToggleModal: () => void
 }
 
-function NextModal({ onClickToggleModal, children }: PropsWithChildren<ModalDefaultType>) {
+function NextModal({ onClickToggleModal }: PropsWithChildren<ModalDefaultType>) {
   return (
     <div>
       <section className={styles.exitAnswerModal}>
@@ -16,7 +16,7 @@ function NextModal({ onClickToggleModal, children }: PropsWithChildren<ModalDefa
           <button className={`${styles.buttonDarkBlue} ${styles.modalButton}`}>다른 종류 문제 풀기</button>
         </div>
         <div className={styles.buttonExitWrap}>
-          <button onClick={onClickToggleModal}>답안 작성을 돌아가기</button>
+          <button onClick={onClickToggleModal}>답안 작성으로 돌아가기</button>
         </div>
       </section>
     </div>

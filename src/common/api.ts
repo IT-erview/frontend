@@ -188,16 +188,20 @@ const postAnswer = async (answer: Quiz) => {
   return response ? true : false
 }
 
-const postQuizAnswers = async (answer: Quiz) => {
+const postQuizAnswers = async (answer: Quiz, type: string) => {
   const response = await request({
     method: 'post',
-    url: '/api/v1/question/quiz',
+    url: `/api/v1/question/quiz?type=${type}`,
     data: {
       content: answer.content,
       questionId: answer.questionId,
     },
   })
-  return response ? true : false
+  if (response) {
+    const nextQuestion: QuizQuestion = response.data
+    return nextQuestion
+  }
+  return null
 }
 
 const postQuestion = async (content: string, tag: number) => {

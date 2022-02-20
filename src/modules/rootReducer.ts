@@ -5,6 +5,8 @@ import quizTags from 'modules/quizTags'
 import allTags from 'modules/allTags'
 import loginModal from 'modules/loginModal'
 import resetQuiz from 'modules/resetQuiz'
+import quizQuestions from 'modules/quizQuestions'
+import nextQuestion from 'modules/nextQuestion'
 
 const reducer = combineReducers({
   registerTags,
@@ -13,6 +15,8 @@ const reducer = combineReducers({
   loginModal,
   allTags,
   resetQuiz,
+  quizQuestions,
+  nextQuestion,
 })
 
 export type ReducerType = ReturnType<typeof reducer>

@@ -3,36 +3,67 @@ import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { useCallback, useEffect, useState } from 'react'
 import { MAX_TEXT_CONTENTS_LENGTH } from 'common/config'
 import { checkTextContentsLength } from 'common/util'
-import { getAnswers } from 'common/api'
+import { getAnswers, postQuizAnswers } from 'common/api'
 import { QuizQuestion, Answer as AnswerType } from 'common/type'
 import styles from 'css/Quiz.module.css'
 import { Form, Input } from 'reactstrap'
 import ExitAnswerModal from 'components/ExitAnswer'
 import NextModal from 'components/NextModal'
 import Answer from './Answer'
+import { useDispatch, useSelector } from 'react-redux'
+import { ReducerType } from 'modules/rootReducer'
+import { NextQuiz, setNextQuestion } from 'modules/nextQuestion'
+import { setQuizQuestions } from 'modules/quizQuestions'
 
 const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteComponentProps> = ({
   quiz,
 }: {
   quiz: QuizQuestion
 }) => {
+  const [current, setCurrent] = useState<QuizQuestion>(quiz)
   const [answerTextContents, setAnswerTextContents] = useState<string>('')
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false)
   const [isOpenModal, setOpenModal] = useState<boolean>(false)
   const [isOpenNextModal, setOpenNextModal] = useState<boolean>(false)
   const [answersList, setAnswersList] = useState<Array<AnswerType>>([])
   const [moreAnswer, setMoreAnswer] = useState<boolean>(false)
-  const [showAnswer, setShowAnswers] = useState<boolean>(false)
+  const [showAnswers, setShowAnswers] = useState<boolean>(false)
+  const nextQuizOption = useSelector<ReducerType, NextQuiz>((state) => state.nextQuestion)
+  const dispatch = useDispatch()
 
-  const getAnswer = useCallback(async () => {
-    const answers = await getAnswers(quiz.id, 'weekly', 1, 10, true)
-    console.log(answers)
-    if (answers) setAnswersList(answers)
-  }, [quiz.id, 'weekly', 1, 10, true])
+  const getAnswer = async () => {
+    if (answersList.length === 0) {
+      const answers = await getAnswers(current.id, 'popular', 0)
+      console.log(answers)
+      if (answers) setAnswersList(answers)
+    }
+  }
+
+  const getNextQuestion = useCallback(async () => {
+    if (!checkTextContentsLength(answerTextContents)) window.alert('답변을 20자 이상 작성해주세요.')
+    else {
+      if (nextQuizOption === NextQuiz.QUIT) console.log('종료')
+      else {
+        const nextQuestion = await postQuizAnswers(
+          { content: answerTextContents, questionId: current.id },
+          nextQuizOption,
+        )
+        if (nextQuestion) {
+          dispatch(setQuizQuestions(nextQuestion))
+          setCurrent(nextQuestion)
+        }
+      }
+
+      setAnswerTextContents('')
+    }
+  }, [nextQuizOption, answerTextContents, dispatch, current.id, setCurrent])
 
   useEffect(() => {
-    getAnswer()
-  }, [getAnswer])
+    if (nextQuizOption !== NextQuiz.INIT) {
+      getNextQuestion()
+      dispatch(setNextQuestion(NextQuiz.INIT))
+    }
+  }, [nextQuizOption, getNextQuestion, dispatch])
 
   const keywordToggle = () => setDropdownOpen((prev) => !prev)
 
@@ -58,16 +89,22 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
     setOpenNextModal(!isOpenNextModal)
   }, [isOpenNextModal])
 
-  const setSHowAnswer = useCallback(() => {
-    setShowAnswers(!showAnswer)
-  }, [showAnswer])
+  const showOtherAnswers = useCallback(() => {
+    setShowAnswers(!showAnswers)
+  }, [showAnswers])
 
-  // const submitQuizAnswer = () => {
-  //   postQuizAnswers(quizAnswer)
-  //   setShowResult(true)
-  // }
+  const expectedKeywords = current.expectedKeywordList
+    ? current.expectedKeywordList.map((keyword) => {
+        return (
+          <div key={keyword.id} className={styles.coreKeyword}>
+            {keyword.name}
+          </div>
+        )
+      })
+    : '기대 키워드가 없습니다.'
 
-  const showAnswers = () => {
+  const otherAnswers = () => {
+    getAnswer()
     return (
       <div className={styles.hitsAnswers}>
         {answersList.length > 0 &&
@@ -106,8 +143,8 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
             <img src="img/quiz_solving_arrow.png" className={styles.solvingBannerArrow} alt="quiz_solving_arrow" />
             인기 문제
             <img src="img/quiz_solving_arrow.png" className={styles.solvingBannerArrow} alt="quiz_solving_arrow" />
-            <span className={styles.solvingBannerTag}>{quiz.tagList[0].tagTitle}</span>
-            <p className={styles.questionTitle}>{quiz.content}</p>
+            <span className={styles.solvingBannerTag}>{current.tagList[0].tagTitle}</span>
+            <p className={styles.questionTitle}>{current.content}</p>
           </div>
         </div>
         <div className={styles.body}>
@@ -133,7 +170,7 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
             />
           </Form>
           <div className={styles.coreKeywordBox}>
-            <span className={styles.coreKeywordTitle}>핵심 키워드 보기</span>
+            <span className={styles.coreKeywordTitle}>기대 키워드 보기</span>
             <button className={styles.keywordDropdownBtn} onClick={keywordToggle}>
               <img
                 src="img/quiz_keyword_dropdown.png"
@@ -143,12 +180,10 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
             </button>
           </div>
           <div className={dropdownOpen ? styles.keywordDropdownOpen : styles.keywordDropdownClose}>
-            <div className={styles.dropdownKeywords}>
-              {dropdownOpen ? <div className={styles.coreKeyword}>{quiz.coreKeyword.name}</div> : null}
-            </div>
+            <div className={styles.dropdownKeywords}>{dropdownOpen ? expectedKeywords : null}</div>
           </div>
           <div className={styles.quizBtn}>
-            <button className={styles.otherAnswers} onClick={setSHowAnswer}>
+            <button className={styles.otherAnswers} onClick={showOtherAnswers}>
               다른 사람의 답변
             </button>
             <button className={styles.nextQuestion} onClick={onClickToggleNextModal}>
@@ -161,9 +196,9 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
         </div>
       </div>
       <div className="next-quiz"></div>
-      {showAnswer ? showAnswers() : null}
-      {isOpenModal && <ExitAnswerModal onClickToggleModal={onClickToggleModal}></ExitAnswerModal>}
-      {isOpenNextModal && <NextModal onClickToggleNextModal={onClickToggleNextModal}></NextModal>}
+      {showAnswers ? otherAnswers() : null}
+      {isOpenModal && <ExitAnswerModal onClickToggleModal={onClickToggleModal} />}
+      {isOpenNextModal && <NextModal onClickToggleNextModal={onClickToggleNextModal} />}
       {(isOpenModal || isOpenNextModal) && <div className={styles.dim}></div>}
     </div>
   )

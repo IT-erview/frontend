@@ -656,8 +656,9 @@ label:hover > .checkbox {
 
 .coreKeywordBox {
   position: relative;
+  padding-left: 75px;
 
-  width: 1060px;
+  width: 985px;
   height: 75px;
   margin: auto;
   margin-top: 25px;
@@ -679,7 +680,7 @@ label:hover > .checkbox {
   /* or 83% */
 
   /* Font / White */
-  margin-left: 75px;
+  /* margin-left: 75px; */
   color: #ffffff;
 }
 .keywordDropdownBtn {
@@ -700,7 +701,8 @@ label:hover > .checkbox {
 
 .keywordDropdownOpen {
   position: relative;
-  width: 1060px;
+  padding-left: 75px;
+  width: 985px;
   height: 95px;
   margin: auto;
   margin-top: -20px;
@@ -722,8 +724,9 @@ label:hover > .checkbox {
   margin: auto;
   margin-top: -20px;
   margin-bottom: 50px;
+  padding-left: 75px;
 
-  width: 1060px;
+  width: 985px;
   height: 0px;
   transition: all 0.4s ease-in;
   transform-origin: top left;
@@ -738,7 +741,7 @@ label:hover > .checkbox {
 .coreKeyword {
   float: left;
   margin-top: 22px;
-  margin-left: 74px;
+  margin-right: 15px;
 
   font-family: NanumSquare;
   font-style: normal;
@@ -798,7 +801,7 @@ label:hover > .checkbox {
   color: #796aca;
 }
 
-.dim  {
+.dim {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -807,7 +810,7 @@ label:hover > .checkbox {
   z-index: 100;
 }
 
-.blur  {
+.blur {
   filter: blur(6px);
   -webkit-filter: blur(6px);
 }

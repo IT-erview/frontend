@@ -117,10 +117,10 @@ const Navigation = (props: any) => {
           localStorage.setItem('userEmail', res.data.email)
         })
         .catch((err) => {
-          console.log(err)
-          if (err.response.status === 401) {
-            window.alert('로그인 에러입니다.')
-          }
+          // console.log(err)
+          // if (err.response.status === 401) {
+          //   window.alert('로그인 에러입니다.')
+          // }
           setUserName('')
           setUserImgUrl('')
           removeCookie('Authorization', { path: '/' })
