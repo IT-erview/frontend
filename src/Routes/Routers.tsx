@@ -7,6 +7,7 @@ import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'
 import MyRegisterQuestion from 'components/MyRegisterQuestion'
 import MyBookmarkQuestion from 'components/MyBookmarkQuestion'
+import QuizResult from 'pages/QuizResult'
 import MyPageNavigation from 'components/MyPageNavigation'
 import AnswerRegisterPage from 'pages/AnswerRegisterPage'
 import QuestionDetailPage from 'pages/QuestionDetailPage'
@@ -33,6 +34,7 @@ const Routers = () => (
     <PrivateRoute path="/QuestionDetail" component={QuestionDetailPage} />
     <PrivateRoute exact path="/SetQuizOptions" component={SetQuizOptionsPage} />
     <PrivateRoute exact path="/AnswerRegister" component={AnswerRegisterPage} />
+    <PrivateRoute exact path="/QuizResult" component={QuizResult} />
     <PrivateRoute path="/MyPage" component={Footer} />
   </BrowserRouter>
 )
