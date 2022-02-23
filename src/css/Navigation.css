@@ -84,11 +84,6 @@ nav {
   width: 20px;
 }
 
-li {
-  float: left;
-  width: 130px !important;
-}
-
 nav .navbar-text {
   /* size: inherit; */
   margin-left: 5%;

@@ -1,0 +1,98 @@
+.quizResult {
+    margin-top: 75px;
+}
+
+.quizResult .titleArea {
+    position: relative;
+    width: 100%;
+    height: 364px;
+    border-radius: 120px 120px 120px 0;
+    color: white;
+    font-weight: bold;
+    text-align: left;
+}
+
+.quizResult .titleArea .title {
+    padding: 152px 0 0 510px;
+    font-size: 26px;
+    line-height: 30px;
+}
+
+.quizResult .titleArea .subTitle {
+    padding: 26px 0 0 510px;
+    font-size: 18px;
+    line-height: 20px;
+}
+
+.quizResult .titleArea .badge {
+    position: absolute;
+    top: 254px;
+    right: 434px;
+    padding: 40px;
+    background-color: #E3E2F0;
+    font-weight: bold;
+    text-align: center;
+    line-height: 20px;
+    color: black;
+    border-radius: 64px 64px 64px 0;
+}
+
+.quizResult .container {
+    width: 1060px;
+    margin: 0 auto;
+}
+
+.quizResult .quizResultBox {
+    margin-top: 70px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.quizResultBox .quizBoxCommon {
+    width: 521px;
+    height: 228px;
+    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-sizing: border-box;
+}
+
+.quizResultBox .quizUserInfo {
+    padding: 36px 107px 0 107px;
+}
+
+.quizUserInfo .quizUser {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #1110364d;
+}
+.quizUserInfo .imageWrap {
+    margin-right: 10px;
+}
+
+.quizUserInfo .imageWrap .profile {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+
+.quizUserInfo .userInfoText {
+    text-align: left;
+}
+
+.quizUserInfo .userInfoText .userName {
+    font-weight: bold;
+    font-size: 26px;
+}
+
+.quizUserInfo .userInfoText .userEmail {
+    padding-top: 5px;
+    font-size: 16px;
+    line-height: 20px;
+    color: #1110364d;
+}
+
+.quizResultBox .quizTags {
+    padding: 45px 71px 0 75px;
+}

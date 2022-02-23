@@ -1,20 +1,19 @@
 // todo: refactoring
 import styles from 'css/QuizResult.module.css'
-import { TagSelectorItem } from 'common/type'
-import { useSelector } from 'react-redux'
-import { ReducerType } from 'modules/rootReducer'
+// import { TagSelectorItem } from 'common/type'
+// import { useSelector } from 'react-redux'
+// import { ReducerType } from 'modules/rootReducer'
 import Footer from 'components/Footer'
 import Navigation from 'components/Navigation'
 
 const QuizResultPage = () => {
-  const quizTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.quizTags)
-
+  /*const quizTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.quizTags)*/
+  const userImgUrl = localStorage.getItem('userImgUrl') as string
   return (
     <>
       <Navigation />
       <div className={styles.quizResult}>
-        <div className={styles.titleArea}>
-          <img src="/img/quiz_img.png" className={styles.titleImg} alt="question_banner_img" />
+        <div className={styles.titleArea} style={{ background: 'url(/img/quiz_img.png)' }}>
           <h2 className={styles.title}>면접문제 학습</h2>
           <p className={styles.subTitle}>
             아직도 암기식으로 면접을 준비하시나요?
@@ -26,45 +25,67 @@ const QuizResultPage = () => {
             확인해주세요
           </div>
         </div>
-        <div className={styles.quizResultBox}>
-          <div className={styles.quizUserInfo}>
-            <h4>{localStorage.getItem('userName')}</h4>
-            <hr className="hr" />
-            <h6>문제당 평균 시간</h6>
-            <span>02:50</span>
-            <h6>좋아요</h6>
-            <span>50</span>
-            <h6>퀴즈로 푼 문제</h6>
-            <span>170</span>
-          </div>
-          <div className={styles.quizTags}>
-            <h4>퀴즈 태그</h4>
-            <hr className="hr2" />
-            {quizTags.map((tag: TagSelectorItem) => {
-              return (
-                tag.isSelected && (
-                  <button key={tag.id} className="tag-btn">
-                    {tag.name}
-                  </button>
+        <div className={styles.container}>
+          <div className={styles.quizResultBox}>
+            <div className={`${styles.quizUserInfo} ${styles.quizBoxCommon}`}>
+              <div className={styles.quizUser}>
+                <div className={styles.imageWrap}>
+                  <img src={userImgUrl} alt="profile" className={styles.profile} />
+                </div>
+                <div className={styles.userInfoText}>
+                  <p className={styles.userName}>{localStorage.getItem('userName')}</p>
+                  <p className={styles.userEmail}>{localStorage.getItem('userEmail')}</p>
+                </div>
+              </div>
+              <div className={styles.quizCount}>
+                <ul>
+                  <li>
+                    <span className={styles.countLabel}>오늘 푼 문제</span>
+                    <span className={styles.countNumber}>13</span>
+                  </li>
+                  <li>
+                    <span className={styles.countLabel}>누적 푼 문제</span>
+                    <span className={styles.countNumber}>183</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className={`${styles.quizTags} ${styles.quizBoxCommon}`}>
+              <h4>선택된 문제 종류</h4>
+              <hr className="hr2" />
+              {/*{quizTags.map((tag: TagSelectorItem) => {
+                return (
+                  tag.isSelected && (
+                    <button key={tag.id} className="tag-btn">
+                      {tag.name}
+                    </button>
+                  )
                 )
-              )
-            })}
+              })}*/}
+              <button type="button" className="btn-tag">
+                javascript
+              </button>
+              <button type="button" className="btn-tag">
+                java
+              </button>
+              <button type="button" className="btn-tag">
+                프로그래밍 언어
+              </button>
+              <button type="button" className="btn-tag">
+                프로그래밍 언어
+              </button>
+              <button type="button" className="btn-tag">
+                프로그래밍 언어
+              </button>
+            </div>
           </div>
-          <div className={styles.quizTimeInfo}>
-            <h4>소요시간</h4>
-            <hr className="hr3" />
-            <h6>총 소요시간</h6>
-            <span>00:00:00</span>
-            <h6>문제당 소요시간</h6>
-            <span>00:00:00</span>
+          <div className={styles.solvedQuiz}>
+            <div className={styles.solvedQuizTitle}>
+              <span>풀었던 문제</span>
+              <div className="hr4" />
+            </div>
+            <div className={styles.solvedQuizList}></div>
           </div>
-        </div>
-        <div className={styles.solvedQuiz}>
-          <div className={styles.solvedQuizTitle}>
-            <span>풀었던 문제</span>
-            <div className="hr4" />
-          </div>
-          <div className={styles.solvedQuizList}></div>
         </div>
       </div>
       <Footer />
