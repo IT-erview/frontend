@@ -40,7 +40,6 @@ const SetQuizOptionsPage = () => {
     <>
       <Navigation />
       {quizzes.length > 0 ? <QuizSolving quiz={quizzes[quizzes.length - 1].question} /> : <SetQuizOptions />}
-      {console.log(quizzes)}
       <Footer />
     </>
   )
