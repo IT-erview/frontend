@@ -10,7 +10,6 @@
   z-index: 200;
 
   width: 430px;
-  height: 372px;
 }
 
 .logo {
@@ -79,6 +78,7 @@
   border-top: 1px solid #d8d8d8;
   padding-top: 15px;
   margin-top: 20px;
+  margin-bottom: 15px;
   /* Boby 1 */
 
   font-family: NanumSquare;
