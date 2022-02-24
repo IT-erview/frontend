@@ -25,7 +25,6 @@ const SetQuizOptionsPage = () => {
   useEffect(() => {
     if (quizzes.length > 0) {
       const unblock = history.block((location, action) => {
-        console.log(location)
         if (location.pathname !== '/QuizResult' && (action === 'POP' || action === 'PUSH')) {
           const confirm = window.confirm('뒤로 가시겠습니까? 변경사항이 저장되지 않을 수 있습니다.')
           if (confirm) {

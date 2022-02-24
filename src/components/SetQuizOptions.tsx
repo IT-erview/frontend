@@ -35,7 +35,6 @@ const SetQuizOptions = () => {
       const randomConfirm = window.confirm('선택된 태그가 없습니다. 랜덤으로 문제를 불러올까요?')
       if (randomConfirm) {
         const getQuiz = await getQuizQuestions(tagList)
-        console.log(getQuiz)
         if (getQuiz) dispatch(setQuizQuestions(getQuiz))
       }
     } else {
