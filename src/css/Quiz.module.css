@@ -762,7 +762,6 @@ label:hover > .checkbox {
 .quizBtn {
   width: 1060px;
   margin: auto;
-  margin-bottom: 190px;
   text-align: right;
 
   font-family: NanumSquare;
@@ -813,4 +812,66 @@ label:hover > .checkbox {
 .blur {
   filter: blur(6px);
   -webkit-filter: blur(6px);
+}
+
+.otherAnswersBox {
+  width: 1920px;
+  margin: auto;
+  margin-top: 65px;
+}
+
+.otherAnswerNone {
+  /* header 3 */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 20px;
+  color: #4c4f53;
+}
+.otherAnswerTitle {
+  width: 1060px;
+  margin: auto;
+  text-align: left;
+  padding-left: 70px;
+  /* Header 3 */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 15px;
+  /* identical to box height, or 83% */
+
+  display: flex;
+  align-items: center;
+
+  color: #000000;
+  padding-bottom: 42px;
+
+  border-bottom: 2px solid #e7e7e7;
+}
+
+.more {
+  /* header 3 */
+  text-align: center;
+}
+.moreHideBtn {
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 20px;
+  /* color: #6a737d; */
+  color: #6a737d;
+  margin-top: 45px;
+  background-color: white;
+}
+
+.moreHideArrow {
+  height: 5.5px;
+  width: 12px;
+  margin-bottom: 3px;
+  margin-left: 5px;
 }

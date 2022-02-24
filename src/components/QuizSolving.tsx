@@ -12,7 +12,7 @@ import NextModal from 'components/NextModal'
 import Answer from './Answer'
 import { useDispatch, useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
-import { NextQuiz, setNextQuestion } from 'modules/nextQuestion'
+import { NextQuiz, setNextQuestionInit } from 'modules/nextQuestion'
 import { setQuizAnswers, setQuizQuestions } from 'modules/quizQuestions'
 
 const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteComponentProps> = ({
@@ -29,13 +29,16 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
   const [moreAnswer, setMoreAnswer] = useState<boolean>(false)
   const [showAnswers, setShowAnswers] = useState<boolean>(false)
   const nextQuizOption = useSelector<ReducerType, NextQuiz>((state) => state.nextQuestion)
+  const [answerLoading, setAnswerLoading] = useState<Boolean>(false)
   const dispatch = useDispatch()
 
   const getAnswer = async () => {
     if (answersList.length === 0) {
       const answers = await getAnswers(current.id, 'popular', 0)
-      console.log(answers)
-      if (answers) setAnswersList(answers)
+      if (answers) {
+        setAnswersList(answers)
+        setAnswerLoading(true)
+      }
     }
   }
 
@@ -62,7 +65,7 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
   useEffect(() => {
     if (nextQuizOption !== NextQuiz.INIT) {
       getNextQuestion()
-      dispatch(setNextQuestion(NextQuiz.INIT))
+      dispatch(setNextQuestionInit)
     }
   }, [nextQuizOption, getNextQuestion, dispatch])
 
@@ -105,30 +108,41 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
     : '기대 키워드가 없습니다.'
 
   const otherAnswers = () => {
-    getAnswer()
-    return (
-      <div className={styles.hitsAnswers}>
-        {answersList.length > 0 &&
-          answersList.map((answersList, idx) => {
-            if (!moreAnswer && idx >= 3) return null
-            return (
-              <Answer
-                key={answersList.id}
-                id={answersList.questionId}
-                number={idx + 1}
-                content={answersList.questionContent!}
-                tagList={answersList.tags}
-                answer={answersList.content}
-                likeCount={answersList.liked}
-                like={answersList.like}
-              />
-            )
-          })}
-        <div className={styles.more}>
-          <button onClick={() => setMoreAnswer((prev) => !prev)} className={styles.moreHideBtn}>
-            {moreHideBtn(answersList.length, moreAnswer)}
-          </button>
+    if (answerLoading === false) {
+      getAnswer()
+      return
+    }
+    if (answersList.length <= 0)
+      return (
+        <div className={styles.otherAnswersBox}>
+          <p className={styles.otherAnswerNone}> 다른 사람의 답변이 없습니다.</p>
         </div>
+      )
+    return (
+      <div className={styles.otherAnswersBox}>
+        <p className={styles.otherAnswerTitle}>다른 사람의 답변</p>
+        {answersList.map((answersList, idx) => {
+          if (!moreAnswer && idx >= 3) return null
+          return (
+            <Answer
+              key={answersList.id}
+              id={answersList.questionId}
+              number={idx + 1}
+              content={current.content}
+              tagList={current.tagList}
+              answer={answersList.content}
+              likeCount={answersList.liked}
+              like={answersList.like}
+            />
+          )
+        })}
+        {answersList.length > 3 ? (
+          <div className={styles.more}>
+            <button onClick={() => setMoreAnswer((prev) => !prev)} className={styles.moreHideBtn}>
+              {moreHideBtn(answersList.length, moreAnswer)}
+            </button>
+          </div>
+        ) : null}
       </div>
     )
   }
