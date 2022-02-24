@@ -2,7 +2,7 @@
 import SetQuizOptions from 'components/SetQuizOptions'
 import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'
-import { QuizQuestion } from 'common/type'
+import { QuizAnswer } from 'common/type'
 import { useEffect } from 'react'
 import QuizSolving from 'components/QuizSolving'
 import { useHistory } from 'react-router-dom'
@@ -12,7 +12,7 @@ import { ReducerType } from 'modules/rootReducer'
 import { setQuizQuestionsReset } from 'modules/quizQuestions'
 
 const SetQuizOptionsPage = () => {
-  const quizzes = useSelector<ReducerType, Array<QuizQuestion>>((state) => state.quizQuestions)
+  const quizzes = useSelector<ReducerType, Array<QuizAnswer>>((state) => state.quizQuestions)
   const history = useHistory()
   const dispatch = useDispatch()
 
@@ -39,7 +39,8 @@ const SetQuizOptionsPage = () => {
   return (
     <>
       <Navigation />
-      {quizzes.length > 0 ? <QuizSolving quiz={quizzes[quizzes.length - 1]} /> : <SetQuizOptions />}
+      {quizzes.length > 0 ? <QuizSolving quiz={quizzes[quizzes.length - 1].question} /> : <SetQuizOptions />}
+      {console.log(quizzes)}
       <Footer />
     </>
   )

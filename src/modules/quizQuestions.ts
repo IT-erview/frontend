@@ -1,18 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { QuizQuestion } from 'common/type'
+import { QuizAnswer, QuizQuestion } from 'common/type'
 
 const quizQuestions = createSlice({
   name: 'quizQuestionsReducer',
-  initialState: [] as Array<QuizQuestion>,
+  initialState: [] as Array<QuizAnswer>,
   reducers: {
-    setQuizQuestions: (state: Array<QuizQuestion>, action: PayloadAction<QuizQuestion>) => {
-      return [...state, action.payload]
+    setQuizQuestions: (state: Array<QuizAnswer>, action: PayloadAction<QuizQuestion>) => {
+      return [...state, { question: action.payload, answer: '' }]
     },
-    setQuizQuestionsReset: (state: Array<QuizQuestion>) => {
+    setQuizAnswers: (state: Array<QuizAnswer>, action: PayloadAction<string>) => {
+      state[state.length - 1].answer = action.payload
+      return state
+    },
+    setQuizQuestionsReset: (state: Array<QuizAnswer>) => {
       return []
     },
   },
 })
 
-export const { setQuizQuestions, setQuizQuestionsReset } = quizQuestions.actions
+export const { setQuizQuestions, setQuizAnswers, setQuizQuestionsReset } = quizQuestions.actions
 export default quizQuestions.reducer

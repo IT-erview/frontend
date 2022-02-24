@@ -79,3 +79,8 @@ export type QuizQuestion = {
   depth: number
   level: number
 }
+
+export type QuizAnswer = {
+  question: QuizQuestion
+  answer: string
+}

@@ -13,7 +13,7 @@ import Answer from './Answer'
 import { useDispatch, useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
 import { NextQuiz, setNextQuestion } from 'modules/nextQuestion'
-import { setQuizQuestions } from 'modules/quizQuestions'
+import { setQuizAnswers, setQuizQuestions } from 'modules/quizQuestions'
 
 const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteComponentProps> = ({
   quiz,
@@ -48,6 +48,7 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
           { content: answerTextContents, questionId: current.id },
           nextQuizOption,
         )
+        dispatch(setQuizAnswers(answerTextContents))
         if (nextQuestion) {
           dispatch(setQuizQuestions(nextQuestion))
           setCurrent(nextQuestion)
