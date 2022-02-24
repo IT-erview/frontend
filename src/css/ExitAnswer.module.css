@@ -1,51 +1,94 @@
 .exitAnswerModal {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    padding: 30px;
-    transform: translate(-50%, -50%);
-    background: #ffffff;
-    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
-    border-radius: 15px;
-    z-index: 200;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  border-radius: 15px;
+  z-index: 200;
+
+  width: 430px;
+  height: 372px;
 }
 
 .logo {
-    display: inline-block;
-    text-align: center;
+  display: inline-block;
+  text-align: center;
+  width: 90px;
+  height: 40px;
+  margin-top: 35px;
 }
 
-h3 {
-    margin-top: 30px;
+.text {
+  margin-top: 40px;
+  line-height: 73px;
+
+  /* Header 3 */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 18px;
+  align-items: center;
+  text-align: center;
+  color: #000000;
 }
 
 .buttonWrap {
-    margin-top: 20px;
+  margin-top: 13px;
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 18px;
+  text-align: center;
+  letter-spacing: -0.02em;
+
+  /* Font / White */
+
+  color: #ffffff;
 }
 
 .modalButton {
-    display: block;
-    width: 300px;
-    height: 30px;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-    color: white;
-    line-height: 30px;
+  display: block;
+  width: 360px;
+  height: 40px;
+  margin: auto;
+  border-top-left-radius: 23px;
+  border-top-right-radius: 23px;
+  border-bottom-right-radius: 23px;
+  color: white;
+  line-height: 40px;
 }
 
 .buttonBlue {
-    background-color: mediumpurple;
+  background: #796aca;
 }
 
 .buttonDarkBlue {
-    margin-top: 10px;
-    background-color: purple;
+  margin-top: 10px;
+  background: #111036;
 }
 
 .buttonExitWrap {
-    border-top: 1px solid #d8d8d8;
-    padding-top: 20px;
-    margin-top: 20px;
+  width: 390px;
+  margin: auto;
+  border-top: 1px solid #d8d8d8;
+  padding-top: 15px;
+  margin-top: 20px;
+  /* Boby 1 */
+
+  font-family: NanumSquare;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 30px;
+  /* identical to box height, or 29px */
+
+  /* Font / Black */
+
+  color: #000000;
 }
