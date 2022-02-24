@@ -92,6 +92,7 @@ const SetQuizOptions = () => {
   useEffect(() => {
     getQuestionTagStat()
   }, [getQuestionTagStat])
+
   const setQuizOptionsImg = '/img/quiz_img.png'
 
   return (
