@@ -33,7 +33,7 @@ function LoginModal() {
               <a href={GOOGLE_AUTH_URL}>
                 <button className={styles.googleLogin}>
                   <img className={styles.googleLogo} src={googleLogo} alt="googleLogo" />
-                  <span>Google으로 계속하기</span>
+                  <span className={styles.googleLoginText}>Google으로 계속하기</span>
                 </button>{' '}
               </a>
               <br />

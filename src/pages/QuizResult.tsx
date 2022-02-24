@@ -1,13 +1,13 @@
 // todo: refactoring
 import styles from 'css/QuizResult.module.css'
-// import { TagSelectorItem } from 'common/type'
-// import { useSelector } from 'react-redux'
-// import { ReducerType } from 'modules/rootReducer'
+import { TagSelectorItem } from 'common/type'
+import { useSelector } from 'react-redux'
+import { ReducerType } from 'modules/rootReducer'
 import Footer from 'components/Footer'
 import Navigation from 'components/Navigation'
 
 const QuizResultPage = () => {
-  /*const quizTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.quizTags)*/
+  const quizTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.quizTags)
   const userImgUrl = localStorage.getItem('userImgUrl') as string
   return (
     <>
@@ -40,11 +40,15 @@ const QuizResultPage = () => {
               <div className={styles.quizCount}>
                 <ul>
                   <li>
-                    <span className={styles.countLabel}>오늘 푼 문제</span>
-                    <span className={styles.countNumber}>13</span>
+                    <span className={styles.countLabel}>
+                      <em>오늘 푼 문제</em>
+                    </span>
+                    <span className={styles.countNumber}>
+                      <em>13</em>
+                    </span>
                   </li>
                   <li>
-                    <span className={styles.countLabel}>누적 푼 문제</span>
+                    <span className={`${styles.countLabel} ${styles.totalCountLabel}`}>누적 푼 문제</span>
                     <span className={styles.countNumber}>183</span>
                   </li>
                 </ul>
@@ -52,37 +56,22 @@ const QuizResultPage = () => {
             </div>
             <div className={`${styles.quizTags} ${styles.quizBoxCommon}`}>
               <h4>선택된 문제 종류</h4>
-              <hr className="hr2" />
-              {/*{quizTags.map((tag: TagSelectorItem) => {
-                return (
-                  tag.isSelected && (
-                    <button key={tag.id} className="tag-btn">
-                      {tag.name}
-                    </button>
+              <div className={styles.tagList}>
+                {quizTags.map((tag: TagSelectorItem) => {
+                  return (
+                    tag.isSelected && (
+                      <button key={tag.id} className={styles.tagBtn}>
+                        {tag.name}
+                      </button>
+                    )
                   )
-                )
-              })}*/}
-              <button type="button" className="btn-tag">
-                javascript
-              </button>
-              <button type="button" className="btn-tag">
-                java
-              </button>
-              <button type="button" className="btn-tag">
-                프로그래밍 언어
-              </button>
-              <button type="button" className="btn-tag">
-                프로그래밍 언어
-              </button>
-              <button type="button" className="btn-tag">
-                프로그래밍 언어
-              </button>
+                })}
+              </div>
             </div>
           </div>
           <div className={styles.solvedQuiz}>
             <div className={styles.solvedQuizTitle}>
-              <span>풀었던 문제</span>
-              <div className="hr4" />
+              <h3>풀었던 문제</h3>
             </div>
             <div className={styles.solvedQuizList}></div>
           </div>
