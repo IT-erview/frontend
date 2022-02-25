@@ -41,7 +41,6 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
       }
     }
   }
-
   const getNextQuestion = useCallback(async () => {
     if (!checkTextContentsLength(answerTextContents)) window.alert('답변을 20자 이상 작성해주세요.')
     else {

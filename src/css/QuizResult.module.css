@@ -67,6 +67,7 @@
     padding-bottom: 20px;
     border-bottom: 1px solid #1110364d;
 }
+
 .quizUserInfo .imageWrap {
     margin-right: 10px;
 }
@@ -163,4 +164,62 @@
 
 .quizResult .solvedQuiz .solvedQuizList {
     margin-top: 25px;
+}
+
+.quizResult .answerBox {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    padding: 70px 150px 70px 90px;
+    border-radius: 15px;
+    box-sizing: border-box;
+    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1);
+}
+
+.quizResult .answerBox .answerIndex {
+    font-weight: bold;
+    font-size: 58px;
+    color: #E3E2F0;
+}
+
+.quizResult .answerBox .answerTextWrap {
+    margin-left: 58px;
+}
+
+.quizResult .answerBox .answerTextWrap .answerTitle {
+    max-width: 690px;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.quizResult .answerBox .answerTextWrap .answerContent {
+    display: -webkit-box;
+    overflow: hidden;
+    margin-top: 15px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    text-align: left;
+    line-height: 18px;
+    color: #a0a0a0;
+}
+
+.quizResult .answerBox .questionTagList {
+    position: absolute;
+    bottom: 33px;
+    right: 90px;
+}
+
+.quizResult .answerBox .questionTagList .questionTag {
+    padding: 7px 20px;
+    background-color: #796aca;
+    border-radius: 17px 17px 17px 0;
+    box-sizing: border-box;
+    color: white;
 }

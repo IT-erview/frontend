@@ -1,21 +1,15 @@
 // todo: refactoring
 import styles from 'css/QuizResult.module.css'
-import { TagSelectorItem } from 'common/type'
-import { useDispatch, useSelector } from 'react-redux'
+import { QuizAnswer, TagSelectorItem } from 'common/type'
+import { useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
 import Footer from 'components/Footer'
 import Navigation from 'components/Navigation'
-import { useEffect } from 'react'
-import { NextQuiz, setNextQuestion } from 'modules/nextQuestion'
 
 const QuizResultPage = () => {
+  const quizzes = useSelector<ReducerType, Array<QuizAnswer>>((state) => state.quizQuestions)
   const quizTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.quizTags)
   const userImgUrl = localStorage.getItem('userImgUrl') as string
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(setNextQuestion(NextQuiz.QUIT))
-  }, [dispatch])
 
   return (
     <>
@@ -81,7 +75,24 @@ const QuizResultPage = () => {
             <div className={styles.solvedQuizTitle}>
               <h3>풀었던 문제</h3>
             </div>
-            <div className={styles.solvedQuizList}></div>
+            <div className={styles.solvedQuizList}>
+              {quizzes.map((quiz: QuizAnswer, idx) => {
+                return (
+                  <div className={styles.answerBox} key={quiz.question.id}>
+                    <span className={styles.answerIndex}>{idx + 1 < 10 ? '0' + (idx + 1) : idx + 1}</span>
+                    <div className={styles.answerTextWrap}>
+                      <h4 className={styles.answerTitle}>{quiz.question.content}</h4>
+                      <p className={styles.answerContent}>{quiz.answer}</p>
+                    </div>
+                    <div className={styles.questionTagList}>
+                      {quiz.question.tagList.map((tag) => {
+                        return <span className={styles.questionTag}>{tag.tagTitle}</span>
+                      })}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </div>
       </div>
