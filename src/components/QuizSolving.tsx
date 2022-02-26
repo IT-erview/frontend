@@ -64,7 +64,7 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
   useEffect(() => {
     if (nextQuizOption !== NextQuiz.INIT) {
       getNextQuestion()
-      dispatch(setNextQuestionInit)
+      dispatch(setNextQuestionInit())
     }
   }, [nextQuizOption, getNextQuestion, dispatch])
 
