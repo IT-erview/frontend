@@ -11,6 +11,8 @@ const QuizResultPage = () => {
   const quizTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.quizTags)
   const userImgUrl = localStorage.getItem('userImgUrl') as string
 
+  console.log(quizzes)
+
   return (
     <>
       <Navigation />
@@ -79,7 +81,15 @@ const QuizResultPage = () => {
               {quizzes.map((quiz: QuizAnswer, idx) => {
                 return (
                   <div className={styles.answerBox} key={quiz.question.id}>
-                    <span className={styles.answerIndex}>{idx + 1 < 10 ? '0' + (idx + 1) : idx + 1}</span>
+                    <div className={styles.answerBoxInfo}>
+                      <span className={styles.answerIndex}>{idx + 1 < 10 ? '0' + (idx + 1) : idx + 1}</span>
+                      <div className={styles.answerBookmarkWrap}>
+                        <span
+                          className={styles.answerBookmark}
+                          style={{ backgroundImage: 'url(/img/bookmark_false.png)' }}></span>
+                        <span className={styles.answerBookmarkCount}>125</span>
+                      </div>
+                    </div>
                     <div className={styles.answerTextWrap}>
                       <h4 className={styles.answerTitle}>{quiz.question.content}</h4>
                       <p className={styles.answerContent}>{quiz.answer}</p>

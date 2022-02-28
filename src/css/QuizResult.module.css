@@ -172,16 +172,39 @@
     justify-content: flex-start;
     align-items: center;
     width: 100%;
+    margin-top: 30px;
     padding: 70px 150px 70px 90px;
     border-radius: 15px;
     box-sizing: border-box;
     box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1);
 }
 
+.quizResult .answerBox:first-child {
+    margin-top: 0;
+}
+
 .quizResult .answerBox .answerIndex {
-    font-weight: bold;
+    font-weight: 800;
     font-size: 58px;
-    color: #E3E2F0;
+    color: #796aca;
+}
+
+.quizResult .answerBox .answerBookmarkWrap {
+    padding-top: 20px;
+    border-top: 1px solid #796aca;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.quizResult .answerBox .answerBookmark {
+    display: block;
+    width: 11px;
+    height: 14px;
+    margin-right: 10px;
+    background-size: 11px 14px;
+    background-repeat: no-repeat;
+    cursor: pointer;
 }
 
 .quizResult .answerBox .answerTextWrap {
@@ -218,8 +241,9 @@
 
 .quizResult .answerBox .questionTagList .questionTag {
     padding: 7px 20px;
-    background-color: #796aca;
+    border: 2px solid #796aca;
     border-radius: 17px 17px 17px 0;
     box-sizing: border-box;
-    color: white;
+    font-weight: bold;
+    color: #796aca;
 }
