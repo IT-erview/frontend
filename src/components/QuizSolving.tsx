@@ -50,16 +50,19 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
       )
       dispatch(setQuizAnswers(answerTextContents))
       if (nextQuestion) {
+        setDropdownOpen(false)
         dispatch(setQuizQuestions(nextQuestion))
+        setShowAnswers(false)
         setCurrent(nextQuestion)
       }
       setAnswerTextContents('')
     }
-  }, [nextQuizOption, answerTextContents, dispatch, current.id, setCurrent])
+  }, [nextQuizOption, answerTextContents, dispatch, current.id, setCurrent, setDropdownOpen, setShowAnswers])
 
   useEffect(() => {
     if (nextQuizOption !== NextQuiz.INIT) {
       getNextQuestion()
+      window.scrollTo(0, 0)
       dispatch(setNextQuestionInit())
     }
   }, [nextQuizOption, getNextQuestion, dispatch])
