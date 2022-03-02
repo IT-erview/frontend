@@ -1,18 +1,23 @@
 // todo: refactoring
 import styles from 'css/QuizResult.module.css'
 import { QuizAnswer, TagSelectorItem } from 'common/type'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
 import Footer from 'components/Footer'
 import Navigation from 'components/Navigation'
 import Question from 'components/Question'
+import { useEffect } from 'react'
+import { NextQuiz, setNextQuestion } from 'modules/nextQuestion'
 
 const QuizResultPage = () => {
   const quizzes = useSelector<ReducerType, Array<QuizAnswer>>((state) => state.quizQuestions)
   const quizTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.quizTags)
   const userImgUrl = localStorage.getItem('userImgUrl') as string
+  const dispatch = useDispatch()
 
-  console.log(quizzes)
+  useEffect(() => {
+    dispatch(setNextQuestion(NextQuiz.QUIT))
+  }, [dispatch])
 
   return (
     <>
