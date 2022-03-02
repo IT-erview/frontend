@@ -44,19 +44,15 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
   const getNextQuestion = useCallback(async () => {
     if (!checkTextContentsLength(answerTextContents)) window.alert('답변을 20자 이상 작성해주세요.')
     else {
-      if (nextQuizOption === NextQuiz.QUIT) console.log('종료')
-      else {
-        const nextQuestion = await postQuizAnswers(
-          { content: answerTextContents, questionId: current.id },
-          nextQuizOption,
-        )
-        dispatch(setQuizAnswers(answerTextContents))
-        if (nextQuestion) {
-          dispatch(setQuizQuestions(nextQuestion))
-          setCurrent(nextQuestion)
-        }
+      const nextQuestion = await postQuizAnswers(
+        { content: answerTextContents, questionId: current.id },
+        nextQuizOption,
+      )
+      dispatch(setQuizAnswers(answerTextContents))
+      if (nextQuestion) {
+        dispatch(setQuizQuestions(nextQuestion))
+        setCurrent(nextQuestion)
       }
-
       setAnswerTextContents('')
     }
   }, [nextQuizOption, answerTextContents, dispatch, current.id, setCurrent])
