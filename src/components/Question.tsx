@@ -1,5 +1,5 @@
 import { getMyAnswer } from 'common/api'
-import { Answer, Tag } from 'common/type'
+import { Tag } from 'common/type'
 import { getZerofilledNumber } from 'common/util'
 import { MAX_DISPLAYED_TAG_COUNT } from 'common/config'
 import styles from 'css/Question.module.css'
@@ -12,7 +12,7 @@ const Question = (props: {
   number: number
   content: string
   tagList?: Array<Tag>
-  answer?: Answer
+  answer?: string
   bookmark?: boolean
   bookmarkCount?: number
 }) => {
@@ -56,7 +56,7 @@ const Question = (props: {
         </div>
         <div className={styles.questionContent}>
           <h1 className={styles.questionTitle}>{props.content}</h1>
-          <p className={styles.questionAnswer}>{props.answer ? props.answer.content : '(등록된 답변이 없습니다)'}</p>
+          <p className={styles.questionAnswer}>{props.answer ? props.answer : '(등록된 답변이 없습니다)'}</p>
         </div>
         <div className={styles.questionTags}>
           {props.tagList &&

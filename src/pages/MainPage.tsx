@@ -161,7 +161,7 @@ const MainPage = () => {
                 number={idx + 1}
                 content={question.content}
                 tagList={question.tagList}
-                answer={question.mostLikedAnswer}
+                answer={question.mostLikedAnswer.content}
                 bookmarkCount={question.bookmarkCount}
                 bookmark={question.bookmark}
               />

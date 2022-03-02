@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
 import Footer from 'components/Footer'
 import Navigation from 'components/Navigation'
+import Question from 'components/Question'
 
 const QuizResultPage = () => {
   const quizzes = useSelector<ReducerType, Array<QuizAnswer>>((state) => state.quizQuestions)
@@ -80,6 +81,17 @@ const QuizResultPage = () => {
             <div className={styles.solvedQuizList}>
               {quizzes.map((quiz: QuizAnswer, idx) => {
                 return (
+                  <Question
+                    key={quiz.question.id}
+                    id={quiz.question.id}
+                    number={idx + 1}
+                    content={quiz.question.content}
+                    tagList={quiz.question.tagList}
+                  />
+                )
+              })}
+              {/* {quizzes.map((quiz: QuizAnswer, idx) => {
+                return (
                   <div className={styles.answerBox} key={quiz.question.id}>
                     <div className={styles.answerBoxInfo}>
                       <span className={styles.answerIndex}>{idx + 1 < 10 ? '0' + (idx + 1) : idx + 1}</span>
@@ -101,7 +113,7 @@ const QuizResultPage = () => {
                     </div>
                   </div>
                 )
-              })}
+              })} */}
             </div>
           </div>
         </div>

@@ -85,7 +85,7 @@ const QuestionDetail = (props: { questionId: number }) => {
                 id={answer.questionId}
                 number={index + 1}
                 content={question?.content || answer.questionContent || ''}
-                answer={answer}
+                answer={answer.content}
                 tagList={answer.tags}
               />
             )
