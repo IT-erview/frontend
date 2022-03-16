@@ -1,24 +1,21 @@
 // todo: refactoring
 // import 'css/SetQuizOptions.css'
-import { useCallback, useEffect, useState } from 'react'
-import { TagCount } from 'common/type'
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { getQuestionStat, getQuizQuestions } from 'common/api'
+import { getQuizQuestions } from 'common/api'
 import { setQuizTagSelected } from 'modules/quizTags'
 import styles from 'css/Quiz.module.css'
 import { useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
 import { TagSelectorItem } from 'common/type'
 import { setQuizQuestions } from 'modules/quizQuestions'
+import UserInfo from './UserInfo'
 
 const SetQuizOptions = () => {
   const [tagDropdownOpen, setTagDropdownOpen] = useState<boolean>(false)
   const tagToggle = () => setTagDropdownOpen((prevState) => !prevState)
-  const userName = localStorage.getItem('userName') as string
-  const userImgUrl = localStorage.getItem('userImgUrl') as string
-  const userEmail = localStorage.getItem('userEmail') as string
+
   const dispatch = useDispatch()
-  const [tagStat, setTagStat] = useState<Array<TagCount>>([])
   const quizTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.quizTags)
 
   // todo: 리팩토링 필요
@@ -44,22 +41,6 @@ const SetQuizOptions = () => {
     }
   }
 
-  const getQuestionTagStat = useCallback(async () => {
-    const questionStat = await getQuestionStat()
-    if (questionStat) {
-      setTagStat(questionStat)
-    }
-  }, [setTagStat])
-
-  const showTagStat = tagStat.map((tag, index) => {
-    if (index < 3)
-      return (
-        <div key={index} className={styles.userTag}>
-          {tag.tagTitle}
-        </div>
-      )
-    else return null
-  })
   const showSelectedTags = quizTags.map((tag, index) => {
     if (tag.isSelected)
       return (
@@ -94,10 +75,6 @@ const SetQuizOptions = () => {
     )
   })
 
-  useEffect(() => {
-    getQuestionTagStat()
-  }, [getQuestionTagStat])
-
   const setQuizOptionsImg = '/img/quiz_img.png'
 
   return (
@@ -120,37 +97,7 @@ const SetQuizOptions = () => {
           </div>
         </div>
         <div className={styles.body}>
-          <div className={styles.userInfo}>
-            {/* Todo: imgUrl 없다면 기본 프로필 사진으로 대체 */}
-            <div className={styles.userProfileSection}>
-              <img src={userImgUrl} alt="userProfileImg" className={styles.userProfileImg}></img>
-              <div>
-                <p className={styles.userName}>{userName} 님</p>
-                <p className={styles.userEmail}>{userEmail}</p>
-              </div>
-            </div>
-            <div className={styles.verticalLine} />
-            <div className={styles.userDetailSection}>
-              {/* Todo: 실제 데이터로 교체 */}
-              <div className={styles.userDetailTitle}>
-                <p>퀴즈로 푼 문제</p>
-                <p>좋아요</p>
-              </div>
-              <div className={styles.userDetailCnt}>
-                <p>170</p>
-                <p>50</p>
-              </div>
-            </div>
-            <div className={styles.verticalLine} />
-            <div className={styles.userTagsSection}>
-              <p className={styles.userTagsTitle}>많이 푼 문제 종류</p>
-              <div className={styles.userTags}>
-                {showTagStat}
-                {tagStat.length > 3 ? '...' : tagStat.length > 0 ? null : '대체 텍스트'}
-              </div>
-            </div>
-          </div>
-
+          <UserInfo />
           <div className={styles.selectTagsBox}>
             <p className={styles.selectTagsTitle}>문제 종류</p>
             <div className={styles.horizontalLine} />
