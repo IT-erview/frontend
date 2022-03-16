@@ -183,6 +183,7 @@
 
 .questionSearchText {
   /* search/text */
+  /* background-color: #a0a0a0; */
   position: relative;
   float: left;
   width: 55%;
@@ -203,6 +204,7 @@
   outline-style: none;
   background: transparent;
 }
+
 .questionSearchText::placeholder {
   color: rgb(255, 255, 255);
 }

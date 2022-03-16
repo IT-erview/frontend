@@ -370,7 +370,7 @@
   line-height: 18px;
   display: flex;
 }
-input {
+.quizInput {
   display: none;
 }
 label:hover {

@@ -79,7 +79,13 @@ const SetQuizOptions = () => {
   const quizDropdown = quizTags.map((tag) => {
     return (
       <div className={styles.tag} key={tag.id}>
-        <input type="checkbox" id={tag.name} name={tag.name} onChange={() => selectTag(tag.id, tag.isSelected)} />
+        <input
+          className={styles.quizInput}
+          type="checkbox"
+          id={tag.name}
+          name={tag.name}
+          onChange={() => selectTag(tag.id, tag.isSelected)}
+        />
         <label htmlFor={tag.name} className={tag.isSelected ? styles.tagNameSelected : styles.tagNameDeselected}>
           <div className={tag.isSelected ? styles.checkboxSelected : styles.checkboxDeselected} />
           {tag.name}
