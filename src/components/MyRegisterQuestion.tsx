@@ -5,6 +5,7 @@ import SortSelectBox, { Sort } from './SortSelectBox'
 import { getMyQuestions } from 'common/api'
 import { Question } from 'common/type'
 import styles from 'css/Mypage.module.css'
+import UserInfo from './UserInfo'
 
 const MyRegisterQuestion = () => {
   const [sort, setSort] = useState<Sort>(Sort.POPULAR)
@@ -35,6 +36,7 @@ const MyRegisterQuestion = () => {
           </p>
         </div>
       </div>
+      <UserInfo />
       <div className="mypage-register-question-question">
         <div className="mypage-register-question-title">
           <span>
