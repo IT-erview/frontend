@@ -15,7 +15,7 @@ const QuestionList = (props: { questions: Array<Question> }) => {
                 number={index + 1}
                 content={question.content}
                 tagList={question.tagList}
-                answer={question.mostLikedAnswer.content}
+                answer={question.mostLikedAnswer?.content}
               />
             </div>
           </div>

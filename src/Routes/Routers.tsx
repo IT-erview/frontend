@@ -8,7 +8,6 @@ import Footer from 'components/Footer'
 import MyRegisterQuestion from 'components/MyRegisterQuestion'
 import MyBookmarkQuestion from 'components/MyBookmarkQuestion'
 import QuizResult from 'pages/QuizResult'
-import MyPageNavigation from 'components/MyPageNavigation'
 import AnswerRegisterPage from 'pages/AnswerRegisterPage'
 import QuestionDetailPage from 'pages/QuestionDetailPage'
 import PublicRoute from 'Routes/PublicRoute'
@@ -24,7 +23,6 @@ const Routers = () => (
 
     <PrivateRoute exact path="/login" component={MainPage} />
     <Route path="/MyPage" component={Navigation} />
-    <Route path="/MyPage" component={MyPageNavigation} />
     <PrivateRoute exact path="/MyPage/MyRegisterQuestion" component={MyRegisterQuestion} />
     <PrivateRoute exact path="/MyPage/MyRegisterAnswer" component={() => MyAnswers({ type: MyAnswerType.ALL })} />
     <PrivateRoute exact path="/MyPage/MyLikeAnswer" component={() => MyAnswers({ type: MyAnswerType.LIKED })} />

@@ -82,6 +82,7 @@ const SetQuizOptions = () => {
       <div>
         <div className={styles.banner}>
           <img src={setQuizOptionsImg} alt="question_banner_img" className={styles.bannerImg} />
+
           <p className={styles.bannerTitle}>면접문제 학습</p>
           <p className={styles.bannerContent}>
             아직도 암기식으로 면접을 준비하시나요?
