@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import 'css/QuestionDetail.css'
 import AnswerComponent from 'components/Answer'
-import QuestionComponent from 'components/Question'
 
 import { Answer, Question } from 'common/type'
 import { getAnswers, getMyAnswer, getQuestion } from 'common/api'
@@ -81,15 +80,15 @@ const QuestionDetail = (props: { questionId: number }) => {
           {question &&
             answers.map((answer, index) => {
               return (
-                <QuestionComponent
+                <AnswerComponent
                   key={answer.id}
                   id={answer.questionId}
                   number={index + 1}
                   content={question?.content || answer.questionContent || ''}
                   answer={answer.content}
                   tagList={answer.tags}
-                  bookmark={question.bookmark}
-                  bookmarkCount={question.bookmarkCount}
+                  like={answer.like}
+                  likeCount={answer.liked}
                 />
               )
             })}
