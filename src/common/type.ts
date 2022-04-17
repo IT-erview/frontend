@@ -74,6 +74,8 @@ export type QuizQuestion = {
     id: number
     name: string
   }
+  bookmark: boolean
+  bookmarkCount: number
   expectedKeywordList: Array<QuestionTags> | null
   expectedKeywordCount: Array<QuestionTags> | null
   depth: number

@@ -78,18 +78,21 @@ const QuestionDetail = (props: { questionId: number }) => {
           next={fetchAnswers}
           hasMore={hasMore}
           loader={<></>}>
-          {answers.map((answer, index) => {
-            return (
-              <QuestionComponent
-                key={answer.id}
-                id={answer.questionId}
-                number={index + 1}
-                content={question?.content || answer.questionContent || ''}
-                answer={answer.content}
-                tagList={answer.tags}
-              />
-            )
-          })}
+          {question &&
+            answers.map((answer, index) => {
+              return (
+                <QuestionComponent
+                  key={answer.id}
+                  id={answer.questionId}
+                  number={index + 1}
+                  content={question?.content || answer.questionContent || ''}
+                  answer={answer.content}
+                  tagList={answer.tags}
+                  bookmark={question.bookmark}
+                  bookmarkCount={question.bookmarkCount}
+                />
+              )
+            })}
           {answers.length === 0 && '등록된 답변이 없습니다.'}
         </InfiniteScroll>
       </div>

@@ -92,6 +92,9 @@ const QuizResultPage = () => {
                     number={idx + 1}
                     content={quiz.question.content}
                     tagList={quiz.question.tagList}
+                    answer={quiz.answer}
+                    bookmark={quiz.question.bookmark}
+                    bookmarkCount={quiz.question.bookmarkCount}
                   />
                 )
               })}

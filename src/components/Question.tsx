@@ -13,8 +13,8 @@ const Question = (props: {
   content: string
   tagList?: Array<Tag>
   answer?: string
-  bookmark?: boolean
-  bookmarkCount?: number
+  bookmark: boolean
+  bookmarkCount: number
 }) => {
   // todo: 전체적으로 적용필요
   // todo: questionId 수정으로 이동 가능
@@ -39,13 +39,14 @@ const Question = (props: {
 
   return (
     <div>
+      {console.log(props)}
       <button onClick={moveToQuestionDetail} className={styles.questionBox}>
         <div className={styles.questionInfo}>
           <div className={styles.questionNumber}>{getZerofilledNumber(props.number)}</div>
           <div className={styles.line}></div>
           <div className={styles.bookmarkSpace}>
             <img
-              src={props.bookmark ? 'img/bookmark_true.png' : 'img/bookmark_false.png'}
+              src={props.bookmark ? '../img/bookmark_true.png' : '../img/bookmark_false.png'}
               alt="questionBookmark"
               className={styles.bookmark}
             />

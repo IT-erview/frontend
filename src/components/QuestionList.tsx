@@ -16,6 +16,8 @@ const QuestionList = (props: { questions: Array<Question> }) => {
                 content={question.content}
                 tagList={question.tagList}
                 answer={question.mostLikedAnswer?.content}
+                bookmark={question.bookmark}
+                bookmarkCount={question.bookmarkCount}
               />
             </div>
           </div>
