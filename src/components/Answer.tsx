@@ -3,6 +3,10 @@ import { getZerofilledNumber } from 'common/util'
 import { Tag } from 'common/type'
 import styles from 'css/Answer.module.css'
 import { MAX_DISPLAYED_TAG_COUNT } from 'common/config'
+import { JWT_TOKEN } from 'constants/Oauth'
+import { useDispatch } from 'react-redux'
+import { setModalOpen } from 'modules/loginModal'
+import { getMyAnswer } from 'common/api'
 
 const Answer = (props: {
   id: number
@@ -23,10 +27,30 @@ const Answer = (props: {
   //     () => window.alert('이미 좋아요한 답변입니다.'),
   //   )
   // }
+  const dispatch = useDispatch()
+  let isRequesting = false
+
+  const moveToQuestionDetail = async () => {
+    if (!JWT_TOKEN) {
+      alert('로그인을 해주세요.')
+      dispatch(setModalOpen(true))
+    } else {
+      if (isRequesting) return
+      isRequesting = true
+      const myAnswer = await getMyAnswer(props.id).finally(() => (isRequesting = false))
+      if (!myAnswer) {
+        alert('문제에 대한 나의 답변이 없으면 다른 사람의 답변을 볼 수 없습니다. 답변 등록 페이지로 이동합니다.')
+        window.open(`/AnswerRegister?question_id=${props.id}`, '', '_blank')
+      } else {
+        window.open(`/QuestionDetail?question_id=${props.id}`)
+      }
+    }
+  }
 
   return (
     <div>
-      <button className={styles.questionBox}>
+      {console.log(props.id)}
+      <button className={styles.questionBox} onClick={moveToQuestionDetail}>
         <div className={styles.questionInfo}>
           <div className={styles.questionNumber}>{getZerofilledNumber(props.number)}</div>
           <div className={styles.line}></div>

@@ -158,7 +158,7 @@ const Navigation = (props: any) => {
             </div>
           </div>
         </Link>
-        <Link to="/MyPage/MyRegisterQuestion">
+        <Link to="/MyPage">
           <div className={styles.my}>
             <div className={styles.menuIcon}>
               <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">

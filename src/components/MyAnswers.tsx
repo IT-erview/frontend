@@ -1,10 +1,10 @@
 import 'css/MyLikeAnswer.css'
-import MyPageProfile from 'components/MyPageProfile'
 import { useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import SortSelectBox, { Sort } from './SortSelectBox'
 import { Answer } from 'common/type'
 import { getMyAnswers, getMyLikedAnswers } from 'common/api'
+import AnswerComponent from 'components/Answer'
 
 export enum MyAnswerType {
   ALL,
@@ -18,19 +18,6 @@ const MyAnswers = (props: { type: MyAnswerType }) => {
   const [page, setPage] = useState(INITIAL_PAGE)
   const [hasMore, setHasMore] = useState(true)
   const [answers, setAnswers] = useState<Array<Answer>>([])
-
-  const getAnswerTitle = (type: MyAnswerType) => {
-    if (type === MyAnswerType.ALL) {
-      return {
-        icon: '/img/mypage_icon2.png',
-        title: '내가 등록한 답변',
-      }
-    }
-    return {
-      icon: '/img/mypage_icon3.png',
-      title: '내가 좋아요한 답변',
-    }
-  }
 
   const getAnswers = async (type: MyAnswerType, sort: string, page: number) => {
     if (type === MyAnswerType.ALL) return await getMyAnswers(sort, page, ROWS_PER_PAGE)
@@ -57,13 +44,8 @@ const MyAnswers = (props: { type: MyAnswerType }) => {
 
   return (
     <div className="mypage-register-like">
-      <MyPageProfile />
       <div className="mypage-register-like-question">
         <div className="mypage-register-question-title">
-          <span>
-            <img src={getAnswerTitle(props.type).icon} alt="title-icon" />
-            {getAnswerTitle(props.type).title}
-          </span>
           <SortSelectBox defaultSort={sort} onSortChanged={(sort) => setSort(sort)} />
         </div>
         <InfiniteScroll
@@ -73,16 +55,18 @@ const MyAnswers = (props: { type: MyAnswerType }) => {
           hasMore={hasMore}
           loader={<></>}>
           {answers.map((answer, index) => {
+            console.log(answer.questionId)
             return (
-              // <QuestionComponent
-              //   key={answer.id}
-              //   id={answer.questionId}
-              //   number={index + 1}
-              //   content={answer.questionContent || ''}
-              //   answer={answer}
-              //   tagList={answer.tags}
-              // />
-              ''
+              <AnswerComponent
+                key={answer.id}
+                id={answer.questionId}
+                number={index + 1}
+                content={answer.questionContent || ''}
+                answer={answer.content}
+                tagList={answer.tags}
+                like={answer.like}
+                likeCount={answer.liked}
+              />
             )
           })}
           {answers.length === 0 && '등록된 답변이 없습니다.'}

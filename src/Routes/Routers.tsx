@@ -5,15 +5,13 @@ import QuestionSearchPage from 'pages/QuestionSearchPage'
 import SetQuizOptionsPage from 'pages/SetQuizOptionsPage'
 import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'
-import MyRegisterQuestion from 'components/MyRegisterQuestion'
-import MyBookmarkQuestion from 'components/MyBookmarkQuestion'
 import QuizResult from 'pages/QuizResult'
 import AnswerRegisterPage from 'pages/AnswerRegisterPage'
 import QuestionDetailPage from 'pages/QuestionDetailPage'
 import PublicRoute from 'Routes/PublicRoute'
 import PrivateRoute from 'Routes/PrivateRoute'
 import LoginPage from 'components/LoginPage'
-import MyAnswers, { MyAnswerType } from 'components/MyAnswers'
+import MyPage from 'pages/MyPage'
 
 const Routers = () => (
   <BrowserRouter>
@@ -23,10 +21,11 @@ const Routers = () => (
 
     <PrivateRoute exact path="/login" component={MainPage} />
     <Route path="/MyPage" component={Navigation} />
-    <PrivateRoute exact path="/MyPage/MyRegisterQuestion" component={MyRegisterQuestion} />
+    <PrivateRoute path="/Mypage" component={MyPage} />
+    {/* <PrivateRoute exact path="/MyPage/MyRegisterQuestion" component={MyRegisterQuestion} />
     <PrivateRoute exact path="/MyPage/MyRegisterAnswer" component={() => MyAnswers({ type: MyAnswerType.ALL })} />
     <PrivateRoute exact path="/MyPage/MyLikeAnswer" component={() => MyAnswers({ type: MyAnswerType.LIKED })} />
-    <PrivateRoute exact path="/MyPage/MyBookmarkQuestion" component={MyBookmarkQuestion} />
+    <PrivateRoute exact path="/MyPage/MyBookmarkQuestion" component={MyBookmarkQuestion} /> */}
     <PrivateRoute exact path="/QuestionRegister" component={QuestionRegisterPage} />
     <PrivateRoute exact path="/QuestionSearch" component={QuestionSearchPage} />
     <PrivateRoute path="/QuestionDetail" component={QuestionDetailPage} />
