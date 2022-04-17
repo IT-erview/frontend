@@ -1,33 +1,26 @@
 // todo: refactoring
 // import 'css/SetQuizOptions.css'
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getQuizQuestions } from 'common/api'
-import { setQuizTagSelected } from 'modules/quizTags'
 import styles from 'css/Quiz.module.css'
-import { useSelector } from 'react-redux'
-import { ReducerType } from 'modules/rootReducer'
-import { TagSelectorItem } from 'common/type'
 import { setQuizQuestions } from 'modules/quizQuestions'
 import UserInfo from './UserInfo'
+import { TagSelectorItem } from 'common/type'
+import { ReducerType } from 'modules/rootReducer'
+import { setQuizTagSelected } from 'modules/quizTags'
+import TagDropdown from 'components/TagDropdown'
 
 const SetQuizOptions = () => {
-  const [tagDropdownOpen, setTagDropdownOpen] = useState<boolean>(false)
-  const tagToggle = () => setTagDropdownOpen((prevState) => !prevState)
-
   const dispatch = useDispatch()
   const quizTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.quizTags)
 
   // todo: 리팩토링 필요
-  const selectTag = (tagId: number, isSelected: boolean) => {
-    dispatch(setQuizTagSelected({ tagId, isSelected: !isSelected }))
-  }
   const deselectTag = (tagId: number) => {
     dispatch(setQuizTagSelected({ tagId, isSelected: false }))
   }
 
   const getQuizzes = async () => {
-    const tagList = quizTags.filter((tag) => tag.isSelected).map((tag) => tag.id)
+    const tagList = quizTags.filter((tag: TagSelectorItem) => tag.isSelected).map((tag: TagSelectorItem) => tag.id)
     if (tagList.length === 0) {
       const randomConfirm = window.confirm('선택된 태그가 없습니다. 랜덤으로 문제를 불러올까요?')
       if (randomConfirm) {
@@ -41,7 +34,7 @@ const SetQuizOptions = () => {
     }
   }
 
-  const showSelectedTags = quizTags.map((tag, index) => {
+  const showSelectedTags = quizTags.map((tag: TagSelectorItem, index: number) => {
     if (tag.isSelected)
       return (
         <button key={index} onClick={() => deselectTag(tag.id)} className={styles.selectedTag}>
@@ -52,28 +45,10 @@ const SetQuizOptions = () => {
   })
 
   const resetSelectedTags = () => {
-    quizTags.forEach((tag) => {
+    quizTags.forEach((tag: TagSelectorItem) => {
       if (tag.isSelected) deselectTag(tag.id)
     })
   }
-
-  const quizDropdown = quizTags.map((tag) => {
-    return (
-      <div className={styles.tag} key={tag.id}>
-        <input
-          className={styles.quizInput}
-          type="checkbox"
-          id={tag.name}
-          name={tag.name}
-          onChange={() => selectTag(tag.id, tag.isSelected)}
-        />
-        <label htmlFor={tag.name} className={tag.isSelected ? styles.tagNameSelected : styles.tagNameDeselected}>
-          <div className={tag.isSelected ? styles.checkboxSelected : styles.checkboxDeselected} />
-          {tag.name}
-        </label>
-      </div>
-    )
-  })
 
   const setQuizOptionsImg = '/img/quiz_img.png'
 
@@ -102,23 +77,7 @@ const SetQuizOptions = () => {
           <div className={styles.selectTagsBox}>
             <p className={styles.selectTagsTitle}>문제 종류</p>
             <div className={styles.horizontalLine} />
-            <div className={styles.selectTagsCheckbox}>
-              <span className={styles.checkboxTitle}>문제 종류</span>
-              <button className={styles.dropdownBtn} onClick={tagToggle}>
-                <img
-                  src="img/dropdown.png"
-                  alt="dropdownArrow"
-                  className={tagDropdownOpen ? styles.dropdownArrowToggle : styles.dropdownArrow}
-                />
-              </button>
-              <button className={styles.tagsResetCheckboxBtn} onClick={resetSelectedTags}>
-                필터 초기화 X
-              </button>
-            </div>
-            <div className={tagDropdownOpen ? styles.dropdownOpen : styles.dropdownClose}>
-              <div className={styles.dropdownTags}>{tagDropdownOpen ? quizDropdown : null}</div>
-            </div>
-
+            <TagDropdown tags={quizTags} setTagSelected={setQuizTagSelected} />
             <div className={styles.selectedTagsSection}>
               <p className={styles.selectedTagsSectionTitle}>문제 풀기</p>
               <div className={styles.horizontalLine} />
