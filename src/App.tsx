@@ -1,4 +1,3 @@
-import './App.css'
 import './Default.css'
 import React from 'react'
 import Routers from './Routes/Routers'
