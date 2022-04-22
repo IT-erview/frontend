@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { QuizQuestion } from 'common/type'
+import { QuizQuestion } from 'utils/type'
 
 const quiz = createSlice({
   name: 'quiz',

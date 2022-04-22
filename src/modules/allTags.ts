@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { TagItem, TagSelectorItem } from 'common/type'
+import { TagItem, TagSelectorItem } from 'utils/type'
 
 const allTags = createSlice({
   name: 'allTagsReducer',

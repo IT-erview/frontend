@@ -1,4 +1,4 @@
-import { getCookie } from 'common/form/Cookies'
+import { getCookie } from 'views/common/form/Cookies'
 
 export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL
 
