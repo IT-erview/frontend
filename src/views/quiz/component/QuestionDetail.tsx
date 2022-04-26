@@ -3,8 +3,9 @@ import 'views/quiz/css/QuestionDetail.css'
 import AnswerComponent from 'views/common/answer/Answer'
 
 import { Answer, Question } from 'utils/type'
-import { getAnswers, getMyAnswer, getQuestion } from 'utils/api'
-import SortSelectBox, { Sort } from '../../common/form/SortSelectBox'
+import { getAnswers, getMyAnswer } from 'api/answer'
+import { getQuestion } from 'api/question'
+import SortSelectBox, { Sort } from 'views/common/form/SortSelectBox'
 import InfiniteScroll from 'react-infinite-scroll-component'
 
 // 북마크 개수, 해당되는 태그, 작성자 없음

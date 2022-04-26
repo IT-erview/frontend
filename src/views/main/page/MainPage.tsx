@@ -14,7 +14,8 @@ import { Answer as AnswerType, Question as QuestionType, TagSelectorItem } from 
 import { setSearchTagSelected } from 'modules/searchTags'
 import { useHistory } from 'react-router'
 import Question from 'views/common/question/Question'
-import { getHitsAnswers, getHitsQuestions } from 'utils/api'
+import { getHitsAnswers } from 'api//answer'
+import { getHitsQuestions } from 'api/question'
 import Answer from 'views/common/answer/Answer'
 
 // header 설정
@@ -161,7 +162,7 @@ const MainPage = () => {
                 number={idx + 1}
                 content={question.content}
                 tagList={question.tagList}
-                answer={question.mostLikedAnswer.content}
+                answer={question.mostLikedAnswer ? question.mostLikedAnswer.content : ''}
                 bookmarkCount={question.bookmarkCount}
                 bookmark={question.bookmark}
               />

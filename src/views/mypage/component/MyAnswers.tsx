@@ -1,9 +1,9 @@
 import 'views/mypage/css/MyLikeAnswer.css'
 import { useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import SortSelectBox, { Sort } from '../../common/form/SortSelectBox'
+import SortSelectBox, { Sort } from 'views/common/form/SortSelectBox'
 import { Answer } from 'utils/type'
-import { getMyAnswers, getMyLikedAnswers } from 'utils/api'
+import { getMyAnswers, getMyLikedAnswers } from 'api/answer'
 import AnswerComponent from 'views/common/answer/Answer'
 
 export enum MyAnswerType {

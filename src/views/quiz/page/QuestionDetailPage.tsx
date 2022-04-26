@@ -1,5 +1,6 @@
 import QuestionDetail from 'views/quiz/component/QuestionDetail'
-import { addBookmark, getQuestion } from 'utils/api'
+import { getQuestion } from 'api/question'
+import { addBookmark } from 'api/bookmark'
 import { isNumeric } from 'utils/util'
 import { useEffect, useState } from 'react'
 
