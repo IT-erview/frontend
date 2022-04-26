@@ -3,8 +3,8 @@ import 'views/quiz/css/QuestionDetail.css'
 import AnswerComponent from 'views/common/answer/Answer'
 
 import { Answer, Question } from 'utils/type'
-import { getAnswers, getMyAnswer } from 'api/answer'
-import { getQuestion } from 'api/question'
+import { getAnswers, getMyAnswer } from 'test/api/answer'
+import { getQuestion } from 'test/api/question'
 import SortSelectBox, { Sort } from 'views/common/form/SortSelectBox'
 import InfiniteScroll from 'react-infinite-scroll-component'
 

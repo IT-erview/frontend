@@ -28,15 +28,35 @@ const QuestionRegister = ({ history }: { history: any }) => {
     }
     if (isRequesting) return
     isRequesting = true
-    const result = await postQuestion(questionTextContents, selectedTag).finally(() => {
-      isRequesting = false
-    })
-    if (result) {
-      window.alert('문제가 등록되었습니다.')
-      setRegistered(true)
-    } else {
-      window.alert('문제가 등록되지 않았습니다.')
+
+    let data = {
+      content: questionTextContents,
+      bookmarkCount: 0,
+      tags: [selectedTag],
+      depth: 1,
+      expectedKeywords: [1],
+      keywordId: 1,
+      level: 1,
     }
+
+    postQuestion(data)
+      .then((response: any) => {
+        window.alert('문제가 등록되었습니다.')
+        setRegistered(true)
+      })
+      .catch(() => {
+        window.alert('문제가 등록되지 않았습니다.')
+      })
+
+    // const result = await postQuestion(questionTextContents, selectedTag).finally(() => {
+    //   isRequesting = false
+    // })
+    // if (result) {
+    //   window.alert('문제가 등록되었습니다.')
+    //   setRegistered(true)
+    // } else {
+    //   window.alert('문제가 등록되지 않았습니다.')
+    // }
   }
 
   const onTagSelect = (tagId: number) => {

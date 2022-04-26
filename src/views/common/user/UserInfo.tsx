@@ -1,4 +1,4 @@
-import { getQuestionStat } from 'api/question'
+import { getQuestionStat } from 'test/api/question'
 import { TagCount } from 'utils/type'
 import styles from 'views/quiz/css/Quiz.module.css'
 import { useCallback, useEffect, useState } from 'react'

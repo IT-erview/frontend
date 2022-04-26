@@ -1,4 +1,4 @@
-import { getMyAnswer } from 'api/answer'
+import { getMyAnswer } from 'test/api/answer'
 import { Tag } from 'utils/type'
 import { getZerofilledNumber } from 'utils/util'
 import { MAX_DISPLAYED_TAG_COUNT } from 'utils/config'

@@ -4,8 +4,8 @@ import { Form, Input } from 'reactstrap'
 import { useEffect, useState } from 'react'
 import { MAX_TEXT_CONTENTS_LENGTH, MIN_TEXT_CONTENTS_LENGTH } from 'utils/config'
 import { checkTextContentsLength, isNumeric } from 'utils/util'
-import { postAnswer } from 'api/answer'
-import { getQuestion } from 'api/question'
+import { postAnswer } from 'test/api/answer'
+import { getQuestion } from 'test/api/question'
 
 const getParsedParameters = () => {
   const questionIdParameters = new URLSearchParams(window.location.search).get('question_id')

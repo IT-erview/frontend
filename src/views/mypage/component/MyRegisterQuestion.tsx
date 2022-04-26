@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import QuestionList from 'views/common/question/QuestionList'
 import SortSelectBox, { Sort } from 'views/common/form/SortSelectBox'
-import { getMyQuestions } from 'api/question'
+import { getMyQuestions } from 'test/api/question'
 import { Question } from 'utils/type'
 
 const MyRegisterQuestion = () => {

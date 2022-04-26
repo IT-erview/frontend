@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import SortSelectBox, { Sort } from 'views/common/form/SortSelectBox'
 import { Answer } from 'utils/type'
-import { getMyAnswers, getMyLikedAnswers } from 'api/answer'
+import { getMyAnswers, getMyLikedAnswers } from 'test/api/answer'
 import AnswerComponent from 'views/common/answer/Answer'
 
 export enum MyAnswerType {

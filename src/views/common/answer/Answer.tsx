@@ -6,7 +6,7 @@ import { MAX_DISPLAYED_TAG_COUNT } from 'utils/config'
 import { JWT_TOKEN } from 'constants/Oauth'
 import { useDispatch } from 'react-redux'
 import { setModalOpen } from 'modules/loginModal'
-import { getMyAnswer } from 'api/answer'
+import { getMyAnswer } from 'test/api/answer'
 
 const Answer = (props: {
   id: number

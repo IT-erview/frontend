@@ -1,5 +1,5 @@
 // @ts-ignore
-import Send from 'test/api/Send.ts'
+import Send from 'api/Send.ts'
 
 export const getTags = () => {
   return Send({

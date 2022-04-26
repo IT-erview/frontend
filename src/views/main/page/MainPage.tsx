@@ -14,8 +14,8 @@ import { Answer as AnswerType, Question as QuestionType, TagSelectorItem } from 
 import { setSearchTagSelected } from 'modules/searchTags'
 import { useHistory } from 'react-router'
 import Question from 'views/common/question/Question'
-import { getHitsAnswers } from 'api//answer'
-import { getHitsQuestions } from 'api/question'
+import { getHitsAnswers } from 'test/api/answer'
+import { getHitsQuestions } from 'test/api/question'
 import Answer from 'views/common/answer/Answer'
 
 // header 설정

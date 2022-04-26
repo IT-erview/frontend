@@ -10,7 +10,7 @@ import { Question, TagSelectorItem } from 'utils/type'
 import TagSelector from 'views/common/tag/TagSelector'
 import { setSearchTagSelected } from 'modules/searchTags'
 import QuestionList from 'views/common/question/QuestionList'
-import { searchQuestions } from 'api/question'
+import { searchQuestions } from 'test/api/question'
 
 // 이미지로 대체 필요
 const searchIcon = () => {

@@ -1,6 +1,6 @@
 // todo: refactoring
 import { useDispatch, useSelector } from 'react-redux'
-import { getQuizQuestions } from 'api/question'
+import { getQuizQuestions } from 'test/api/question'
 import styles from 'views/quiz/css/Quiz.module.css'
 import { setQuizQuestions } from 'modules/quizQuestions'
 import UserInfo from 'views/common/user/UserInfo'
