@@ -1,18 +1,24 @@
-import { RouteComponentProps, withRouter } from 'react-router-dom'
+// react
 import { useCallback, useEffect, useState } from 'react'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { ReducerType } from 'modules/rootReducer'
+import { Form, Input } from 'reactstrap'
+// util
 import { MAX_TEXT_CONTENTS_LENGTH } from 'utils/config'
 import { checkTextContentsLength } from 'utils/util'
-import { getAnswers, postQuizAnswers } from 'test/api/answer'
 import { QuizQuestion, Answer as AnswerType } from 'utils/type'
+// style
 import styles from 'views/quiz/css/Quiz.module.css'
-import { Form, Input } from 'reactstrap'
+// redux
+import { NextQuiz, setNextQuestionInit } from 'modules/nextQuestion'
+import { setQuizAnswers, setQuizQuestions } from 'modules/quizQuestions'
+// api
+import { getAnswers, postQuizAnswers } from 'api/answer'
+// component
 import ExitAnswerModal from 'views/quiz/component/ExitAnswer'
 import NextModal from 'views/quiz/component/NextModal'
 import Answer from 'views/common/answer/Answer'
-import { useDispatch, useSelector } from 'react-redux'
-import { ReducerType } from 'modules/rootReducer'
-import { NextQuiz, setNextQuestionInit } from 'modules/nextQuestion'
-import { setQuizAnswers, setQuizQuestions } from 'modules/quizQuestions'
 
 const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteComponentProps> = ({
   quiz,
@@ -31,30 +37,59 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
   const [answerLoading, setAnswerLoading] = useState<Boolean>(false)
   const dispatch = useDispatch()
 
-  const getAnswer = async () => {
+  const getAnswer = () => {
     if (answersList.length === 0) {
-      const answers = await getAnswers(current.id, 'popular', 0)
-      if (answers) {
-        setAnswersList(answers)
-        setAnswerLoading(true)
+      let params = {
+        page: 0,
+        size: 10,
+        sort: `popular,desc`,
       }
+      getAnswers(current.id, params).then((res: any) => {
+        if (res.data) {
+          setAnswersList(res.data)
+          setAnswerLoading(true)
+        }
+      })
+
+      // const answers = await getAnswers(current.id, 'popular', 0)
+      // if (answers) {
+      //   setAnswersList(answers)
+      //   setAnswerLoading(true)
+      // }
     }
   }
   const getNextQuestion = useCallback(async () => {
     if (!checkTextContentsLength(answerTextContents)) window.alert('답변을 20자 이상 작성해주세요.')
     else {
-      const nextQuestion = await postQuizAnswers(
-        { content: answerTextContents, questionId: current.id },
-        nextQuizOption,
-      )
-      dispatch(setQuizAnswers(answerTextContents))
-      if (nextQuestion) {
-        setDropdownOpen(false)
-        dispatch(setQuizQuestions(nextQuestion))
-        setShowAnswers(false)
-        setCurrent(nextQuestion)
+      let data = {
+        content: answerTextContents,
+        questionId: current.id,
       }
-      setAnswerTextContents('')
+      let params = {
+        type: nextQuizOption,
+      }
+      dispatch(setQuizAnswers(answerTextContents))
+      postQuizAnswers(data, params).then((res: any) => {
+        if (res.data) {
+          setDropdownOpen(false)
+          dispatch(setQuizQuestions(res.data))
+          setShowAnswers(false)
+          setCurrent(res.data)
+        }
+      })
+
+      // const nextQuestion = await postQuizAnswers(
+      //   { content: answerTextContents, questionId: current.id },
+      //   nextQuizOption,
+      // )
+      // dispatch(setQuizAnswers(answerTextContents))
+      // if (nextQuestion) {
+      //   setDropdownOpen(false)
+      //   dispatch(setQuizQuestions(nextQuestion))
+      //   setShowAnswers(false)
+      //   setCurrent(nextQuestion)
+      // }
+      // setAnswerTextContents('')
     }
   }, [nextQuizOption, answerTextContents, dispatch, current.id, setCurrent, setDropdownOpen, setShowAnswers])
 

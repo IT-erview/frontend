@@ -1,6 +1,9 @@
+// react
 import { PropsWithChildren } from 'react'
-import styles from 'views/quiz/css/ExitAnswer.module.css'
 import { useDispatch } from 'react-redux'
+// style
+import styles from 'views/quiz/css/ExitAnswer.module.css'
+// redux
 import { NextQuiz, setNextQuestion } from 'modules/nextQuestion'
 
 interface ModalDefaultType {

@@ -1,10 +1,16 @@
-import { getMyAnswer } from 'test/api/answer'
-import { Tag } from 'utils/type'
+// react
+import { useDispatch } from 'react-redux'
+// util
 import { getZerofilledNumber } from 'utils/util'
 import { MAX_DISPLAYED_TAG_COUNT } from 'utils/config'
-import styles from 'views/common/question/Question.module.css'
+import { Tag } from 'utils/type'
+// oauth
 import { JWT_TOKEN } from 'constants/Oauth'
-import { useDispatch } from 'react-redux'
+//style
+import styles from 'views/common/question/Question.module.css'
+// api
+import { getMyAnswer } from 'api/answer'
+// redux
 import { setModalOpen } from 'modules/loginModal'
 
 const Question = (props: {
@@ -20,26 +26,29 @@ const Question = (props: {
   // todo: questionId 수정으로 이동 가능
   let isRequesting = false
   const dispatch = useDispatch()
-  const moveToQuestionDetail = async () => {
+  const moveToQuestionDetail = () => {
     if (!JWT_TOKEN) {
       alert('로그인을 해주세요.')
       dispatch(setModalOpen(true))
     } else {
       if (isRequesting) return
       isRequesting = true
-      const myAnswer = await getMyAnswer(props.id).finally(() => (isRequesting = false))
-      if (!myAnswer) {
-        alert('문제에 대한 나의 답변이 없으면 다른 사람의 답변을 볼 수 없습니다. 답변 등록 페이지로 이동합니다.')
-        window.open(`/AnswerRegister?question_id=${props.id}`, '', '_blank')
-      } else {
-        window.open(`/QuestionDetail?question_id=${props.id}`)
-      }
+      getMyAnswer(props.id)
+        .finally(() => {
+          isRequesting = false
+        })
+        .then(() => {
+          alert('문제에 대한 나의 답변이 없으면 다른 사람의 답변을 볼 수 없습니다. 답변 등록 페이지로 이동합니다.')
+          window.open(`/AnswerRegister?question_id=${props.id}`, '', '_blank')
+        })
+        .catch(() => {
+          window.open(`/QuestionDetail?question_id=${props.id}`)
+        })
     }
   }
 
   return (
     <div>
-      {console.log(props)}
       <button onClick={moveToQuestionDetail} className={styles.questionBox}>
         <div className={styles.questionInfo}>
           <div className={styles.questionNumber}>{getZerofilledNumber(props.number)}</div>

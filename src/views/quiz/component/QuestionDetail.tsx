@@ -1,12 +1,17 @@
+// react
 import { useEffect, useState } from 'react'
-import 'views/quiz/css/QuestionDetail.css'
-import AnswerComponent from 'views/common/answer/Answer'
-
+// library
+import InfiniteScroll from 'react-infinite-scroll-component'
+// util
 import { Answer, Question } from 'utils/type'
+// style
+import 'views/quiz/css/QuestionDetail.css'
+// api
 import { getAnswers, getMyAnswer } from 'test/api/answer'
 import { getQuestion } from 'test/api/question'
+// component
+import AnswerComponent from 'views/common/answer/Answer'
 import SortSelectBox, { Sort } from 'views/common/form/SortSelectBox'
-import InfiniteScroll from 'react-infinite-scroll-component'
 
 // 북마크 개수, 해당되는 태그, 작성자 없음
 const QuestionDetail = (props: { questionId: number }) => {

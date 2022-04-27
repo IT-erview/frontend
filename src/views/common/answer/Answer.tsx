@@ -1,12 +1,21 @@
 // import 'css/Answer.css'
+// oauth
+import { JWT_TOKEN } from 'constants/Oauth'
+
+// util
 import { getZerofilledNumber } from 'utils/util'
 import { Tag } from 'utils/type'
-import styles from 'views/common/answer/Answer.module.css'
 import { MAX_DISPLAYED_TAG_COUNT } from 'utils/config'
-import { JWT_TOKEN } from 'constants/Oauth'
+
+// style
+import styles from 'views/common/answer/Answer.module.css'
+
+// redux
 import { useDispatch } from 'react-redux'
 import { setModalOpen } from 'modules/loginModal'
-import { getMyAnswer } from 'test/api/answer'
+
+// api
+import { getMyAnswer } from 'api/answer'
 
 const Answer = (props: {
   id: number
@@ -30,26 +39,29 @@ const Answer = (props: {
   const dispatch = useDispatch()
   let isRequesting = false
 
-  const moveToQuestionDetail = async () => {
+  const moveToQuestionDetail = () => {
     if (!JWT_TOKEN) {
       alert('로그인을 해주세요.')
       dispatch(setModalOpen(true))
     } else {
       if (isRequesting) return
       isRequesting = true
-      const myAnswer = await getMyAnswer(props.id).finally(() => (isRequesting = false))
-      if (!myAnswer) {
-        alert('문제에 대한 나의 답변이 없으면 다른 사람의 답변을 볼 수 없습니다. 답변 등록 페이지로 이동합니다.')
-        window.open(`/AnswerRegister?question_id=${props.id}`, '', '_blank')
-      } else {
-        window.open(`/QuestionDetail?question_id=${props.id}`)
-      }
+      getMyAnswer(props.id)
+        .finally(() => {
+          isRequesting = false
+        })
+        .then(() => {
+          alert('문제에 대한 나의 답변이 없으면 다른 사람의 답변을 볼 수 없습니다. 답변 등록 페이지로 이동합니다.')
+          window.open(`/AnswerRegister?question_id=${props.id}`, '', '_blank')
+        })
+        .catch(() => {
+          window.open(`/QuestionDetail?question_id=${props.id}`)
+        })
     }
   }
 
   return (
     <div>
-      {console.log(props.id)}
       <button className={styles.questionBox} onClick={moveToQuestionDetail}>
         <div className={styles.questionInfo}>
           <div className={styles.questionNumber}>{getZerofilledNumber(props.number)}</div>

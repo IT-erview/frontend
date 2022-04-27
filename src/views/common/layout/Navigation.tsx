@@ -1,20 +1,30 @@
 // todo: refactoring
+
+//react
 import { useCallback, useEffect, useState } from 'react'
-import styles from 'views/common/layout/Navigation.module.css'
 import { Link, useHistory, withRouter } from 'react-router-dom'
-import { removeCookie } from 'views/common/form/Cookies'
+import { useDispatch, useSelector } from 'react-redux'
+// oauth
 import { JWT_TOKEN } from 'constants/Oauth'
 import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
-import { setModalOpen } from 'modules/loginModal'
+// util
 import { TagSelectorItem } from 'utils/type'
+// style
+import styles from 'views/common/layout/Navigation.module.css'
+// redux
+import { setModalOpen } from 'modules/loginModal'
 import { ReducerType } from 'modules/rootReducer'
-import { getTags } from 'test/api/tags'
 import { setAllTags } from 'modules/allTags'
 import { setSearchTags } from 'modules/searchTags'
 import { setQuizTags } from 'modules/quizTags'
 import { setRegisterTags } from 'modules/registerTags'
 import { setResetQuiz } from 'modules/resetQuiz'
+
+//api
+import { getTags } from 'api/tag'
+
+// component
+import { removeCookie } from 'views/common/form/Cookies'
 
 const Navigation = (props: any) => {
   const [userEmail, setUserEmail] = useState<string>('')
@@ -26,12 +36,11 @@ const Navigation = (props: any) => {
   const allTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.allTags)
   const [renew, setRenew] = useState<boolean>(false)
 
-  const getAllTags = useCallback(async () => {
-    const tags = await getTags()
-    if (tags) {
-      dispatch(setAllTags(tags))
+  const getAllTags = useCallback(() => {
+    getTags().then((res: any) => {
+      dispatch(setAllTags(res.data))
       setRenew(true)
-    }
+    })
   }, [dispatch])
 
   useEffect(() => {

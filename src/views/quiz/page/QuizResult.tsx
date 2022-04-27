@@ -1,13 +1,18 @@
 // todo: refactoring
-import styles from 'views/quiz/css/QuizResult.module.css'
-import { QuizAnswer, TagSelectorItem } from 'utils/type'
+// react
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
+// util
+import { QuizAnswer, TagSelectorItem } from 'utils/type'
+// style
+import styles from 'views/quiz/css/QuizResult.module.css'
+// redux
+import { NextQuiz, setNextQuestion } from 'modules/nextQuestion'
+// component
 import Footer from 'views/common/layout/Footer'
 import Navigation from 'views/common/layout/Navigation'
 import Question from 'views/common/question/Question'
-import { useEffect } from 'react'
-import { NextQuiz, setNextQuestion } from 'modules/nextQuestion'
 
 const QuizResultPage = () => {
   const quizzes = useSelector<ReducerType, Array<QuizAnswer>>((state) => state.quizQuestions)

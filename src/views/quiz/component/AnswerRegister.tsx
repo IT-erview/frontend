@@ -1,11 +1,15 @@
-import 'views/quiz/css/AnswerRegister.css'
+// react
+import { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { Form, Input } from 'reactstrap'
-import { useEffect, useState } from 'react'
+// util
 import { MAX_TEXT_CONTENTS_LENGTH, MIN_TEXT_CONTENTS_LENGTH } from 'utils/config'
 import { checkTextContentsLength, isNumeric } from 'utils/util'
-import { postAnswer } from 'test/api/answer'
-import { getQuestion } from 'test/api/question'
+// style
+import 'views/quiz/css/AnswerRegister.css'
+// api
+import { postAnswer } from 'api/answer'
+import { getQuestion } from 'api/question'
 
 const getParsedParameters = () => {
   const questionIdParameters = new URLSearchParams(window.location.search).get('question_id')
@@ -20,10 +24,15 @@ const AnswerRegister = () => {
   const [questionContent, setQuestionContent] = useState<string>('')
 
   useEffect(() => {
-    const getQuestionContent = async () => {
+    const getQuestionContent = () => {
       if (questionId) {
-        const question = await getQuestion(questionId)
-        if (question) setQuestionContent(question.content)
+        getQuestion(questionId).then((res: any) => {
+          if (res.data) {
+            setQuestionContent(res.data.content)
+          }
+        })
+        // const question = await getQuestion(questionId)
+        // if (question) setQuestionContent(question.content)
       }
     }
     getQuestionContent()
@@ -33,23 +42,39 @@ const AnswerRegister = () => {
 
   let isRequesting = false
 
-  const registerAnswer = async () => {
+  const registerAnswer = () => {
     if (!checkTextContentsLength(answerTextContents)) {
       window.alert(`최소 ${MIN_TEXT_CONTENTS_LENGTH}자 이상 입력해주세요`)
       return
     }
     if (isRequesting) return
     isRequesting = true
-    const result = await postAnswer({ questionId: questionId, content: answerTextContents }).finally(() => {
-      isRequesting = false
-    })
-    if (result) {
-      window.alert('답변이 등록되었습니다.')
-      window.open(`/QuestionDetail?question_id=${questionId}`)
-      window.close()
-    } else {
-      window.alert('답변이 등록되지 않았습니다.')
+    let data = {
+      questionId: questionId,
+      content: answerTextContents,
     }
+    postAnswer(data)
+      .finally(() => {
+        isRequesting = false
+      })
+      .then((res: any) => {
+        window.alert('답변이 등록되었습니다.')
+        window.open(`/QuestionDetail?question_id=${questionId}`)
+        window.close()
+      })
+      .catch(() => {
+        window.alert('답변이 등록되지 않았습니다.')
+      })
+    // const result = await postAnswer({ questionId: questionId, content: answerTextContents }).finally(() => {
+    //   isRequesting = false
+    // })
+    // if (result) {
+    //   window.alert('답변이 등록되었습니다.')
+    //   window.open(`/QuestionDetail?question_id=${questionId}`)
+    //   window.close()
+    // } else {
+    //   window.alert('답변이 등록되지 않았습니다.')
+    // }
   }
 
   return (

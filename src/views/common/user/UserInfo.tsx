@@ -1,4 +1,4 @@
-import { getQuestionStat } from 'test/api/question'
+import { getQuestionStat } from 'api/question'
 import { TagCount } from 'utils/type'
 import styles from 'views/quiz/css/Quiz.module.css'
 import { useCallback, useEffect, useState } from 'react'
@@ -9,11 +9,10 @@ const UserInfo = () => {
   const userEmail = localStorage.getItem('userEmail') as string
   const [tagStat, setTagStat] = useState<Array<TagCount>>([])
 
-  const getQuestionTagStat = useCallback(async () => {
-    const questionStat = await getQuestionStat()
-    if (questionStat) {
-      setTagStat(questionStat)
-    }
+  const getQuestionTagStat = useCallback(() => {
+    getQuestionStat().then((res: any) => {
+      setTagStat(res.data)
+    })
   }, [setTagStat])
 
   const showTagStat = tagStat.map((tag, index) => {

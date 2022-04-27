@@ -1,6 +1,8 @@
+// components
 import QuestionSearch from 'views/search/component/QuestionSearch'
 import Navigation from 'views/common/layout/Navigation'
 import Footer from 'views/common/layout/Footer'
+
 const QuestionSearchPage = () => {
   const questionRegisterImg = '/img/page_info.png'
   return (

@@ -1,15 +1,28 @@
+// react
 import { useEffect, useState } from 'react'
+// util
+import { Question } from 'utils/type'
+// api
+import { getMyQuestions } from 'api/question'
+
+// components
 import QuestionList from 'views/common/question/QuestionList'
 import SortSelectBox, { Sort } from 'views/common/form/SortSelectBox'
-import { getMyQuestions } from 'test/api/question'
-import { Question } from 'utils/type'
 
 const MyRegisterQuestion = () => {
   const [sort, setSort] = useState<Sort>(Sort.POPULAR)
   const [questions, setQuestions] = useState<Array<Question>>([])
+
   useEffect(() => {
-    const initQuestions = async () => {
-      setQuestions(await getMyQuestions(sort))
+    const initQuestions = () => {
+      let params = {
+        sort: `${sort},desc`,
+        size: 30,
+        page: 0,
+      }
+      getMyQuestions(params).then((res: any) => {
+        setQuestions(res.data)
+      })
     }
     initQuestions()
   }, [sort])
