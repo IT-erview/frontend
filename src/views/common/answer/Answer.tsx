@@ -44,7 +44,7 @@ const Answer = (props: {
       if (isRequesting) return
       isRequesting = true
       const myAnswer = await getMyAnswer(props.id).finally(() => (isRequesting = false))
-      if (!myAnswer) {
+      if (!myAnswer.data) {
         alert('문제에 대한 나의 답변이 없으면 다른 사람의 답변을 볼 수 없습니다. 답변 등록 페이지로 이동합니다.')
         window.open(`/AnswerRegister?question_id=${props.id}`, '', '_blank')
       } else {

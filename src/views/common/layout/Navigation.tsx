@@ -34,8 +34,9 @@ const Navigation = (props: any) => {
 
   const getAllTags = useCallback(async () => {
     const tags = await getTags()
-    if (tags) {
-      dispatch(setAllTags(tags))
+    console.log(tags)
+    if (tags.data) {
+      dispatch(setAllTags(tags.data))
       setRenew(true)
     }
   }, [dispatch])

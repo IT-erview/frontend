@@ -33,11 +33,11 @@ const SetQuizOptions = () => {
       const randomConfirm = window.confirm('선택된 태그가 없습니다. 랜덤으로 문제를 불러올까요?')
       if (randomConfirm) {
         const getQuiz = await getQuizQuestions(params)
-        if (getQuiz) dispatch(setQuizQuestions(getQuiz))
+        if (getQuiz.data) dispatch(setQuizQuestions(getQuiz.data))
       }
     } else {
       const getQuiz = await getQuizQuestions(params)
-      if (getQuiz) dispatch(setQuizQuestions(getQuiz))
+      if (getQuiz.data) dispatch(setQuizQuestions(getQuiz.data))
       else window.alert('해당 태그에 해당하는 문제가 없습니다!')
     }
   }

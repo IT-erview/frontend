@@ -20,7 +20,8 @@ const MyBookmarkQuestion = () => {
         page: 0,
         size: 30,
       }
-      setQuestions(await getBookmarks(params))
+      let bookmarkList = await getBookmarks(params)
+      setQuestions(bookmarkList.data)
     }
     initQuestions()
   }, [sort])

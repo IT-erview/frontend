@@ -46,7 +46,7 @@ const QuestionRegister = ({ history }: { history: any }) => {
     const result = await postQuestion(data).finally(() => {
       isRequesting = false
     })
-    if (result) {
+    if (result.data) {
       window.alert('문제가 등록되었습니다.')
       setRegistered(true)
     } else {

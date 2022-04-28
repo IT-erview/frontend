@@ -70,7 +70,7 @@ const QuestionSearch = () => {
       sort: `${sort},desc`,
     }
     const searchResults = await searchQuestions(params)
-    setQuestions(searchResults)
+    setQuestions(searchResults.data)
     setQuestionSearchInput('')
   }, [questionSearchInput, questionSearchTags, sort])
 

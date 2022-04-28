@@ -1,10 +1,10 @@
 // @ts-ignore
 import Send from 'api/Send.ts'
 
-export const getQuestion = (questionId: number) => {
+export const getQuestion = (id: number) => {
   return Send({
     method: 'get',
-    url: `/api/v1/question/${questionId}`,
+    url: `/api/v1/question/${id}`,
   })
 }
 export const getQuestions = (page: number, rowsPerPage: number) => {

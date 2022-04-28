@@ -45,8 +45,8 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
         size: 10,
       }
       const answers = await getAnswers(current.id, params)
-      if (answers) {
-        setAnswersList(answers)
+      if (answers.data) {
+        setAnswersList(answers.data)
         setAnswerLoading(true)
       }
     }
@@ -63,11 +63,11 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
       }
       const nextQuestion = await postQuizAnswers(params, data)
       dispatch(setQuizAnswers(answerTextContents))
-      if (nextQuestion) {
+      if (nextQuestion.data) {
         setDropdownOpen(false)
-        dispatch(setQuizQuestions(nextQuestion))
+        dispatch(setQuizQuestions(nextQuestion.data))
         setShowAnswers(false)
-        setCurrent(nextQuestion)
+        setCurrent(nextQuestion.data)
       }
       setAnswerTextContents('')
     }

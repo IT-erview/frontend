@@ -11,17 +11,17 @@ export const likeAnswer = (answerId: number) => {
   })
 }
 
-export const getAnswers = (questionId: number, params: object) => {
+export const getAnswers = (id: number, params: object) => {
   return Send({
     method: 'get',
-    url: `/api/v1/answer/question/${questionId}`,
+    url: `/api/v1/answer/question/${id}`,
     params: params,
   })
 }
-export const getMyAnswer = (questionId: number) => {
+export const getMyAnswer = (id: number) => {
   return Send({
     method: 'get',
-    url: `/api/v1/answer/${questionId}/mine`,
+    url: `/api/v1/answer/${id}/mine`,
   })
 }
 export const getMyAnswers = (params: object) => {

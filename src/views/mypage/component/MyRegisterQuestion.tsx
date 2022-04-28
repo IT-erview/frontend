@@ -19,7 +19,8 @@ const MyRegisterQuestion = () => {
         page: 0,
         size: 30,
       }
-      setQuestions(await getMyQuestions(params))
+      let questionList = await getMyQuestions(params)
+      setQuestions(questionList.data)
     }
     initQuestions()
   }, [sort])

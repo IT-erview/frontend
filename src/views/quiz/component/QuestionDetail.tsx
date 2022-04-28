@@ -34,17 +34,17 @@ const QuestionDetail = (props: { questionId: number }) => {
     }
     const fetchedAnswer = await getAnswers(props.questionId, params)
     setPage(nextPage)
-    setAnswers((answers) => [...answers, ...fetchedAnswer])
+    setAnswers((answers) => [...answers, ...fetchedAnswer.data])
   }
 
   useEffect(() => {
     const initMyAnswer = async () => {
       const answer = await getMyAnswer(props.questionId)
-      setMyAnswer(answer)
+      setMyAnswer(answer.data)
     }
     const initQuestion = async () => {
       const question = await getQuestion(props.questionId)
-      if (question) setQuestion(question)
+      if (question.data) setQuestion(question.data)
     }
     const refreshAnswers = async () => {
       let params = {
@@ -53,8 +53,8 @@ const QuestionDetail = (props: { questionId: number }) => {
         sort: `${sort},desc`,
       }
       const fetchedAnswer = await getAnswers(props.questionId, params)
-      setHasMore(fetchedAnswer.length > 0)
-      setAnswers(fetchedAnswer)
+      setHasMore(fetchedAnswer.data.length > 0)
+      setAnswers(fetchedAnswer.data)
       setPage(INITIAL_PAGE)
     }
     initMyAnswer()

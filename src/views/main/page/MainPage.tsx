@@ -236,7 +236,7 @@ const MainPage = () => {
       option: questionSort,
     }
     const questions = await getHitsQuestions(params)
-    if (questions) setHitQuestions(questions)
+    if (questions.data) setHitQuestions(questions.data)
   }, [questionSort])
 
   const getAnswers = useCallback(async () => {
@@ -244,7 +244,7 @@ const MainPage = () => {
       option: answerSort,
     }
     const answers = await getHitsAnswers(params)
-    if (answers) setHitAnswers(answers)
+    if (answers.data) setHitAnswers(answers.data)
   }, [answerSort])
 
   useEffect(() => {

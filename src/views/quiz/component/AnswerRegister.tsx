@@ -27,7 +27,7 @@ const AnswerRegister = () => {
     const getQuestionContent = async () => {
       if (questionId) {
         const question = await getQuestion(questionId)
-        if (question) setQuestionContent(question.content)
+        if (question.data) setQuestionContent(question.data.content)
       }
     }
     getQuestionContent()
@@ -51,7 +51,7 @@ const AnswerRegister = () => {
     const result = await postAnswer(data).finally(() => {
       isRequesting = false
     })
-    if (result) {
+    if (result.data) {
       window.alert('답변이 등록되었습니다.')
       window.open(`/QuestionDetail?question_id=${questionId}`)
       window.close()
