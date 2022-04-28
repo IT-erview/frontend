@@ -1,5 +1,4 @@
 // todo: refactoring
-// component
 import QuestionRegister from 'views/enrollment/component/QuestionRegister'
 import Navigation from 'views/common/layout/Navigation'
 import Footer from 'views/common/layout/Footer'

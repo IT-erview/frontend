@@ -1,10 +1,7 @@
-// react
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-// util
-import { TagSelectorItem } from 'utils/type'
-// style
 import styles from 'views/quiz/css/Quiz.module.css'
+import { TagSelectorItem } from 'utils/type'
+import { useDispatch } from 'react-redux'
+import { useState } from 'react'
 
 const TagDropdown = (props: { tags: Array<TagSelectorItem>; setTagSelected: Function }) => {
   const dispatch = useDispatch()

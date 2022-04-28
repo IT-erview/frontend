@@ -1,12 +1,8 @@
-// react
-import { useEffect, useState } from 'react'
-// util
-import { isNumeric } from 'utils/util'
-// api
-import { addBookmark } from 'api/bookmark'
-import { getQuestion } from 'api/question'
-// component
 import QuestionDetail from 'views/quiz/component/QuestionDetail'
+import { getQuestion } from 'test/api/question'
+import { addBookmark } from 'test/api/bookmark'
+import { isNumeric } from 'utils/util'
+import { useEffect, useState } from 'react'
 
 const getParsedParameters = () => {
   const questionIdParameters = new URLSearchParams(window.location.search).get('question_id')
@@ -20,18 +16,11 @@ const QuestionDetailPage = () => {
   const [questionContent, setQuestionContent] = useState<string>('')
 
   useEffect(() => {
-    const getQuestionContent = () => {
+    const getQuestionContent = async () => {
       if (questionId) {
-        getQuestion(questionId).then((res: any) => {
-          if (res.data) {
-            setQuestionContent(res.data.content)
-          }
-        })
+        const question = await getQuestion(questionId)
+        if (question) setQuestionContent(question.content)
       }
-      // if (questionId) {
-      //   const question = await getQuestion(questionId)
-      //   if (question) setQuestionContent(question.content)
-      // }
     }
     getQuestionContent()
   }, [questionId])
@@ -42,24 +31,10 @@ const QuestionDetailPage = () => {
   const bookmarkIt = async () => {
     if (isRequesting) return
     isRequesting = true
-    addBookmark(questionId)
-      .finally(() => {
-        isRequesting = false
-      })
-      .then((res: any) => {
-        if (res.data) {
-          alert('북마크 되었습니다.')
-        } else {
-          alert('이미 북마크한 문제입니다.')
-        }
-      })
-      .catch(() => {
-        alert('오류가 발생하였습니다.')
-      })
-    // const result = await addBookmark(questionId).finally(() => {
-    //   isRequesting = false
-    // })
-    // window.alert(result ? '북마크 되었습니다.' : '이미 북마크한 문제입니다.')
+    const result = await addBookmark(questionId).finally(() => {
+      isRequesting = false
+    })
+    window.alert(result ? '북마크 되었습니다.' : '이미 북마크한 문제입니다.')
   }
   return (
     <>

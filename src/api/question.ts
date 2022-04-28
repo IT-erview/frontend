@@ -1,12 +1,12 @@
 // @ts-ignore
 import Send from 'api/Send.ts'
-
-export const getQuestion = (id: number) => {
-  return Send({
-    method: 'get',
-    url: `/api/v1/question/${id}`,
-  })
-}
+//
+// export const getQuestion = (questionId: number) => {
+//   return Send({
+//     method: 'get',
+//     url: `/api/v1/question/${questionId}`,
+//   })
+// }
 // export const getQuestions = (page: number, rowsPerPage: number) => {
 //   return Send({
 //     method: 'get',
@@ -17,27 +17,31 @@ export const getQuestion = (id: number) => {
 //     },
 //   })
 // }
-export const getQuizQuestions = (params: object) => {
-  return Send({
-    method: 'get',
-    url: `/api/v1/question/quiz`,
-    params: params,
-  })
-}
-export const getMyQuestions = (params: object) => {
-  return Send({
-    method: 'get',
-    url: `/api/v1/question/mine`,
-    params: params,
-  })
-}
-export const searchQuestions = (params: object) => {
-  return Send({
-    method: 'get',
-    url: `/api/v1/question/search`,
-    params: params,
-  })
-}
+// export const getQuizQuestions = (tagList: Array<number>) => {
+//   return Send({
+//     method: 'get',
+//     url: `/api/v1/question/quiz?tags=${tagList}`,
+//   })
+// }
+// export const getMyQuestions = (sort: string, desc = true, page = 0, rowsPerPage = 30) => {
+//   return Send({
+//     method: 'get',
+//     url: `/api/v1/question/mine?page=${page}&size=${rowsPerPage}&sort=${sort}${desc ? ',desc' : ''}`,
+//   })
+// }
+// export const searchQuestions = (
+//     keyword: string,
+//     sort: string,
+//     tagList: Array<number> = [],
+//     desc = true,
+//     page = 0,
+//     rowsPerPage = 30,
+// ) => {
+//   return Send({
+//     method: 'get',
+//     url: `/api/v1/question/search?keyword=${keyword}&page=${page}&size=${rowsPerPage}&tags=${tagList}&sort=${sort}${desc ? ',desc' : ''}`,
+//   })
+// }
 export const postQuestion = (data: object) => {
   return Send({
     method: 'post',
@@ -45,11 +49,10 @@ export const postQuestion = (data: object) => {
     data: data,
   })
 }
-export const getHitsQuestions = (params: object) => {
+export const getHitsQuestions = (sort: string) => {
   return Send({
     method: 'get',
-    url: `/api/v1/question/hits`,
-    params: params,
+    url: `/api/v1/question/hits?option=${sort}`,
   })
 }
 export const getQuestionStat = () => {

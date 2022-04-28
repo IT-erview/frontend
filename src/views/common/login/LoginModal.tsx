@@ -1,13 +1,9 @@
 // todo: 타 tsx 파일과 코드 스타일 맞추기
-// react
 import React from 'react'
+import styles from 'views/common/login/LoginModal.module.css'
+import { GOOGLE_AUTH_URL, GITHUB_AUTH_URL } from 'constants/Oauth'
 import { useSelector, useDispatch } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
-// oauth
-import { GOOGLE_AUTH_URL, GITHUB_AUTH_URL } from 'constants/Oauth'
-// style
-import styles from 'views/common/login/LoginModal.module.css'
-// redux
 import { setModalOpen } from 'modules/loginModal'
 
 const iterviewLogo = '/img/iterview_logo_dark.png'

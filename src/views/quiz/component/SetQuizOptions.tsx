@@ -1,18 +1,12 @@
 // todo: refactoring
-// react
 import { useDispatch, useSelector } from 'react-redux'
-// util
-import { TagSelectorItem } from 'utils/type'
-// style
+import { getQuizQuestions } from 'test/api/question'
 import styles from 'views/quiz/css/Quiz.module.css'
-// redux
 import { setQuizQuestions } from 'modules/quizQuestions'
+import UserInfo from 'views/common/user/UserInfo'
+import { TagSelectorItem } from 'utils/type'
 import { ReducerType } from 'modules/rootReducer'
 import { setQuizTagSelected } from 'modules/quizTags'
-// api
-import { getQuizQuestions } from 'api/question'
-// component
-import UserInfo from 'views/common/user/UserInfo'
 import TagDropdown from 'views/common/tag/TagDropdown'
 
 const SetQuizOptions = () => {
@@ -26,29 +20,16 @@ const SetQuizOptions = () => {
 
   const getQuizzes = async () => {
     const tagList = quizTags.filter((tag: TagSelectorItem) => tag.isSelected).map((tag: TagSelectorItem) => tag.id)
-    let params = {
-      tags: tagList,
-    }
     if (tagList.length === 0) {
       const randomConfirm = window.confirm('선택된 태그가 없습니다. 랜덤으로 문제를 불러올까요?')
       if (randomConfirm) {
-        getQuizQuestions(params).then((res: any) => {
-          dispatch(setQuizQuestions(res.data))
-        })
-        // const getQuiz = await getQuizQuestions(tagList)
-        // if (getQuiz) dispatch(setQuizQuestions(getQuiz))
+        const getQuiz = await getQuizQuestions(tagList)
+        if (getQuiz) dispatch(setQuizQuestions(getQuiz))
       }
     } else {
-      getQuizQuestions(params)
-        .then((res: any) => {
-          dispatch(setQuizQuestions(res.data))
-        })
-        .catch(() => {
-          window.alert('해당 태그에 해당하는 문제가 없습니다!')
-        })
-      // const getQuiz = await getQuizQuestions(tagList)
-      // if (getQuiz) dispatch(setQuizQuestions(getQuiz))
-      // else window.alert('해당 태그에 해당하는 문제가 없습니다!')
+      const getQuiz = await getQuizQuestions(tagList)
+      if (getQuiz) dispatch(setQuizQuestions(getQuiz))
+      else window.alert('해당 태그에 해당하는 문제가 없습니다!')
     }
   }
 

@@ -1,8 +1,5 @@
-// react
 import { useState } from 'react'
-// style
 import styles from 'views/mypage/css/Mypage.module.css'
-//component
 import UserInfo from 'views/common/user/UserInfo'
 import MyPageNavigation, { MyPageInquireType } from 'views/mypage/component/MyPageNavigation'
 import MyAnswers, { MyAnswerType } from 'views/mypage/component/MyAnswers'

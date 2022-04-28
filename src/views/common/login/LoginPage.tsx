@@ -1,10 +1,7 @@
 // todo: refactoring
-// react
+import LoginModal from 'views/common/login/LoginModal'
 import { useDispatch } from 'react-redux'
 import { setModalOpen } from 'modules/loginModal'
-
-// component
-import LoginModal from 'views/common/login/LoginModal'
 
 const LoginPage = () => {
   const dispatch = useDispatch()
