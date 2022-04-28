@@ -16,7 +16,7 @@ import { setSearchTagSelected } from 'modules/searchTags'
 import { getHitsAnswers } from 'api/answer'
 import { getHitsQuestions } from 'api/question'
 // component
-import Navigation from 'views/common/layout/Navigation'
+import Navigation from 'views/common/layout/Navigations'
 import Footer from 'views/common/layout/Footer'
 import styles from 'views/main/css/MainPage.module.css'
 import LoginModal from 'views/common/login/LoginModal'
