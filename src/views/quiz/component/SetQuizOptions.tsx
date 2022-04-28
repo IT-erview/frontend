@@ -27,7 +27,7 @@ const SetQuizOptions = () => {
   const getQuizzes = async () => {
     const tagList = quizTags.filter((tag: TagSelectorItem) => tag.isSelected).map((tag: TagSelectorItem) => tag.id)
     let params = {
-      tags: tagList,
+      tags: tagList.toString(),
     }
     if (tagList.length === 0) {
       const randomConfirm = window.confirm('선택된 태그가 없습니다. 랜덤으로 문제를 불러올까요?')

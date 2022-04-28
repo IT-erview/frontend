@@ -61,12 +61,14 @@ const QuestionSearch = () => {
   const [sort, setSort] = useState<Sort>(Sort.POPULAR)
   const [questions, setQuestions] = useState<Array<Question>>([])
 
+  const tagList = questionSearchTags.filter((tag) => tag.isSelected).map((tag) => tag.id)
+
   const search = useCallback(async () => {
     let params = {
       keyword: questionSearchInput,
       page: 0,
       size: 30,
-      tags: questionSearchTags.filter((tag) => tag.isSelected).map((tag) => tag.id),
+      tags: tagList.toString(),
       sort: `${sort},desc`,
     }
     const searchResults = await searchQuestions(params)
