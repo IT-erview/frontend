@@ -1,6 +1,8 @@
+// react
 import { PropsWithChildren } from 'react'
-import styles from 'views/quiz/css/ExitAnswer.module.css'
 import { Link } from 'react-router-dom'
+// style
+import styles from 'views/quiz/css/ExitAnswer.module.css'
 
 interface ModalDefaultType {
   onClickToggleModal: () => void

@@ -1,11 +1,15 @@
-import 'views/quiz/css/AnswerRegister.css'
-import { withRouter } from 'react-router-dom'
-import { Form, Input } from 'reactstrap'
+// react
 import { useEffect, useState } from 'react'
+import { Form, Input } from 'reactstrap'
+import { withRouter } from 'react-router-dom'
+// util
 import { MAX_TEXT_CONTENTS_LENGTH, MIN_TEXT_CONTENTS_LENGTH } from 'utils/config'
 import { checkTextContentsLength, isNumeric } from 'utils/util'
-import { postAnswer } from 'test/api/answer'
-import { getQuestion } from 'test/api/question'
+// style
+import 'views/quiz/css/AnswerRegister.css'
+// api
+import { postAnswer } from 'api/answer'
+import { getQuestion } from 'api/question'
 
 const getParsedParameters = () => {
   const questionIdParameters = new URLSearchParams(window.location.search).get('question_id')
@@ -40,7 +44,11 @@ const AnswerRegister = () => {
     }
     if (isRequesting) return
     isRequesting = true
-    const result = await postAnswer({ questionId: questionId, content: answerTextContents }).finally(() => {
+    let data = {
+      questionId: questionId,
+      content: answerTextContents,
+    }
+    const result = await postAnswer(data).finally(() => {
       isRequesting = false
     })
     if (result) {

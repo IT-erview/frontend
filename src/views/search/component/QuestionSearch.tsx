@@ -1,16 +1,22 @@
 // todo: refactoring
-import 'views/search/css/QuestionSearch.css'
+// react
 import { useEffect, useState, useCallback } from 'react'
-import { Input } from 'reactstrap'
-import SortSelectBox, { Sort } from 'views/common/form/SortSelectBox'
-import { MAX_SEARCH_WORD_LENGTH } from 'utils/config'
 import { useDispatch, useSelector } from 'react-redux'
-import { ReducerType } from 'modules/rootReducer'
+import { Input } from 'reactstrap'
+// util
 import { Question, TagSelectorItem } from 'utils/type'
-import TagSelector from 'views/common/tag/TagSelector'
+import { MAX_SEARCH_WORD_LENGTH } from 'utils/config'
+// style
+import 'views/search/css/QuestionSearch.css'
+// redux
 import { setSearchTagSelected } from 'modules/searchTags'
+// api
+import { searchQuestions } from 'api/question'
+// component
+import SortSelectBox, { Sort } from 'views/common/form/SortSelectBox'
+import { ReducerType } from 'modules/rootReducer'
+import TagSelector from 'views/common/tag/TagSelector'
 import QuestionList from 'views/common/question/QuestionList'
-import { searchQuestions } from 'test/api/question'
 
 // 이미지로 대체 필요
 const searchIcon = () => {
@@ -56,11 +62,14 @@ const QuestionSearch = () => {
   const [questions, setQuestions] = useState<Array<Question>>([])
 
   const search = useCallback(async () => {
-    const searchResults = await searchQuestions(
-      questionSearchInput,
-      sort,
-      questionSearchTags.filter((tag) => tag.isSelected).map((tag) => tag.id),
-    )
+    let params = {
+      keyword: questionSearchInput,
+      page: 0,
+      size: 30,
+      tags: questionSearchTags.filter((tag) => tag.isSelected).map((tag) => tag.id),
+      sort: `${sort},desc`,
+    }
+    const searchResults = await searchQuestions(params)
     setQuestions(searchResults)
     setQuestionSearchInput('')
   }, [questionSearchInput, questionSearchTags, sort])

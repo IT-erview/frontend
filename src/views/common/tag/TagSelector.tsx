@@ -1,7 +1,7 @@
 // todo: refactoring
-import 'views/common/tag/Tags.css'
 import { useEffect, useState } from 'react'
 import { TagSelectorItem } from 'utils/type'
+import 'views/common/tag/Tags.css'
 
 const TagSelector = (props: {
   tags: Array<TagSelectorItem>

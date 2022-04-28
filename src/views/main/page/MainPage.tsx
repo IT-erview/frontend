@@ -1,22 +1,28 @@
 // memo 제외하고 대부분 완료
 // import 'css/MainPage.css'
+// react
+import { useCallback, useEffect, useState } from 'react'
+import { useHistory } from 'react-router'
+import { useDispatch, useSelector } from 'react-redux'
+import { ReducerType } from 'modules/rootReducer'
+// oauth
 import { JWT_TOKEN } from 'constants/Oauth'
-import axios from 'axios'
+// util
+import { MAX_SEARCH_TAG_LENGTH } from 'utils/config'
+import { Answer as AnswerType, Question as QuestionType, TagSelectorItem } from 'utils/type'
+// redux
+import { setSearchTagSelected } from 'modules/searchTags'
+// api
+import { getHitsAnswers } from 'api/answer'
+import { getHitsQuestions } from 'api/question'
+// component
 import Navigation from 'views/common/layout/Navigation'
 import Footer from 'views/common/layout/Footer'
 import styles from 'views/main/css/MainPage.module.css'
-import { useDispatch, useSelector } from 'react-redux'
-import { ReducerType } from 'modules/rootReducer'
 import LoginModal from 'views/common/login/LoginModal'
-import { MAX_SEARCH_TAG_LENGTH } from 'utils/config'
-import { useCallback, useEffect, useState } from 'react'
-import { Answer as AnswerType, Question as QuestionType, TagSelectorItem } from 'utils/type'
-import { setSearchTagSelected } from 'modules/searchTags'
-import { useHistory } from 'react-router'
 import Question from 'views/common/question/Question'
-import { getHitsAnswers } from 'test/api/answer'
-import { getHitsQuestions } from 'test/api/question'
 import Answer from 'views/common/answer/Answer'
+import axios from 'axios'
 
 // header 설정
 axios.defaults.headers.common['Authorization'] = JWT_TOKEN ? `Bearer ${JWT_TOKEN}` : ''
@@ -226,12 +232,18 @@ const MainPage = () => {
   }, [searchTags, tagSearchText])
 
   const getQuestions = useCallback(async () => {
-    const questions = await getHitsQuestions(questionSort)
+    let params = {
+      option: questionSort,
+    }
+    const questions = await getHitsQuestions(params)
     if (questions) setHitQuestions(questions)
   }, [questionSort])
 
   const getAnswers = useCallback(async () => {
-    const answers = await getHitsAnswers(answerSort)
+    let params = {
+      option: answerSort,
+    }
+    const answers = await getHitsAnswers(params)
     if (answers) setHitAnswers(answers)
   }, [answerSort])
 

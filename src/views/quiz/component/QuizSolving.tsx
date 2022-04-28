@@ -1,18 +1,24 @@
-import { RouteComponentProps, withRouter } from 'react-router-dom'
+// react
 import { useCallback, useEffect, useState } from 'react'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { Form, Input } from 'reactstrap'
+import { useDispatch, useSelector } from 'react-redux'
+import { ReducerType } from 'modules/rootReducer'
+// util
 import { MAX_TEXT_CONTENTS_LENGTH } from 'utils/config'
 import { checkTextContentsLength } from 'utils/util'
-import { getAnswers, postQuizAnswers } from 'test/api/answer'
 import { QuizQuestion, Answer as AnswerType } from 'utils/type'
+// style
 import styles from 'views/quiz/css/Quiz.module.css'
-import { Form, Input } from 'reactstrap'
+// redux
+import { NextQuiz, setNextQuestionInit } from 'modules/nextQuestion'
+import { setQuizAnswers, setQuizQuestions } from 'modules/quizQuestions'
+// api
+import { getAnswers, postQuizAnswers } from 'api/answer'
+// component
 import ExitAnswerModal from 'views/quiz/component/ExitAnswer'
 import NextModal from 'views/quiz/component/NextModal'
 import Answer from 'views/common/answer/Answer'
-import { useDispatch, useSelector } from 'react-redux'
-import { ReducerType } from 'modules/rootReducer'
-import { NextQuiz, setNextQuestionInit } from 'modules/nextQuestion'
-import { setQuizAnswers, setQuizQuestions } from 'modules/quizQuestions'
 
 const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteComponentProps> = ({
   quiz,
@@ -33,7 +39,12 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
 
   const getAnswer = async () => {
     if (answersList.length === 0) {
-      const answers = await getAnswers(current.id, 'popular', 0)
+      let params = {
+        page: 0,
+        sort: 'popular,desc',
+        size: 10,
+      }
+      const answers = await getAnswers(current.id, params)
       if (answers) {
         setAnswersList(answers)
         setAnswerLoading(true)
@@ -43,10 +54,14 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
   const getNextQuestion = useCallback(async () => {
     if (!checkTextContentsLength(answerTextContents)) window.alert('답변을 20자 이상 작성해주세요.')
     else {
-      const nextQuestion = await postQuizAnswers(
-        { content: answerTextContents, questionId: current.id },
-        nextQuizOption,
-      )
+      let data = {
+        questionId: current.id,
+        content: answerTextContents,
+      }
+      let params = {
+        type: nextQuizOption,
+      }
+      const nextQuestion = await postQuizAnswers(params, data)
       dispatch(setQuizAnswers(answerTextContents))
       if (nextQuestion) {
         setDropdownOpen(false)

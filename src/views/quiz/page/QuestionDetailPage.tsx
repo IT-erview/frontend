@@ -1,8 +1,12 @@
-import QuestionDetail from 'views/quiz/component/QuestionDetail'
-import { getQuestion } from 'test/api/question'
-import { addBookmark } from 'test/api/bookmark'
-import { isNumeric } from 'utils/util'
+// react
 import { useEffect, useState } from 'react'
+// util
+import { isNumeric } from 'utils/util'
+// api
+import { getQuestion } from 'api/question'
+import { addBookmark } from 'api/bookmark'
+// component
+import QuestionDetail from 'views/quiz/component/QuestionDetail'
 
 const getParsedParameters = () => {
   const questionIdParameters = new URLSearchParams(window.location.search).get('question_id')

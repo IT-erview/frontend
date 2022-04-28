@@ -1,9 +1,14 @@
-import 'views/mypage/css/MyLikeAnswer.css'
+// react
 import { useEffect, useState } from 'react'
+// library
 import InfiniteScroll from 'react-infinite-scroll-component'
-import SortSelectBox, { Sort } from 'views/common/form/SortSelectBox'
+// util
 import { Answer } from 'utils/type'
+// api
 import { getMyAnswers, getMyLikedAnswers } from 'test/api/answer'
+// component
+import 'views/mypage/css/MyLikeAnswer.css'
+import SortSelectBox, { Sort } from 'views/common/form/SortSelectBox'
 import AnswerComponent from 'views/common/answer/Answer'
 
 export enum MyAnswerType {
@@ -20,6 +25,11 @@ const MyAnswers = (props: { type: MyAnswerType }) => {
   const [answers, setAnswers] = useState<Array<Answer>>([])
 
   const getAnswers = async (type: MyAnswerType, sort: string, page: number) => {
+    // let params = {
+    //   page: page,
+    //   size: ROWS_PER_PAGE,
+    //   sort: `${sort},desc`,
+    // }
     if (type === MyAnswerType.ALL) return await getMyAnswers(sort, page, ROWS_PER_PAGE)
     return await getMyLikedAnswers(sort, page, ROWS_PER_PAGE)
   }

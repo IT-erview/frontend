@@ -1,20 +1,26 @@
 // todo: refactoring
+// react
 import { useCallback, useEffect, useState } from 'react'
-import styles from 'views/common/layout/Navigation.module.css'
 import { Link, useHistory, withRouter } from 'react-router-dom'
-import { removeCookie } from 'views/common/form/Cookies'
-import { JWT_TOKEN } from 'constants/Oauth'
-import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { setModalOpen } from 'modules/loginModal'
+// oauth
+import { JWT_TOKEN } from 'constants/Oauth'
+import { removeCookie } from 'views/common/form/Cookies'
+// util
 import { TagSelectorItem } from 'utils/type'
+// style
+import styles from 'views/common/layout/Navigation.module.css'
+// redux
+import { setModalOpen } from 'modules/loginModal'
 import { ReducerType } from 'modules/rootReducer'
-import { getTags } from 'test/api/tags'
 import { setAllTags } from 'modules/allTags'
-import { setSearchTags } from 'modules/searchTags'
 import { setQuizTags } from 'modules/quizTags'
 import { setRegisterTags } from 'modules/registerTags'
 import { setResetQuiz } from 'modules/resetQuiz'
+import { setSearchTags } from 'modules/searchTags'
+// api
+import { getTags } from 'api/tag'
+import axios from 'axios'
 
 const Navigation = (props: any) => {
   const [userEmail, setUserEmail] = useState<string>('')

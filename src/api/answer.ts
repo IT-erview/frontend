@@ -1,6 +1,5 @@
 // @ts-ignore
 import Send from 'api/Send.ts'
-import { Quiz } from 'utils/type'
 
 export const likeAnswer = (answerId: number) => {
   return Send({
@@ -12,10 +11,11 @@ export const likeAnswer = (answerId: number) => {
   })
 }
 
-export const getAnswers = (questionId: number, sort: string, page: number, rowsPerPage = 10, desc = true) => {
+export const getAnswers = (questionId: number, params: object) => {
   return Send({
     method: 'get',
-    url: `/api/v1/answer/question/${questionId}?page=${page}&size=${rowsPerPage}&sort=${sort}${desc ? ',desc' : ''}`,
+    url: `/api/v1/answer/question/${questionId}`,
+    params: params,
   })
 }
 export const getMyAnswer = (questionId: number) => {
@@ -24,53 +24,39 @@ export const getMyAnswer = (questionId: number) => {
     url: `/api/v1/answer/${questionId}/mine`,
   })
 }
-export const getMyAnswers = (sort: string, page: number, rowsPerPage = 4, desc = true) => {
+export const getMyAnswers = (params: object) => {
   return Send({
     method: 'get',
-    url: `/api/v1/answer/mine?page=${page}&size=${rowsPerPage}&sort=${sort}${desc ? ',desc' : ''}`,
+    url: `/api/v1/answer/mine`,
+    params: params,
   })
 }
-export const getMyLikedAnswers = (sort: string, page: number, rowsPerPage = 4, desc = true) => {
+export const getMyLikedAnswers = (params: object) => {
   return Send({
     method: 'get',
-    url: `/api/v1/answer/like/mine?page=${page}&size=${rowsPerPage}&sort=${sort}${desc ? ',desc' : ''}`,
+    url: `/api/v1/answer/like/mine`,
+    params: params,
   })
 }
-export const getHitsAnswers = (sort: string) => {
+export const getHitsAnswers = (params: object) => {
   return Send({
     method: 'get',
-    url: `/api/v1/answer/hits?option=${sort}`,
+    url: `/api/v1/answer/hits`,
+    params: params,
   })
 }
-export const postAnswer = (answer: Quiz) => {
+export const postAnswer = (data: object) => {
   return Send({
     method: 'post',
     url: '/api/v1/answer',
-    data: {
-      content: answer.content,
-      questionId: answer.questionId,
-    },
+    data: data,
   })
 }
-export const postQuizAnswers = (answer: Quiz, type: string) => {
+export const postQuizAnswers = (params: object, data: object) => {
   return Send({
     method: 'post',
-    url: `/api/v1/question/quiz?type=${type}`,
-    data: {
-      content: answer.content,
-      questionId: answer.questionId,
-    },
-  })
-}
-export const addBookmark = (questionId: number) => {
-  return Send({
-    method: 'post',
-    url: `/api/v1/bookmark/${questionId}`,
-  })
-}
-export const getBookmarks = (sort: string, desc = true, page = 0, rowsPerPage = 30) => {
-  return Send({
-    method: 'get',
-    url: `/api/v1/bookmark/mine?page=${page}&size=${rowsPerPage}&sort=${sort}${desc ? ',desc' : ''}`,
+    url: `/api/v1/question/quiz`,
+    params: params,
+    data: data,
   })
 }

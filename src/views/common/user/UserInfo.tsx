@@ -1,7 +1,7 @@
-import { getQuestionStat } from 'test/api/question'
+import { useCallback, useEffect, useState } from 'react'
 import { TagCount } from 'utils/type'
 import styles from 'views/quiz/css/Quiz.module.css'
-import { useCallback, useEffect, useState } from 'react'
+import { getQuestionStat } from 'api/question'
 
 const UserInfo = () => {
   const userName = localStorage.getItem('userName') as string

@@ -1,12 +1,17 @@
+// react
 import { useEffect, useState } from 'react'
-import 'views/quiz/css/QuestionDetail.css'
-import AnswerComponent from 'views/common/answer/Answer'
-
-import { Answer, Question } from 'utils/type'
-import { getAnswers, getMyAnswer } from 'test/api/answer'
-import { getQuestion } from 'test/api/question'
-import SortSelectBox, { Sort } from 'views/common/form/SortSelectBox'
+// library
 import InfiniteScroll from 'react-infinite-scroll-component'
+// util
+import { Answer, Question } from 'utils/type'
+// style
+import 'views/quiz/css/QuestionDetail.css'
+// api
+import { getAnswers, getMyAnswer } from 'api/answer'
+import { getQuestion } from 'api/question'
+// component
+import SortSelectBox, { Sort } from 'views/common/form/SortSelectBox'
+import AnswerComponent from 'views/common/answer/Answer'
 
 // 북마크 개수, 해당되는 태그, 작성자 없음
 const QuestionDetail = (props: { questionId: number }) => {
@@ -22,7 +27,12 @@ const QuestionDetail = (props: { questionId: number }) => {
   const fetchAnswers = async () => {
     if (!hasMore) return
     const nextPage = page + 1
-    const fetchedAnswer = await getAnswers(props.questionId, sort, nextPage, ROWS_PER_PAGE)
+    let params = {
+      page: nextPage,
+      size: ROWS_PER_PAGE,
+      sort: `${sort},desc`,
+    }
+    const fetchedAnswer = await getAnswers(props.questionId, params)
     setPage(nextPage)
     setAnswers((answers) => [...answers, ...fetchedAnswer])
   }
@@ -37,7 +47,12 @@ const QuestionDetail = (props: { questionId: number }) => {
       if (question) setQuestion(question)
     }
     const refreshAnswers = async () => {
-      const fetchedAnswer = await getAnswers(props.questionId, sort, INITIAL_PAGE, ROWS_PER_PAGE)
+      let params = {
+        page: INITIAL_PAGE,
+        size: ROWS_PER_PAGE,
+        sort: `${sort},desc`,
+      }
+      const fetchedAnswer = await getAnswers(props.questionId, params)
       setHasMore(fetchedAnswer.length > 0)
       setAnswers(fetchedAnswer)
       setPage(INITIAL_PAGE)

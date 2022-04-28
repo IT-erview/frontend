@@ -1,16 +1,20 @@
 // todo: refactoring
-import SetQuizOptions from 'views/quiz/component/SetQuizOptions'
-import Navigation from 'views/common/layout/Navigation'
-import Footer from 'views/common/layout/Footer'
-import { QuizAnswer } from 'utils/type'
+// react
 import { useEffect } from 'react'
-import QuizSolving from 'views/quiz/component/QuizSolving'
 import { useHistory } from 'react-router-dom'
 import { useBeforeunload } from 'react-beforeunload'
 import { useDispatch, useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
+// util
+import { QuizAnswer } from 'utils/type'
+// redux
 import { setQuizQuestionsReset } from 'modules/quizQuestions'
 import { NextQuiz, setNextQuestionInit } from 'modules/nextQuestion'
+// component
+import SetQuizOptions from 'views/quiz/component/SetQuizOptions'
+import Navigation from 'views/common/layout/Navigation'
+import Footer from 'views/common/layout/Footer'
+import QuizSolving from 'views/quiz/component/QuizSolving'
 
 const SetQuizOptionsPage = () => {
   const quizzes = useSelector<ReducerType, Array<QuizAnswer>>((state) => state.quizQuestions)

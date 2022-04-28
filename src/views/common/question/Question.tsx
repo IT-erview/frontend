@@ -1,11 +1,17 @@
-import { getMyAnswer } from 'test/api/answer'
-import { Tag } from 'utils/type'
+// react
+import { useDispatch } from 'react-redux'
+// oauth
+import { JWT_TOKEN } from 'constants/Oauth'
+// util
 import { getZerofilledNumber } from 'utils/util'
 import { MAX_DISPLAYED_TAG_COUNT } from 'utils/config'
+import { Tag } from 'utils/type'
+// style
 import styles from 'views/common/question/Question.module.css'
-import { JWT_TOKEN } from 'constants/Oauth'
-import { useDispatch } from 'react-redux'
+// redux
 import { setModalOpen } from 'modules/loginModal'
+// api
+import { getMyAnswer } from 'api/answer'
 
 const Question = (props: {
   id: number

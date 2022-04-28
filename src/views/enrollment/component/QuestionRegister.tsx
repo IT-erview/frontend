@@ -1,14 +1,18 @@
-import 'views/enrollment/css/QuestionRegister.css'
+// react
 import { useState } from 'react'
 import { Form, Input, Button } from 'reactstrap'
 import { withRouter } from 'react-router-dom'
-import { MAX_TEXT_CONTENTS_LENGTH, MIN_TEXT_CONTENTS_LENGTH } from 'utils/config'
-import { checkTextContentsLength } from 'utils/util'
-import { postQuestion } from 'api/question'
-import { MAX_DISPLAYED_TAG_COUNT } from 'utils/config'
 import { useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
+// util
+import { MAX_TEXT_CONTENTS_LENGTH, MIN_TEXT_CONTENTS_LENGTH } from 'utils/config'
+import { checkTextContentsLength } from 'utils/util'
+import { MAX_DISPLAYED_TAG_COUNT } from 'utils/config'
 import { TagSelectorItem } from 'utils/type'
+// style
+import 'views/enrollment/css/QuestionRegister.css'
+// api
+import { postQuestion } from 'api/question'
 
 // 디자인 적용 전 데이터 등록을 위한 기능만 구현
 const QuestionRegister = ({ history }: { history: any }) => {
@@ -39,24 +43,15 @@ const QuestionRegister = ({ history }: { history: any }) => {
       level: 1,
     }
 
-    postQuestion(data)
-      .then((response: any) => {
-        window.alert('문제가 등록되었습니다.')
-        setRegistered(true)
-      })
-      .catch(() => {
-        window.alert('문제가 등록되지 않았습니다.')
-      })
-
-    // const result = await postQuestion(questionTextContents, selectedTag).finally(() => {
-    //   isRequesting = false
-    // })
-    // if (result) {
-    //   window.alert('문제가 등록되었습니다.')
-    //   setRegistered(true)
-    // } else {
-    //   window.alert('문제가 등록되지 않았습니다.')
-    // }
+    const result = await postQuestion(data).finally(() => {
+      isRequesting = false
+    })
+    if (result) {
+      window.alert('문제가 등록되었습니다.')
+      setRegistered(true)
+    } else {
+      window.alert('문제가 등록되지 않았습니다.')
+    }
   }
 
   const onTagSelect = (tagId: number) => {

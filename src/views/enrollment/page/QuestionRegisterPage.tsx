@@ -1,7 +1,7 @@
 // todo: refactoring
-import QuestionRegister from 'views/enrollment/component/QuestionRegister'
-import Navigation from 'views/common/layout/Navigation'
 import Footer from 'views/common/layout/Footer'
+import Navigation from 'views/common/layout/Navigation'
+import QuestionRegister from 'views/enrollment/component/QuestionRegister'
 
 const QuestionRegisterPage = () => {
   const questionRegisterImg = '/img/page_info.png'
