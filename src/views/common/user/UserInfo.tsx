@@ -11,8 +11,8 @@ const UserInfo = () => {
 
   const getQuestionTagStat = useCallback(async () => {
     const questionStat = await getQuestionStat()
-    if (questionStat) {
-      setTagStat(questionStat)
+    if (questionStat.data) {
+      setTagStat(questionStat.data)
     }
   }, [setTagStat])
 
