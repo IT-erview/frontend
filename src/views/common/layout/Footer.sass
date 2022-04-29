@@ -1,0 +1,51 @@
+@import 'sass/helpers/_variables.sass'
+@import 'sass/helpers/_extends.sass'
+@import 'sass/helpers/_mixins.scss'
+
+footer
+    .footer-wrap
+        +flex-box(space-between, center)
+        +size(null, 100%)
+        +padding(0 120px)
+
+    .footer-top
+        height: 180px
+        background-color: #111036
+
+        .footer-logo img
+            +size(93px)
+
+        .footer-menu
+            +flex-box(null, center)
+
+            li
+                +margin(right 100px)
+
+                &:last-child
+                    +margin(right 0)
+
+                a
+                    font-size: 18px
+                    font-weight: 800
+                    color: $white
+
+    .footer-bottom
+        height: 80px
+        background-color: #796ACA
+
+        .footer-office
+            font-weight: 800
+            font-size: 18px
+            letter-spacing: .8px
+            color: $white
+
+        .footer-information
+            +flex-box(null, center)
+
+            li
+                +margin(right 40px)
+                font-size: 16px
+                color: $white
+
+                &:last-child
+                    +margin(right 0)

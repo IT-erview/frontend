@@ -1,43 +1,37 @@
-import 'views/common/layout/Footer.css'
+import { Link } from 'react-router-dom'
+
+import 'views/common/layout/Footer.sass'
 
 const Footer = () => {
   return (
     <footer>
-      <div className="expand-footer-top">
-        <div className="footer-top">
-          <div className="footer-logo">
-            <img src="/img/LOGO3.png" alt="footer-logo" />
+      <div className={'footer-top'}>
+        <div className={'footer-wrap'}>
+          <div className={'footer-logo'}>
+            <img src="/img/logo.svg" alt="logo" />
           </div>
-
-          <div className="footer-top-div">
-            <h1>서비스</h1>
-            <h3>어쩌구</h3>
-            <h3>어쩌구</h3>
-          </div>
-
-          <div className="footer-top-div">
-            <h1>약관동의</h1>
-            <h3>어쩌구</h3>
-            <h3>저쩌구</h3>
-          </div>
-
-          <div className="footer-top-div">
-            <h1>문의</h1>
-            <h3>어쩌구</h3>
-            <h3>저쩌구</h3>
-          </div>
-
-          <div className="footer-top-div">
-            <h1>고객센터</h1>
-            <h3>어쩌구</h3>
-            <h3>저쩌구</h3>
-          </div>
+          <ul className={'footer-menu'}>
+            <li>
+              <Link to="/">약관동의</Link>
+            </li>
+            <li>
+              <Link to="/">문의</Link>
+            </li>
+            <li>
+              <Link to="/">고객센터</Link>
+            </li>
+          </ul>
         </div>
       </div>
-      <div className="footer-bottom-expand">
-        <div className="footer-bottom-div">
-          <h1>2021 txtxtxtx</h1>
-          <h1> 서울 강남구 해산로 등등</h1>
+      <div className={'footer-bottom'}>
+        <div className={'footer-wrap'}>
+          <span className={'footer-office'}>2021 IT'erview</span>
+          <ul className={'footer-information'}>
+            <li>서울특별시 강남구 해산로 103길 면접빌딩 101호 잇터뷰</li>
+            <li>대표 : 김문준</li>
+            <li>Fax : 02 2593 4940</li>
+            <li>Email : iterview.cs@gmail.com</li>
+          </ul>
         </div>
       </div>
     </footer>
