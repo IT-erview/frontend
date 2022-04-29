@@ -1,5 +1,5 @@
 import { Question } from 'utils/type'
-import 'views/common/layout/Navigation.css'
+// import 'views/common/layout/Navigation.css'
 import QuestionComponent from 'views/common/question/Question'
 
 const QuestionList = (props: { questions: Array<Question> }) => {
