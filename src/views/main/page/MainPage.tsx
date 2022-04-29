@@ -5,8 +5,6 @@ import { useCallback, useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { ReducerType } from 'modules/rootReducer'
-// oauth
-import { JWT_TOKEN } from 'constants/Oauth'
 // util
 import { MAX_SEARCH_TAG_LENGTH } from 'utils/config'
 import { Answer as AnswerType, Question as QuestionType, TagSelectorItem } from 'utils/type'
@@ -23,10 +21,7 @@ import Footer from 'views/common/layout/Footer'
 import LoginModal from 'views/common/login/LoginModal'
 import Question from 'views/common/question/Question'
 import Answer from 'views/common/answer/Answer'
-import axios from 'axios'
 
-// header 설정
-axios.defaults.headers.common['Authorization'] = JWT_TOKEN ? `Bearer ${JWT_TOKEN}` : ''
 // enum FeatureDescriptionType {
 //   SEARCH,
 //   REGISTER,

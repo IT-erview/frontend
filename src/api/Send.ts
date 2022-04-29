@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { JWT_TOKEN } from 'constants/Oauth'
 
+axios.defaults.headers.common['Authorization'] = JWT_TOKEN ? `Bearer ${JWT_TOKEN}` : ''
+
 const instance = axios.create({
   baseURL: '/',
   headers: {
