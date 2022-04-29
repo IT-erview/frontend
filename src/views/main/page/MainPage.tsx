@@ -133,7 +133,7 @@ const MainPage = () => {
   const showTags = searchingTags.map((tag, index) => {
     return (
       <li key={index}>
-        <button onClick={() => selectTag(tag)} className={`${tag.isSelected ? 'tag-selected' : ''} tag`}>
+        <button onClick={() => selectTag(tag)} className={`${tag.isSelected ? 'selected' : ''} tag`}>
           {tag.name}
         </button>
       </li>
@@ -169,14 +169,16 @@ const MainPage = () => {
       <article className={'hits-question'}>
         <div className={'title-wrap'}>
           <h2 className={'hits-title'}>베스트 면접 문제</h2>
-          <div className={'sort'}>
+          <div className={'sort-wrap'}>
             <button
+              type="button"
               className={`${questionSort === 'weekly' ? 'active' : ''} sort`}
               onClick={() => setQuestionSort('weekly')}>
               주간
             </button>
-            |
+            <span className={'bar'}></span>
             <button
+              type="button"
               className={`${questionSort === 'monthly' ? 'active' : ''} sort`}
               onClick={() => setQuestionSort('monthly')}>
               월간
@@ -215,15 +217,15 @@ const MainPage = () => {
       <article className={'hits-answer'}>
         <div className={'title-wrap'}>
           <h2 className={'hits-title'}>베스트 면접 답변</h2>
-          <div className={'hits-sort'}>
+          <div className={'sort-wrap'}>
             <button
-              className={`${questionSort === 'weekly' ? 'active' : ''} sort`}
+              className={`${answerSort === 'weekly' ? 'active' : ''} sort`}
               onClick={() => setAnswerSort('weekly')}>
               주간
             </button>
-            |
+            <span className={'bar'}></span>
             <button
-              className={`${questionSort === 'monthly' ? 'active' : ''} sort`}
+              className={`${answerSort === 'monthly' ? 'active' : ''} sort`}
               onClick={() => setAnswerSort('monthly')}>
               월간
             </button>
@@ -261,7 +263,7 @@ const MainPage = () => {
     <>
       <Navigation />
       <div className={`${loginModal ? 'blur' : ''} main`}>
-        <section className={'banner-wrap'} style={{ background: 'url(img/background_0.png) no-repeat center center' }}>
+        <section className={'banner-wrap'} style={{ backgroundImage: 'url(img/background_0.png)' }}>
           <div className={'container'}>
             <article className={'main-title-wrap'}>
               <div className={'logo-wrap'}>
@@ -308,8 +310,8 @@ const MainPage = () => {
               </div>
             </article>
             <article className={'search-wrap'}>
+              <h2 className={'search-title'}>문제 검색</h2>
               <div className={'search-box'}>
-                <h2 className={'search-title'}>문제 검색</h2>
                 <div className={'search-input-wrap'}>
                   <input
                     type="text"
@@ -336,13 +338,11 @@ const MainPage = () => {
               </div>
 
               {selectedTags.length > 0 && (
-                <div className={'select-box'}>
-                  <div className={'selected-tag-wrap'}>
-                    <ul>{showSelectedTags}</ul>
-                    <button onClick={resetSelectedTags} className={'btn-reset'}>
-                      검색어 초기화 X
-                    </button>
-                  </div>
+                <div className={'selected-tag-wrap'}>
+                  <ul>{showSelectedTags}</ul>
+                  <button onClick={resetSelectedTags} className={'btn-reset'}>
+                    검색어 초기화 X
+                  </button>
                 </div>
               )}
               <div className={'tag-wrap'}>
