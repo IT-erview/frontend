@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
+import 'sass/app.sass'
 import App from './App'
 // import 'bootstrap/dist/css/bootstrap.css'
 import { BrowserRouter } from 'react-router-dom'

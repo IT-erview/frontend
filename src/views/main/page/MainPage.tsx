@@ -10,6 +10,8 @@ import { JWT_TOKEN } from 'constants/Oauth'
 // util
 import { MAX_SEARCH_TAG_LENGTH } from 'utils/config'
 import { Answer as AnswerType, Question as QuestionType, TagSelectorItem } from 'utils/type'
+// style
+import styles from 'views/main/css/MainPage.module.css'
 // redux
 import { setSearchTagSelected } from 'modules/searchTags'
 // api
@@ -18,7 +20,6 @@ import { getHitsQuestions } from 'api/question'
 // component
 import Navigation from 'views/common/layout/Navigations'
 import Footer from 'views/common/layout/Footer'
-import styles from 'views/main/css/MainPage.module.css'
 import LoginModal from 'views/common/login/LoginModal'
 import Question from 'views/common/question/Question'
 import Answer from 'views/common/answer/Answer'

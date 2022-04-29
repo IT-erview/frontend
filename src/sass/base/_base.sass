@@ -1,0 +1,33 @@
+img
+    display: block
+
+.bold, strong, dt
+    font-weight: bold
+
+.hidden
+    @extend %hidden
+
+input[type="text"] , input[type="submit"] , input[type="button"]
+    -webkit-appearance: none
+
+input,
+textarea,
+select,
+button,
+a
+    font-family: $font-family-base
+    color: $font-color-base
+
+table
+    border-collapse: collapse
+    border-spacing: 0
+
+body
+    font-family: $font-family-base
+    font-size: $font-size-base
+    color: $font-color-base
+    -webkit-font-smoothing: antialiased
+    -moz-osx-font-smoothing: grayscale
+
+code
+    font-family: $font-family-code
