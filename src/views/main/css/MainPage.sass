@@ -1,0 +1,63 @@
+@import 'sass/helpers/_variables.sass'
+@import 'sass/helpers/_extends.sass'
+@import 'sass/helpers/_mixins.scss'
+
+@import 'sass/ui/_button.sass'
+
+.main
+    +margin(top 75px)
+
+    &.blur
+        filter: blur(6px)
+        -webkit-filter: blur(6px)
+
+    .banner-wrap
+        +border-radius(300px 300px 300px 0)
+        height: 800px
+        background-size: cover
+
+        .main-title-wrap
+            +flex-box(flex-start, flex-end)
+            +padding(80px 95px 0 95px)
+
+            .logo-wrap
+                +margin(right 40px)
+
+            p
+                font-size: 16px
+                line-height: 22px
+                color: $white
+
+        .information-wrap
+            +flex-box(flex-start, center)
+            +margin(top 80px)
+            +padding(0 95px)
+
+            .information-title-wrap
+                +margin(right 50px)
+
+                .btn-next, .btn-prev
+                    text-align: center
+
+                .btn-prev
+                    transform: rotate(180deg)
+
+                .information-title
+                    +size(75px)
+                    +margin(30px 0)
+                    +padding(12px 0)
+                    +border(4px solid $white)
+                    +border-radius(25px 25px 0 25px)
+                    +box-sizing(border-box)
+                    text-align: center
+    
+                    span
+                        font-weight: 800
+                        font-size: 18px
+                        color: $white
+
+            .information-content p
+                font-weight: bold
+                font-size: 18px
+                line-height: 24px
+                color: $white

@@ -9,7 +9,7 @@ import { ReducerType } from 'modules/rootReducer'
 import { MAX_SEARCH_TAG_LENGTH } from 'utils/config'
 import { Answer as AnswerType, Question as QuestionType, TagSelectorItem } from 'utils/type'
 // style
-import styles from 'views/main/css/MainPage.module.css'
+import 'views/main/css/MainPage.sass'
 // redux
 import { setSearchTagSelected } from 'modules/searchTags'
 // api
@@ -96,131 +96,11 @@ const MainPage = () => {
     else return result
   }
 
-  const showSelectedTags = selectedTags.map((tag, index) => {
-    return (
-      <button key={index} className={styles.selectedTags} onClick={() => selectTag(tag)}>
-        {tag.name} X
-      </button>
-    )
-  })
-
-  const showTags = searchingTags.map((tag, index) => {
-    return (
-      <button
-        key={index}
-        onClick={() => selectTag(tag)}
-        className={tag.isSelected ? styles.questionSearchTagSelected : styles.questionSearchTagDeselected}>
-        {tag.name}
-      </button>
-    )
-  })
-
   const resetSelectedTags = () => {
     selectedTags.forEach((tag) => {
       onTagSelect(tag.id, !tag.isSelected)
     })
     setSelectedTags([])
-  }
-
-  const moreHideBtn = (hitsLength: number, more: boolean) => {
-    if (hitsLength > 3) {
-      return more ? (
-        <>
-          {'숨기기'} <img src="img/hide_btn.png" alt="hideBtn" className={styles.moreHideArrow} />
-        </>
-      ) : (
-        <>
-          {'더보기'} <img src="img/more_btn.png" alt="moreBtn" className={styles.moreHideArrow} />
-        </>
-      )
-    } else return null
-  }
-
-  const showHitsQuestions = () => {
-    return (
-      <div className={styles.hitsQuestions}>
-        <span className={styles.hitsTitle}>베스트 면접 문제</span>
-        <div className={styles.sort}>
-          <button
-            className={questionSort === 'weekly' ? styles.sortSelected : styles.sortDeselected}
-            onClick={() => setQuestionSort('weekly')}>
-            주간
-          </button>
-          |
-          <button
-            className={questionSort === 'monthly' ? styles.sortSelected : styles.sortDeselected}
-            onClick={() => setQuestionSort('monthly')}>
-            월간
-          </button>
-        </div>
-        <div className={styles.hitsLine}></div>
-        {hitsQuestions.length > 0 &&
-          hitsQuestions.map((question, idx) => {
-            if (!moreQuestion && idx >= 3) return null
-            return (
-              <Question
-                key={question.id}
-                id={question.id}
-                number={idx + 1}
-                content={question.content}
-                tagList={question.tagList}
-                answer={question.mostLikedAnswer ? question.mostLikedAnswer.content : ''}
-                bookmarkCount={question.bookmarkCount}
-                bookmark={question.bookmark}
-              />
-            )
-          })}
-        <div className={styles.more}>
-          <button onClick={() => setMoreQuestion((prev) => !prev)} className={styles.moreHideBtn}>
-            {moreHideBtn(hitsQuestions.length, moreQuestion)}
-          </button>
-        </div>
-      </div>
-    )
-  }
-
-  const showHitsAnswers = () => {
-    return (
-      <div className={styles.hitsAnswers}>
-        <h1 className={styles.hitsTitle}>베스트 면접 답변</h1>
-        <div className={styles.sort}>
-          <button
-            className={answerSort === 'weekly' ? styles.sortSelected : styles.sortDeselected}
-            onClick={() => setAnswerSort('weekly')}>
-            주간
-          </button>
-          |
-          <button
-            className={answerSort === 'monthly' ? styles.sortSelected : styles.sortDeselected}
-            onClick={() => setAnswerSort('monthly')}>
-            월간
-          </button>
-        </div>
-
-        <div className={styles.hitsLine}></div>
-        {hitsAnswers.length > 0 &&
-          hitsAnswers.map((answer, idx) => {
-            if (!moreAnswer && idx >= 3) return null
-            return (
-              <Answer
-                key={answer.id}
-                id={answer.questionId}
-                number={idx + 1}
-                content={answer.questionContent!}
-                tagList={answer.tags}
-                answer={answer.content}
-                likeCount={answer.liked}
-                like={answer.like}
-              />
-            )
-          })}
-        <div className={styles.more}>
-          <button onClick={() => setMoreAnswer((prev) => !prev)} className={styles.moreHideBtn}>
-            {moreHideBtn(hitsAnswers.length, moreAnswer)}
-          </button>
-        </div>
-      </div>
-    )
   }
 
   useEffect(() => {
@@ -250,92 +130,233 @@ const MainPage = () => {
     getAnswers()
   }, [getAnswers])
 
-  return (
-    <>
-      <div className={loginModal ? styles.blur : styles.main}>
-        <Navigation />
-        <div className={styles.banner}>
-          <div className={styles.backgroundBox}>
-            <img className={styles.backgroundCover} src="img/background_0.png" alt="background" />
-          </div>
-          <div className={styles.logo}>
-            <img src="img/iterview_logo_white.png" alt="logo" />
-          </div>
-          <p className={styles.introduction}>
-            IT’erview는 개발자들의 면접을 효율적으로 도와주는 서비스입니다. 체계적인 면접 학습을 경험해보세요.
-          </p>
-          <div>
-            <div className={styles.contentIntroductionUp}>
-              <svg width="24" height="12" viewBox="0 0 24 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M1 1L11.1538 10.3077V10.3077C11.6212 10.775 12.3788 10.775 12.8462 10.3077V10.3077L23 1"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </div>
-            <div className={styles.contentIntroductionTitle}>
-              <p className={styles.contentIntroductionTitleText}>퀴즈</p>
-            </div>
-            <div className={styles.contentIntroductionContent}>
-              마이페이지, 문제검색, 퀴즈에 대한 자세한 설명 및 사용법을 설명해주는 박스입니다.
-              <br />
-              사용자가 로그인하면 해당 박스는 사용자의 개인 정보를 보여주는 박스로 변경될 예정입니다.
-            </div>
-            <div className={styles.contentIntroductionDown}>
-              <svg width="24" height="12" viewBox="0 0 24 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M1 1L11.1538 10.3077V10.3077C11.6212 10.775 12.3788 10.775 12.8462 10.3077V10.3077L23 1"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </div>
-          </div>
-          <div className={styles.questionSearchBox}>
-            <div className={styles.questionSearchTitle}>문제 검색</div>
-            <input
-              type="text"
-              maxLength={MAX_SEARCH_TAG_LENGTH}
-              value={tagSearchText}
-              onChange={(e) => {
-                setTagSearchText(e.target.value)
-              }}
-              placeholder="검색어를 입력해주세요."
-              className={styles.questionSearchText}
-            />
-            <button
-              onClick={() => {
-                history.push('/QuestionSearch')
-              }}
-              className={styles.questionSearchBtn}>
-              검색하기
-            </button>
+  const showTags = searchingTags.map((tag, index) => {
+    return (
+      <li key={index}>
+        <button onClick={() => selectTag(tag)} className={`${tag.isSelected ? 'tag-selected' : ''} tag`}>
+          {tag.name}
+        </button>
+      </li>
+    )
+  })
 
-            <div className={styles.questionSearchLine} />
-            <p className={styles.questionSearchExplain}>
-              일일이 찾아야 했던 면접 질문과 답변들, 검증되지 않았던 정보들, 한 번에 검색하고 검증된 정보를 받아보세요.
-            </p>
-            <div className={styles.selectedTagBox}>
-              <div className={styles.selectedTagsSection}>{showSelectedTags}</div>
-              <button
-                onClick={resetSelectedTags}
-                className={selectedTags.length > 0 ? styles.questionSearchResetBtn : styles.questionSearchResetNone}>
-                검색어 초기화 X
-              </button>
-              <div className={selectedTags.length > 0 ? styles.selectedTagsLine : ''} />
-            </div>
-            <div className={styles.questionSearchTag}>{showTags}</div>
+  const showSelectedTags = selectedTags.map((tag, index) => {
+    return (
+      <li key={index}>
+        <button className={'selected-tag'} onClick={() => selectTag(tag)}>
+          {tag.name} X
+        </button>
+      </li>
+    )
+  })
+
+  const moreHideBtn = (hitsLength: number, more: boolean) => {
+    if (hitsLength > 3) {
+      return more ? (
+        <>
+          {'숨기기'} <img src="img/hide_btn.png" alt="button-hide" className={'btn-hide-img'} />
+        </>
+      ) : (
+        <>
+          {'더보기'} <img src="img/more_btn.png" alt="button-more" className={'btn-more-img'} />
+        </>
+      )
+    } else return null
+  }
+
+  const showHitsQuestions = () => {
+    return (
+      <article className={'hits-question'}>
+        <div className={'title-wrap'}>
+          <h2 className={'hits-title'}>베스트 면접 문제</h2>
+          <div className={'sort'}>
+            <button
+              className={`${questionSort === 'weekly' ? 'active' : ''} sort`}
+              onClick={() => setQuestionSort('weekly')}>
+              주간
+            </button>
+            |
+            <button
+              className={`${questionSort === 'monthly' ? 'active' : ''} sort`}
+              onClick={() => setQuestionSort('monthly')}>
+              월간
+            </button>
           </div>
         </div>
-        <div className="body">
-          <div className="hit-section">
+        <div className={'content-wrap'}>
+          {hitsQuestions.length > 0 &&
+            hitsQuestions.map((question, idx) => {
+              if (!moreQuestion && idx >= 3) return null
+              return (
+                <Question
+                  key={question.id}
+                  id={question.id}
+                  number={idx + 1}
+                  content={question.content}
+                  tagList={question.tagList}
+                  answer={question.mostLikedAnswer ? question.mostLikedAnswer.content : ''}
+                  bookmarkCount={question.bookmarkCount}
+                  bookmark={question.bookmark}
+                />
+              )
+            })}
+        </div>
+        <div className={'btn-wrap'}>
+          <button onClick={() => setMoreQuestion((prev) => !prev)} className={'btn-more-hide'}>
+            {moreHideBtn(hitsQuestions.length, moreQuestion)}
+          </button>
+        </div>
+      </article>
+    )
+  }
+
+  const showHitsAnswers = () => {
+    return (
+      <article className={'hits-answer'}>
+        <div className={'title-wrap'}>
+          <h2 className={'hits-title'}>베스트 면접 답변</h2>
+          <div className={'hits-sort'}>
+            <button
+              className={`${questionSort === 'weekly' ? 'active' : ''} sort`}
+              onClick={() => setAnswerSort('weekly')}>
+              주간
+            </button>
+            |
+            <button
+              className={`${questionSort === 'monthly' ? 'active' : ''} sort`}
+              onClick={() => setAnswerSort('monthly')}>
+              월간
+            </button>
+          </div>
+        </div>
+
+        <div className={'content-wrap'}>
+          {hitsAnswers.length > 0 &&
+            hitsAnswers.map((answer, idx) => {
+              if (!moreAnswer && idx >= 3) return null
+              return (
+                <Answer
+                  key={answer.id}
+                  id={answer.questionId}
+                  number={idx + 1}
+                  content={answer.questionContent!}
+                  tagList={answer.tags}
+                  answer={answer.content}
+                  likeCount={answer.liked}
+                  like={answer.like}
+                />
+              )
+            })}
+        </div>
+        <div className={'btn-wrap'}>
+          <button onClick={() => setMoreAnswer((prev) => !prev)} className={'btn-more-hide'}>
+            {moreHideBtn(hitsAnswers.length, moreAnswer)}
+          </button>
+        </div>
+      </article>
+    )
+  }
+
+  return (
+    <>
+      <Navigation />
+      <div className={`${loginModal ? 'blur' : ''} main`}>
+        <section className={'banner-wrap'} style={{ background: 'url(img/background_0.png) no-repeat center center' }}>
+          <div className={'container'}>
+            <article className={'main-title-wrap'}>
+              <div className={'logo-wrap'}>
+                <img src="img/iterview_logo_white.png" className={'logo'} alt="logo" />
+              </div>
+              <p className={'introduction'}>
+                IT’erview는 개발자들의 면접을 효율적으로 도와주는 서비스입니다.
+                <br />
+                체계적인 면접 학습을 경험해보세요.
+              </p>
+            </article>
+            <article className={'information-wrap'}>
+              <div className={'information-title-wrap'}>
+                <div className={'btn-prev'}>
+                  <svg width="24" height="12" viewBox="0 0 24 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M1 1L11.1538 10.3077V10.3077C11.6212 10.775 12.3788 10.775 12.8462 10.3077V10.3077L23 1"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </div>
+                <div className={'information-title'}>
+                  <span>퀴즈</span>
+                </div>
+                <div className={'btn-next'}>
+                  <svg width="24" height="12" viewBox="0 0 24 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M1 1L11.1538 10.3077V10.3077C11.6212 10.775 12.3788 10.775 12.8462 10.3077V10.3077L23 1"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <div className={'information-content'}>
+                <p>
+                  마이페이지, 문제검색, 퀴즈에 대한 자세한 설명 및 사용법을 설명해주는 박스입니다.
+                  <br />
+                  사용자가 로그인하면 해당 박스는 사용자의 개인 정보를 보여주는 박스로 변경될 예정입니다.
+                </p>
+              </div>
+            </article>
+            <article className={'search-wrap'}>
+              <div className={'search-box'}>
+                <h2 className={'search-title'}>문제 검색</h2>
+                <div className={'search-input-wrap'}>
+                  <input
+                    type="text"
+                    maxLength={MAX_SEARCH_TAG_LENGTH}
+                    value={tagSearchText}
+                    onChange={(e) => {
+                      setTagSearchText(e.target.value)
+                    }}
+                    placeholder="검색어를 입력해주세요."
+                    className={'search-input'}
+                  />
+                  <button
+                    onClick={() => {
+                      history.push('/QuestionSearch')
+                    }}
+                    className={'search-button'}>
+                    검색하기
+                  </button>
+                </div>
+                <p className={'search-information'}>
+                  일일이 찾아야 했던 면접 질문과 답변들, 검증되지 않았던 정보들, 한 번에 검색하고 검증된 정보를
+                  받아보세요.
+                </p>
+              </div>
+
+              {selectedTags.length > 0 && (
+                <div className={'select-box'}>
+                  <div className={'selected-tag-wrap'}>
+                    <ul>{showSelectedTags}</ul>
+                    <button onClick={resetSelectedTags} className={'btn-reset'}>
+                      검색어 초기화 X
+                    </button>
+                  </div>
+                </div>
+              )}
+              <div className={'tag-wrap'}>
+                <ul>{showTags}</ul>
+              </div>
+            </article>
+          </div>
+        </section>
+        <section className="content-wrap">
+          <div className={'container'}>
             {showHitsQuestions()}
             {showHitsAnswers()}
           </div>
-        </div>
+        </section>
       </div>
       <Footer />
       <LoginModal />
