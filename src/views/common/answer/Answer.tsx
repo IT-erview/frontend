@@ -1,4 +1,3 @@
-// import 'css/Answer.css'
 // react
 import { useDispatch } from 'react-redux'
 //oauth
@@ -54,8 +53,7 @@ const Answer = (props: {
   }
 
   return (
-    <div>
-      {console.log(props.id)}
+    <>
       <button className={styles.questionBox} onClick={moveToQuestionDetail}>
         <div className={styles.questionInfo}>
           <div className={styles.questionNumber}>{getZerofilledNumber(props.number)}</div>
@@ -89,7 +87,7 @@ const Answer = (props: {
             })}
         </div>
       </button>
-    </div>
+    </>
   )
 }
 

@@ -7,7 +7,7 @@ import { getZerofilledNumber } from 'utils/util'
 import { MAX_DISPLAYED_TAG_COUNT } from 'utils/config'
 import { Tag } from 'utils/type'
 // style
-import styles from 'views/common/question/Question.module.css'
+import 'views/common/question/Question.sass'
 // redux
 import { setModalOpen } from 'modules/loginModal'
 // api
@@ -44,41 +44,39 @@ const Question = (props: {
   }
 
   return (
-    <div>
-      {console.log(props)}
-      <button onClick={moveToQuestionDetail} className={styles.questionBox}>
-        <div className={styles.questionInfo}>
-          <div className={styles.questionNumber}>{getZerofilledNumber(props.number)}</div>
-          <div className={styles.line}></div>
-          <div className={styles.bookmarkSpace}>
+    <>
+      <div onClick={moveToQuestionDetail} className={'question-box'}>
+        <div className={'question-info-wrap'}>
+          <div className={'question-index-wrap'}>
+            <span className={'question-index'}>{getZerofilledNumber(props.number)}</span>
+          </div>
+          <div className={'question-bookmark-wrap'}>
             <img
               src={props.bookmark ? '../img/bookmark_true.png' : '../img/bookmark_false.png'}
               alt="questionBookmark"
-              className={styles.bookmark}
+              className={'question-bookmark-icon'}
             />
-            <div className={styles.bookmarkCount}>
-              <p className={styles.bookmarkCountText}>{props.bookmarkCount}</p>
-            </div>
+            <p className={'question-bookmark-count'}>{props.bookmarkCount}</p>
           </div>
         </div>
-        <div className={styles.questionContent}>
-          <h1 className={styles.questionTitle}>{props.content}</h1>
-          <p className={styles.questionAnswer}>{props.answer ? props.answer : '(등록된 답변이 없습니다)'}</p>
-        </div>
-        <div className={styles.questionTags}>
-          {props.tagList &&
-            props.tagList.map((tag, index) => {
-              return (
-                index < MAX_DISPLAYED_TAG_COUNT && (
-                  <span className={styles.questionTag} key={index}>
-                    {tag.tagTitle}
-                  </span>
+        <div className={'question-content-wrap'}>
+          <h1 className={'question-title'}>{props.content}</h1>
+          <p className={'question-answer'}>{props.answer ? props.answer : '(등록된 답변이 없습니다)'}</p>
+          <div className={'question-tag-wrap'}>
+            {props.tagList &&
+              props.tagList.map((tag, index) => {
+                return (
+                  index < MAX_DISPLAYED_TAG_COUNT && (
+                    <span className={'question-tag'} key={index}>
+                      {tag.tagTitle}
+                    </span>
+                  )
                 )
-              )
-            })}
+              })}
+          </div>
         </div>
-      </button>
-    </div>
+      </div>
+    </>
   )
 }
 

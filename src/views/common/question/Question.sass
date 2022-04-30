@@ -1,0 +1,64 @@
+@import 'sass/helpers/_variables.sass'
+@import 'sass/helpers/_extends.sass'
+@import 'sass/helpers/_mixins.scss'
+
+@import 'sass/ui/_button.sass'
+
+.question-box
+    +flex-box(null, flex-start)
+    +size(1060px, 213px)
+    +margin(top 25px)
+    +padding(45px 97px 0 90px)
+    +border-radius(15px)
+    +box-sizing(border-box)
+    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1)
+
+    .question-index-wrap
+        +padding(bottom 10px)
+        +border(1px solid $page-color, bottom)
+
+        .question-index
+            font-weight: 800
+            font-size: 58px
+            color: $page-color
+
+    .question-bookmark-wrap
+        +margin(top 10px)
+        +flex-box(center, center)
+
+        img
+            +size(15px, 14px)
+
+        .question-bookmark-count
+            +margin(left 10px)
+            color: $page-color
+
+    .question-content-wrap
+        +margin(top 10px left 60px)
+        min-width: 745px
+
+        .question-title
+            +ellipse(745px)
+            font-weight: 800
+            font-size: 18px
+            line-height: 20px
+
+        .question-answer
+            +margin(top 15px)
+            +ellipse(745px, 2)
+            min-height: 36px
+            line-height: 18px
+            color: #a0a0a0
+
+        .question-tag-wrap
+            overflow: hidden
+
+            .question-tag
+                +padding(5px 18px)
+                +border-radius(17px 17px 17px 0)
+                +border(2px solid $page-color)
+                +box-sizing(border-box)
+                display: block
+                float: right
+                color: $page-color
+
