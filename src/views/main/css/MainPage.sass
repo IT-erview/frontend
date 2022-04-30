@@ -154,18 +154,18 @@
                             background-color: #796aca4d
 
     .content-wrap
-        +margin(top 50px bottom 100px)
+        +margin(top 50px)
 
-        .title-wrap
+        .hits-title-wrap
             +flex-box(space-between, flex-end)
             +padding(right 85px left 92px bottom 32px)
             +border(2px solid $border-color-light, bottom)
 
-        .hits-title
-            font-weight: 800
-            font-size: 26px
+            .hits-title
+                font-weight: 800
+                font-size: 26px
 
-        .sort-wrap
+        .hits-sort-wrap
             +flex-box(flex-start, center)
 
             .sort
@@ -180,6 +180,25 @@
                 +size(1px, 14px)
                 display: block
                 background-color: #a0a0a0
+
+        .hits-btn-wrap
+            +flex-box(center, center)
+            +margin(top 45px)
+
+            .btn-more-hide
+                +btn()
+                +flex-box(center, center)
+
+                span
+                    font-weight: 800
+                    font-size: 18px
+                    line-height: 20px
+                    color: #6a737d
+
+                img
+                    +margin(left 5px)
+                    +size(12px)
+
 
         .hits-answer
             +margin(top 75px)

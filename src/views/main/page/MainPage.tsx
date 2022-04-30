@@ -154,11 +154,11 @@ const MainPage = () => {
     if (hitsLength > 3) {
       return more ? (
         <>
-          {'숨기기'} <img src="img/hide_btn.png" alt="button-hide" className={'btn-hide-img'} />
+          <span>{'숨기기'}</span> <img src="img/hide_btn.png" alt="button-hide" className={'btn-hide-img'} />
         </>
       ) : (
         <>
-          {'더보기'} <img src="img/more_btn.png" alt="button-more" className={'btn-more-img'} />
+          <span>{'더보기'}</span> <img src="img/more_btn.png" alt="button-more" className={'btn-more-img'} />
         </>
       )
     } else return null
@@ -167,9 +167,9 @@ const MainPage = () => {
   const showHitsQuestions = () => {
     return (
       <article className={'hits-question'}>
-        <div className={'title-wrap'}>
+        <div className={'hits-title-wrap'}>
           <h2 className={'hits-title'}>베스트 면접 문제</h2>
-          <div className={'sort-wrap'}>
+          <div className={'hits-sort-wrap'}>
             <button
               type="button"
               className={`${questionSort === 'weekly' ? 'active' : ''} sort`}
@@ -185,7 +185,7 @@ const MainPage = () => {
             </button>
           </div>
         </div>
-        <div className={'content-wrap'}>
+        <div className={'hits-content-wrap'}>
           {hitsQuestions.length > 0 &&
             hitsQuestions.map((question, idx) => {
               if (!moreQuestion && idx >= 3) return null
@@ -203,7 +203,7 @@ const MainPage = () => {
               )
             })}
         </div>
-        <div className={'btn-wrap'}>
+        <div className={'hits-btn-wrap'}>
           <button onClick={() => setMoreQuestion((prev) => !prev)} className={'btn-more-hide'}>
             {moreHideBtn(hitsQuestions.length, moreQuestion)}
           </button>
@@ -215,9 +215,9 @@ const MainPage = () => {
   const showHitsAnswers = () => {
     return (
       <article className={'hits-answer'}>
-        <div className={'title-wrap'}>
+        <div className={'hits-title-wrap'}>
           <h2 className={'hits-title'}>베스트 면접 답변</h2>
-          <div className={'sort-wrap'}>
+          <div className={'hits-sort-wrap'}>
             <button
               className={`${answerSort === 'weekly' ? 'active' : ''} sort`}
               onClick={() => setAnswerSort('weekly')}>
@@ -232,7 +232,7 @@ const MainPage = () => {
           </div>
         </div>
 
-        <div className={'content-wrap'}>
+        <div className={'hits-content-wrap'}>
           {hitsAnswers.length > 0 &&
             hitsAnswers.map((answer, idx) => {
               if (!moreAnswer && idx >= 3) return null
@@ -250,7 +250,7 @@ const MainPage = () => {
               )
             })}
         </div>
-        <div className={'btn-wrap'}>
+        <div className={'hits-btn-wrap'}>
           <button onClick={() => setMoreAnswer((prev) => !prev)} className={'btn-more-hide'}>
             {moreHideBtn(hitsAnswers.length, moreAnswer)}
           </button>
