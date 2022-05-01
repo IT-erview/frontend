@@ -9,8 +9,7 @@ import { MAX_TEXT_CONTENTS_LENGTH, MIN_TEXT_CONTENTS_LENGTH } from 'utils/config
 import { checkTextContentsLength } from 'utils/util'
 import { MAX_DISPLAYED_TAG_COUNT } from 'utils/config'
 import { TagSelectorItem } from 'utils/type'
-// style
-import 'views/enrollment/css/QuestionRegister.css'
+
 // api
 import { postQuestion } from 'api/question'
 
@@ -67,97 +66,99 @@ const QuestionRegister = ({ history }: { history: any }) => {
   }
 
   return (
-    <div className="question-register">
-      <div className="question-register-info-detail">
-        알고싶은
-        <br />
-        문제를 작성하고
-        <br />
-        태그를 걸어주세요!
-      </div>
+    <>
       {isRegistered ? (
-        <>
-          <div className="question-register-after">
-            <div className="question-register-after-content">
-              <span>
-                문제 등록이 완료되었습니다!
-                <br />
-                마이페이지로 돌아가 문제에 대한 답변을 작성해보세요.
-              </span>
-              <div className="question-register-after-question">
-                <h1>01</h1>
-                <h2>{questionTextContents}</h2>
+        <div className={'register-complete'}>
+          <div className={'register-complete-content-wrap'}>
+            <div className={'register-complete-text'}>
+              <p>문제 등록이 완료되었습니다!</p>
+              <p>마이페이지로 돌아가 문제에 대한 답변을 작성해보세요.</p>
+            </div>
+            <div className={'register-complete-box'}>
+              <span className={'complete-box-index'}>01</span>
+              <p className={'complete-box-content'}>{questionTextContents}</p>
+              <div className={'complete-box-tags-wrap'}>
                 {questionTags &&
                   questionTags.map((tag, index) => {
                     return (
                       index < MAX_DISPLAYED_TAG_COUNT &&
                       tag.isSelected && (
-                        <div className="question-register-after-tags" key={tag.id}>
+                        <div className="question-box-tag" key={tag.id}>
                           {tag.name}
                         </div>
                       )
                     )
                   })}
               </div>
-              <button
-                className="question-register-after-btn2"
-                onClick={() => {
-                  history.push('/')
-                }}>
-                홈으로 돌아가기
-              </button>
-              <button
-                className="question-register-after-btn1"
-                onClick={() => {
-                  history.push('/MyPage/MyRegisterQuestion')
-                }}>
-                마이페이지로 가기
-              </button>
             </div>
           </div>
-        </>
+          <div className="btn-wrap">
+            <button
+              className="btn-go-home"
+              onClick={() => {
+                history.push('/')
+              }}>
+              홈으로 돌아가기
+            </button>
+            <button
+              className="btn-go-mypage"
+              onClick={() => {
+                history.push('/MyPage/MyRegisterQuestion')
+              }}>
+              마이페이지로 가기
+            </button>
+          </div>
+        </div>
       ) : (
-        <>
-          <div className="question-register-input">
-            <Form>
-              <h1>문제 입력</h1>
-              <div className="question-register-hr" />
-              <span id="text-counts" style={{ color: checkTextContentsLength(questionTextContents) ? 'black' : 'red' }}>
-                ( {questionTextContents.length} / {MAX_TEXT_CONTENTS_LENGTH} )
+        <div className={'question-register'}>
+          <div className={'register-title-wrap'}>
+            <h2 className={'register-title'}>문제 등록</h2>
+          </div>
+          <Form className={'register-form'}>
+            <div className={'register-form-title-wrap'}>
+              <h3>문제 작성</h3>
+              <span
+                id="text-counts"
+                style={{ color: checkTextContentsLength(questionTextContents) ? '#a0a0a0' : 'red' }}>
+                {questionTextContents.length} / {MAX_TEXT_CONTENTS_LENGTH}
               </span>
-              <Input
-                type="textarea"
-                value={questionTextContents}
-                maxLength={MAX_TEXT_CONTENTS_LENGTH}
-                onChange={(e) => {
-                  setQuestionTextContents(e.target.value)
-                }}
-                id="question-contents"
-                placeholder="알고싶은 면접 문제를 입력해주세요."
-              />
-            </Form>
-            <div className="question-register-tags">
-              <h2>문제 태그 선택</h2>
-              <div className="question-register-hr2" />
-              <div id="register-tags">
-                {/* <TagSelector tags={questionTags} onTagSelect={onTagSelect} /> */}
-                {questionTags.map((tag) => {
-                  return (
-                    <button
-                      className={tag.id === selectedTag ? 'selectedTag' : 'deselectedTag'}
-                      key={tag.id}
-                      onClick={() => onTagSelect(tag.id)}>
-                      {tag.name}
-                    </button>
-                  )
-                })}
-              </div>
-              <Button onClick={registerQuestion}>등록하기</Button>
+            </div>
+            <Input
+              type="textarea"
+              value={questionTextContents}
+              maxLength={MAX_TEXT_CONTENTS_LENGTH}
+              onChange={(e) => {
+                setQuestionTextContents(e.target.value)
+              }}
+              id="question-contents"
+              className={'question-content'}
+              placeholder="알고싶은 면접 문제를 입력해주세요."
+            />
+          </Form>
+          <div className="register-tags-wrap">
+            <h3>문제 종류 선택</h3>
+            <div id="register-tags" className={'register-tags-list-wrap'}>
+              {/* <TagSelector tags={questionTags} onTagSelect={onTagSelect} /> */}
+              {questionTags.map((tag) => {
+                return (
+                  <button
+                    className={`${tag.id === selectedTag ? 'selected' : ''} register-tag`}
+                    key={tag.id}
+                    onClick={() => onTagSelect(tag.id)}>
+                    {tag.name}
+                  </button>
+                )
+              })}
             </div>
           </div>
-        </>
+          <div className={'btn-wrap'}>
+            <Button className={'btn-register'} onClick={registerQuestion}>
+              등록하기
+            </Button>
+          </div>
+        </div>
       )}
-    </div>
+    </>
   )
 }
 

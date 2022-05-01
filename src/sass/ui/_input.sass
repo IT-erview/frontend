@@ -1,24 +1,24 @@
 %input-default
-  +padding(left 19px)
-  +box-sizing(border-box)
-  outline: none
-
-  &:focus
+    +box-sizing(border-box)
     outline: none
 
-%input-white-light
-  +border(0)
+    &:focus
+        outline: none
+
+%input-ghost
+    +border(0)
+    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1)
 
 @mixin input($type: null, $border: null, $radius: null)
-  @extend %input-default
+    @extend %input-default
 
-  @if $type == white-light-fill
-    @extend %input-white-light
+    @if $type == ghost
+        @extend %input-ghost
 
-  @if $border != null
-    @include border($border)
+    @if $border != null
+        @include border($border)
 
-  @if $radius != null
-    @include border-radius($radius)
-  @else
-    @include border-radius(0)
+    @if $radius != null
+        @include border-radius($radius)
+    @else
+        @include border-radius(0)
