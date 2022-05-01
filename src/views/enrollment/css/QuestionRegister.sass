@@ -29,18 +29,21 @@
             line-height: 20px
             color: $white
 
-        .question-register-tip
-            +size(238px, 127px)
-            +padding(40px 20px)
-            +border-radius(64px 64px 64px 0)
-            +position(absolute, 350px, 422px)
-            +box-sizing(border-box)
-            box-shadow: 3px 3px 20px rgba(0,0,0,0.1)
-            background-color: #E3E2F0
-            font-weight: 800
-            font-size: $font-size-large
-            line-height: 20px
-            text-align: center
+        .question-register-tip-wrap
+            +margin(top 30px)
+            +flex-box(flex-end)
+
+            .question-register-tip-box
+                +size(238px, 127px)
+                +padding(40px 20px)
+                +border-radius(64px 64px 64px 0)
+                +box-sizing(border-box)
+                box-shadow: 3px 3px 20px rgba(0,0,0,0.1)
+                background-color: #E3E2F0
+                font-weight: 800
+                font-size: $font-size-large
+                line-height: 20px
+                text-align: center
 
     .content-wrap
         +margin(top 73px bottom 78px)

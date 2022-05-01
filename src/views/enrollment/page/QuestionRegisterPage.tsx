@@ -19,10 +19,12 @@ const QuestionRegisterPage = () => {
               <br />
               직접 문제를 등록하고 내 답변을 비교해보세요!
             </p>
-            <div className="question-register-tip">
-              알고싶은
-              <br />
-              문제를 작성해주세요!
+            <div className="question-register-tip-wrap">
+              <div className="question-register-tip-box">
+                알고싶은
+                <br />
+                문제를 작성해주세요!
+              </div>
             </div>
           </div>
         </section>
