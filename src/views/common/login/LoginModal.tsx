@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 // oauth
 import { GOOGLE_AUTH_URL, GITHUB_AUTH_URL } from 'constants/Oauth'
 // style
-import styles from 'views/common/login/LoginModal.module.css'
+import 'views/common/login/LoginModal.sass'
 // redux
 import { ReducerType } from 'modules/rootReducer'
 import { setModalOpen } from 'modules/loginModal'
@@ -25,31 +25,24 @@ function LoginModal() {
   return (
     <div>
       {loginModal ? (
-        <div className={styles.modal}>
-          <section>
-            <button className={styles.close} onClick={close}>
-              &times;
-            </button>
-            <div className={styles.header}>
-              <img className={styles.iterviewLogo} src={iterviewLogo} alt="" />
-            </div>
-            <main>
-              <a href={GOOGLE_AUTH_URL}>
-                <button className={styles.googleLogin}>
-                  <img className={styles.googleLogo} src={googleLogo} alt="googleLogo" />
-                  <span className={styles.googleLoginText}>Google으로 계속하기</span>
-                </button>{' '}
-              </a>
-              <br />
-              <a href={GITHUB_AUTH_URL}>
-                <button className={styles.githubLogin}>
-                  <img className={styles.githubLogo} src={githubLogo} alt="githubLogo" />
-                  Github으로 계속하기
-                </button>
-              </a>
-            </main>
-          </section>
-        </div>
+        <section className={'login-modal'}>
+          <button className={'btn-close'} onClick={close}>
+            &times;
+          </button>
+          <div className={'modal-header'}>
+            <img src={iterviewLogo} className={'iterview-logo'} alt="iterview" />
+          </div>
+          <div className={'modal-content'}>
+            <a href={GOOGLE_AUTH_URL} className={'btn-login btn-google'}>
+              <img src={googleLogo} className={'login-icon'} alt="googleLogo" />
+              <span className={'login-text'}>Google으로 계속하기</span>
+            </a>
+            <a href={GITHUB_AUTH_URL} className={'btn-login btn-github'}>
+              <img src={githubLogo} className={'login-icon'} alt="githubLogo" />
+              <span className={'login-text github-text'}>Github으로 계속하기</span>
+            </a>
+          </div>
+        </section>
       ) : null}
     </div>
   )

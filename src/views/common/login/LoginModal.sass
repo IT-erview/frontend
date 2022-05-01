@@ -1,0 +1,55 @@
+@import 'sass/helpers/_variables.sass'
+@import 'sass/helpers/_extends.sass'
+@import 'sass/helpers/_mixins.scss'
+
+@import 'sass/ui/_button.sass'
+
+.login-modal
+    +padding(42px 35px 32px 35px)
+    +position(fixed, 50%, null, null, 50%)
+    +border-radius(15px)
+    background-color: $white
+    transform: translate(-50%, -50%)
+    z-index: 2000
+
+    .btn-close
+        +btn()
+        +size(20px, 20px)
+        +margin(15px)
+        +position(absolute, 0, 0)
+        color: #b8b8b8
+
+    .modal-header
+        +size(91px, 39px)
+        +margin(0 auto)
+
+        img
+            +size(91px, 39px)
+
+    .modal-content
+        +margin(top 42px)
+
+        .btn-login
+            +size(360px)
+            +padding(11px 33px)
+            +border-radius(23px 23px 23px 0)
+            +flex-box(flex-start, center)
+            +box-sizing(border-box)
+
+            .login-icon
+                +size(22px, 22px)
+                +margin(right 44px)
+
+            .login-text
+                font-weight: bold
+                line-height: 18px
+
+        .btn-google
+            background-color: #E3E2F0
+
+        .btn-github
+            +margin(top 10px)
+            background-color: #000000
+
+            .github-text
+                color: $white
