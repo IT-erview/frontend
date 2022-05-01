@@ -7,7 +7,7 @@ import { getZerofilledNumber } from 'utils/util'
 import { Tag } from 'utils/type'
 import { MAX_DISPLAYED_TAG_COUNT } from 'utils/config'
 // style
-import styles from 'views/common/answer/Answer.module.css'
+import 'views/common/answer/Answer.sass'
 // redux
 import { setModalOpen } from 'modules/loginModal'
 // api
@@ -54,39 +54,38 @@ const Answer = (props: {
 
   return (
     <>
-      <button className={styles.questionBox} onClick={moveToQuestionDetail}>
-        <div className={styles.questionInfo}>
-          <div className={styles.questionNumber}>{getZerofilledNumber(props.number)}</div>
-          <div className={styles.line}></div>
-          <div className={styles.likeSpace}>
+      <div className={'answer-box'} onClick={moveToQuestionDetail}>
+        <div className={'answer-info-wrap'}>
+          <div className={'answer-index-wrap'}>
+            <span className={'answer-index'}>{getZerofilledNumber(props.number)}</span>
+          </div>
+          <div className={'answer-like-wrap'}>
             {/* <button onClick={like}>좋아요! {props.like}</button> */}
             <img
               src={props.like ? 'img/like_true.png' : 'img/like_false.png'}
+              className={'answer-like-icon'}
               alt="answerLike"
-              className={styles.like}
             />
-            <div className={styles.likeCount}>
-              <p>{props.likeCount}</p>
-            </div>
+            <p className={'answer-like-count'}>{props.likeCount}</p>
           </div>
         </div>
-        <div className={styles.questionContent}>
-          <h1 className={styles.questionTitle}>{props.content}</h1>
-          <p className={styles.questionAnswer}>{props.answer}</p>
-        </div>
-        <div className={styles.questionTags}>
-          {props.tagList &&
-            props.tagList.map((tag, index) => {
-              return (
-                index < MAX_DISPLAYED_TAG_COUNT && (
-                  <span className={styles.questionTag} key={index}>
-                    {tag.tagTitle}
-                  </span>
+        <div className={'answer-content-wrap'}>
+          <h3 className={'answer-title'}>{props.content}</h3>
+          <p className={'question-answer'}>{props.answer}</p>
+          <div className={'answer-tag-wrap'}>
+            {props.tagList &&
+              props.tagList.map((tag, index) => {
+                return (
+                  index < MAX_DISPLAYED_TAG_COUNT && (
+                    <span className={'answer-tag'} key={index}>
+                      {tag.tagTitle}
+                    </span>
+                  )
                 )
-              )
-            })}
+              })}
+          </div>
         </div>
-      </button>
+      </div>
     </>
   )
 }

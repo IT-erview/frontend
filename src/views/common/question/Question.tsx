@@ -45,7 +45,7 @@ const Question = (props: {
 
   return (
     <>
-      <div onClick={moveToQuestionDetail} className={'question-box'}>
+      <div className={'question-box'} onClick={moveToQuestionDetail}>
         <div className={'question-info-wrap'}>
           <div className={'question-index-wrap'}>
             <span className={'question-index'}>{getZerofilledNumber(props.number)}</span>
@@ -60,7 +60,7 @@ const Question = (props: {
           </div>
         </div>
         <div className={'question-content-wrap'}>
-          <h1 className={'question-title'}>{props.content}</h1>
+          <h3 className={'question-title'}>{props.content}</h3>
           <p className={'question-answer'}>{props.answer ? props.answer : '(등록된 답변이 없습니다)'}</p>
           <div className={'question-tag-wrap'}>
             {props.tagList &&

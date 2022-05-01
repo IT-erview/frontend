@@ -3,3 +3,64 @@
 @import 'sass/helpers/_mixins.scss'
 
 @import 'sass/ui/_button.sass'
+
+.answer-box
+    +flex-box(null, flex-start)
+    +size(1060px, 213px)
+    +margin(top 25px)
+    +padding(45px 97px 0 90px)
+    +border-radius(15px)
+    +box-sizing(border-box)
+    background-color: #231d4c
+    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1)
+
+    .answer-index-wrap
+        +padding(bottom 10px)
+        +border(1px solid $page-color, bottom)
+
+        .answer-index
+            font-weight: 800
+            font-size: 58px
+            color: $page-color
+
+    .answer-like-wrap
+        +margin(top 10px)
+        +flex-box(center, center)
+
+        .answer-like-icon
+            +size(15px, 14px)
+
+        .answer-like-count
+            +margin(left 10px)
+            color: $page-color
+
+    .answer-content-wrap
+        +margin(top 10px left 60px)
+        min-width: 745px
+
+        .answer-title
+            +ellipse(745px)
+            line-height: 18px
+            color: #a0a0a0
+
+        .question-answer
+            +margin(top 15px)
+            +ellipse(745px, 2)
+            min-height: 40px
+            font-size: 18px
+            font-weight: 800
+            line-height: 20px
+            color: $white
+
+        .answer-tag-wrap
+            overflow: hidden
+
+            .answer-tag
+                +padding(5px 18px)
+                +border-radius(17px 17px 17px 0)
+                +border(2px solid $page-color)
+                +box-sizing(border-box)
+                display: block
+                float: right
+                color: $page-color
+
