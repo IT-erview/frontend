@@ -32,7 +32,7 @@ const UserInfo = () => {
 
   return (
     <>
-      <div className={'user-info-box-wrap'}>
+      <article className={'user-info-box-wrap'}>
         <div className="container">
           <div className="user-info-box">
             {/* Todo: imgUrl 없다면 기본 프로필 사진으로 대체 */}
@@ -63,7 +63,7 @@ const UserInfo = () => {
             </div>
           </div>
         </div>
-      </div>
+      </article>
     </>
   )
 }

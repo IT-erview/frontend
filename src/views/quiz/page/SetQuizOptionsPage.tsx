@@ -52,11 +52,13 @@ const SetQuizOptionsPage = () => {
   return (
     <>
       <Navigation />
-      {quizzes.length > 0 && status !== NextQuiz.QUIT ? (
-        <QuizSolving quiz={quizzes[quizzes.length - 1].question} />
-      ) : (
-        <SetQuizOptions />
-      )}
+      <main className="quiz-wrap">
+        {quizzes.length > 0 && status !== NextQuiz.QUIT ? (
+          <QuizSolving quiz={quizzes[quizzes.length - 1].question} />
+        ) : (
+          <SetQuizOptions />
+        )}
+      </main>
       <Footer />
     </>
   )

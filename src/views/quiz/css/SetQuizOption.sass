@@ -1,0 +1,113 @@
+@import 'sass/helpers/_variables.sass'
+@import 'sass/helpers/_extends.sass'
+@import 'sass/helpers/_mixins.scss'
+
+@import 'sass/ui/_button.sass'
+
+.set-quiz-wrap
+    .banner-wrap
+        +margin(top 75px)
+        +border-radius(75px 75px 75px 0)
+        height: 364px
+        background-size: cover
+        background-repeat: no-repeat
+        background-position: center center
+
+        h1
+            +padding(top 152px)
+            text-align: left
+            font-weight: 800
+            font-size: 26px
+            line-height: 30px
+            color: $white
+
+        p
+            +padding(top 26px)
+            font-weight: bold
+            font-size: $font-size-large
+            line-height: 20px
+            color: $white
+
+        .set-quiz-tip-wrap
+            +margin(top 10px)
+            +flex-box(flex-end)
+
+            .set-quiz-tip-box
+                +flex-box(center, center)
+                +size(238px, 152px)
+                +padding(40px 20px)
+                +border-radius(64px 64px 64px 0)
+                +box-sizing(border-box)
+                box-shadow: 3px 3px 20px rgba(0,0,0,0.1)
+                background-color: #E3E2F0
+                font-weight: 800
+                font-size: $font-size-large
+                line-height: 20px
+                text-align: center
+
+    .content-wrap
+        +margin(top 70px bottom 145px)
+
+        .option-box-wrap
+            +margin(top 76px)
+
+            .option-box-title-wrap
+                +padding(left 30px right 30px bottom 24px)
+                +border(2px solid #e7e7e7, bottom)
+
+                h2
+                    font-weight: 800
+                    font-size: 26px
+
+        .selected-box-wrap
+            +margin(top 76px)
+
+            .selected-box-title-wrap
+                +padding(left 30px right 30px bottom 24px)
+                +border(2px solid #e7e7e7, bottom)
+
+                h2
+                    font-weight: 800
+                    font-size: 26px
+
+            .selected-tag-box
+                +margin(top 25px)
+                +padding(50px 90px 55px 90px)
+                +border-radius(15px)
+                background-color: #111036
+
+                .selected-tag-box-title-wrap
+                    +flex-box(space-between, flex-end)
+                    +padding(bottom 30px)
+                    +border(2px solid $page-color, bottom)
+
+                    h3
+                        font-weight: 800
+                        font-size: 26px
+                        color: $white
+
+                    .btn-reset
+                        +btn()
+                        font-size: 16px
+                        color: #a0a0a0
+
+            .selected-tags-list-wrap
+                +margin(top 13px)
+                +flex-box(flex-start, cetner)
+                flex-wrap: wrap
+                gap: 5px 8px
+
+                .selected-tag
+                    +btn(page-ghost, 2px solid $page-color, 17px 17px 17px 0)
+                    font-weight: bold
+                    font-size: 14px
+
+            .btn-wrap
+                +flex-box(flex-end, center)
+                +margin(top 90px)
+
+                .btn-start
+                    +btn(page-fill, null, 25px 25px 25px 0)
+                    +size(99px, 50px)
+                    font-weight: 800
+                    font-size: 18px
