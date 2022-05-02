@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { TagSelectorItem } from 'utils/type'
-import styles from 'views/quiz/css/Quiz.module.css'
+import 'views/common/tag/TagDropdown.sass'
 
 const TagDropdown = (props: { tags: Array<TagSelectorItem>; setTagSelected: Function }) => {
   const dispatch = useDispatch()
@@ -19,40 +19,40 @@ const TagDropdown = (props: { tags: Array<TagSelectorItem>; setTagSelected: Func
   const tagToggle = () => setTagDropdownOpen((prevState) => !prevState)
 
   const dropdown = props.tags.map((tag: TagSelectorItem) => (
-    <div className={styles.tag} key={tag.id}>
+    <div className={'checkbox-wrap'} key={tag.id}>
       <input
-        className={styles.quizInput}
+        className={'input-option'}
         type="checkbox"
         id={tag.name}
         name={tag.name}
         onChange={() => selectTag(tag.id, tag.isSelected)}
       />
-      <label htmlFor={tag.name} className={tag.isSelected ? styles.tagNameSelected : styles.tagNameDeselected}>
-        <div className={tag.isSelected ? styles.checkboxSelected : styles.checkboxDeselected} />
-        {tag.name}
+      <label htmlFor={tag.name} className={`${tag.isSelected ? 'selected' : ''} label-option`}>
+        <span className={'icon-checkbox'} />
+        <p>{tag.name}</p>
       </label>
     </div>
   ))
 
   return (
-    <>
-      <div className={styles.selectTagsCheckbox}>
-        <span className={styles.checkboxTitle}>문제 종류</span>
-        <button className={styles.dropdownBtn} onClick={tagToggle}>
-          <img
-            src="img/dropdown.png"
-            alt="dropdownArrow"
-            className={tagDropdownOpen ? styles.dropdownArrowToggle : styles.dropdownArrow}
-          />
-        </button>
-        <button className={styles.tagsResetCheckboxBtn} onClick={resetSelectedTags}>
-          필터 초기화 X
-        </button>
+    <div className={'dropdown-box-wrap'}>
+      <div className={'dropdown-box-compact'}>
+        <span className={'compact-title'}>문제 종류</span>
+        <div className={'compact-handler'}>
+          <button className={'btn-dropdown-reset'} onClick={resetSelectedTags}>
+            필터 초기화 X
+          </button>
+          <button className={'btn-dropdown'} onClick={tagToggle}>
+            <img
+              src="img/dropdown.png"
+              alt="dropdownArrow"
+              className={`${tagDropdownOpen ? 'active' : ''} icon-dropdown`}
+            />
+          </button>
+        </div>
       </div>
-      <div className={tagDropdownOpen ? styles.dropdownOpen : styles.dropdownClose}>
-        <div className={styles.dropdownTags}>{tagDropdownOpen ? dropdown : null}</div>
-      </div>
-    </>
+      <div className={`${tagDropdownOpen ? 'show' : ''} dropdown-box`}>{tagDropdownOpen ? dropdown : null}</div>
+    </div>
   )
 }
 

@@ -1,0 +1,51 @@
+@import 'sass/helpers/_variables.sass'
+@import 'sass/helpers/_extends.sass'
+@import 'sass/helpers/_mixins.scss'
+
+@import 'sass/ui/_button.sass'
+@import 'sass/ui/_input.sass'
+
+.dropdown-box-wrap
+    .dropdown-box-compact
+        +flex-box(space-between, center)
+        +size(100%, 75px)
+        +padding(right 35px left 87px )
+        +border-radius(15px)
+        +box-sizing(border-box)
+        box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1)
+
+        .compact-title
+            font-weight: bold
+            font-size: 16px
+            color: #a0a0a0
+
+        .compact-handler
+            +flex-box(flex-start, center)
+
+            .btn-dropdown-reset
+                +btn()
+                +margin(right 10px)
+                font-size: 16px
+                color: #a0a0a0
+
+            .btn-dropdown
+                +btn(null, null, null)
+                +size(40px, 30px)
+                +flex-box(center, center)
+
+                .icon-dropdown
+                    +size(15px, 7px)
+
+    .dropdown-box
+        +size(100%, 365px)
+        +margin(top -75px)
+        +padding(top 100px bottom 15px left 90px right 50px)
+        +border-radius(15px)
+        +box-sizing(border-box)
+        box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1)
+        display: inline-grid
+        grid-template-columns: 1fr 1fr
+        gap: 9px
+
+        .checkbox-wrap
+            +flex-box(flex-start, center)
