@@ -2,7 +2,7 @@
 import { PropsWithChildren } from 'react'
 import { useDispatch } from 'react-redux'
 // style
-import styles from 'views/quiz/css/ExitAnswer.module.css'
+import 'views/quiz/css/ExitModal.sass'
 // redux
 import { NextQuiz, setNextQuestion } from 'modules/nextQuestion'
 
@@ -22,19 +22,23 @@ function Modal({ onClickToggleNextModal }: PropsWithChildren<ModalDefaultType>) 
   }
   return (
     <div>
-      <section className={styles.exitAnswerModal}>
-        <img className={styles.logo} src="img/iterview_logo_dark.png" alt="logo" />
-        <h3 className={styles.text}>답변 작성을 완료하셨나요?</h3>
-        <div className={styles.buttonWrap}>
-          <button onClick={deepQuestion} className={`${styles.buttonBlue} ${styles.modalButton}`}>
+      <section className={'exit-modal exit-next-modal'}>
+        <div className={'logo-wrap'}>
+          <img className={'logo'} src="img/iterview_logo_dark.png" alt="logo" />
+        </div>
+        <p>답변 작성을 완료하셨나요?</p>
+        <div className={'btn-wrap'}>
+          <button onClick={deepQuestion} className={`btn-common btn-deep`}>
             해당 문제 심화 문제 풀기
           </button>
-          <button onClick={newQuestion} className={`${styles.buttonDarkBlue} ${styles.modalButton}`}>
+          <button onClick={newQuestion} className={`btn-common btn-another`}>
             다른 종류 문제 풀기
           </button>
         </div>
-        <div className={styles.buttonExitWrap}>
-          <button onClick={onClickToggleNextModal}>답안 작성으로 돌아가기</button>
+        <div className={'sub-btn-wrap'}>
+          <button className={'btn-close'} onClick={onClickToggleNextModal}>
+            답안 작성으로 돌아가기
+          </button>
         </div>
       </section>
     </div>

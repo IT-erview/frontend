@@ -1,0 +1,61 @@
+@import 'sass/helpers/_variables.sass'
+@import 'sass/helpers/_extends.sass'
+@import 'sass/helpers/_mixins.scss'
+
+@import 'sass/ui/_button.sass'
+
+.exit-modal
+    +size(430px)
+    +padding(35px 20px 15px 20px)
+    +position(fixed, 50%, null, null, 50%)
+    +border-radius(15px)
+    background-color: $white
+    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1);
+    transform: translate(-50%, -50%)
+    z-index: 2000
+
+    .logo-wrap
+        +size(91px)
+        +margin(0 auto)
+
+        img
+            +size(91px)
+
+    p
+        +padding(top 70px)
+        font-weight: 800
+        font-size: 18px
+        text-align: center
+
+    .btn-wrap
+        +size(360px)
+        +margin(40px auto 0 auto)
+
+        .btn-common
+            +size(360px, 40px)
+            +margin(bottom 10px)
+            font-weight: bold
+            font-size: 16px
+            line-height: 40px
+
+            &:last-child
+                +margin(bottom 0)
+
+        .btn-exit,
+        .btn-another
+            +btn(page-dark-fill, null, 23px 23px 23px 0)
+
+        .btn-deep
+            +btn(page-fill, null, 23px 23px 23px 0)
+
+    .sub-btn-wrap
+        +flex-box(center, center)
+        +margin(top 20px)
+        +padding(top 16px)
+        +border(1px solid #1110364d, top)
+
+        .btn-close
+            +btn()
+            font-weight: bold
+            font-size: 16px
+            line-height: 29px
