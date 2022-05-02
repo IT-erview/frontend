@@ -12,12 +12,10 @@ const SortSelectBox = (props: { defaultSort: Sort; onSortChanged: (sort: Sort) =
   const getSortButtonStyles = (sort: Sort) => {
     const style: CSSProperties = {
       color: '#4d4d4e',
-      borderColor: '#707070',
       fontWeight: 'bold',
     }
     if (selectedSort !== sort) {
       style.color = '#6a737d'
-      style.borderColor = '#cdcdd5'
       style.fontWeight = 'normal'
     }
     return style
@@ -31,10 +29,19 @@ const SortSelectBox = (props: { defaultSort: Sort; onSortChanged: (sort: Sort) =
 
   return (
     <>
-      <button style={getSortButtonStyles(Sort.LATEST)} id="sort-by-latest" onClick={() => onSortSelect(Sort.LATEST)}>
+      <button
+        style={getSortButtonStyles(Sort.LATEST)}
+        id="sort-by-latest"
+        className={'sort'}
+        onClick={() => onSortSelect(Sort.LATEST)}>
         최신순
       </button>
-      <button style={getSortButtonStyles(Sort.POPULAR)} id="sort-by-like" onClick={() => onSortSelect(Sort.POPULAR)}>
+      <span className={'bar'}></span>
+      <button
+        style={getSortButtonStyles(Sort.POPULAR)}
+        id="sort-by-like"
+        className={'sort'}
+        onClick={() => onSortSelect(Sort.POPULAR)}>
         인기순
       </button>
     </>

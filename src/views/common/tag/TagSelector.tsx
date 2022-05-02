@@ -1,7 +1,7 @@
 // todo: refactoring
 import { useEffect, useState } from 'react'
 import { TagSelectorItem } from 'utils/type'
-import 'views/common/tag/Tags.css'
+import 'views/common/tag/Tags.sass'
 
 const TagSelector = (props: {
   tags: Array<TagSelectorItem>
@@ -19,11 +19,11 @@ const TagSelector = (props: {
   }, [props.tags])
 
   return (
-    <div className="classification-tag-btn">
+    <div className={'tag-list-wrap'}>
       {tags.map((tag) => {
         return (
           <button
-            className={tag.isSelected ? 'classification-tag-selected' : 'classification-tag-unselected'}
+            className={`${tag.isSelected ? 'selected' : ''} tag`}
             key={tag.id}
             onClick={() => toggle(tag.id, !tag.isSelected)}>
             {tag.name}

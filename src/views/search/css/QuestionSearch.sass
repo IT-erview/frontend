@@ -1,0 +1,129 @@
+@import 'sass/helpers/_variables.sass'
+@import 'sass/helpers/_extends.sass'
+@import 'sass/helpers/_mixins.scss'
+
+@import 'sass/ui/_button.sass'
+@import 'sass/ui/_input.sass'
+
+.question-search-wrap
+    .banner-wrap
+        +margin(top 75px)
+        +border-radius(75px 75px 75px 0)
+        height: 364px
+        background-size: cover
+        background-repeat: no-repeat
+        background-position: center center
+
+        h1
+            +padding(top 152px)
+            text-align: left
+            font-weight: 800
+            font-size: 26px
+            line-height: 30px
+            color: $white
+
+        p
+            +padding(top 26px)
+            font-weight: bold
+            font-size: $font-size-large
+            line-height: 20px
+            color: $white
+
+        .question-search-tip-wrap
+            +margin(top 10px)
+            +flex-box(flex-end)
+
+            .question-search-tip-box
+                +flex-box(center, center)
+                +size(232px, 152px)
+                +padding(40px 20px)
+                +border-radius(64px 64px 64px 0)
+                +box-sizing(border-box)
+                box-shadow: 3px 3px 20px rgba(0,0,0,0.1)
+                background-color: #E3E2F0
+                font-weight: 800
+                font-size: $font-size-large
+                line-height: 20px
+                text-align: center
+
+    .content-wrap
+        +margin(top 70px bottom 70px)
+
+        .question-search
+            .search-box-title-wrap
+                +padding(left 30px right 30px bottom 24px)
+                +border(2px solid #e7e7e7, bottom)
+
+            h2
+                font-weight: 800
+                font-size: 26px
+
+
+            .question-search-box
+                +margin(top 25px)
+                +padding(36px 90px)
+                +border-radius(15px)
+                background-color: #111036
+
+                .question-search-input-wrap
+                    +flex-box(null, flex-end)
+
+                    .question-search-input
+                        +input(null, 0)
+                        +size(740px, 30px)
+                        +padding(bottom 10px left 10px)
+                        +border(2px solid #796aca, bottom)
+                        font-size: 16px
+                        line-height: 18px
+                        background-color: inherit
+                        color: $white
+
+                        &::placeholder
+                            color: $white
+
+                    .btn-search
+                        +btn(page-fill)
+                        +size(130px, 50px)
+                        +border-radius(25px 25px 25px 0)
+                        font-weight: 800
+                        font-size: 18px
+
+                .search-information
+                    +padding(top 10px left 10px)
+                    font-size: 16px
+                    color: $page-color
+
+                .search-tag-wrap
+                    +margin(top 26px)
+
+        .searched-question-wrap
+            +margin(top 63px)
+
+            .searched-title-wrap
+                +flex-box(space-between, flex-end)
+                +padding(left 30px right 30px bottom 24px)
+                +border(2px solid #e7e7e7, bottom)
+
+                .sort-button-wrap
+                    +flex-box(flex-start, center)
+
+                    .sort
+                        +btn()
+                        font-size: 16px
+                        color: #a0a0a0
+
+                    .bar
+                        +size(1px, 14px)
+                        display: block
+                        background-color: #a0a0a0
+
+                h2
+                    font-weight: 800
+                    font-size: 26px
+
+            .list-none
+                +padding(top 25px)
+                text-align: center
+                font-weight: bold
+                font-size: 20px
+                line-height: 24px

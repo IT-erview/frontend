@@ -21,8 +21,7 @@ const QuestionList = (props: { questions: Array<Question> }) => {
               />
             </div>
           </div>
-        ))) ||
-        '등록된 문제가 없습니다.'}
+        ))) || <p className={'list-none'}>등록된 문제가 없습니다.</p>}
     </div>
   )
 }
