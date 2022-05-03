@@ -1,7 +1,9 @@
 // react
 import { useState } from 'react'
+
 // style
-import styles from 'views/mypage/css/Mypage.module.css'
+import 'views/mypage/css/Mypage.sass'
+
 // component
 import UserInfo from 'views/common/user/UserInfo'
 import MyPageNavigation, { MyPageInquireType } from 'views/mypage/component/MyPageNavigation'
@@ -28,31 +30,29 @@ const MyPage = () => {
     }
   }
   return (
-    <div className="mypage-question">
-      <div className={styles.banner}>
-        <img src={mypageImg} alt="question_banner_img" className={styles.bannerImg} />
-
-        <p className={styles.bannerTitle}>마이페이지</p>
-        <p className={styles.bannerContent}>지금까지 풀었던 문제들을 한 번에 만나보세요!</p>
-        <div className={styles.bannerInfo}>
-          <p className={styles.bannerInfoText}>
-            환영합니다
-            <br />
-            {userName} 님
-          </p>
+    <div className={'mypage-wrap'}>
+      <section className={'banner-wrap'} style={{ backgroundImage: `url(${mypageImg})` }}>
+        <div className="container">
+          <h1>마이페이지</h1>
+          <p>지금까지 풀었던 문제들을 한 번에 만나보세요!</p>
+          <div className={'mypage-tip-wrap'}>
+            <div className={'mypage-tip-box'}>
+              환영합니다
+              <br />
+              {userName} 님
+            </div>
+          </div>
         </div>
-      </div>
-      <UserInfo />
-      <div className="mypage-question">
-        <div className="mypage-question-title">
-          <span>
-            {/* <img src="/img/mypage_icon1.png" alt="mypage-register-quesiton-icon" />
-            내가 등록한 문제 */}
-            <MyPageNavigation mypageType={mypageType} setMypageType={setMypageType} />
-          </span>
+      </section>
+      <section className="content-wrap">
+        <div className="container">
+          <UserInfo />
+          {/* <img src="/img/mypage_icon1.png" alt="mypage-register-quesiton-icon" />
+          내가 등록한 문제 */}
+          <MyPageNavigation mypageType={mypageType} setMypageType={setMypageType} />
+          {showQuestions()}
         </div>
-        {showQuestions()}
-      </div>
+      </section>
     </div>
   )
 }

@@ -1,0 +1,50 @@
+@import 'sass/helpers/_variables.sass'
+@import 'sass/helpers/_extends.sass'
+@import 'sass/helpers/_mixins.scss'
+
+@import 'sass/ui/_button.sass'
+@import 'sass/ui/_input.sass'
+
+.mypage-wrap
+    .banner-wrap
+        +margin(top 75px)
+        +border-radius(75px 75px 75px 0)
+        height: 224px
+        background-size: cover
+        background-repeat: no-repeat
+        background-position: center center
+
+        h1
+            +padding(top 83px)
+            text-align: left
+            font-weight: 800
+            font-size: 26px
+            line-height: 30px
+            color: $white
+
+        p
+            +padding(top 15px)
+            font-weight: bold
+            font-size: $font-size-large
+            line-height: 20px
+            color: $white
+
+        .mypage-tip-wrap
+            +margin(top -20px)
+            +flex-box(flex-end)
+
+            .mypage-tip-box
+                +flex-box(center, center)
+                +size(162px, 127px)
+                +padding(40px 20px)
+                +border-radius(64px 64px 64px 0)
+                +box-sizing(border-box)
+                box-shadow: 3px 3px 20px rgba(0,0,0,0.1)
+                background-color: #E3E2F0
+                font-weight: 800
+                font-size: $font-size-large
+                line-height: 20px
+                text-align: center
+
+    .content-wrap
+        +margin(top 70px bottom 80px)
