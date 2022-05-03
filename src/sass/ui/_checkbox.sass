@@ -1,0 +1,40 @@
+%checkbox-default
+    +size(16px, 16px)
+    +margin(0)
+    +padding(0)
+    +border(1px solid #111036)
+    +border-radius(5px)
+    +prefix(appearance, none, moz webkit)
+    background-color: $white
+    outline: none
+    cursor: pointer
+
+    &.selected
+        +background('/asset/image/global/icon_checkbox_on.svg', no-repeat, center center)
+        background-size: 16px, 16px
+
+%checkbox-wrap-default
+    display: flex
+    justify-content: flex-start
+    align-items: center
+    line-height: 16px
+
+    input[type="checkbox"]
+        @extend %checkbox-default
+        +margin(right 24px)
+
+        &:checked + label
+            font-weight: 800
+
+    label
+        font-weight: bold
+        font-size: 16px
+
+        &:hover
+            color: $page-color
+
+@mixin checkbox()
+    @extend %checkbox-default
+
+@mixin checkbox-wrap()
+    @extend %checkbox-wrap-default

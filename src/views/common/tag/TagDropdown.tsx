@@ -12,7 +12,9 @@ const TagDropdown = (props: { tags: Array<TagSelectorItem>; setTagSelected: Func
 
   const resetSelectedTags = () => {
     props.tags.forEach((tag: TagSelectorItem) => {
-      if (tag.isSelected) selectTag(tag.id, tag.isSelected)
+      if (tag.isSelected) {
+        selectTag(tag.id, tag.isSelected)
+      }
     })
   }
   const [tagDropdownOpen, setTagDropdownOpen] = useState<boolean>(false)
@@ -21,16 +23,13 @@ const TagDropdown = (props: { tags: Array<TagSelectorItem>; setTagSelected: Func
   const dropdown = props.tags.map((tag: TagSelectorItem) => (
     <div className={'checkbox-wrap'} key={tag.id}>
       <input
-        className={'input-option'}
+        className={`${tag.isSelected ? 'selected' : ''} input-option`}
         type="checkbox"
         id={tag.name}
         name={tag.name}
         onChange={() => selectTag(tag.id, tag.isSelected)}
       />
-      <label htmlFor={tag.name} className={`${tag.isSelected ? 'selected' : ''} label-option`}>
-        <span className={'icon-checkbox'} />
-        <p>{tag.name}</p>
-      </label>
+      <label htmlFor={tag.name}>{tag.name}</label>
     </div>
   ))
 
