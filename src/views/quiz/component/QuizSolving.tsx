@@ -46,6 +46,7 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
       }
       const answers = await getAnswers(current.id, params)
       if (answers.data.content) {
+        console.log(answers)
         setAnswersList(answers.data.content)
         setAnswerLoading(true)
       }
@@ -127,12 +128,17 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
     if (answersList.length <= 0)
       return (
         <div className={'other-answer-wrap'}>
+          <div className="other-answer-title-wrap">
+            <h2 className={'other-answer-title'}>다른 사람이 푼 답변</h2>
+          </div>
           <p className={'other-answer-none'}> 다른 사람의 답변이 없습니다.</p>
         </div>
       )
     return (
       <div className={'other-answer-wrap'}>
-        <p className={'other-answer-title'}>다른 사람의 답변</p>
+        <div className="other-answer-title-wrap">
+          <h2 className={'other-answer-title'}>다른 사람이 푼 답변</h2>
+        </div>
         {answersList.map((answersList, idx) => {
           if (!moreAnswer && idx >= 3) return null
           return (

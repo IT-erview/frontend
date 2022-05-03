@@ -1,0 +1,133 @@
+@import 'sass/helpers/_variables.sass'
+@import 'sass/helpers/_extends.sass'
+@import 'sass/helpers/_mixins.scss'
+
+@import 'sass/ui/_button.sass'
+
+.quiz-result-wrap
+    .banner-wrap
+        +margin(top 75px)
+        +border-radius(75px 75px 75px 0)
+        height: 364px
+        background-size: cover
+        background-repeat: no-repeat
+        background-position: center center
+
+        h1
+            +padding(top 152px)
+            text-align: left
+            font-weight: 800
+            font-size: 26px
+            line-height: 30px
+            color: $white
+
+        p
+            +padding(top 26px)
+            font-weight: bold
+            font-size: $font-size-large
+            line-height: 20px
+            color: $white
+
+        .quiz-result-tip-wrap
+            +margin(top 30px)
+            +flex-box(flex-end)
+
+            .quiz-result-tip-box
+                +flex-box(center, center)
+                +size(238px, 127px)
+                +padding(40px 20px)
+                +border-radius(64px 64px 64px 0)
+                +box-sizing(border-box)
+                box-shadow: 3px 3px 20px rgba(0,0,0,0.1)
+                background-color: #E3E2F0
+                font-weight: 800
+                font-size: $font-size-large
+                line-height: 20px
+                text-align: center
+
+    .content-wrap
+        +margin(top 70px bottom 165px)
+
+        .quiz-result-box-wrap
+            +flex-box(space-between, center)
+
+            .quiz-box-common
+                +size(521px, 228px)
+                +border-radius(15px)
+                +box-sizing(border-box)
+                box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1)
+
+            .quiz-box-user
+                +padding(33px 107px 0 107px)
+
+                .quiz-user
+                    +flex-box(flex-start, center)
+                    +padding(bottom 25px)
+                    +border(1px solid #1110364d, bottom)
+
+                    .user-profile
+                        +size(45px, 45px)
+                        +border-radius(50%)
+
+                    .user-info-text
+                        +margin(left 11px)
+
+                        .user-name
+                            font-weight: 800
+                            font-size: 26px
+
+                        .user-email
+                            +margin(top 5px)
+                            font-weight: bold
+                            font-size: 16px
+                            color: #1110364d
+
+                .quiz-count
+                    +margin(top 20px)
+                    +padding(0 10px)
+
+                    li
+                        +flex-box(space-between, center)
+                        +margin(top 13px)
+
+                        &:first-child
+                            +margin(top 0)
+
+                    .today
+                        span
+                            font-weight: bold
+                            font-size: 16px
+                            color: $page-color
+
+                    .total
+                        .count-label
+                            font-weight: bold
+                            font-size: 16px
+                            color: #a0a0a0
+
+                        .count-number
+                            font-weight: 800
+                            font-size: 16px
+
+            .quiz-box-tags
+                +padding(40px 75px 0 75px)
+
+                h3
+                    +padding(bottom 15px)
+                    +border(1px solid #bbb7c3, bottom)
+                    font-weight: 800
+                    font-size: 18px
+
+                .tag-list-wrap
+                    +margin(top 15px)
+
+        .solved-quiz-wrap
+            +margin(top 75px)
+
+            .solved-quiz-title-wrap
+                +padding(left 30px right 30px bottom 30px)
+                +border(2px solid #E7E7E7, bottom)
+
+                h2
+                    font-weight: 800
+                    font-size: 26px
