@@ -9,7 +9,7 @@ import { MAX_TEXT_CONTENTS_LENGTH } from 'utils/config'
 import { checkTextContentsLength } from 'utils/util'
 import { QuizQuestion, Answer as AnswerType } from 'utils/type'
 // style
-import styles from 'views/quiz/css/Quiz.module.css'
+import 'views/quiz/css/QuizSolving.sass'
 // redux
 import { NextQuiz, setNextQuestionInit } from 'modules/nextQuestion'
 import { setQuizAnswers, setQuizQuestions } from 'modules/quizQuestions'
@@ -45,8 +45,8 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
         size: 10,
       }
       const answers = await getAnswers(current.id, params)
-      if (answers.data) {
-        setAnswersList(answers.data)
+      if (answers.data.content) {
+        setAnswersList(answers.data.content)
         setAnswerLoading(true)
       }
     }
@@ -83,20 +83,6 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
 
   const keywordToggle = () => setDropdownOpen((prev) => !prev)
 
-  const moreHideBtn = (hitsLength: number, more: boolean) => {
-    if (hitsLength > 3) {
-      return more ? (
-        <>
-          {'숨기기'} <img src="img/hide_btn.png" alt="hideBtn" className={styles.moreHideArrow} />
-        </>
-      ) : (
-        <>
-          {'더보기'} <img src="img/more_btn.png" alt="moreBtn" className={styles.moreHideArrow} />
-        </>
-      )
-    } else return null
-  }
-
   const onClickToggleModal = useCallback(() => {
     setOpenModal(!isOpenModal)
   }, [isOpenModal])
@@ -109,12 +95,26 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
     setShowAnswers(!showAnswers)
   }, [showAnswers])
 
+  const moreHideBtn = (hitsLength: number, more: boolean) => {
+    if (hitsLength > 3) {
+      return more ? (
+        <>
+          {'숨기기'} <img src="img/hide_btn.png" alt="hideBtn" className={'icon-hide'} />
+        </>
+      ) : (
+        <>
+          {'더보기'} <img src="img/more_btn.png" alt="moreBtn" className={'icon-more'} />
+        </>
+      )
+    } else return null
+  }
+
   const expectedKeywords = current.expectedKeywordList
     ? current.expectedKeywordList.map((keyword) => {
         return (
-          <div key={keyword.id} className={styles.coreKeyword}>
+          <span key={keyword.id} className={'core-keyword'}>
             {keyword.name}
-          </div>
+          </span>
         )
       })
     : '기대 키워드가 없습니다.'
@@ -126,13 +126,13 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
     }
     if (answersList.length <= 0)
       return (
-        <div className={styles.otherAnswersBox}>
-          <p className={styles.otherAnswerNone}> 다른 사람의 답변이 없습니다.</p>
+        <div className={'other-answer-wrap'}>
+          <p className={'other-answer-none'}> 다른 사람의 답변이 없습니다.</p>
         </div>
       )
     return (
-      <div className={styles.otherAnswersBox}>
-        <p className={styles.otherAnswerTitle}>다른 사람의 답변</p>
+      <div className={'other-answer-wrap'}>
+        <p className={'other-answer-title'}>다른 사람의 답변</p>
         {answersList.map((answersList, idx) => {
           if (!moreAnswer && idx >= 3) return null
           return (
@@ -149,8 +149,8 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
           )
         })}
         {answersList.length > 3 ? (
-          <div className={styles.more}>
-            <button onClick={() => setMoreAnswer((prev) => !prev)} className={styles.moreHideBtn}>
+          <div className={'btn-wrap'}>
+            <button onClick={() => setMoreAnswer((prev) => !prev)} className={'btn-more'}>
               {moreHideBtn(answersList.length, moreAnswer)}
             </button>
           </div>
@@ -162,71 +162,75 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
   // @ts-ignore
   return (
     <div>
-      <div className={isOpenModal || isOpenNextModal ? styles.blur : styles.normal}>
-        <div className={styles.solvingBanner}>
-          <img className={styles.solvingBannerImg} src="img/quiz_solving_img.png" alt="quiz_solving_banner_img" />
-          <div className={styles.solvingBannerText}>
-            테스트 문제
-            <img src="img/quiz_solving_arrow.png" className={styles.solvingBannerArrow} alt="quiz_solving_arrow" />
-            인기 문제
-            <img src="img/quiz_solving_arrow.png" className={styles.solvingBannerArrow} alt="quiz_solving_arrow" />
-            <span className={styles.solvingBannerTag}>{current.tagList[0].tagTitle}</span>
-            <p className={styles.questionTitle}>{current.content}</p>
+      <div className={`${isOpenModal || isOpenNextModal ? 'blur' : ''} quiz-solving-wrap`}>
+        <div className={'banner-wrap'} style={{ backgroundImage: `url(img/quiz_solving_img.png)` }}>
+          <div className={'container'}>
+            <div className={'breadcrumb-wrap'}>
+              <span className={'breadcrumb-item'}>테스트 문제</span>
+              <img src="img/quiz_solving_arrow.png" className={'icon-arrow'} alt="quiz_solving_arrow" />
+              <span className={'breadcrumb-item'}>인기 문제</span>
+              <img src="img/quiz_solving_arrow.png" className={'icon-arrow'} alt="quiz_solving_arrow" />
+              <span className={'banner-tag'}>{current.tagList[0].tagTitle}</span>
+            </div>
+            <h1 className={'question-title'}>{current.content}</h1>
           </div>
         </div>
-        <div className={styles.body}>
-          <p className={styles.answerTitle}>
-            답변 작성
-            <span
-              className={styles.answerTextLength}
-              style={{ color: checkTextContentsLength(answerTextContents) ? '#a0a0a0' : 'red' }}>
-              {answerTextContents.length} / {MAX_TEXT_CONTENTS_LENGTH}
-            </span>
-          </p>
-          <div className={styles.quizHorizontalLine} />
-          <Form className={styles.answerForm}>
-            <Input
-              className={styles.answerInput}
-              type="textarea"
-              value={answerTextContents}
-              maxLength={MAX_TEXT_CONTENTS_LENGTH}
-              onChange={(e) => {
-                setAnswerTextContents(e.target.value)
-              }}
-              placeholder="답변을 작성해주세요. '다음 문제로 넘어가기' 버튼을 누르시면 답변은 자동 저장됩니다."
-            />
-          </Form>
-          <div className={styles.coreKeywordBox}>
-            <span className={styles.coreKeywordTitle}>기대 키워드 보기</span>
-            <button className={styles.keywordDropdownBtn} onClick={keywordToggle}>
-              <img
-                src="img/quiz_keyword_dropdown.png"
-                alt="dropdownArrow"
-                className={dropdownOpen ? styles.keywordDropdownToggle : styles.keywordDropdown}
+        <div className={'content-wrap'}>
+          <div className="container">
+            <div className={'content-title-wrap'}>
+              <h2>답변 작성</h2>
+              <span
+                className={'text-counts'}
+                style={{ color: checkTextContentsLength(answerTextContents) ? '#a0a0a0' : 'red' }}>
+                {answerTextContents.length} / {MAX_TEXT_CONTENTS_LENGTH}
+              </span>
+            </div>
+            <Form className={'answer-form'}>
+              <Input
+                className={'answer-content'}
+                type="textarea"
+                value={answerTextContents}
+                maxLength={MAX_TEXT_CONTENTS_LENGTH}
+                onChange={(e) => {
+                  setAnswerTextContents(e.target.value)
+                }}
+                placeholder="답변을 작성해주세요. '다음 문제로 넘어가기' 버튼을 누르시면 답변은 자동 저장됩니다."
               />
-            </button>
-          </div>
-          <div className={dropdownOpen ? styles.keywordDropdownOpen : styles.keywordDropdownClose}>
-            <div className={styles.dropdownKeywords}>{dropdownOpen ? expectedKeywords : null}</div>
-          </div>
-          <div className={styles.quizBtn}>
-            <button className={styles.otherAnswers} onClick={showOtherAnswers}>
-              다른 사람의 답변
-            </button>
-            <button className={styles.nextQuestion} onClick={onClickToggleNextModal}>
-              다음 문제로 넘어가기
-            </button>
-            <button className={styles.exit} onClick={onClickToggleModal}>
-              종료
-            </button>
+            </Form>
+            <div className={'keyword-box-wrap'}>
+              <div className={'keyword-compact'}>
+                <h3 className={'keyword-title'}>핵심 키워드 보기</h3>
+                <button className={'btn-keyword-dropdown'} onClick={keywordToggle}>
+                  <img
+                    src="img/quiz_keyword_dropdown.png"
+                    alt="dropdownArrow"
+                    className={`${dropdownOpen ? 'active' : ''} icon-down-arrow`}
+                  />
+                </button>
+              </div>
+              <div className={`${dropdownOpen ? 'show' : ''} keyword-box`}>
+                {dropdownOpen ? expectedKeywords : null}
+              </div>
+            </div>
+            <div className={'btn-wrap'}>
+              <button className={'btn-common btn-show-answer'} onClick={showOtherAnswers}>
+                다른 사람의 답변
+              </button>
+              <button className={'btn-common btn-next'} onClick={onClickToggleNextModal}>
+                다음 문제로 넘어가기
+              </button>
+              <button className={'btn-common btn-exit'} onClick={onClickToggleModal}>
+                종료
+              </button>
+            </div>
+            {showAnswers ? otherAnswers() : null}
           </div>
         </div>
       </div>
       <div className="next-quiz"></div>
-      {showAnswers ? otherAnswers() : null}
       {isOpenModal && <ExitAnswerModal onClickToggleModal={onClickToggleModal} />}
       {isOpenNextModal && <NextModal onClickToggleNextModal={onClickToggleNextModal} />}
-      {(isOpenModal || isOpenNextModal) && <div className={styles.dim}></div>}
+      {(isOpenModal || isOpenNextModal) && <div className={'dim'}></div>}
     </div>
   )
 }

@@ -1,0 +1,139 @@
+@import 'sass/helpers/_variables.sass'
+@import 'sass/helpers/_extends.sass'
+@import 'sass/helpers/_mixins.scss'
+
+@import 'sass/ui/_button.sass'
+@import 'sass/ui/_input.sass'
+
+.quiz-solving-wrap
+    +margin(top 75px bottom 105px)
+
+    .banner-wrap
+        +border-radius(75px 75px 75px 0)
+        height: 222px
+        background-size: cover
+        background-repeat: no-repeat
+        background-position: center center
+
+        .breadcrumb-wrap
+            +flex-box(flex-start, center)
+            +padding(top 65px)
+
+            .breadcrumb-item
+                font-weight: 800
+                font-size: 18px
+                line-height: 20px
+                color: $page-color
+
+            .icon-arrow
+                +size(5px, 12px)
+                +margin(0 20px)
+
+            .banner-tag
+                font-weight: 800
+                font-size: 18px
+                line-height: 20px
+                color: #a0a0a0
+
+        .question-title
+            +padding(top 55px)
+            font-weight: 800
+            font-size: 26px
+            color: $white
+
+    .content-wrap
+        +margin(top 70px)
+
+        .content-title-wrap
+            +flex-box(space-between, bottom)
+            +padding(0 30px 24px 30px)
+            +border(2px solid #e7e7e7, bottom)
+
+            h2
+                font-weight: 800
+                font-size: 26px
+
+        .answer-form
+            +margin(top 25px)
+
+            .answer-content
+                +input(ghost, null, 15px)
+                +size(1060px, 365px)
+                +margin(top 15px)
+                +padding(44px 70px)
+                resize: none
+
+                &::placeholder
+                    font-weight: bold
+                    font-size: 16px
+                    color: #1110364d
+
+        .keyword-box-wrap
+            +margin(top 25px)
+            min-height: 75px
+            position: relative
+
+            .keyword-compact
+                +flex-box(space-between, center)
+                +size(100%, 75px)
+                +padding(0 70px)
+                +position(absolute, 0, null, null, 0)
+                +border-radius(15px)
+                +box-sizing(border-box)
+                background-color: $page-color
+                box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1)
+
+                .keyword-title
+                    font-weight: 800
+                    font-size: 18px
+                    color: $white
+
+                .btn-keyword-dropdown
+                    +btn()
+                    +flex-box(center, center)
+                    +size(20px, 18px)
+                    +padding(0)
+
+                    .icon-down-arrow
+                        +size(15px, 7px)
+                        transition: all 0.4s ease-in-out
+
+                        &.active
+                            transform: rotate(-180deg)
+
+            .keyword-box
+                +padding(0 70px)
+                +border-radius(15px)
+                +box-sizing(border-box)
+                height: 75px
+                background-color: $page-color
+                box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1)
+                transition: all 0.4s ease-in-out
+
+                .core-keyword
+                    +btn(null, 2px solid $white)
+                    +padding(5px 8px)
+                    display: inline-block
+                    font-weight: bold
+                    font-size: 14px
+                    color: $white
+
+                &.show
+                    +padding(top 99px bottom 25px)
+                    height: 150px
+
+        .btn-wrap
+            +margin(top 35px)
+            +flex-box(flex-end, center)
+
+            .btn-common
+                +btn(page-ghost, 3px solid $page-color, 23px 23px 23px 0)
+                +margin(right 18px)
+                +padding(10px 26px)
+                font-weight: bold
+                font-size: 16px
+                line-height: 18px
+
+                &.last-child
+                    +margin(right 0)
+
