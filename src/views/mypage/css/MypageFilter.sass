@@ -1,0 +1,75 @@
+@import 'sass/helpers/_variables.sass'
+@import 'sass/helpers/_extends.sass'
+@import 'sass/helpers/_mixins.scss'
+
+@import 'sass/ui/_button.sass'
+@import 'sass/ui/_checkbox.sass'
+
+.mypage-wrap
+    .mypage-filter-wrap
+        position: relative
+        min-height: 75px
+
+        .mypage-filter-compact
+            +flex-box(space-between, center)
+            +size(100%, 75px)
+            +padding(right 35px left 87px )
+            +position(absolute, 0 0)
+            +border-radius(15px)
+            +box-sizing(border-box)
+            background-color: $page-color
+            box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1)
+
+            .compact-title
+                font-weight: bold
+                font-size: 16px
+                color: $white
+
+            .compact-handler
+                +flex-box(flex-start, center)
+
+                .btn-dropdown-reset
+                    +btn()
+                    +margin(right 10px)
+                    font-size: 16px
+                    color: #A5A6F6
+
+                .btn-dropdown
+                    +btn(null, null, null)
+                    +size(40px, 30px)
+                    +flex-box(center, center)
+
+                    .icon-dropdown
+                        +size(15px, 7px)
+                        transition: all 0.4s ease-in-out
+
+                        &.active
+                            transform: rotate(180deg)
+
+        .dropdown-box
+            +size(100%, 75px)
+            +padding(top 0 bottom 0 left 90px right 50px)
+            +border-radius(15px)
+            +box-sizing(border-box)
+            background-color: $page-color
+            box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1)
+            transition: all .3s ease-out
+
+            &.show
+                +padding(top 90px bottom 15px)
+                height: 365px
+
+            .dropdown-sort-wrap
+                +flex-box(flex-start, center)
+                +padding(bottom 20px)
+                +border(1px solid $white, bottom)
+                gap: 145px
+
+            .dropdown-tag-wrap
+                +margin(top 22px)
+                display: grid
+                gap: 15px
+                grid-template-columns: 1fr 1fr
+
+            .checkbox-wrap
+                +checkbox-wrap(checkbox-white)
