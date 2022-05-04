@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 // util
 import { Question, TagSelectorItem } from 'utils/type'
 // style
-import 'views/mypage/css/MyBookmarkQuestion.sass'
-import 'views/mypage/css/MypageFilter.sass'
+import 'views/mypage/style/MyBookmarkQuestion.sass'
+import 'views/mypage/style/MypageFilter.sass'
 // redux
 import { ReducerType } from 'modules/rootReducer'
 import { setQuizTagSelected } from 'modules/quizTags'

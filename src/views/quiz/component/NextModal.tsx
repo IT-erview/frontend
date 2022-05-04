@@ -2,7 +2,7 @@
 import { PropsWithChildren } from 'react'
 import { useDispatch } from 'react-redux'
 // style
-import 'views/quiz/css/ExitModal.sass'
+import 'views/quiz/style/ExitModal.sass'
 // redux
 import { NextQuiz, setNextQuestion } from 'modules/nextQuestion'
 

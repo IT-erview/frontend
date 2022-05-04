@@ -2,7 +2,7 @@
 import { useState } from 'react'
 
 // style
-import 'views/mypage/css/Mypage.sass'
+import 'views/mypage/style/Mypage.sass'
 
 // component
 import UserInfo from 'views/common/user/UserInfo'

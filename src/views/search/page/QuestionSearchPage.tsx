@@ -1,5 +1,5 @@
 // style
-import 'views/search/css/QuestionSearch.sass'
+import 'views/search/style/QuestionSearch.sass'
 // component
 import Navigation from 'views/common/layout/Navigation'
 import Footer from 'views/common/layout/Footer'

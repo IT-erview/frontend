@@ -6,7 +6,7 @@ import { ReducerType } from 'modules/rootReducer'
 // util
 import { QuizAnswer, TagSelectorItem } from 'utils/type'
 // style
-import 'views/quiz/css/QuizResult.sass'
+import 'views/quiz/style/QuizResult.sass'
 // redux
 import { NextQuiz, setNextQuestion } from 'modules/nextQuestion'
 // component

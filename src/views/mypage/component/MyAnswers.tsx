@@ -6,8 +6,8 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 // util
 import { Answer, TagSelectorItem } from 'utils/type'
 // style
-import 'views/mypage/css/MyAnswer.sass'
-import 'views/mypage/css/MypageFilter.sass'
+import 'views/mypage/style/MyAnswer.sass'
+import 'views/mypage/style/MypageFilter.sass'
 // redux
 import { ReducerType } from 'modules/rootReducer'
 import { setQuizTagSelected } from 'modules/quizTags'

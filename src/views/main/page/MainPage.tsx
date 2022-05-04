@@ -9,7 +9,7 @@ import { ReducerType } from 'modules/rootReducer'
 import { MAX_SEARCH_TAG_LENGTH } from 'utils/config'
 import { Answer as AnswerType, Question as QuestionType, TagSelectorItem } from 'utils/type'
 // style
-import 'views/main/css/MainPage.sass'
+import 'views/main/style/MainPage.sass'
 // redux
 import { setSearchTagSelected } from 'modules/searchTags'
 // api

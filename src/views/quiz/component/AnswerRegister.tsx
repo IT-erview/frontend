@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom'
 import { MAX_TEXT_CONTENTS_LENGTH, MIN_TEXT_CONTENTS_LENGTH } from 'utils/config'
 import { checkTextContentsLength, isNumeric } from 'utils/util'
 // style
-import 'views/quiz/css/AnswerRegister.css'
+import 'views/quiz/style/AnswerRegister.css'
 // api
 import { postAnswer } from 'api/answer'
 import { getQuestion } from 'api/question'

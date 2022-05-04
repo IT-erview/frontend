@@ -3,7 +3,7 @@ import Footer from 'views/common/layout/Footer'
 import Navigation from 'views/common/layout/Navigation'
 import QuestionRegister from 'views/enrollment/component/QuestionRegister'
 // style
-import 'views/enrollment/css/QuestionRegister.sass'
+import 'views/enrollment/style/QuestionRegister.sass'
 
 const QuestionRegisterPage = () => {
   const questionRegisterImg = '/img/quiz_img.png'

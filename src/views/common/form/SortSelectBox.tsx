@@ -1,5 +1,5 @@
 import { CSSProperties, useState } from 'react'
-import 'views/quiz/css/QuestionDetail.css'
+import 'views/quiz/style/QuestionDetail.css'
 
 export enum Sort {
   POPULAR = 'popular',

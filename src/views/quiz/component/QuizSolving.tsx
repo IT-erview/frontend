@@ -9,7 +9,7 @@ import { MAX_TEXT_CONTENTS_LENGTH } from 'utils/config'
 import { checkTextContentsLength } from 'utils/util'
 import { QuizQuestion, Answer as AnswerType } from 'utils/type'
 // style
-import 'views/quiz/css/QuizSolving.sass'
+import 'views/quiz/style/QuizSolving.sass'
 // redux
 import { NextQuiz, setNextQuestionInit } from 'modules/nextQuestion'
 import { setQuizAnswers, setQuizQuestions } from 'modules/quizQuestions'

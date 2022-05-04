@@ -5,7 +5,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 // util
 import { Answer, Question } from 'utils/type'
 // style
-import 'views/quiz/css/QuestionDetail.css'
+import 'views/quiz/style/QuestionDetail.css'
 // api
 import { getAnswers, getMyAnswer } from 'api/answer'
 import { getQuestion } from 'api/question'

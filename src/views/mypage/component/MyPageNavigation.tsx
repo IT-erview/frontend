@@ -1,6 +1,6 @@
 // todo: refactoring
 import { useState } from 'react'
-import 'views/mypage/css/MyPageNavigation.sass'
+import 'views/mypage/style/MyPageNavigation.sass'
 
 export enum MyPageInquireType {
   REGISTERED_QUESTION,

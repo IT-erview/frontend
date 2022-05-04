@@ -5,7 +5,7 @@ import { ReducerType } from 'modules/rootReducer'
 // util
 import { TagSelectorItem } from 'utils/type'
 // style
-import 'views/quiz/css/SetQuizOption.sass'
+import 'views/quiz/style/SetQuizOption.sass'
 // redux
 import { setQuizQuestions } from 'modules/quizQuestions'
 import { setQuizTagSelected } from 'modules/quizTags'
