@@ -1,6 +1,6 @@
 // todo: refactoring
 import { useState } from 'react'
-import 'views/mypage/css/MyPageNavigation.css'
+import 'views/mypage/css/MyPageNavigation.sass'
 
 export enum MyPageInquireType {
   REGISTERED_QUESTION,
@@ -39,27 +39,23 @@ const MyPageNavigation = (props: { mypageType: MyPageInquireType; setMypageType:
   }
 
   return (
-    <div className="mypage-navigation">
-      <div className="mypage-category">
+    <div className={'mypage-navigation-wrap'}>
+      <ul className={'mypage-navigation-list'}>
         {myPageInquires.map((inquire) => {
           return (
-            <button
-              key={inquire.type}
-              style={{
-                borderBottom: isFocused(inquire.type) ? '2px solid #2188FF' : 'none',
-                color: isFocused(inquire.type) ? 'black' : '#6a737d',
-                fontWeight: isFocused(inquire.type) ? 'bold' : 'normal',
-              }}
-              onClick={() => {
-                setFocusedMyPageInquireType(inquire.type)
-                props.setMypageType(inquire.type)
-              }}>
-              <img src={inquire.img} alt={inquire.title} />
-              <span id="text-question">{inquire.title}</span>
-            </button>
+            <li key={inquire.type} className={`${isFocused(inquire.type) ? 'active' : ''} mypage-navigtaion-item`}>
+              <button
+                onClick={() => {
+                  setFocusedMyPageInquireType(inquire.type)
+                  props.setMypageType(inquire.type)
+                }}>
+                <img src={inquire.img} alt={inquire.title} />
+                <span>{inquire.title}</span>
+              </button>
+            </li>
           )
         })}
-      </div>
+      </ul>
     </div>
   )
 }
