@@ -139,7 +139,7 @@ const MyAnswers = (props: { type: MyAnswerType }) => {
             />
           )
         })}
-        <p className={'none-list'}>{answers.length === 0 && '등록된 답변이 없습니다.'}</p>
+        <p className={'list-none'}>{answers.length === 0 && '등록된 답변이 없습니다.'}</p>
       </InfiniteScroll>
       <div className="mypage-register-question-title">
         <SortSelectBox defaultSort={sort} onSortChanged={(sort) => setSort(sort)} />
