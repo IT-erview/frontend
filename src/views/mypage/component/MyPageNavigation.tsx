@@ -39,7 +39,7 @@ const MyPageNavigation = (props: { mypageType: MyPageInquireType; setMypageType:
   }
 
   return (
-    <div className={'mypage-navigation-wrap'}>
+    <article className={'mypage-navigation-wrap'}>
       <ul className={'mypage-navigation-list'}>
         {myPageInquires.map((inquire) => {
           return (
@@ -56,7 +56,7 @@ const MyPageNavigation = (props: { mypageType: MyPageInquireType; setMypageType:
           )
         })}
       </ul>
-    </div>
+    </article>
   )
 }
 

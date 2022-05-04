@@ -30,7 +30,7 @@ const MyPage = () => {
     }
   }
   return (
-    <div className={'mypage-wrap'}>
+    <main className={'mypage-wrap'}>
       <section className={'banner-wrap'} style={{ backgroundImage: `url(${mypageImg})` }}>
         <div className="container">
           <h1>마이페이지</h1>
@@ -44,16 +44,16 @@ const MyPage = () => {
           </div>
         </div>
       </section>
-      <section className="content-wrap">
-        <div className="container">
+      <section className={'content-wrap'}>
+        <div className={'container'}>
           <UserInfo />
           {/* <img src="/img/mypage_icon1.png" alt="mypage-register-quesiton-icon" />
           내가 등록한 문제 */}
           <MyPageNavigation mypageType={mypageType} setMypageType={setMypageType} />
-          {showQuestions()}
+          <article className={'mypage-main-content-wrap'}>{showQuestions()}</article>
         </div>
       </section>
-    </div>
+    </main>
   )
 }
 

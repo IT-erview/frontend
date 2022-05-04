@@ -2,16 +2,11 @@
     +size(16px, 16px)
     +margin(0)
     +padding(0)
-    +border(1px solid #111036)
     +border-radius(5px)
     +prefix(appearance, none, moz webkit)
-    background-color: $white
+    background-color: inherit
     outline: none
     cursor: pointer
-
-    &.selected
-        +background('/asset/image/global/icon_checkbox_on.svg', no-repeat, center center)
-        background-size: 16px, 16px
 
 %checkbox-wrap-default
     display: flex
@@ -29,12 +24,48 @@
     label
         font-weight: bold
         font-size: 16px
+        cursor: pointer
 
-        &:hover
-            color: $page-color
+%checkbox-page
+    +border(1px solid #111036)
 
-@mixin checkbox()
+    &.selected
+        +background('/asset/image/global/icon_checkbox_on.svg', no-repeat, center center)
+        background-size: 16px, 16px
+
+%checkbox-wrap-page
+    input[type="checkbox"]
+        @extend %checkbox-page
+
+    label:hover
+        color: $page-color
+
+%checkbox-white
+    +border(1px solid $white)
+
+    &.selected
+        +background('/asset/image/global/icon_checkbox_on_white.svg', no-repeat, center center)
+        background-size: 16px, 16px
+
+%checkbox-wrap-white
+    input[type="checkbox"]
+        @extend %checkbox-white
+
+    label
+        color: $white
+
+@mixin checkbox($type: null)
     @extend %checkbox-default
 
-@mixin checkbox-wrap()
+    @if($type == 'checkbox-page')
+        @extend %checkbox-page
+    @else if($type == 'checkbox-white')
+        @extend %checkbox-page
+
+@mixin checkbox-wrap($type: null)
     @extend %checkbox-wrap-default
+
+    @if($type == 'checkbox-page')
+        @extend %checkbox-wrap-page
+    @else if($type == 'checkbox-white')
+        @extend %checkbox-wrap-white
