@@ -46,7 +46,6 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
       }
       const answers = await getAnswers(current.id, params)
       if (answers.data.content) {
-        console.log(answers)
         setAnswersList(answers.data.content)
         setAnswerLoading(true)
       }
