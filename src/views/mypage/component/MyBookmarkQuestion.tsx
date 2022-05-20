@@ -82,7 +82,7 @@ const MyBookmarkQuestion = () => {
               <img
                 src="img/dropdown_white.png"
                 alt="dropdownArrow"
-                className={`${filterDropdownOpen ? 'active' : ''} icon-dropdown`}
+                className={`${filterDropdownOpen ? '' : 'active'} icon-dropdown`}
               />
             </button>
           </div>
