@@ -37,7 +37,7 @@ const QuestionSearch = () => {
     const searchResults = await searchQuestions(params)
     setQuestions(searchResults.data)
     setQuestionSearchInput('')
-  }, [questionSearchInput, questionSearchTags, sort])
+  }, [questionSearchInput, sort, tagList])
 
   useEffect(() => {
     search()

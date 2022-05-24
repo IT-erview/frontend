@@ -114,7 +114,7 @@ const Navigation = () => {
     return (
       <div className={'dropdown-menu-wrap'}>
         <div className={'dropdown-user-wrap'}>
-          <img src={userImgUrl} className={'user-profile-img'} alt="profile-image" />
+          <img src={userImgUrl} className={'user-profile-img'} alt="profile-img" />
           <div className={'user-profile-text-wrap'}>
             <p className={'user-name'}>{userName} 님</p>
             <p className={'user-email'}>{userEmail}</p>
