@@ -1,6 +1,6 @@
 // todo: refactoring
 // react
-import { useEffect, useState, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Input } from 'reactstrap'
 // util
@@ -38,10 +38,6 @@ const QuestionSearch = () => {
     setQuestions(searchResults.data)
     setQuestionSearchInput('')
   }, [questionSearchInput, sort, tagList])
-
-  useEffect(() => {
-    search()
-  }, [search])
 
   const onTagSelect = (tagId: number, isSelected: boolean) => dispatch(setSearchTagSelected({ tagId, isSelected }))
 
