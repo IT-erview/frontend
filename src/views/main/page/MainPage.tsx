@@ -210,7 +210,10 @@ const MainPage = () => {
                 </p>
               </div>
             </article>
-            <TagSearch />
+            <article className={'search-wrap'}>
+              <h2 className={'search-title'}>문제 검색</h2>
+              <TagSearch />
+            </article>
           </div>
         </section>
         <section className="content-wrap">
