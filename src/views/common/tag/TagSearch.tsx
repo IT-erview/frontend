@@ -1,10 +1,16 @@
-import { ReducerType } from 'modules/rootReducer'
-import { setSearchTagSelected } from 'modules/searchTags'
+// react
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useHistory, useLocation } from 'react-router-dom'
+// util
 import { MAX_SEARCH_TAG_LENGTH } from 'utils/config'
 import { TagSelectorItem } from 'utils/type'
+//style
+import 'views/common/tag/TagSearch.sass'
+// redux
+import { ReducerType } from 'modules/rootReducer'
+import { setSearchTagSelected } from 'modules/searchTags'
+import { useDispatch, useSelector } from 'react-redux'
+// router-dom
+import { useHistory, useLocation } from 'react-router-dom'
 
 const TagSearch = () => {
   const [text, setText] = useState('')
