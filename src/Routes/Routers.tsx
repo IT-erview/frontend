@@ -22,10 +22,6 @@ const Routers = () => (
     <PrivateRoute exact path="/login" component={MainPage} />
     <Route path="/MyPage" component={Navigation} />
     <PrivateRoute path="/Mypage" component={MyPage} />
-    {/* <PrivateRoute exact path="/MyPage/MyRegisterQuestion" component={MyRegisterQuestion} />
-    <PrivateRoute exact path="/MyPage/MyRegisterAnswer" component={() => MyAnswers({ type: MyAnswerType.ALL })} />
-    <PrivateRoute exact path="/MyPage/MyLikeAnswer" component={() => MyAnswers({ type: MyAnswerType.LIKED })} />
-    <PrivateRoute exact path="/MyPage/MyBookmarkQuestion" component={MyBookmarkQuestion} /> */}
     <PrivateRoute exact path="/QuestionRegister" component={QuestionRegisterPage} />
     <PrivateRoute exact path="/QuestionSearch" component={QuestionSearchPage} />
     <PrivateRoute path="/QuestionDetail" component={QuestionDetailPage} />
