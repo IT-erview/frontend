@@ -1,5 +1,5 @@
 // react
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 // util
 import { TagSelectorItem } from 'utils/type'
@@ -18,18 +18,24 @@ const MypageFilter = () => {
   const [filterDropdownOpen, setFilterDropdownOpen] = useState<boolean>(false)
   const tagToggle = () => setFilterDropdownOpen((prevState) => !prevState)
 
+  const [selectedSort, setSelectedSort] = useState<String>('인기순')
+  const selectSort = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedSort(e.target.value)
+    console.log(selectedSort)
+  }
+
   const dropDownSort = (
     <div className="dropdown-common dropdown-sort-wrap">
-      <div className={'checkbox-wrap'}>
-        <input type="checkbox" id="popular" name="sort" />
+      <div className={'radio-wrap'}>
+        <input type="radio" id="popular" name="sort" value="인기순" onChange={selectSort} />
         <label htmlFor="popular">인기순</label>
       </div>
-      <div className={'checkbox-wrap'}>
-        <input type="checkbox" id="latest" name="sort" />
+      <div className={'radio-wrap'}>
+        <input type="radio" id="latest" name="sort" value="최신순" onChange={selectSort} />
         <label htmlFor="latest">최신순</label>
       </div>
-      <div className={'checkbox-wrap'}>
-        <input type="checkbox" id="older" name="sort" />
+      <div className={'radio-wrap'}>
+        <input type="radio" id="older" name="sort" value="오래된 순" onChange={selectSort} />
         <label htmlFor="older">오래된 순</label>
       </div>
     </div>
@@ -63,7 +69,7 @@ const MypageFilter = () => {
           </button>
         </div>
       </div>
-      <div className={`${filterDropdownOpen ? 'show' : ''} dropdown-box`}>
+      <div className={`dropdown-box ${filterDropdownOpen ? 'show' : ''}`}>
         {filterDropdownOpen ? dropDownSort : null}
         <div className="dropdown-common dropdown-tag-wrap">{filterDropdownOpen ? dropdownTag : null}</div>
       </div>

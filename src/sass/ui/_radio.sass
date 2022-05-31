@@ -1,0 +1,53 @@
+%radio-default
+    +size(16px, 16px)
+    +margin(0)
+    +padding(0)
+    +border-radius(5px)
+    +prefix(appearance, none, moz webkit)
+    background-color: inherit
+    outline: none
+    cursor: pointer
+
+%radio-wrap-default
+    display: flex
+    justify-content: flex-start
+    align-items: center
+    line-height: 16px
+
+    input[type="radio"]
+        @extend %radio-default
+        +margin(right 24px)
+
+        &:checked + label
+            font-weight: 800
+
+    label
+        font-weight: bold
+        font-size: 16px
+        cursor: pointer
+
+%radio-rectangle-white
+    +border(1px solid $white)
+
+    &:checked
+        +background('/asset/image/global/icon_checkbox_on_white.svg', no-repeat, center center)
+        background-size: 16px, 16px
+
+%radio-wrap-rectangle-white
+    input[type="radio"]
+        @extend %radio-rectangle-white
+
+    label
+        color: $white
+
+@mixin radio($type: null)
+    @extend %radio-default
+
+    @if($type == 'radio-rectangle-white')
+        @extend %radio-rectangle-white
+
+@mixin radio-wrap($type: null)
+    @extend %radio-wrap-default
+
+    @if($type == 'radio-rectangle-white')
+        @extend %radio-wrap-rectangle-white
