@@ -5,13 +5,16 @@
 @import 'sass/ui/_button.sass'
 
 .navigation
-    +size(100% null 1400px, 75px)
-    +padding(left 140px)
-    +flex-box(space-between, center)
+    +size(100%, 75px)
     +position(fixed, 0)
     background-color: white
     box-sizing: border-box
     z-index: 1000
+
+    .navigation-wrap
+        +size(100% 1593px, 75px)
+        +margin(0 auto)
+        +flex-box(space-between, center)
 
     a
         display: block
@@ -41,7 +44,6 @@
 
     .login-wrap
         +size(null,75px)
-        +padding(right 170px)
         +flex-box(null, center)
         position: relative
         cursor: pointer
