@@ -30,7 +30,7 @@ const SetQuizOptionsPage = () => {
     if (quizzes.length > 0) {
       const unblock = history.block((location, action) => {
         if (location.pathname !== '/QuizResult' && (action === 'POP' || action === 'PUSH')) {
-          const confirm = window.confirm('뒤로 가시겠습니까? 변경사항이 저장되지 않을 수 있습니다.')
+          const confirm = window.confirm('페이지를 이동하시겠습니까? 퀴즈가 초기화 됩니다.')
           if (confirm) dispatch(setQuizQuestionsReset())
           else return false
         }
