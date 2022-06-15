@@ -54,7 +54,7 @@ const QuestionDetail = (props: { questionId: number }) => {
       }
       const fetchedAnswer = await getAnswers(props.questionId, params)
       setHasMore(fetchedAnswer.data.length > 0)
-      setAnswers(fetchedAnswer.data)
+      setAnswers(fetchedAnswer.data.content)
       setPage(INITIAL_PAGE)
     }
     initMyAnswer()
@@ -93,6 +93,7 @@ const QuestionDetail = (props: { questionId: number }) => {
           next={fetchAnswers}
           hasMore={hasMore}
           loader={<></>}>
+          {console.log(answers)}
           {question &&
             answers.map((answer, index) => {
               return (
