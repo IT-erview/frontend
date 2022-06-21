@@ -2,12 +2,15 @@ import { useCallback, useEffect, useState } from 'react'
 import { TagCount } from 'utils/type'
 import 'views/common/user/UserInfo.sass'
 import { getQuestionStat } from 'api/question'
+import { getActivity } from 'api/user'
 
 const UserInfo = () => {
   const userName = localStorage.getItem('userName') as string
   const userImgUrl = localStorage.getItem('userImgUrl') as string
   const userEmail = localStorage.getItem('userEmail') as string
   const [tagStat, setTagStat] = useState<Array<TagCount>>([])
+  const [solved, setSolved] = useState<number>(0)
+  const [liked, setLiked] = useState<number>(0)
 
   const getQuestionTagStat = useCallback(async () => {
     const questionStat = await getQuestionStat()
@@ -15,6 +18,14 @@ const UserInfo = () => {
       setTagStat(questionStat.data)
     }
   }, [setTagStat])
+
+  const getUserActivity = useCallback(async () => {
+    const activity = await getActivity()
+    if (activity.data) {
+      setSolved(activity.data.solvedProblem)
+      setLiked(activity.data.likedCount)
+    }
+  }, [setSolved, setLiked])
 
   const showTagStat = tagStat.map((tag, index) => {
     if (index < 3)
@@ -28,7 +39,8 @@ const UserInfo = () => {
 
   useEffect(() => {
     getQuestionTagStat()
-  }, [getQuestionTagStat])
+    getUserActivity()
+  }, [getQuestionTagStat, getUserActivity])
 
   return (
     <>
@@ -47,11 +59,11 @@ const UserInfo = () => {
               {/* Todo: 실제 데이터로 교체 */}
               <div className={'user-detail-solved'}>
                 <span className={'label'}>퀴즈로 푼 문제</span>
-                <span className={'count'}>170</span>
+                <span className={'count'}>{solved}</span>
               </div>
               <div className={'user-detail-like'}>
                 <span className={'label'}>좋아요</span>
-                <span className={'count'}>50</span>
+                <span className={'count'}>{liked}</span>
               </div>
             </div>
             <div className={'user-tag-wrap'}>
