@@ -122,7 +122,7 @@ const Navigation = () => {
         </div>
         <div className={'dropdown-mypage-wrap dropdown-menu-item'}>
           <Link to="/">프로필 수정</Link>
-          <Link to="/">마이페이지</Link>
+          <Link to="/mypage">마이페이지</Link>
         </div>
         <div className={'dropdown-cs-wrap dropdown-menu-item'}>
           <Link to="/">자주하는 질문</Link>
