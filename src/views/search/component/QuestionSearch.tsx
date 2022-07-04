@@ -1,24 +1,33 @@
 // todo: refactoring
 // react
+import { ReducerType } from 'modules/rootReducer'
 import { useState } from 'react'
-import { Question } from 'utils/type'
+import { useSelector } from 'react-redux'
+//import { useCallback, useEffect } from 'react'
 // util
-// redux
-// api
+//import { TagSelectorItem } from 'utils/type'
+import { Question } from 'utils/type'
+// // redux
+// import { ReducerType } from 'modules/rootReducer'
+// import { useSelector } from 'react-redux'
+// // api
+// import { searchQuestions } from 'api/question'
 // component
 import SortSelectBox, { Sort } from 'views/common/form/SortSelectBox'
 import QuestionList from 'views/common/question/QuestionList'
 import TagSearch from 'views/common/tag/TagSearch'
 
-const QuestionSearch = () => {
-  // const dispatch = useDispatch()
-  // const [questionSearchInput, setQuestionSearchInput] = useState<string>('')
+export const QuestionSearch = () => {
+  //const questions = useSelector<ReducerType, Array<Question>>((state) => state.searchResults)
+
+  const [sort, setSort] = useState<Sort>(Sort.POPULAR)
+  //const [questions, setQuestions] = useState<Array<Question>>([])
+  //const dispatch = useDispatch()
 
   // const questionSearchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.searchTags)
-  const [sort, setSort] = useState<Sort>(Sort.POPULAR)
-  // const [questions, setQuestions] = useState<Array<Question>>([])
-  const questions = [] as Array<Question>
 
+  // const [questions, setQuestions] = useState<Array<Question>>([])
+  const questions = useSelector<ReducerType, Array<Question>>((state) => state.searchResults)
   // const search = useCallback(async () => {
   //   let params = {
   //     keyword: questionSearchInput,
