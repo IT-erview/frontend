@@ -10,6 +10,7 @@ import nextQuestion from 'modules/nextQuestion'
 import searchKeywords from 'modules/searchKeywords'
 import currentSort from 'modules/currentSort'
 import searchResults from 'modules/searchResults'
+import searchTotalElement from 'modules/searchTotalElement'
 
 const reducer = combineReducers({
   registerTags,
@@ -23,6 +24,7 @@ const reducer = combineReducers({
   searchKeywords,
   currentSort,
   searchResults,
+  searchTotalElement,
 })
 
 export type ReducerType = ReturnType<typeof reducer>

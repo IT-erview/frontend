@@ -1,45 +1,41 @@
 // todo: refactoring
 // react
 import { ReducerType } from 'modules/rootReducer'
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
-//import { useCallback, useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 // util
 //import { TagSelectorItem } from 'utils/type'
 import { Question } from 'utils/type'
-// // redux
-// import { ReducerType } from 'modules/rootReducer'
-// import { useSelector } from 'react-redux'
-// // api
-// import { searchQuestions } from 'api/question'
 // component
 import SortSelectBox, { Sort } from 'views/common/form/SortSelectBox'
 import QuestionList from 'views/common/question/QuestionList'
 import TagSearch from 'views/common/tag/TagSearch'
+// api
+import { searchQuestions as searchAPI } from 'api/question'
+// redux
+import { setSearchResults } from 'modules/searchResults'
 
 export const QuestionSearch = () => {
-  //const questions = useSelector<ReducerType, Array<Question>>((state) => state.searchResults)
-
   const [sort, setSort] = useState<Sort>(Sort.POPULAR)
-  //const [questions, setQuestions] = useState<Array<Question>>([])
-  //const dispatch = useDispatch()
-
-  // const questionSearchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.searchTags)
-
-  // const [questions, setQuestions] = useState<Array<Question>>([])
   const questions = useSelector<ReducerType, Array<Question>>((state) => state.searchResults)
-  // const search = useCallback(async () => {
-  //   let params = {
-  //     keyword: questionSearchInput,
-  //     page: 0,
-  //     size: 30,
-  //     tags: tagList.toString(),
-  //     sort: `${sort},desc`,
-  //   }
-  //   const searchResults = await searchQuestions(params)
-  //   setQuestions(searchResults.data)
-  //   setQuestionSearchInput('')
-  // }, [questionSearchInput, sort, tagList])
+  const dispatch = useDispatch()
+
+  const allQuestion = async () => {
+    let params = {
+      tags: [],
+      sort: sort,
+      size: 20,
+    }
+    const searchResults = await searchAPI(params)
+    if (searchResults.data.content.length !== 0) {
+      dispatch(setSearchResults(searchResults.data.content))
+    }
+  }
+
+  useEffect(() => {
+    allQuestion()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className={'question-search'}>

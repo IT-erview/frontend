@@ -11,6 +11,8 @@ import { setSearchTagSelected } from 'modules/searchTags'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSearchKeywords } from 'modules/searchKeywords'
 import { setSearchResults } from 'modules/searchResults'
+import { setSearchTotalElement } from 'modules/searchTotalElement'
+
 // router-dom
 import { useHistory, useLocation } from 'react-router-dom'
 // component
@@ -68,17 +70,15 @@ const TagSearch = () => {
       keyword: searchKeywords,
       tags: selectedTagsId.toString(),
       sort: sort,
+      size: 20,
+      page: 0,
     }
-    console.log('키워드', searchKeywords)
-    console.log('태그', selectedTagsId)
-    console.log('정렬', sort)
-
     const searchResults = await searchAPI(params)
-    console.log(searchResults)
     if (searchResults.data.content.length !== 0) {
       console.log('success')
       console.log(searchResults.data)
       dispatch(setSearchResults(searchResults.data.content))
+      dispatch(setSearchTotalElement(searchResults.data.totalElements))
     }
   }
 
