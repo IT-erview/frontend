@@ -1,7 +1,5 @@
 import { CSSProperties, useState } from 'react'
 import 'views/quiz/style/QuestionDetail.css'
-import { useDispatch } from 'react-redux'
-import { setCurrentSort } from 'modules/currentSort'
 
 export enum Sort {
   POPULAR = 'popular',
@@ -10,7 +8,6 @@ export enum Sort {
 
 const SortSelectBox = (props: { defaultSort: Sort; onSortChanged: (sort: Sort) => void }) => {
   const [selectedSort, setSelectedSort] = useState<Sort>(props.defaultSort)
-  const dispatch = useDispatch()
 
   const getSortButtonStyles = (sort: Sort) => {
     const style: CSSProperties = {
@@ -28,7 +25,6 @@ const SortSelectBox = (props: { defaultSort: Sort; onSortChanged: (sort: Sort) =
     if (sort === selectedSort) return
     setSelectedSort(sort)
     props.onSortChanged(sort)
-    dispatch(setCurrentSort(sort))
   }
 
   return (

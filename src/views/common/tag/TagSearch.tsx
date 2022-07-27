@@ -7,39 +7,30 @@ import { TagSelectorItem } from 'utils/type'
 import 'views/common/tag/TagSearch.sass'
 // redux
 import { ReducerType } from 'modules/rootReducer'
-import { setSearchTagSelected } from 'modules/searchTags'
+import { setSearch, setSearchKeyword, setSearchTagSelected } from 'modules/search'
 import { useDispatch, useSelector } from 'react-redux'
-import { setSearchKeywords } from 'modules/searchKeywords'
-import { setSearchResults } from 'modules/searchResults'
-import { setSearchTotalElement } from 'modules/searchTotalElement'
 
 // router-dom
 import { useHistory, useLocation } from 'react-router-dom'
 // component
-import { Sort } from 'views/common/form/SortSelectBox'
 //api
-import { searchQuestions as searchAPI } from 'api/question'
 
 const TagSearch = () => {
-  //const [text, setText] = useState('')
+  const [text, setText] = useState('')
   const location = useLocation()
   const history = useHistory()
-  const searchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.searchTags)
+  const searchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.search.tags)
   const [searchingTags, setSearchingTags] = useState<Array<TagSelectorItem>>([])
-  const [selectedTags, setSelectedTags] = useState<Array<TagSelectorItem>>(
-    searchTags.filter((tag) => tag.isSelected === true),
-  )
+  const [selectedTags, setSelectedTags] = useState<Array<TagSelectorItem>>(searchTags.filter((tag) => tag.isSelected))
   const dispatch = useDispatch()
   const onTagSelect = (tagId: number, isSelected: boolean) => dispatch(setSearchTagSelected({ tagId, isSelected }))
 
-  const selectedTagsId = selectedTags.map((tag) => tag.id)
-  const searchKeywords = useSelector<ReducerType, string>((state) => state.searchKeywords)
-  const sort = useSelector<ReducerType, Sort>((state) => state.currentSort)
+  // const searchKeywords = useSelector<ReducerType, string>((state) => state.searchKeywords)
 
   const selectTag = (tag: TagSelectorItem) => {
     onTagSelect(tag.id, !tag.isSelected)
-    //setText('')
-    dispatch(setSearchKeywords(''))
+    dispatch(setSearch(true))
+    setText('')
     if (tag.isSelected) {
       setSelectedTags(selectedTags.filter((item) => item.id !== tag.id))
     } else {
@@ -65,28 +56,12 @@ const TagSearch = () => {
     setSelectedTags([])
   }
 
-  const search = async () => {
-    let params = {
-      keyword: searchKeywords,
-      tags: selectedTagsId.toString(),
-      sort: sort,
-      size: 20,
-      page: 0,
-    }
-    const searchResults = await searchAPI(params)
-    if (searchResults.data.content.length !== 0) {
-      console.log('success')
-      console.log(searchResults.data)
-      dispatch(setSearchResults(searchResults.data.content))
-      dispatch(setSearchTotalElement(searchResults.data.totalElements))
-    }
-  }
-
   const searchQuestions = () => {
+    dispatch(setSearch(true))
+    dispatch(setSearchKeyword(text))
     if (location.pathname !== '/QuestionSearch') {
       history.push('/QuestionSearch')
     }
-    search()
   }
 
   const showTags = searchingTags.map((tag, index) => {
@@ -110,8 +85,8 @@ const TagSearch = () => {
   })
 
   useEffect(() => {
-    setSearchingTags(findTags(searchTags, searchKeywords))
-  }, [searchTags, searchKeywords])
+    setSearchingTags(findTags(searchTags, text))
+  }, [searchTags, text])
 
   return (
     <article className={'search-wrap'}>
@@ -120,10 +95,9 @@ const TagSearch = () => {
           <input
             type="text"
             maxLength={MAX_SEARCH_TAG_LENGTH}
-            value={searchKeywords}
+            value={text}
             onChange={(e) => {
-              //setText(e.target.value)
-              dispatch(setSearchKeywords(e.target.value))
+              setText(e.target.value)
             }}
             placeholder="검색어를 입력해주세요."
             className={'search-input'}
