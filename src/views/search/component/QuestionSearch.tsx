@@ -1,36 +1,51 @@
 // todo: refactoring
 // react
-import { useState } from 'react'
-import { Question } from 'utils/type'
+import { ReducerType } from 'modules/rootReducer'
+import { useCallback, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 // util
-// redux
-// api
+import { Question, TagSelectorItem } from 'utils/type'
 // component
-import SortSelectBox, { Sort } from 'views/common/form/SortSelectBox'
 import QuestionList from 'views/common/question/QuestionList'
 import TagSearch from 'views/common/tag/TagSearch'
+// api
+import { searchQuestions as searchAPI } from 'api/question'
+// redux
+import SortSelectBox, { Sort } from '../../common/form/SortSelectBox'
+import { setSearch } from '../../../modules/search'
 
-const QuestionSearch = () => {
-  // const dispatch = useDispatch()
-  // const [questionSearchInput, setQuestionSearchInput] = useState<string>('')
-
-  // const questionSearchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.searchTags)
+export const QuestionSearch = () => {
+  const [questions, setQuestions] = useState<Array<Question>>([])
+  const searchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.search.tags)
+  const tags: string = searchTags
+    .filter((tag) => tag.isSelected)
+    .map((tag) => tag.id)
+    .toString()
+  const searchKeywords = useSelector<ReducerType, string>((state) => state.search.keyword)
+  const dispatch = useDispatch()
+  const doSearch = useSelector<ReducerType, boolean>((state) => state.search.search)
   const [sort, setSort] = useState<Sort>(Sort.POPULAR)
-  // const [questions, setQuestions] = useState<Array<Question>>([])
-  const questions = [] as Array<Question>
 
-  // const search = useCallback(async () => {
-  //   let params = {
-  //     keyword: questionSearchInput,
-  //     page: 0,
-  //     size: 30,
-  //     tags: tagList.toString(),
-  //     sort: `${sort},desc`,
-  //   }
-  //   const searchResults = await searchQuestions(params)
-  //   setQuestions(searchResults.data)
-  //   setQuestionSearchInput('')
-  // }, [questionSearchInput, sort, tagList])
+  const getQuestion = useCallback(async () => {
+    let params = {
+      keyword: searchKeywords,
+      tags: tags,
+      sort: sort,
+      size: 20,
+      page: 0,
+    }
+    const searchResults = await searchAPI(params)
+    if (searchResults.data.content) {
+      setQuestions(searchResults.data.content)
+    }
+  }, [searchKeywords, tags, sort])
+
+  useEffect(() => {
+    if (doSearch) {
+      getQuestion()
+      dispatch(setSearch(false))
+    } else if (!questions.length && !tags.length && !searchKeywords.length) getQuestion()
+  }, [doSearch, dispatch, getQuestion, questions, tags, searchKeywords])
 
   return (
     <div className={'question-search'}>
@@ -46,7 +61,13 @@ const QuestionSearch = () => {
         <div className={'searched-title-wrap'}>
           <h2>등록된 면접 문제</h2>
           <div className={'sort-button-wrap'}>
-            <SortSelectBox defaultSort={sort} onSortChanged={(sort) => setSort(sort)} />
+            <SortSelectBox
+              defaultSort={sort}
+              onSortChanged={(sort) => {
+                setSort(sort)
+                dispatch(setSearch(true))
+              }}
+            />
           </div>
         </div>
         <div className={'searched-content-wrap'}>

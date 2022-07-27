@@ -20,7 +20,7 @@ import { setAllTags } from 'modules/allTags'
 import { setQuizTags } from 'modules/quizTags'
 import { setRegisterTags } from 'modules/registerTags'
 import { setResetQuiz } from 'modules/resetQuiz'
-import { setSearchTags } from 'modules/searchTags'
+import { setSearchTags } from 'modules/search'
 
 // api
 import { getTags } from 'api/tag'

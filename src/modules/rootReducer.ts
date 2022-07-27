@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import registerTags from 'modules/registerTags'
-import searchTags from 'modules/searchTags'
+import search from 'modules/search'
 import quizTags from 'modules/quizTags'
 import allTags from 'modules/allTags'
 import loginModal from 'modules/loginModal'
@@ -10,7 +10,7 @@ import nextQuestion from 'modules/nextQuestion'
 
 const reducer = combineReducers({
   registerTags,
-  searchTags,
+  search,
   quizTags,
   loginModal,
   allTags,

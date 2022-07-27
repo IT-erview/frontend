@@ -7,25 +7,29 @@ import { TagSelectorItem } from 'utils/type'
 import 'views/common/tag/TagSearch.sass'
 // redux
 import { ReducerType } from 'modules/rootReducer'
-import { setSearchTagSelected } from 'modules/searchTags'
+import { setSearch, setSearchKeyword, setSearchTagSelected } from 'modules/search'
 import { useDispatch, useSelector } from 'react-redux'
+
 // router-dom
 import { useHistory, useLocation } from 'react-router-dom'
+// component
+//api
 
 const TagSearch = () => {
   const [text, setText] = useState('')
   const location = useLocation()
   const history = useHistory()
-  const searchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.searchTags)
+  const searchTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.search.tags)
   const [searchingTags, setSearchingTags] = useState<Array<TagSelectorItem>>([])
-  const [selectedTags, setSelectedTags] = useState<Array<TagSelectorItem>>(
-    searchTags.filter((tag) => tag.isSelected === true),
-  )
+  const [selectedTags, setSelectedTags] = useState<Array<TagSelectorItem>>(searchTags.filter((tag) => tag.isSelected))
   const dispatch = useDispatch()
   const onTagSelect = (tagId: number, isSelected: boolean) => dispatch(setSearchTagSelected({ tagId, isSelected }))
 
+  // const searchKeywords = useSelector<ReducerType, string>((state) => state.searchKeywords)
+
   const selectTag = (tag: TagSelectorItem) => {
     onTagSelect(tag.id, !tag.isSelected)
+    dispatch(setSearch(true))
     setText('')
     if (tag.isSelected) {
       setSelectedTags(selectedTags.filter((item) => item.id !== tag.id))
@@ -49,10 +53,13 @@ const TagSearch = () => {
     selectedTags.forEach((tag) => {
       onTagSelect(tag.id, !tag.isSelected)
     })
+    dispatch(setSearch(true))
     setSelectedTags([])
   }
 
   const searchQuestions = () => {
+    dispatch(setSearch(true))
+    dispatch(setSearchKeyword(text))
     if (location.pathname !== '/QuestionSearch') {
       history.push('/QuestionSearch')
     }
