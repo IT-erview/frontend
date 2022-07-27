@@ -61,10 +61,15 @@ const getAnswers = async (questionId: number, sort: string, page: number, rowsPe
   })
 }
 
-const getMyAnswers = async (sort: string, page: number, rowsPerPage = 4, desc = true) => {
+const getMyAnswers = async (sort: string, page: number, tags: string, rowsPerPage = 4, desc = true) => {
   const response = await request({
     method: 'get',
-    url: `/api/v1/answer/mine?page=${page}&size=${rowsPerPage}&sort=${sort}${desc ? ',desc' : ''}`,
+    url: `/api/v1/answer/mine?sort=${sort}${desc ? ',desc' : ''}`,
+    params: {
+      page,
+      size: rowsPerPage,
+      tags: tags,
+    },
   })
   if (!response) return []
   // todo: api 수정 후 아래와 주석과 같은 형태로 코드 수정되어야함
@@ -73,8 +78,8 @@ const getMyAnswers = async (sort: string, page: number, rowsPerPage = 4, desc = 
   if (!content) return []
   return content.map((item: any) => {
     const answer = item as Answer
-    answer.questionContent = item.question?.content
-    answer.tags = item.question?.tagList
+    answer.questionContent = item.questionContent
+    answer.tags = item.tags
     return answer
   })
 }
