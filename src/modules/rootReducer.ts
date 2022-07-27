@@ -7,6 +7,7 @@ import loginModal from 'modules/loginModal'
 import resetQuiz from 'modules/resetQuiz'
 import quizQuestions from 'modules/quizQuestions'
 import nextQuestion from 'modules/nextQuestion'
+import searchFilter from 'modules/searchFilter'
 
 const reducer = combineReducers({
   registerTags,
@@ -17,6 +18,7 @@ const reducer = combineReducers({
   resetQuiz,
   quizQuestions,
   nextQuestion,
+  searchFilter,
 })
 
 export type ReducerType = ReturnType<typeof reducer>
