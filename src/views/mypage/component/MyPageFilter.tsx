@@ -7,41 +7,41 @@ import { TagSelectorItem } from 'utils/type'
 import 'views/mypage/style/MypageFilter.sass'
 // redux
 import { ReducerType } from 'modules/rootReducer'
-import { setQuizTagSelected } from 'modules/quizTags'
+import { Sort } from '../../common/form/SortSelectBox'
+import { filter, setFilterSort, setFilterTagSelected } from 'modules/searchFilter'
 
 const MypageFilter = () => {
-  const quizTags = useSelector<ReducerType, Array<TagSelectorItem>>((state) => state.quizTags)
+  const filter = useSelector<ReducerType, filter>((state) => state.searchFilter)
   const dispatch = useDispatch()
   const selectTag = (tagId: number, isSelected: boolean) => {
-    dispatch(setQuizTagSelected({ tagId, isSelected: !isSelected }))
+    dispatch(setFilterTagSelected({ tagId, isSelected: !isSelected }))
   }
   const [filterDropdownOpen, setFilterDropdownOpen] = useState<boolean>(false)
   const tagToggle = () => setFilterDropdownOpen((prevState) => !prevState)
 
-  const [selectedSort, setSelectedSort] = useState<String>('인기순')
-  const selectSort = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedSort(e.target.value)
-    console.log(selectedSort)
+  // const [selectedSort, setSelectedSort] = useState<Sort>(Sort.POPULAR)
+  const selectSort = (sort: Sort) => {
+    dispatch(setFilterSort(sort))
   }
 
   const dropDownSort = (
     <div className="dropdown-common dropdown-sort-wrap">
       <div className={'radio-wrap'}>
-        <input type="radio" id="popular" name="sort" value="인기순" onChange={selectSort} />
+        <input type="radio" id="popular" name="sort" value={Sort.POPULAR} onChange={() => selectSort(Sort.POPULAR)} />
         <label htmlFor="popular">인기순</label>
       </div>
       <div className={'radio-wrap'}>
-        <input type="radio" id="latest" name="sort" value="최신순" onChange={selectSort} />
+        <input type="radio" id="latest" name="sort" value={Sort.LATEST} onChange={() => selectSort(Sort.LATEST)} />
         <label htmlFor="latest">최신순</label>
       </div>
       <div className={'radio-wrap'}>
-        <input type="radio" id="older" name="sort" value="오래된 순" onChange={selectSort} />
+        <input type="radio" id="older" name="sort" value={Sort.LATEST} onChange={() => selectSort(Sort.LATEST)} />
         <label htmlFor="older">오래된 순</label>
       </div>
     </div>
   )
 
-  const dropdownTag = quizTags.map((tag: TagSelectorItem) => (
+  const dropdownTag = filter.tags.map((tag: TagSelectorItem) => (
     <div className={'checkbox-wrap'} key={tag.id}>
       <input
         className={`${tag.isSelected ? 'selected' : ''} input-option`}
@@ -54,12 +54,20 @@ const MypageFilter = () => {
     </div>
   ))
 
+  const resetFilter = () => {
+    filter.tags.forEach((tag: TagSelectorItem) => {
+      if (tag.isSelected) selectTag(tag.id, tag.isSelected)
+    })
+  }
+
   return (
     <div className={'mypage-filter-wrap'}>
       <div className={'mypage-filter-compact'}>
         <span className={'compact-title'}>필터 설정하기</span>
         <div className={'compact-handler'}>
-          <button className={'btn-dropdown-reset'}>필터 초기화 X</button>
+          <button className={'btn-dropdown-reset'} onClick={resetFilter}>
+            필터 초기화 X
+          </button>
           <button className={'btn-dropdown'} onClick={tagToggle}>
             <img
               src="img/dropdown_white.png"

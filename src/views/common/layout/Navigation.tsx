@@ -25,6 +25,7 @@ import { setSearchTags } from 'modules/search'
 // api
 import { getTags } from 'api/tag'
 import axios from 'axios'
+import { setFilterTags } from '../../../modules/searchFilter'
 
 const Navigation = () => {
   const [userEmail, setUserEmail] = useState<string>('')
@@ -55,6 +56,7 @@ const Navigation = () => {
       dispatch(setSearchTags(allTags))
       dispatch(setQuizTags(allTags))
       dispatch(setRegisterTags(allTags))
+      dispatch(setFilterTags(allTags))
       setRenew(false)
     }
   }, [allTags, dispatch, renew])

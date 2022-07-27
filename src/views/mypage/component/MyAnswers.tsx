@@ -9,9 +9,11 @@ import 'views/mypage/style/MyAnswer.sass'
 // api
 import { getMyAnswers, getMyLikedAnswers } from 'test/api/answer'
 // component
-import SortSelectBox, { Sort } from 'views/common/form/SortSelectBox'
 import AnswerComponent from 'views/common/answer/Answer'
 import MypageFilter from 'views/mypage/component/MyPageFilter'
+import { useSelector } from 'react-redux'
+import { ReducerType } from 'modules/rootReducer'
+import { filter } from 'modules/searchFilter'
 
 export enum MyAnswerType {
   ALL,
@@ -21,38 +23,37 @@ export enum MyAnswerType {
 const MyAnswers = (props: { type: MyAnswerType }) => {
   const ROWS_PER_PAGE = 4
   const INITIAL_PAGE = 0
-  const [sort, setSort] = useState<Sort>(Sort.POPULAR)
   const [page, setPage] = useState(INITIAL_PAGE)
   const [hasMore, setHasMore] = useState(true)
   const [answers, setAnswers] = useState<Array<Answer>>([])
+  const filter = useSelector<ReducerType, filter>((state) => state.searchFilter)
+  const tagList = filter.tags
+    .filter((tag) => tag.isSelected)
+    .map((tag) => tag.id)
+    .toString()
 
-  const getAnswers = async (type: MyAnswerType, sort: string, page: number) => {
-    // let params = {
-    //   page: page,
-    //   size: ROWS_PER_PAGE,
-    //   sort: `${sort},desc`,
-    // }
-    if (type === MyAnswerType.ALL) return await getMyAnswers(sort, page, ROWS_PER_PAGE)
+  const getAnswers = async (type: MyAnswerType, sort: string, tagList: string, page: number) => {
+    if (type === MyAnswerType.ALL) return await getMyAnswers(sort, page, tagList, ROWS_PER_PAGE)
     return await getMyLikedAnswers(sort, page, ROWS_PER_PAGE)
   }
 
   const fetchAnswers = async () => {
     if (!hasMore) return
     const nextPage = page + 1
-    const fetchedAnswer = await getAnswers(props.type, sort, nextPage)
+    const fetchedAnswer = await getAnswers(props.type, filter.sort, tagList, nextPage)
     setPage(nextPage)
     setAnswers((answers) => [...answers, ...fetchedAnswer])
   }
 
   useEffect(() => {
     const refreshAnswers = async () => {
-      const fetchedAnswer = await getAnswers(props.type, sort, INITIAL_PAGE)
+      const fetchedAnswer = await getAnswers(props.type, filter.sort, tagList, INITIAL_PAGE)
       setHasMore(fetchedAnswer.length > 0)
       setAnswers(fetchedAnswer)
       setPage(INITIAL_PAGE)
     }
     refreshAnswers()
-  }, [sort, props.type])
+  }, [filter, props.type, tagList])
 
   return (
     <div className="mypage-answer-wrap">
@@ -64,7 +65,6 @@ const MyAnswers = (props: { type: MyAnswerType }) => {
         hasMore={hasMore}
         loader={<></>}>
         {answers.map((answer, index) => {
-          console.log(answer.questionId)
           return (
             <AnswerComponent
               key={answer.id}
@@ -80,9 +80,7 @@ const MyAnswers = (props: { type: MyAnswerType }) => {
         })}
         <p className={'list-none'}>{answers.length === 0 && '등록된 답변이 없습니다.'}</p>
       </InfiniteScroll>
-      <div className="mypage-register-question-title">
-        <SortSelectBox defaultSort={sort} onSortChanged={(sort) => setSort(sort)} />
-      </div>
+      <div className="mypage-register-question-title"></div>
     </div>
   )
 }
