@@ -53,6 +53,7 @@ const TagSearch = () => {
     selectedTags.forEach((tag) => {
       onTagSelect(tag.id, !tag.isSelected)
     })
+    dispatch(setSearch(true))
     setSelectedTags([])
   }
 
