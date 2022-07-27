@@ -30,7 +30,9 @@ const TagSearch = () => {
   const selectTag = (tag: TagSelectorItem) => {
     onTagSelect(tag.id, !tag.isSelected)
     dispatch(setSearch(true))
-    setText('')
+    if (text === tag.name) {
+      setText('')
+    }
     if (tag.isSelected) {
       setSelectedTags(selectedTags.filter((item) => item.id !== tag.id))
     } else {
@@ -54,6 +56,8 @@ const TagSearch = () => {
       onTagSelect(tag.id, !tag.isSelected)
     })
     dispatch(setSearch(true))
+    dispatch(setSearchKeyword(''))
+    setText('')
     setSelectedTags([])
   }
 
