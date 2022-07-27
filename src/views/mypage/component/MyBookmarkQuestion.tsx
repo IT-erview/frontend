@@ -8,33 +8,45 @@ import 'views/mypage/style/MyBookmarkQuestion.sass'
 import { getBookmarks } from 'api/bookmark'
 // component
 import QuestionList from 'views/common/question/QuestionList'
-import SortSelectBox, { Sort } from 'views/common/form/SortSelectBox'
 import MypageFilter from 'views/mypage/component/MyPageFilter'
+import { useSelector } from 'react-redux'
+import { ReducerType } from 'modules/rootReducer'
+import { filter } from 'modules/searchFilter'
 
 const MyBookmarkQuestion = () => {
-  const [sort, setSort] = useState<Sort>(Sort.POPULAR)
   const [questions, setQuestions] = useState<Array<Question>>([])
+  const filter = useSelector<ReducerType, filter>((state) => state.searchFilter)
+  const tagList = filter.tags
+    .filter((tag) => tag.isSelected)
+    .map((tag) => tag.id)
+    .toString()
 
   useEffect(() => {
     const initQuestions = async () => {
       let params = {
-        sort: `${sort}`,
+        sort: filter.sort,
         page: 0,
         size: 30,
+        tags: tagList,
       }
       let bookmarkList = await getBookmarks(params)
-      setQuestions(bookmarkList.data)
+      if (bookmarkList.status === 200) {
+        setQuestions([])
+        bookmarkList.data.content.forEach(
+          (ques: { createdDate: string; email: string; id: number; modifiedDate: string; question: Question }) => {
+            setQuestions((prev) => [...prev, ques.question])
+          },
+        )
+      }
     }
     initQuestions()
-  }, [sort])
+  }, [filter, tagList])
 
   return (
     <div className="mypage-bookmark-wrap">
       <MypageFilter />
       <QuestionList questions={questions} />
-      <div className="mypage-register-bookmark-title">
-        <SortSelectBox defaultSort={sort} onSortChanged={(sort) => setSort(sort)} />
-      </div>
+      <div className="mypage-register-bookmark-title"></div>
     </div>
   )
 }
