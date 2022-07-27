@@ -35,7 +35,6 @@ export const QuestionSearch = () => {
       page: 0,
     }
     const searchResults = await searchAPI(params)
-    console.log(searchResults)
     if (searchResults.data.content) {
       setQuestions(searchResults.data.content)
     }
