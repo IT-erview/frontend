@@ -45,7 +45,7 @@ export const QuestionSearch = () => {
       getQuestion()
       dispatch(setSearch(false))
     } else if (!questions.length && !tags.length && !searchKeywords.length) getQuestion()
-  }, [doSearch, dispatch, getQuestion])
+  }, [doSearch, dispatch, getQuestion, questions, tags, searchKeywords])
 
   return (
     <div className={'question-search'}>
