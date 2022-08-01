@@ -1,0 +1,194 @@
+@import 'sass/helpers/_variables.sass'
+@import 'sass/helpers/_extends.sass'
+@import 'sass/helpers/_mixins.scss'
+
+@import 'sass/ui/_button.sass'
+
+.question-detail-wrap
+    +margin(top 75px bottom 105px)
+
+    .banner-wrap
+        +margin(top 75px)
+        +border-radius(75px 75px 75px 0)
+        height: 364px
+        background-size: cover
+        background-repeat: no-repeat
+        background-position: center center
+
+        h1
+            +padding(top 152px)
+            font-weight: 800
+            font-size: 26px
+            color: $white
+
+        p
+            +padding(top 26px)
+            font-weight: 800
+            font-size: 18px
+            line-height: 24px
+            color: $white
+
+    .content-wrap
+        +margin(top 70px)
+
+        .question-content
+            h2
+                +padding(bottom 32px left 20px)
+                +border(1px solid $border-color-light, bottom)
+                font-size: 26px
+                font-weight: 800
+
+            .question-information-box
+                +flex-box(space-between, center)
+                +margin(top 25px)
+                +padding(46px 98px 46px 35px)
+                +border-radius(15px)
+                box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1)
+
+                .question-title
+                    font-weight: 800
+                    font-size: 18px
+
+                .question-description
+                    +padding(top 10px)
+                    color: #a0a0a0
+                    font-size: 16px
+
+            .question-handler
+                +flex-box(flex-start, center)
+
+                .btn-bookmark
+                    +flex-box(flex-start, center)
+                    +btn()
+                    +padding(0)
+                    font-weight: 700
+                    font-size: 16px
+                    color: $page-color
+
+                    img
+                        +margin(right 10px)
+                        +size(11px, 14px)
+
+                .bar
+                    +margin(0 23px)
+                    +size(2px, 17px)
+                    background-color: $page-color
+
+                .question-tag
+                    +padding(5px 18px)
+                    +border-radius(17px 17px 17px 0)
+                    +border(2px solid $page-color)
+                    +box-sizing(border-box)
+                    display: block
+                    float: right
+                    color: $page-color
+
+        .keyword-box-wrap
+            +margin(top 30px)
+            min-height: 75px
+            position: relative
+
+            .keyword-compact
+                +flex-box(space-between, center)
+                +size(100%, 75px)
+                +padding(0 70px)
+                +position(absolute, 0, null, null, 0)
+                +border-radius(15px)
+                +box-sizing(border-box)
+                background-color: $page-color
+                box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1)
+
+                .keyword-title
+                    font-weight: 800
+                    font-size: 18px
+                    color: $white
+
+                .btn-keyword-dropdown
+                    +btn()
+                    +flex-box(center, center)
+                    +size(20px, 18px)
+                    +padding(0)
+
+                    .icon-down-arrow
+                        +size(15px, 7px)
+                        transition: all 0.4s ease-in-out
+
+                        &.active
+                            transform: rotate(-180deg)
+
+            .keyword-box
+                +padding(0 70px)
+                +border-radius(15px)
+                +box-sizing(border-box)
+                height: 75px
+                background-color: $page-color
+                box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1)
+                transition: all 0.4s ease-in-out
+
+                .core-keyword
+                    +btn(null, 2px solid $white)
+                    +padding(5px 8px)
+                    display: inline-block
+                    font-weight: bold
+                    font-size: 14px
+                    color: $white
+
+                &.show
+                    +padding(top 99px bottom 25px)
+                    height: 150px
+
+        .my-answer
+            +margin(top 76px)
+
+            .my-title-wrap
+                +flex-box(space-between, center)
+                +padding(left 20px bottom 20px right 20px)
+                +border(1px solid $border-color-light, bottom)
+
+                h3
+                    font-weight: 800
+                    font-size: 18px
+
+                .btn-like
+                    +flex-box(flex-start, center)
+                    +btn()
+                    +padding(0)
+                    font-weight: 700
+                    font-size: 16px
+                    color: $page-color
+
+                    img
+                        +size(15px, 14px)
+                        +margin(right 7px)
+
+            .my-content-wrap
+                +size(100%, 365px)
+                +margin(top 25px)
+                +padding(44px 70px)
+                +border-radius(15px)
+                +box-sizing(border-box)
+                background-color: #111036
+
+                p
+                    font-weight: 700
+                    font-size: 16px
+                    color: $white
+                    line-height: 20px
+
+        .other-answer
+            +margin(top 94px)
+
+            .other-title-wrap
+                +flex-box(space-between, center)
+                +padding(left 20px bottom 20px right 20px)
+                +border(1px solid $border-color-light, bottom)
+
+            h3
+                font-weight: 800
+                font-size: 18px
+
+            .other-content-wrap
+                +margin(top 25px)
+
+                .other-answer-none
+                    +padding(left 20px)
