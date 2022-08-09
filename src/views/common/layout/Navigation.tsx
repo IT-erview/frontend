@@ -150,33 +150,6 @@ const Navigation = () => {
         <div className={'menu-wrap'}>
           <ul>
             <li>
-              <Link to="/">
-                <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M0.699951 7.50011H13.3M1.04995 5.40012H12.95M2.09995 3.30012H11.9M1.04995 9.60011H12.95M2.09995 11.7001H11.9M6.99995 1.0188V13.9057M5.24995 1.36996C2.79995 5.56996 2.79995 9.43098 5.24995 13.631M8.74995 1.30896C11.55 5.50896 11.9 9.43098 8.74995 13.631"
-                    stroke="#09C558"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <circle cx="7" cy="7.5" r="6.5" stroke="#09C558" />
-                </svg>
-                <span>Home</span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/MyPage">
-                <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M3.375 8.375V14.5H15.075V8.375M1.125 7.9375L9.675 0.9375L16.875 7.9375M3.375 4.4375V0.5H5.175V2.6875"
-                    stroke="#160CFB"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                <span>마이페이지</span>
-              </Link>
-            </li>
-            <li>
               <Link to="/QuestionSearch">
                 <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="5.44444" cy="5.94444" r="4.94444" stroke="#FC2F31" />
@@ -188,19 +161,6 @@ const Navigation = () => {
                   />
                 </svg>
                 <span>문제검색</span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/QuestionRegister">
-                <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M3.14555 2.95324H14.8546M3.14555 5.89713H14.8546M3.14555 8.35038H10.2728M3.14555 11.2943H0.600098V0.5H17.4001V11.2943H9.25464L3.14555 14.5V11.2943Z"
-                    stroke="#D58A34"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                <span>문제등록</span>
               </Link>
             </li>
             <li>
@@ -216,6 +176,19 @@ const Navigation = () => {
                   <circle cx="7.99995" cy="7.49995" r="0.777778" fill="#FAE45B" />
                 </svg>
                 <span>퀴즈</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/QuestionRegister">
+                <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M3.14555 2.95324H14.8546M3.14555 5.89713H14.8546M3.14555 8.35038H10.2728M3.14555 11.2943H0.600098V0.5H17.4001V11.2943H9.25464L3.14555 14.5V11.2943Z"
+                    stroke="#D58A34"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <span>문제등록</span>
               </Link>
             </li>
           </ul>
