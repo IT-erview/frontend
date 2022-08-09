@@ -104,7 +104,7 @@ const TagSearch = () => {
             onChange={(e) => {
               setText(e.target.value)
             }}
-            placeholder="검색어를 입력해주세요."
+            placeholder="태그 혹은 검색어를 입력해주세요."
             className={'search-input'}
           />
           <button onClick={searchQuestions} className={'search-button'}>
@@ -119,7 +119,7 @@ const TagSearch = () => {
         <div className={'selected-tag-wrap'}>
           <ul>{showSelectedTags}</ul>
           <button onClick={resetSelectedTags} className={'btn-reset'}>
-            검색어 초기화 X
+            태그 초기화 X
           </button>
         </div>
       )}
