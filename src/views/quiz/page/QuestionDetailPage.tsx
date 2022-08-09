@@ -1,62 +1,52 @@
-// react
-import { useEffect, useState } from 'react'
-// util
-import { isNumeric } from 'utils/util'
-// api
-import { getQuestion } from 'api/question'
-import { addBookmark } from 'api/bookmark'
-// component
+import Navigation from 'views/common/layout/Navigation'
+import Footer from 'views/common/layout/Footer'
+// import { useEffect, useState } from 'react'
+// import { isNumeric } from 'utils/util'
+// import { getQuestion } from 'api/question'
+import 'views/quiz/style/QuestionDetailStyle.sass'
+
 import QuestionDetail from 'views/quiz/component/QuestionDetail'
 
-const getParsedParameters = () => {
-  const questionIdParameters = new URLSearchParams(window.location.search).get('question_id')
-  return {
-    questionId: isNumeric(questionIdParameters) ? Number(questionIdParameters) : undefined,
-  }
-}
+// const getParsedParameters = () => {
+//   const questionIdParameters = new URLSearchParams(window.location.search).get('question_id')
+//   return {
+//     questionId: isNumeric(questionIdParameters) ? Number(questionIdParameters) : undefined,
+//   }
+// }
 
 const QuestionDetailPage = () => {
-  const questionId = getParsedParameters().questionId
-  const [questionContent, setQuestionContent] = useState<string>('')
-
-  useEffect(() => {
-    const getQuestionContent = async () => {
-      if (questionId) {
-        const question = await getQuestion(questionId)
-        if (question.data) setQuestionContent(question.data.content)
-      }
-    }
-    getQuestionContent()
-  }, [questionId])
-
-  if (questionId === undefined) return <></>
-  let isRequesting = false
-
-  const bookmarkIt = async () => {
-    if (isRequesting) return
-    isRequesting = true
-    const result = await addBookmark(questionId).finally(() => {
-      isRequesting = false
-    })
-    window.alert(result.data ? '북마크 되었습니다.' : '이미 북마크한 문제입니다.')
-  }
+  const questionRegisterImg = '/img/quiz_img.png'
+  // const questionId = getParsedParameters().questionId
+  // const [questionContent, setQuestionContent] = useState<string>('')
+  // useEffect(() => {
+  //   const getQuestionContent = async () => {
+  //     if (questionId) {
+  //       const question = await getQuestion(questionId)
+  //       console.log(question)
+  //       if (question.data) setQuestionContent(question.data.content)
+  //     }
+  //   }
+  //   getQuestionContent()
+  // }, [questionId])
   return (
     <>
-      <div className="question-detail-top">
-        <div className="question-detail-bar">
-          <img src="/img/iterview-logo.jpg" alt="logo" />
-        </div>
-        <div id="top-hr-line" />
-        <div className="question-detail-title">
-          <img src="/img/figure1.png" alt="question-detail-title-icon" />
-          <span>{questionContent}</span>
-          <button onClick={bookmarkIt}>북마크로 문제 저장하기</button>
-        </div>
-      </div>
-      <div className="body">
-        <QuestionDetail questionId={questionId} />
-      </div>
+      <Navigation />
+      <main className="question-detail-wrap">
+        <section className="banner-wrap" style={{ backgroundImage: `url(${questionRegisterImg})` }}>
+          <div className="container">
+            <h1>제목</h1>
+            <p>
+              이리저리 흩어진 면접지문과 답변?
+              <br />
+              한번에 검색하고 검증된 답변도 확인해보세요!
+            </p>
+          </div>
+        </section>
+        <QuestionDetail />
+      </main>
+      <Footer />
     </>
   )
 }
+
 export default QuestionDetailPage

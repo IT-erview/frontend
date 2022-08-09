@@ -24,7 +24,7 @@ const Routers = () => (
     <PrivateRoute path="/Mypage" component={MyPage} />
     <PrivateRoute exact path="/QuestionRegister" component={QuestionRegisterPage} />
     <PrivateRoute exact path="/QuestionSearch" component={QuestionSearchPage} />
-    <PrivateRoute path="/QuestionDetail" component={QuestionDetailPage} />
+    <PrivateRoute path="/QuestionDetail/:id" component={QuestionDetailPage} />
     <PrivateRoute exact path="/SetQuizOptions" component={SetQuizOptionsPage} />
     <PrivateRoute exact path="/AnswerRegister" component={AnswerRegisterPage} />
     <PrivateRoute exact path="/QuizResult" component={QuizResult} />
