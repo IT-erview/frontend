@@ -114,6 +114,22 @@ const QuestionRegister = ({ history }: { history: any }) => {
           <div className={'register-title-wrap'}>
             <h2 className={'register-title'}>문제 등록</h2>
           </div>
+          <div className="register-tags-wrap">
+            <h3>문제 종류 선택</h3>
+            <div id="register-tags" className={'register-tags-list-wrap'}>
+              {/* <TagSelector tags={questionTags} onTagSelect={onTagSelect} /> */}
+              {questionTags.map((tag) => {
+                return (
+                  <button
+                    className={`${tag.id === selectedTag ? 'selected' : ''} register-tag`}
+                    key={tag.id}
+                    onClick={() => onTagSelect(tag.id)}>
+                    {tag.name}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
           <Form className={'register-form'}>
             <div className={'register-form-title-wrap'}>
               <h3>문제 작성</h3>
@@ -135,22 +151,6 @@ const QuestionRegister = ({ history }: { history: any }) => {
               placeholder="알고싶은 면접 문제를 입력해주세요."
             />
           </Form>
-          <div className="register-tags-wrap">
-            <h3>문제 종류 선택</h3>
-            <div id="register-tags" className={'register-tags-list-wrap'}>
-              {/* <TagSelector tags={questionTags} onTagSelect={onTagSelect} /> */}
-              {questionTags.map((tag) => {
-                return (
-                  <button
-                    className={`${tag.id === selectedTag ? 'selected' : ''} register-tag`}
-                    key={tag.id}
-                    onClick={() => onTagSelect(tag.id)}>
-                    {tag.name}
-                  </button>
-                )
-              })}
-            </div>
-          </div>
           <div className={'btn-wrap'}>
             <Button className={'btn-register'} onClick={registerQuestion}>
               등록하기
