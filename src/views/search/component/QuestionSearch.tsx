@@ -25,6 +25,7 @@ export const QuestionSearch = () => {
   const dispatch = useDispatch()
   const doSearch = useSelector<ReducerType, boolean>((state) => state.search.search)
   const [sort, setSort] = useState<Sort>(Sort.POPULAR)
+  const [totalElement, setTotalElement] = useState(0)
 
   const getQuestion = useCallback(async () => {
     let params = {
@@ -36,6 +37,7 @@ export const QuestionSearch = () => {
     }
     const searchResults = await searchAPI(params)
     if (searchResults.data.content) {
+      setTotalElement(searchResults.data.totalElements)
       setQuestions(searchResults.data.content)
     }
   }, [searchKeywords, tags, sort])
@@ -59,7 +61,7 @@ export const QuestionSearch = () => {
       </div>
       <div className={'searched-question-wrap'}>
         <div className={'searched-title-wrap'}>
-          <h2>등록된 면접 문제</h2>
+          <h2>등록된 면접 문제({totalElement})</h2>
           <div className={'sort-button-wrap'}>
             <SortSelectBox
               defaultSort={sort}
