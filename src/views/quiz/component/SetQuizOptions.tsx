@@ -46,7 +46,7 @@ const SetQuizOptions = () => {
     if (tag.isSelected)
       return (
         <button key={index} onClick={() => deselectTag(tag.id)} className={'selected-tag'}>
-          {tag.name} X
+          {tag.name}
         </button>
       )
     else return null
@@ -85,29 +85,21 @@ const SetQuizOptions = () => {
             <UserInfo />
             <article className={'option-box-wrap'}>
               <div className={'option-box-title-wrap'}>
-                <h2>문제 종류</h2>
+                <h2>문제 태그 선택</h2>
               </div>
               <TagDropdown tags={quizTags} setTagSelected={setQuizTagSelected} />
             </article>
             <article className={'selected-box-wrap'}>
-              <div className={'selected-box-title-wrap'}>
-                <h2>문제 풀기</h2>
-              </div>
               <div className={'selected-tag-box'}>
-                <div className={'selected-tag-box-title-wrap'}>
-                  <h3>선택된 문제 종류</h3>
-                  <button className={'btn-reset'} onClick={resetSelectedTags}>
-                    필터 초기화 X
-                  </button>
-                </div>
                 <div className={'selected-tags-list-wrap'}>{showSelectedTags}</div>
-                <div className={'btn-wrap'}>
-                  <button className={'btn-start'} onClick={getQuizzes}>
-                    시작
-                  </button>
-                </div>
+                <button className={'btn-reset'} onClick={resetSelectedTags}>
+                  태그 초기화 X
+                </button>
               </div>
             </article>
+            <button className={'btn-start'} onClick={getQuizzes}>
+              퀴즈 풀기
+            </button>
           </div>
         </section>
       </div>
