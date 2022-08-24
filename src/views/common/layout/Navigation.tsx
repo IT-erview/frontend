@@ -144,7 +144,7 @@ const Navigation = () => {
       <div className="navigation-wrap">
         <div className={'logo-wrap'}>
           <Link to="/">
-            <img src="/img/iterview_logo_dark.png" alt="logo" />
+            <img src="/img/iterview_logo_dark.png" alt="logo" width={93} height={40} />
           </Link>
         </div>
         <div className={'menu-wrap'}>
