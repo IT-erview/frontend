@@ -1,26 +1,33 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { TagSelectorItem } from 'utils/type'
 import 'views/common/tag/TagDropdown.sass'
+import { MAX_SEARCH_TAG_LENGTH } from 'utils/config'
 
 const TagDropdown = (props: { tags: Array<TagSelectorItem>; setTagSelected: Function }) => {
   const dispatch = useDispatch()
+  const [text, setText] = useState('')
+  const [searchingTags, setSearchingTags] = useState<Array<TagSelectorItem>>([])
 
   const selectTag = (tagId: number, isSelected: boolean) => {
     dispatch(props.setTagSelected({ tagId, isSelected: !isSelected }))
   }
 
-  const resetSelectedTags = () => {
-    props.tags.forEach((tag: TagSelectorItem) => {
-      if (tag.isSelected) {
-        selectTag(tag.id, tag.isSelected)
-      }
-    })
-  }
-  const [tagDropdownOpen, setTagDropdownOpen] = useState<boolean>(false)
-  const tagToggle = () => setTagDropdownOpen((prevState) => !prevState)
+  useEffect(() => {
+    const findTags = (tags: Array<TagSelectorItem>, text: string) => {
+      const result = [] as Array<TagSelectorItem>
+      props.tags.forEach((tag) => {
+        const tagNameLower = tag.name.toLowerCase()
+        const textLower = text.toLowerCase()
+        if (tagNameLower.indexOf(textLower) !== -1) result.push(tag)
+      })
+      if (result.length === 0) return tags
+      else return result
+    }
+    setSearchingTags(findTags(props.tags, text))
+  }, [props.tags, text])
 
-  const dropdown = props.tags.map((tag: TagSelectorItem) => (
+  const showTags = searchingTags.map((tag: TagSelectorItem) => (
     <div className={'checkbox-wrap'} key={tag.id}>
       <input
         className={`${tag.isSelected ? 'selected' : ''} input-option`}
@@ -36,21 +43,19 @@ const TagDropdown = (props: { tags: Array<TagSelectorItem>; setTagSelected: Func
   return (
     <div className={'dropdown-box-wrap'}>
       <div className={'dropdown-box-compact'}>
-        <span className={'compact-title'}>문제 종류</span>
-        <div className={'compact-handler'}>
-          <button className={'btn-dropdown-reset'} onClick={resetSelectedTags}>
-            필터 초기화 X
-          </button>
-          <button className={'btn-dropdown'} onClick={tagToggle}>
-            <img
-              src="img/dropdown.png"
-              alt="dropdownArrow"
-              className={`${tagDropdownOpen ? 'active' : ''} icon-dropdown`}
-            />
-          </button>
-        </div>
+        <img src="img/nav_icon3.png" alt="search" className={'tag-search'} />
+        <input
+          type="text"
+          maxLength={MAX_SEARCH_TAG_LENGTH}
+          value={text}
+          onChange={(e) => {
+            setText(e.target.value)
+          }}
+          placeholder="문제 태그를 검색해보세요."
+          className={'compact-title'}
+        />
       </div>
-      <div className={`${tagDropdownOpen ? 'show' : ''} dropdown-box`}>{tagDropdownOpen ? dropdown : null}</div>
+      <div className={`show dropdown-box`}>{showTags}</div>
     </div>
   )
 }
