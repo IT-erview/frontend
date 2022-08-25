@@ -218,7 +218,7 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
               </div>
             </div>
             <div className={'btn-wrap'}>
-              <button className={'btn-common btn-show-answer'} onClick={showOtherAnswers}>
+              <button className={`${showAnswers ? 'show' : ''} btn-common btn-show-answer`} onClick={showOtherAnswers}>
                 다른 사람의 답변
               </button>
               <button className={'btn-common btn-next'} onClick={onClickToggleNextModal}>
