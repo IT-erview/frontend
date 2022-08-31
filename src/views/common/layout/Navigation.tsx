@@ -144,7 +144,7 @@ const Navigation = () => {
       <div className="navigation-wrap">
         <div className={'logo-wrap'}>
           <Link to="/">
-            <img src="/img/iterview_logo_dark.png" alt="logo" />
+            <img src="/img/iterview_logo_dark.png" alt="logo" style={{ width: 93, height: 40, marginLeft: 120 }} />
           </Link>
         </div>
         <div className={'menu-wrap'}>
@@ -200,7 +200,12 @@ const Navigation = () => {
                 <img src={userImgUrl} alt="user-profile-img" className={'user-profile-image'} />
                 <span>{userName} 님</span>
                 <div className={'dropdown-button-wrap'}>
-                  <img src="/img/nav_icon7.png" className={isOpen ? 'arrow-up' : 'arrow-down'} alt="login_icon" />
+                  <img
+                    src="/img/nav_icon7.png"
+                    className={isOpen ? 'arrow-up' : 'arrow-down'}
+                    alt="login_icon"
+                    style={{ marginRight: 110 }}
+                  />
                 </div>
               </div>
               {isOpen ? dropdownMenu() : ''}
@@ -223,7 +228,12 @@ const Navigation = () => {
                 </svg>
                 <span>LOGIN</span>
                 <div className={'dropdown-button-wrap'}>
-                  <img src="/img/nav_icon7.png" className={'dropdown-button'} alt="login_icon" />
+                  <img
+                    src="/img/nav_icon7.png"
+                    className={'dropdown-button'}
+                    alt="login_icon"
+                    style={{ marginRight: 110 }}
+                  />
                 </div>
               </div>
             </>

@@ -52,7 +52,7 @@
             +margin(top 76px)
 
             .option-box-title-wrap
-                +padding(left 30px right 30px bottom 24px)
+                +padding(left 90px right 30px bottom 24px)
                 +border(2px solid #e7e7e7, bottom)
 
                 h2
@@ -65,52 +65,39 @@
         .selected-box-wrap
             +margin(top 76px)
 
-            .selected-box-title-wrap
-                +padding(left 30px right 30px bottom 24px)
-                +border(2px solid #e7e7e7, bottom)
-
-                h2
-                    font-weight: 800
-                    font-size: 26px
-
             .selected-tag-box
-                +margin(top 25px)
-                +padding(50px 90px 55px 90px)
+                +size(100%, 100% null 75px)
+                +padding(20px 90px 20px 110px)
                 +border-radius(15px)
-                background-color: #111036
+                +box-sizing(border-box)
+                display: flex
+                background-color: $page-color
+                box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1)
 
-                .selected-tag-box-title-wrap
-                    +flex-box(space-between, flex-end)
-                    +padding(bottom 30px)
-                    +border(2px solid $page-color, bottom)
-
-                    h3
-                        font-weight: 800
-                        font-size: 26px
-                        color: $white
-
-                    .btn-reset
-                        +btn()
-                        font-size: 16px
-                        color: #a0a0a0
+                .btn-reset
+                    +btn()
+                    +size(120px)
+                    +border(0px)
+                    font-size: 16px
+                    color: #FFFFFF
 
             .selected-tags-list-wrap
-                +margin(top 13px)
+                +size(100%)
                 +flex-box(flex-start, cetner)
                 flex-wrap: wrap
-                gap: 5px 8px
+                gap: 7px 10px
 
                 .selected-tag
-                    +btn(page-ghost, 2px solid $page-color, 17px 17px 17px 0)
-                    font-weight: bold
+                    +btn(page-ghost, 2px solid #ffffff, 17px 17px 17px 0)
+                    +padding(5px 17px)
+                    color: #FFFFFF
+                    font-weight: 700
                     font-size: 14px
+                    letter-spacing: -0.02em
 
-            .btn-wrap
-                +flex-box(flex-end, center)
-                +margin(top 90px)
-
-                .btn-start
-                    +btn(page-fill, null, 25px 25px 25px 0)
-                    +size(99px, 50px)
-                    font-weight: 800
-                    font-size: 18px
+        .btn-start
+            +btn(page-dark-fill, null, 25px 25px 25px 0)
+            +size(135px, 50px)
+            +margin(top 40px left auto bottom 250px)
+            font-weight: 800
+            font-size: 18px
