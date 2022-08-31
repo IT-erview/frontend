@@ -91,7 +91,7 @@ const QuizResultPage = () => {
               </div>
               <div className={'solved-quiz-list-wrap'}>
                 {quizzes.map((quiz: QuizAnswer, idx) => {
-                  return (
+                  return quiz.answer.length > 0 ? (
                     <Question
                       key={quiz.question.id}
                       id={quiz.question.id}
@@ -102,32 +102,8 @@ const QuizResultPage = () => {
                       bookmark={quiz.question.bookmark}
                       bookmarkCount={quiz.question.bookmarkCount}
                     />
-                  )
+                  ) : null
                 })}
-                {/* {quizzes.map((quiz: QuizAnswer, idx) => {
-                  return (
-                    <div className={styles.answerBox} key={quiz.question.id}>
-                      <div className={styles.answerBoxInfo}>
-                        <span className={styles.answerIndex}>{idx + 1 < 10 ? '0' + (idx + 1) : idx + 1}</span>
-                        <div className={styles.answerBookmarkWrap}>
-                          <span
-                            className={styles.answerBookmark}
-                            style={{ backgroundImage: 'url(/img/bookmark_false.png)' }}></span>
-                          <span className={styles.answerBookmarkCount}>125</span>
-                        </div>
-                      </div>
-                      <div className={styles.answerTextWrap}>
-                        <h4 className={styles.answerTitle}>{quiz.question.content}</h4>
-                        <p className={styles.answerContent}>{quiz.answer}</p>
-                      </div>
-                      <div className={styles.questionTagList}>
-                        {quiz.question.tagList.map((tag) => {
-                          return <span className={styles.questionTag}>{tag.tagTitle}</span>
-                        })}
-                      </div>
-                    </div>
-                  )
-                })} */}
               </div>
             </div>
           </div>
