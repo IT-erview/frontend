@@ -12,17 +12,25 @@
     .dropdown-box-compact
         +flex-box(space-between, center)
         +size(100%, 75px)
-        +padding(right 35px left 87px )
+        +padding(right 35px left 95px)
         +position(absolute, 0 0)
         +border-radius(15px)
         +box-sizing(border-box)
         background-color: #FFFFFF
         box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1)
 
+        .tag-search
+            +size(25px)
+
         .compact-title
+            +size(95%, 100%)
+            +border(0px)
             font-weight: bold
             font-size: 16px
             color: #a0a0a0
+
+            &::placeholder
+                color: #a0a0a0
 
         .compact-handler
             +flex-box(flex-start, center)
@@ -42,19 +50,16 @@
                     +size(15px, 7px)
 
     .dropdown-box
-        +size(100%, 75px)
-        +padding(top 0 bottom 0 left 90px right 50px)
+        +size(100%, null 400px)
+        +padding(top 90px bottom 15px left 90px right 50px)
         +border-radius(15px)
         +box-sizing(border-box)
         box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1)
         display: inline-grid
         grid-template-columns: 1fr 1fr
-        gap: 9px
-        transition: all .3s ease-out
-
-        &.show
-            +padding(top 90px bottom 15px)
-            height: 365px
+        overflow: auto
 
         .checkbox-wrap
             +checkbox-wrap(checkbox-page)
+            +margin(10px)
+
