@@ -71,7 +71,7 @@ const QuizResultPage = () => {
                 </div>
               </div>
               <div className={'quiz-box-common quiz-box-tags'}>
-                <h3>선택된 문제 종류</h3>
+                <h3>선택된 문제 태그</h3>
                 <div className={'tag-list-wrap'}>
                   {quizTags.map((tag: TagSelectorItem) => {
                     return (
