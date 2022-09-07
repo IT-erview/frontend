@@ -1,48 +1,55 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Answer from 'views/common/answer/Answer'
 import { getAnswers } from 'api/answer'
 import { Answer as AnswerType } from 'utils/type'
 import { useParams } from 'react-router-dom'
+import MyPagePagination from 'views/mypage/component/MypagePagination'
 
 const QuestionDetail = () => {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false)
   const keywordToggle = () => setDropdownOpen((prev) => !prev)
   const arrow = '/img/quiz_keyword_dropdown.png'
-  const [moreAnswer, setMoreAnswer] = useState<boolean>(false)
 
   const questionId = useParams<{ id?: string }>()
-  console.log(questionId.id)
+  //console.log(questionId.id)
+  const [page, setPage] = useState(1)
+  // 임의로 설정
+  const totalElement = 10
 
   const [answersList, setAnswersList] = useState<Array<AnswerType>>([])
   const [answerLoading, setAnswerLoading] = useState<Boolean>(false)
-  const getAnswer = async () => {
-    if (answersList.length === 0) {
-      let params = {
-        page: 0,
-        sort: 'popular,desc',
-        size: 10,
-      }
-      const answers = await getAnswers(Number(questionId.id), params)
-      if (answers.data.content) {
-        setAnswersList(answers.data.content)
-        setAnswerLoading(true)
-      }
-    }
-  }
 
-  const moreHideBtn = (hitsLength: number, more: boolean) => {
-    if (hitsLength > 3) {
-      return more ? (
-        <>
-          {'숨기기'} <img src="img/hide_btn.png" alt="hideBtn" className={'icon-hide'} />
-        </>
-      ) : (
-        <>
-          {'더보기'} <img src="img/more_btn.png" alt="moreBtn" className={'icon-more'} />
-        </>
-      )
-    } else return null
-  }
+  const getAnswer = useCallback(async () => {
+    let params = {
+      page: page - 1,
+      sort: 'popular,desc',
+      size: 5,
+    }
+    const answers = await getAnswers(Number(questionId.id), params)
+    if (answers.data.content) {
+      setAnswersList(answers.data.content)
+      setAnswerLoading(true)
+      //setTotalElement(data.totalElement)
+    }
+  }, [page, questionId.id])
+
+  useEffect(() => {
+    getAnswer()
+  }, [getAnswer])
+
+  // const moreHideBtn = (hitsLength: number, more: boolean) => {
+  //   if (hitsLength > 3) {
+  //     return more ? (
+  //       <>
+  //         {'숨기기'} <img src="img/hide_btn.png" alt="hideBtn" className={'icon-hide'} />
+  //       </>
+  //     ) : (
+  //       <>
+  //         {'더보기'} <img src="img/more_btn.png" alt="moreBtn" className={'icon-more'} />
+  //       </>
+  //     )
+  //   } else return null
+  // }
 
   const otherAnswers = () => {
     if (answerLoading === false) {
@@ -58,12 +65,11 @@ const QuestionDetail = () => {
     return (
       <div className={'other-answer-wrap'}>
         {answersList.map((answersList, idx) => {
-          if (!moreAnswer && idx >= 3) return null
           return (
             <Answer
               key={answersList.id}
               id={answersList.questionId}
-              number={idx + 1}
+              number={idx + 1 + (page - 1) * 5}
               content={'내용'}
               tagList={[]}
               answer={answersList.content}
@@ -72,13 +78,6 @@ const QuestionDetail = () => {
             />
           )
         })}
-        {answersList.length > 3 ? (
-          <div className={'btn-wrap'}>
-            <button onClick={() => setMoreAnswer((prev) => !prev)} className={'btn-more'}>
-              {moreHideBtn(answersList.length, moreAnswer)}
-            </button>
-          </div>
-        ) : null}
       </div>
     )
   }
@@ -135,6 +134,9 @@ const QuestionDetail = () => {
             <h3>다른사람이 작성한 답변</h3>
           </div>
           <div className="other-content-wrap">{otherAnswers()}</div>
+          <div className={'paging-wrap'}>
+            <MyPagePagination page={page} setPage={setPage} totalElement={totalElement} />
+          </div>
         </article>
       </div>
     </section>

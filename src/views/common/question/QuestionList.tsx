@@ -7,7 +7,7 @@ import QuestionComponent from 'views/common/question/Question'
 // component
 //api
 
-const QuestionList = (props: { questions: Array<Question> }) => {
+const QuestionList = (props: { questions: Array<Question>; page: number }) => {
   // const totalElements = useSelector<ReducerType, number>((state) => state.searchTotalElement)
   // const totalPage = Math.trunc((totalElements - 1) / 10)
   // const [currentPage, setCurrentPage] = useState(0)
@@ -45,6 +45,7 @@ const QuestionList = (props: { questions: Array<Question> }) => {
   //     return
   //   }
   // }, [currentPage, totalPage])
+  const startNum = (props.page - 1) * 5
 
   return (
     <div className={'question-list-wrap'}>
@@ -53,7 +54,7 @@ const QuestionList = (props: { questions: Array<Question> }) => {
           <QuestionComponent
             key={question.id}
             id={question.id}
-            number={index + 1}
+            number={index + 1 + startNum}
             content={question.content}
             tagList={question.tagList}
             answer={question.mostLikedAnswer?.content}

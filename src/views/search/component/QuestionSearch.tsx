@@ -13,6 +13,9 @@ import { searchQuestions as searchAPI } from 'api/question'
 // redux
 import SortSelectBox, { Sort } from '../../common/form/SortSelectBox'
 import { setSearch } from '../../../modules/search'
+//
+import 'views/search/style/QuestionSearch.sass'
+import Pagination from 'react-js-pagination'
 
 export const QuestionSearch = () => {
   const [questions, setQuestions] = useState<Array<Question>>([])
@@ -26,28 +29,47 @@ export const QuestionSearch = () => {
   const doSearch = useSelector<ReducerType, boolean>((state) => state.search.search)
   const [sort, setSort] = useState<Sort>(Sort.POPULAR)
   const [totalElement, setTotalElement] = useState(0)
+  const [page, setPage] = useState(1)
 
   const getQuestion = useCallback(async () => {
     let params = {
       keyword: searchKeywords,
       tags: tags,
       sort: sort,
-      size: 20,
-      page: 0,
+      size: 5,
+      page: page - 1,
     }
     const searchResults = await searchAPI(params)
     if (searchResults.data.content) {
       setTotalElement(searchResults.data.totalElements)
       setQuestions(searchResults.data.content)
     }
-  }, [searchKeywords, tags, sort])
+  }, [searchKeywords, tags, sort, page])
+
+  const SearchPaging = () => {
+    function handlePageChange(page: number) {
+      setPage(page)
+      dispatch(setSearch(true))
+    }
+    return (
+      <Pagination
+        activePage={page}
+        itemsCountPerPage={5}
+        totalItemsCount={totalElement}
+        pageRangeDisplayed={5}
+        prevPageText="<"
+        nextPageText=">"
+        onChange={handlePageChange}
+      />
+    )
+  }
 
   useEffect(() => {
     if (doSearch) {
       getQuestion()
       dispatch(setSearch(false))
     } else if (!questions.length && !tags.length && !searchKeywords.length) getQuestion()
-  }, [doSearch, dispatch, getQuestion, questions, tags, searchKeywords])
+  }, [doSearch, dispatch, getQuestion, questions, tags, searchKeywords, page])
 
   return (
     <div className={'question-search'}>
@@ -61,7 +83,7 @@ export const QuestionSearch = () => {
       </div>
       <div className={'searched-question-wrap'}>
         <div className={'searched-title-wrap'}>
-          <h2>등록된 면접 문제({totalElement})</h2>
+          <h2>등록된 면접 문제 ({totalElement})</h2>
           <div className={'sort-button-wrap'}>
             <SortSelectBox
               defaultSort={sort}
@@ -73,7 +95,10 @@ export const QuestionSearch = () => {
           </div>
         </div>
         <div className={'searched-content-wrap'}>
-          <QuestionList questions={questions} />
+          <QuestionList questions={questions} page={page} />
+        </div>
+        <div className={'paging-wrap'}>
+          <SearchPaging />
         </div>
       </div>
     </div>

@@ -7,7 +7,6 @@ import { ReducerType } from 'modules/rootReducer'
 import { Answer as AnswerType, Question as QuestionType } from 'utils/type'
 // style
 import 'views/main/style/MainPage.sass'
-// redux
 // api
 import { getHitsAnswers } from 'api/answer'
 import { getHitsQuestions } from 'api/question'
@@ -210,6 +209,7 @@ const MainPage = () => {
                 </p>
               </div>
             </article>
+
             <article className={'search-wrap'}>
               <h2 className={'search-title'}>문제 검색</h2>
               <TagSearch />
