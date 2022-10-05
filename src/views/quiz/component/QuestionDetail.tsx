@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Answer from 'views/common/answer/Answer'
 import { getAnswers } from 'api/answer'
-import { Answer as AnswerType } from 'utils/type'
+import { Answer as AnswerType, Question } from 'utils/type'
 import { useParams } from 'react-router-dom'
+import { getQuestion } from 'api/question'
 
 const QuestionDetail = () => {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false)
@@ -11,10 +12,21 @@ const QuestionDetail = () => {
   const [moreAnswer, setMoreAnswer] = useState<boolean>(false)
 
   const questionId = useParams<{ id?: string }>()
-  console.log(questionId.id)
-
   const [answersList, setAnswersList] = useState<Array<AnswerType>>([])
+  const [questionData, setQuestionData] = useState<Question>()
+
   const [answerLoading, setAnswerLoading] = useState<Boolean>(false)
+  const getQuestionData = async () => {
+    const data = await getQuestion(Number(questionId.id))
+    if (data.data.content) {
+      setQuestionData(questionData)
+    }
+  }
+
+  useEffect(() => {
+    getQuestionData()
+  })
+
   const getAnswer = async () => {
     if (answersList.length === 0) {
       let params = {
@@ -91,7 +103,7 @@ const QuestionDetail = () => {
           <div className="question-information-box">
             <div className="question-information">
               <p className="question-title">멀티프로세스는 무엇이고, 왜 사용할까요?</p>
-              <p className="question-description">멀티프로세스는 무엇이고, 왜 사용할까요?</p>
+              <p className="question-description">{questionData?.content}</p>
             </div>
             <div className="question-handler">
               <button className="btn-bookmark">
