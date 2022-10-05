@@ -15,31 +15,52 @@
         background-repeat: no-repeat
         background-position: center center
 
-        .breadcrumb-wrap
-            +flex-box(flex-start, center)
-            +padding(top 65px)
 
-            .breadcrumb-item
+        .container
+            +padding(top 100px left 30px)
+            display: flex
+            flex-direction: row
+
+            .question-title
                 font-weight: 800
-                font-size: 18px
-                line-height: 20px
-                color: $page-color
+                font-size: 26px
+                color: $white
 
-            .icon-arrow
-                +size(5px, 12px)
-                +margin(0 20px)
+            .question-info
+                +margin(left auto)
+                display: flex
+                align-items: center
 
-            .banner-tag
-                font-weight: 800
-                font-size: 18px
-                line-height: 20px
-                color: #a0a0a0
+                .question-tag
+                    +padding(7px 20px)
+                    +border(2px solid #FFFFFF)
+                    +border-radius(19px 17px 17px 0px)
+                    color: #FFFFFF
 
-        .question-title
-            +padding(top 55px)
-            font-weight: 800
-            font-size: 26px
-            color: $white
+                .btn-bookmark
+                    +btn(0)
+                    +size(null, 16px)
+                    +margin(left 15px right 50px)
+                    +padding(left 20px)
+                    display: flex
+                    align-items: center
+                    border-left: 1px solid #FFFFFF
+                    border-radius: 0px
+                    background-color: transparent
+
+                    img
+                        +size(11px 14px)
+
+                    span
+                        +margin(left 10px)
+                        display: flex
+                        align-self: flex-start
+                        color: white
+                        font-size: 16px
+                        line-height: 18px
+                        font-weight: 600
+
+
 
     .content-wrap
         +margin(top 70px)

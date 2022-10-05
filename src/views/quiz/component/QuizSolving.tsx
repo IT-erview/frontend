@@ -19,6 +19,7 @@ import { getAnswers, postQuizAnswers } from 'api/answer'
 import ExitAnswerModal from 'views/quiz/component/ExitAnswer'
 import NextModal from 'views/quiz/component/NextModal'
 import Answer from 'views/common/answer/Answer'
+import { addBookmark, deleteBookmark } from 'api/bookmark'
 
 const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteComponentProps> = ({
   quiz,
@@ -36,6 +37,9 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
   const nextQuizOption = useSelector<ReducerType, NextQuiz>((state) => state.nextQuestion)
   const [answerLoading, setAnswerLoading] = useState<Boolean>(false)
   const dispatch = useDispatch()
+  const bookmarkImg = ['img/bookmark_white_false.png', 'img/bookmark_white_true.png'] as Array<string>
+  const [bookmark, setBookmark] = useState<boolean>(current.bookmark)
+  const [bookmarkCount, setBookmarkCount] = useState<number>(current.bookmarkCount)
 
   const getAnswer = async () => {
     if (answersList.length === 0) {
@@ -94,6 +98,24 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
   const showOtherAnswers = useCallback(() => {
     setShowAnswers(!showAnswers)
   }, [showAnswers])
+
+  const doBookmark = async () => {
+    if (!bookmark) {
+      const result = await addBookmark(current.id)
+      if (result.status === 200) {
+        alert('북마크 되었습니다.')
+        setBookmark((prev) => !prev)
+        setBookmarkCount((prev) => prev + 1)
+      }
+    } else {
+      const result = await deleteBookmark(current.id)
+      if (result.status === 200) {
+        alert('북마크가 해제되었습니다.')
+        setBookmark((prev) => !prev)
+        setBookmarkCount((prev) => prev - 1)
+      }
+    }
+  }
 
   const moreHideBtn = (hitsLength: number, more: boolean) => {
     if (hitsLength > 3) {
@@ -170,14 +192,14 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
       <div className={`${isOpenModal || isOpenNextModal ? 'blur' : ''} quiz-solving-wrap`}>
         <div className={'banner-wrap'} style={{ backgroundImage: `url(img/quiz_solving_img.png)` }}>
           <div className={'container'}>
-            <div className={'breadcrumb-wrap'}>
-              <span className={'breadcrumb-item'}>테스트 문제</span>
-              <img src="img/quiz_solving_arrow.png" className={'icon-arrow'} alt="quiz_solving_arrow" />
-              <span className={'breadcrumb-item'}>인기 문제</span>
-              <img src="img/quiz_solving_arrow.png" className={'icon-arrow'} alt="quiz_solving_arrow" />
-              <span className={'banner-tag'}>{current.tagList[0].tagTitle}</span>
-            </div>
             <h1 className={'question-title'}>{current.content}</h1>
+            <div className={'question-info'}>
+              <div className={'question-tag'}>{current.tagList[0].tagTitle}</div>
+              <button className={'btn-bookmark'} onClick={doBookmark}>
+                <img src={bookmark ? bookmarkImg[1] : bookmarkImg[0]} alt="bookmark" />
+                <span>{bookmarkCount}</span>
+              </button>
+            </div>
           </div>
         </div>
         <div className={'content-wrap'}>
@@ -228,6 +250,8 @@ const QuizSolving: React.FunctionComponent<{ quiz: QuizQuestion } & RouteCompone
                 종료
               </button>
             </div>
+            {console.log(current)}
+
             {showAnswers ? otherAnswers() : null}
           </div>
         </div>

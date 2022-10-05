@@ -7,6 +7,12 @@ export const addBookmark = (id: number) => {
     url: `/api/v1/bookmark/${id}`,
   })
 }
+export const deleteBookmark = (id: number) => {
+  return Send({
+    method: 'delete',
+    url: `/api/v1/bookmark/${id}`,
+  })
+}
 export const getBookmarks = (params: object) => {
   return Send({
     method: 'get',
