@@ -66,6 +66,7 @@ export const QuestionSearch = () => {
 
   useEffect(() => {
     if (doSearch) {
+      setPage(1)
       getQuestion()
       dispatch(setSearch(false))
     } else if (!questions.length && !tags.length && !searchKeywords.length) getQuestion()
