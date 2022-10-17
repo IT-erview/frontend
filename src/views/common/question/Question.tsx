@@ -1,5 +1,6 @@
 // react
 // oauth
+import { JWT_TOKEN } from 'constants/Oauth'
 // util
 import { getZerofilledNumber } from 'utils/util'
 import { MAX_DISPLAYED_TAG_COUNT } from 'utils/config'
@@ -8,7 +9,31 @@ import { Tag } from 'utils/type'
 import 'views/common/question/Question.sass'
 // redux
 // api
+import { addBookmark } from 'api/bookmark'
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
+
+const alarmBookmark = (
+  id: number,
+  e: React.MouseEvent<HTMLElement>,
+  isBookmarked: boolean,
+  setIsBookmarked: React.Dispatch<React.SetStateAction<boolean>>,
+  setBookmarkCount: React.Dispatch<React.SetStateAction<number>>,
+) => {
+  e.preventDefault()
+  if (isBookmarked === false) {
+    setIsBookmarked(true)
+    setBookmarkCount((current) => current + 1)
+    addBookmark(id)
+    alert('북마크 되었습니다!')
+    // } else {
+    //   isBookmarked = false
+    //   // 아직 api 수정이 되지 않음
+    //   //deleteBookmark(id)
+    //   alert('북마크가 취소되었습니다!')
+    // }
+  }
+}
 
 const Question = (props: {
   id: number
@@ -21,7 +46,8 @@ const Question = (props: {
 }) => {
   // todo: 전체적으로 적용필요
   // todo: questionId 수정으로 이동 가능
-
+  const [isBookmarked, setIsBookmarked] = useState(props.bookmark)
+  const [bookmarkCount, setBookmarkCount] = useState(props.bookmarkCount)
   return (
     <Link to={`/QuestionDetail/${props.id}`}>
       <div className={'question-box'}>
@@ -29,13 +55,17 @@ const Question = (props: {
           <div className={'question-index-wrap'}>
             <span className={'question-index'}>{getZerofilledNumber(props.number)}</span>
           </div>
-          <div className={'question-bookmark-wrap'}>
+          <div
+            className={'question-bookmark-wrap'}
+            onClick={
+              JWT_TOKEN ? (e) => alarmBookmark(props.id, e, isBookmarked, setIsBookmarked, setBookmarkCount) : undefined
+            }>
             <img
-              src={props.bookmark ? '../img/bookmark_true.png' : '../img/bookmark_false.png'}
+              src={isBookmarked ? '../img/bookmark_true.png' : '../img/bookmark_false.png'}
               alt="questionBookmark"
               className={'question-bookmark-icon'}
             />
-            <p className={'question-bookmark-count'}>{props.bookmarkCount}</p>
+            <p className={'question-bookmark-count'}>{bookmarkCount}</p>
           </div>
         </div>
         <div className={'question-content-wrap'}>

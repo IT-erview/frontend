@@ -14,3 +14,9 @@ export const getBookmarks = (params: object) => {
     params: params,
   })
 }
+export const deleteBookmark = (bookmarkId: number) => {
+  return Send({
+    method: 'delete',
+    url: `/api/v1/bookmark/${bookmarkId}`,
+  })
+}
